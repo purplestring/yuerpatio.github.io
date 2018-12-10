@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<head>
+	<style type="text/css"> 
+	body
+	  {
+		background-color:#88ab83;
+	  }
+	  
+	a {
+		color:#aff;
+		text-decoration: none;
+	} /* 已或未访问链接颜色 */
+		
+	a:hover {
+		color:#fff;	
+		text-decoration: none;
+	} /* 悬停时链接颜色 */
+	
+	#foot{
+		color:#000;
+		font-size:14px;
+	}
+	
+	#foots{
+		color:#000;
+		font-size:18px;
+	}
+	
+	#title{
+		font-size:50px;
+	}	
+	
+	#sub{
+		font-size:40px;
+	}		
+	
+	#content{
+		font-size:30px;
+	}	
+	
+    </style>
+	<meta charste="utf-8">
+	<title>鱼儿</title>
+
+<body>
+
+<h1 id="title" align="center" >鱼院</h1><br>
+
+
+<div id="content" align="center">	
+	<a name="file" href="/pano/draw">全景绘</a><br>
+	<a name="file" href="/pano">全景照</a><br>
+	<!--a name="file" href="/pano/cb">悄悄咪咪</a><br-->
+	<a name="file" href="/pano/others">全景皮一皮</a><br>
+	<a name="file" href="/main/guhua">古画临摹</a><br>
+	<a name="file" href="/main/shufa">书法临摹</a><br>
+	<a name="file" href="/main/jieqi">节气合集</a><br>
+	<a name="file" href="/main/color">彩色写实</a><br>
+	<a name="file" href="/main/suse">素色写实</a><br>
+	<a name="file" href="/main/h5">h5设计</a><br>
+	<a name="file" href="/main/others">其它</a><br>
+</div>
+
+<br>
+
+<div id="foot" align="center" >
+Copyright © 2015~18 鱼儿. All Rights Reserved.<br>
+</div>
+
+<div id="foots" align="center" >
+</div>
+
+
+<br>
+
+</body>
+
+<script language=javascript>
+function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+if(IsPC()!=true)
+{	
+	document.getElementById('title').style.fontSize="72px";
+	//document.getElementById('sub').style.fontSize="54px";
+	document.getElementById('content').style.fontSize="48px";
+	document.getElementById('foot').style.fontSize="28px";
+	document.getElementById('foots').style.fontSize="42px";
+}
+ </script>
+ 
+</html>
