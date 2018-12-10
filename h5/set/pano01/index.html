@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<head>
+    <script src="../../js/css3d.js"></script>
+    <style>
+        #main {
+            width: 500px;
+            width: 500px;
+        }
+    </style>
+	<title>全景动图 · 古堡</title>
+</head>
+<body>
+
+<div id="main">
+
+</div>
+<script>
+    //创建场景
+    var s = new C3D.Stage();
+    s.size(window.innerWidth, window.innerHeight).material({
+        color: "#cccccc"
+    }).update();
+    document.getElementById('main').appendChild(s.el);
+
+    //创建1个立方体放入场景
+    var c = new C3D.Skybox();
+    c.size(2608).position(0, 0, 0).material({
+        front: {image: "../../../pano/draw/gubao/pano_f.jpg"},
+        back: {image: "../../../pano/draw/gubao/pano_b.jpg"},
+        left: {image: "../../../pano/draw/gubao/pano_l.jpg"},
+        right: {image: "../../../pano/draw/gubao/pano_r.jpg"},
+        up: {image: "../../../pano/draw/gubao/pano_u.jpg"},
+        down: {image: "../../../pano/draw/gubao/pano_d.jpg"},
+
+    }).update();
+    s.addChild(c);
+	
+	
+	//创建一个三维容器（创建以方便分组使用）
+	var sp = new C3D.Sprite();
+	sp.position(0, 0, -500).update();
+	s.addChild(sp);
+
+	var mysp = new C3D.Sprite();
+	mysp.position(0, 0, 0).update();
+	s.addChild(mysp);
+
+	
+	var myp = new C3D.Plane();
+		myp.size(200)
+				.name('myimg')
+				.position(0, 0, 700)
+				.rotation(0, 0, 0)
+				.material({
+					/*color : "#cccccc",*/
+					image: 'img/face.gif',
+					width: '223px',
+					height: '183px',
+				})
+				.buttonMode(true)
+				.update();
+		mysp.addChild(myp);
+
+		
+		myp.on("click", function() {
+
+		});
+	
+	var myp1 = new C3D.Plane();
+	myp1.size(44).name('myp1').position(230, -576, 1052).rotation(0, 180, 0).material({image: 'img/feng01.gif',width: '31px',height: '44px',}).update();
+	mysp.addChild(myp1);
+	
+	var myp2 = new C3D.Plane();
+	myp2.size(52).name('myp2').position(1138, -766, 95).rotation(0, -90, 0).material({image: 'img/feng02.gif',width: '52px',height: '37px',}).update();
+	mysp.addChild(myp2);
+	
+	var tree1a = new C3D.Plane();
+	tree1a.size(430).id('tree1a').position(-571, -73, 197).rotation(0, 104, 0).material({image: '',width: '320px',height: '430px',}).update();
+	mysp.addChild(tree1a);
+	
+	var tree1b = new C3D.Plane();
+	tree1b.size(430).id('tree1b').position(-571, -73, 197).rotation(0, 104, 0).material({image: 'img/1.png',width: '320px',height: '430px',}).update();
+	mysp.addChild(tree1b);
+	
+	var tree1c = new C3D.Plane();
+	tree1c.size(430).id('tree1c').position(-571, -73, 197).rotation(0, 104, 0).material({image: '',width: '320px',height: '430px',}).update();
+	mysp.addChild(tree1c);
+	
+	var oTree1a=document.getElementById('tree1a');
+	var oTree1b=document.getElementById('tree1b');
+	var oTree1c=document.getElementById('tree1c');
+	var int=self.setInterval("tree()",200);
+	var treect=0;var treeframe=25;
+	//oTree1c.onclick = function(){tree();}
+	var treeimg=["1.png","2.png","3.png","3.png","4.png","5.png","5.png","1.png","1.png"];
+	var treenum=treeimg.length;
+	function tree(){	
+		oTree1c.style.opacity=(treect%treeframe)/treeframe;
+		oTree1a.style.opacity=1-(treect%treeframe)/treeframe;
+		if(treect%treeframe==0) {			
+			oTree1a.style.backgroundImage = 'url(img/'+treeimg[parseInt(treect/treeframe)%treenum]+')';
+			oTree1b.style.backgroundImage = 'url(img/'+treeimg[parseInt(treect/treeframe+1)%treenum]+')';
+			oTree1c.style.backgroundImage = 'url(img/'+treeimg[parseInt(treect/treeframe+2)%treenum]+')';			
+		}		
+		treect++;
+	}
+	
+    //响应屏幕调整尺寸
+    function resize() {
+        s.size(window.innerWidth, window.innerHeight).update();
+    }
+
+    window.onresize = function () {
+        resize();
+    };
+    resize();
+
+    //刷新场景
+    requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame ||
+            function (callback) {
+                setTimeout(callback, 1000 / 60);
+            };
+
+    function go() {
+//            c.rotate(0, 0.1, 0).updateT();
+
+        s.camera.rotate(0, 0.3, 0).updateT();
+
+        requestAnimationFrame(go);
+    }
+	
+	var oMain=document.getElementById('main');
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+		c.rotate(b*0.1, -a*0.1, 0).updateT();
+		//sp.rotate(b*0.1, -a*0.15, 0).updateT();
+		mysp.rotate(b*0.1, -a*0.1, 0).updateT();
+        //requestAnimationFrame(go);
+		
+	}
+
+
+	function move0(ev,mvfn)
+	{
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		var disY = ev.clientY;
+		
+		document.onmousemove = function(ev){
+			var ev = ev || window.event;				
+			mvfn(ev.clientX - disX,ev.clientY - disY);
+			disX = ev.clientX;disY = ev.clientY;
+			
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+		return false;
+	}
+
+	function move1(ev,mvfn)
+	{
+		var disX = ev.changedTouches[0].clientX;	
+		var disY = ev.changedTouches[0].clientY;	
+		document.ontouchmove = function(ev){			
+
+			mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+			disX = ev.changedTouches[0].clientX;
+			disY = ev.changedTouches[0].clientY;
+			
+		};
+		document.ontouchend = function(){			
+			document.ontouchstart = null;
+			document.ontouchmove = null;
+		};
+		return false;
+	}
+
+    //requestAnimationFrame(go);
+
+</script>
+</body>

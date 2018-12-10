@@ -1,0 +1,115 @@
+@-webkit-keyframes nod {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	5%{
+		-webkit-transform:rotate(27deg);					
+	}
+	10%{
+		-webkit-transform:rotate(0deg);					
+	}
+	25%{
+		-webkit-transform:rotate(0deg);
+	}
+	30%{
+		-webkit-transform:rotate(23deg);					
+	}
+	35%{
+		-webkit-transform:rotate(0deg);					
+	}
+	50%{
+		-webkit-transform:rotate(0deg);
+	}
+	55%{
+		-webkit-transform:rotate(32deg);					
+	}
+	60%{
+		-webkit-transform:rotate(0deg);					
+	}
+}
+@-webkit-keyframes blink {
+	0%{
+		background-position: 0 0;
+	}
+	20%{
+		background-position: 0 0;
+	}
+	21%{
+		background-position: -29px 0;
+	}
+	100%{
+		background-position: -29px 0;
+	}
+}
+@-webkit-keyframes wind {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	20%{
+		-webkit-transform:rotate(-20deg);
+	}
+	80%{
+		-webkit-transform:rotate(-20deg);
+	}
+}
+@-webkit-keyframes tail {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	20%{
+		-webkit-transform:rotate(-7deg);
+	}
+	80%{
+		-webkit-transform:rotate(-7deg);
+	}
+}
+@-webkit-keyframes zhi1 {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	20%{
+		-webkit-transform:rotate(0.5deg);
+	}
+	70%{
+		-webkit-transform:rotate(-0.5deg);
+	}
+}
+@-webkit-keyframes zhi2 {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	20%{
+		-webkit-transform:rotate(-0.5deg);
+	}
+	70%{
+		-webkit-transform:rotate(0.5deg);
+	}
+}
+@-webkit-keyframes zhi3 {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	30%{
+		-webkit-transform:rotate(-1deg);
+	}
+	80%{
+		-webkit-transform:rotate(1deg);
+	}
+}
+@-webkit-keyframes zhi3a {
+	0%{
+		-webkit-transform:rotate(0deg);
+	}
+	13%{
+		-webkit-transform:rotate(7deg);
+	}
+	40%{
+		-webkit-transform:rotate(-2deg);
+	}
+	60%{
+		-webkit-transform:rotate(1.5deg);
+	}
+	80%{
+		-webkit-transform:rotate(-1.2deg);
+	}
+}

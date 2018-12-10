@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>pavilion</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+		body{
+			background-color: #bcccb4;
+		}
+		
+        #main{
+            width: 400px;
+            height: 400px;
+            box-sizing: border-box;
+            margin: 200px auto;
+            position: relative;
+			transform-style: preserve-3d; 
+			-webkit-transform-style: preserve-3d; 
+			/*perspective: 500px;
+			perspective:900px;
+			perspective-origin: 30% 30%;*/
+
+            transform: rotateY(0deg) rotateX(0deg);
+			-webkit-transform: rotateY(0deg) rotateX(0deg);
+            
+        }
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            font-size: 60px;
+            text-align: center;
+			color: rgb(255,0,255,0);
+            line-height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+		
+		
+        #floor0{
+			width: 1000px;
+            height: 1600px;
+			margin-left: -400px;
+			margin-top: -700px;
+			background:url("6.png");
+            /*background-color: #687b5f;*/
+            transform: translateY(100px) rotateX(90deg);
+			-webkit-transform: translateY(100px) rotateX(90deg);
+        }
+		.fence{
+			background-color: rgb(255,0,255,0.2);
+			background:url("2.png") 0px 40px no-repeat;
+		}
+        #fence2{
+            transform: translateZ(-100px);
+			-webkit-transform: translateZ(-100px);
+        }
+
+        #fence1{
+			background:url("1.png") 0px 40px no-repeat;
+            transform: rotateX(360deg) translateZ(100px);
+			-webkit-transform: rotateX(360deg) translateZ(100px);
+        }
+        #fence3{
+	
+            transform: translateX(-100px) rotateY(90deg);
+			-webkit-transform: translateX(-100px) rotateY(90deg);
+        }
+        #fence4{
+
+            transform: translateX(100px) rotateY(90deg);
+			-webkit-transform: translateX(100px) rotateY(90deg);
+        }
+		.roof{
+			background-color: rgb(255,0,255,0.2);
+			background:url("0.png") -10px 0px no-repeat;
+		}
+		#roof1{            
+            transform:   translateY(-60px) translateZ(90px) rotateX(62deg);
+			-webkit-transform: translateY(-60px) translateZ(90px) rotateX(62deg);
+        }
+		#roof2{
+            transform:  translateY(-60px) translateZ(-90px)  rotateX(-62deg);
+			-webkit-transform: translateY(-60px) translateZ(-90px)  rotateX(-62deg);
+        }
+		#roof3{
+            transform: translateY(-60px) translateX(-90px)  rotateY(-90deg) rotateX(62deg);
+			-webkit-transform: translateY(-60px) translateX(-90px)  rotateY(-90deg) rotateX(62deg);
+        }
+		#roof4{
+            transform: translateY(-60px) translateX(90px) rotateY(90deg) rotateX(62deg);
+			-webkit-transform: translateY(-60px) translateX(90px) rotateY(90deg) rotateX(62deg);
+        }
+		#floor1{
+			width: 220px;
+            height: 220px;
+			margin-left: -10px;
+			margin-top: -10px;
+            background-color: #99a891;
+            transform: translateY(50px) rotateX(90deg);
+			-webkit-transform: translateY(50px) rotateX(90deg);
+        }
+		.side{
+			background-color: rgb(255,0,255,0.2);
+			width: 220px;
+            height: 50px;
+			margin-left: -10px;
+			margin-top: -10px;
+			background:url("3.png")  0px 0px no-repeat;
+			
+		}
+		#side1{            
+            transform: translateY(160px) translateZ(110px);
+			-webkit-transform: translateY(160px) translateZ(110px);
+        }
+		#side2{
+            transform:  translateY(160px) translateX(-110px) rotateY(-90deg);
+			-webkit-transform: translateY(160px) translateX(-110px) rotateY(-90deg);
+        }
+		#side3{
+            transform: translateY(160px) translateZ(-110px);
+			-webkit-transform: translateY(160px) translateZ(-110px);
+        }
+		#side4{
+            transform:  translateY(160px) translateX(110px) rotateY(-90deg);
+			-webkit-transform: translateY(160px) translateX(110px) rotateY(-90deg);
+        }
+		.ladder{
+			background-color: rgb(255,0,255,0.2);			
+		}
+		#ladder1{
+			width: 50px;
+            height: 50px;
+			background:url("4.png")  0px 0px no-repeat;
+            transform:  translateY(150px) translateX(50px) translateZ(135px) rotateY(-90deg);
+			-webkit-transform: translateY(150px) translateX(50px) translateZ(135px) rotateY(-90deg);
+        }
+		#ladder2{
+			width: 50px;
+            height: 50px;
+			background:url("4.png")  0px 0px no-repeat;
+            transform:  translateY(150px) translateX(100px) translateZ(135px) rotateY(-90deg);
+			-webkit-transform: translateY(150px) translateX(100px) translateZ(135px) rotateY(-90deg);
+        }
+		#ladder3{
+			width: 50px;
+            height: 50px;
+			background:url("5.png")  0px 0px no-repeat;
+            transform:  translateY(158px) translateX(75px) translateZ(130px) rotateX(45deg);
+			-webkit-transform: translateY(158px) translateX(75px) translateZ(130px) rotateX(45deg);
+        }
+		 #footer{
+            width:300px;
+            position:absolute;
+            text-align: center;
+            left:50%;
+            margin-left: -150px;
+            top:600px;
+        }
+		.tree{
+			background-color: rgb(255,0,255,0.2);			
+		}
+		#tree1{
+			width: 233px;
+            height: 396px;
+			background:url("tree1.png") 0px 0px no-repeat;
+            transform: translateX(-200px) translateY(-198px) translateZ(400px) ;
+			-webkit-transform: translateX(-200px) translateY(-198px) translateZ(400px) ;
+        }
+		#tree2{
+			width: 233px;
+            height: 396px;
+			background:url("tree1.png") 0px 0px no-repeat;
+            transform: translateX(-300px) translateY(-198px) translateZ(350px) ;
+			-webkit-transform: translateX(-300px) translateY(-198px) translateZ(350px) ;
+        }
+		.hill{
+			background-color: rgb(255,0,255,0.2);			
+		}
+		#hill1{
+			width: 800px;
+            height: 155px;
+			background:url("hill.png") 0px 0px no-repeat;
+            transform: translateX(-200px) translateY(85px) translateZ(600px) ;
+			-webkit-transform: translateX(-200px) translateY(85px) translateZ(600px) ;
+        }
+
+    </style>
+</head>
+<body>
+<ul id="main">
+    <li id="floor0"></li>
+    <li class="fence" id="fence1"></li>
+    <li class="fence" id="fence2"></li>
+    <li class="fence" id="fence3"></li>
+    <li class="fence" id="fence4"></li>
+	<li class="roof" id="roof1"></li>
+	<li class="roof" id="roof2"></li>
+	<li class="roof" id="roof3"></li>
+	<li class="roof" id="roof4"></li>
+	<li id="floor1"></li>
+	<li class="side" id="side1"></li>
+	<li class="side" id="side2"></li>
+	<li class="side" id="side3"></li>
+	<li class="side" id="side4"></li>
+	<li class="ladder" id="ladder1"></li>
+	<li class="ladder" id="ladder2"></li>
+	<li class="ladder" id="ladder3"></li>
+	<li class="tree" id="tree1"></li>
+	<li class="tree" id="tree2"></li>
+	<li class="hill" id="hill1"></li>
+</ul>
+<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+window.onload=function (){
+	var oMain=document.getElementById('main');
+	oMain.style['transform'] = oMain.style['-webkit-transform']="rotateY(9deg) rotateX(-7deg)";
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+
+		//oMain.style['transform-style']="";
+		var x=parseFloat (oMain.style['-webkit-transform'].split('rotateX(')[1].split('deg')[0])+(-b/4);
+		var y=parseFloat (oMain.style['-webkit-transform'].split('rotateY(')[1].split('deg')[0])+(a/4);
+		//console.log ("rotateY("+y+"deg) rotateX("+x+"deg)");
+		if(x<0 && x>(-30) && y>(-30) && y<(30))
+		{
+			oMain.style['transform'] ="rotateY("+y+"deg) rotateX("+x+"deg)";
+			oMain.style['-webkit-transform'] ="rotateY("+y+"deg) rotateX("+x+"deg)";
+			//oMain.style['perspective'] = "500px";
+			//oMain.style['-webkit-perspective'] = "500px";
+			//oMain.style['transform-style']="preserve-3d";
+		}
+
+	};
+}
+
+function move0(ev,mvfn)
+{
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn)
+{
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+
+</script>
+</html>

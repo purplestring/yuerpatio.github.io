@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>啦啦啦~~~</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: url("http://ww2.sinaimg.cn/woriginal/68d84d6dgw1eurpvggj66j21kw1esb29.jpg") no-repeat;
+            background-size:cover;
+            overflow: hidden;
+        }
+        ul{
+            width: 300px;
+            height: 300px;
+            /*background-color: red;*/
+            position: absolute;
+            bottom: 300px;
+            left: 50%;
+            margin-left:-150px;
+            transform-style: preserve-3d;
+            /*transform: rotateX(-10deg);*/
+            animation: limove 12s linear 0s infinite normal;
+        }
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            font-size: 60px;
+            text-align: center;
+            line-height: 200px;
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            background-color: black;
+        }
+
+        ul li img{
+            width: 200px;
+            height: 200px;
+            border: 1px solid white;
+            box-sizing: border-box;
+        }
+        ul:hover li img{
+            opacity: 0.5;
+        }
+        ul li:hover img{
+            opacity: 1;
+        }
+        #miao{
+            width: 300px;
+            height: 520px;
+            background: url("miao.png") no-repeat;
+            background-size:cover;
+            bottom: 50px;
+            position: absolute;
+            left: 50%;
+            margin-left:-150px;
+            animation: nomove 12s linear 0s infinite normal;
+        }
+        @keyframes limove {
+            from{
+                transform: rotateX(-10deg) rotateY(0deg);
+            }
+            to{
+                transform: rotateX(-10deg) rotateY(360deg);
+            }
+        }
+
+        @keyframes nomove {
+            from{
+                transform: rotateX(0deg) rotateY(360deg);
+            }
+            to{
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+        }
+        #play {
+
+            width: 640px;
+            height: 210px;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            margin-left:-320px;
+
+            background:  no-repeat rgba(8, 7, 30, 0.5);
+            background-position:0px 30px;
+            /*display:none;*/
+            visibility:hidden;
+            text-align: center;
+            color: #fff;
+
+        }
+
+        #word{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            height: auto;
+            background-position: center center;
+            background:  fixed center center no-repeat;
+            background-size: cover;
+            width: 100%;
+        }
+
+
+        #div1{
+            height:20px;
+            /*background-image: url(div1.png);*/
+            overflow:hidden;
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            color:white;
+            position:relative;
+            margin:0 auto;
+            font-size:16px;
+            width: 100%;
+        }
+        #div2{
+            width:20px;
+            height:20px;
+            background-color:rgba(255,255,255,0.8);
+            position:absolute;
+            left:0;
+        }
+
+    </style>
+</head>
+<body>
+
+<ul>
+    <img id="miao" src="miao.png" alt="miao">
+    <li><img src="https://ww1.sinaimg.cn/mw690/68d84d6dgw1f99cnssqtyj20oe0oeq6e.jpg" alt="早生的铃虫" music="https://m128.xiami.net/497/996354497/2100363231/1776240680_1467784668751.mp3?auth_key=1543374000-0-0-288ed7522a3073c3eeabb741311e6140" pic=""></li>
+    <li><img src="https://ww2.sinaimg.cn/mw690/68d84d6djw1ef0ofsk6n0j20zk0z519o.jpg" alt="晴日共剪窗" music="../player01/0.mp3" pic="word.png"></li>
+    <li><img src="https://wx2.sinaimg.cn/mw690/68d84d6dgy1flu5kvsj6sj215o15oaj1.jpg" alt="步履不停" music="../player01/0.mp3" pic=""></li>
+    <li><img src="https://ww1.sinaimg.cn/mw690/68d84d6djw1erta2cdhy8j20go0goq48.jpg" alt="我想和你虚度时光" music="../player01/0.mp3" pic=""></li>
+    <li><img src="https://ww4.sinaimg.cn/mw690/68d84d6djw1erta2cflxfj20go0fggn7.jpg" alt="诗遇上歌" music="../player01/0.mp3" pic=""></li>
+    <li><img src="https://wx3.sinaimg.cn/mw690/68d84d6dly1fbvqkcp2aoj20ku0kutci.jpg" alt="光芒" music="../player01/0.mp3" pic=""></li>
+    <li><img src="https://wx1.sinaimg.cn/mw690/68d84d6dgy1ftzxqend9ij20ti0ti7ja.jpg" alt="久不唱歌忘了喵" music="../player01/0.mp3" pic=""></li>
+    <li><img src="https://wx3.sinaimg.cn/mw690/68d84d6dgy1ftjd7ui7b4j20nl0nln57.jpg" alt="慢" music="../player01/0.mp3" pic=""></li>
+
+</ul>
+<div id="play">
+    <div id="div1">
+        <audio id="v1" music="">
+            <source src="../player01/0.mp3"></source>
+        </audio>
+        <div id="div2"></div>
+        <div id="info" alt="">晴日共剪窗</div>
+    </div>
+</div>
+<!--<audio src="images/miao.mp3" autoplay="autoplay" loop="loop"></audio>-->
+</body>
+<script>
+    window.onload=function(){
+        var oUl=document.getElementsByTagName('ul');
+        var oLi=oUl[0].getElementsByTagName("li");
+        var oV = document.getElementById('v1');
+        var oMiao=document.getElementById('miao');
+        var oInfo=document.getElementById('info');
+        var oPlay=document.getElementById('play');
+        var oDiv1 = document.getElementById('div1');
+        var oDiv2 = document.getElementById('div2');
+        for (var i=0;i<oLi.length;i++) {
+            oLi[i].style.cssText="transform: rotateY("+(360/oLi.length)*i+"deg) translateZ(400px);";
+            (function(x){
+                oLi[x].onmouseover=function(){
+                    oInfo.innerHTML=oLi[x].children[0].alt;
+                    oInfo.alt=oLi[x].children[0].alt;
+
+                }
+                oLi[x].onclick=function(){
+                    oPlay.style.background='url('+oLi[x].children[0].attributes["pic"].nodeValue+') 0px 30px no-repeat rgba(8, 7, 30, 0.5)';
+                    //alert(oV.src);
+                    if(oV.attributes["music"].nodeValue != oLi[x].children[0].attributes["music"].nodeValue) {
+                        oV.attributes["music"].nodeValue=oLi[x].children[0].attributes["music"].nodeValue;
+                        oV.src = oLi[x].children[0].attributes["music"].nodeValue;
+                        oV.load();
+                    }
+
+                    playPause();
+
+                }
+            })(i);
+
+        }
+
+
+        //var animateStop=false;
+       // var timer1 = null;
+        oUl[0].onmouseover = function(){
+           // animateStop=true;
+            oUl[0].style.animationPlayState="paused";
+            oMiao.style.animationPlayState="paused";
+            oPlay.style.visibility= "visible";
+            //timer1 = setInterval(animateRun,1000);
+        };
+
+//        oUl[0].onmouseout = function(){
+//            //animateRun();
+//        };
+        //oMiao.onmouseover =
+        oPlay.onmouseleave = function(){
+            //oPlay.style.visibility="hidden";
+            animateRun();
+        };
+
+        function animateRun() {
+
+            oPlay.style.visibility="hidden";
+            oUl[0].style.animationPlayState="running";
+            oMiao.style.animationPlayState="running";
+        }
+
+//        oDiv1.onclick = function(){
+//            playPause();
+//        };
+
+
+
+        oDiv2.onmousedown = function(ev){
+            var ev = ev || window.event;
+            disX = ev.clientX - oDiv2.offsetLeft;
+
+            document.onmousemove = function(ev){
+                var ev = ev || window.event;
+                var L = ev.clientX - disX;
+                setBar(L);
+
+            };
+            document.onmouseup = function(){
+                document.onmousemove = null;
+            };
+            return false;
+        };
+
+        function setBar(L){
+
+            if(L<0){
+                L = 0;
+            }
+            else if(L>oDiv1.offsetWidth - oDiv2.offsetWidth){
+                L = oDiv1.offsetWidth - oDiv2.offsetWidth;
+            }
+            oDiv2.style.left = L + 'px';
+            var scale = L/(oDiv1.offsetWidth - oDiv2.offsetWidth);
+            oV.currentTime = scale * oV.duration;
+            nowTime();
+
+        }
+
+
+        function nowTime(){
+
+            if( oV.paused ) oInfo.innerHTML="暂停中："+oInfo.alt+" "+changeTime(oV.currentTime);
+            else {oInfo.innerHTML="播放中："+oInfo.alt+" "+changeTime(oV.currentTime);}
+            var scale = oV.currentTime/oV.duration;
+
+            oDiv2.style.left = scale * (oDiv1.offsetWidth-oDiv1.offsetHeight) + 'px';
+            if(scale==1)
+            {
+                oV.pause();
+                oInfo.innerHTML= oInfo.alt;
+               // oPauseplay.src="play-button.png";
+            }
+
+        }
+
+        function playPause(){
+            if( oV.paused ){
+                oV.play();
+                oInfo.innerHTML=oInfo.alt;
+               // oPauseplay.src="pause-button.png";
+                nowTime();
+                timer = setInterval(nowTime,1000);
+                oInfo.innerHTML="播放中："+oInfo.alt+" "+changeTime(oV.currentTime);
+            }
+            else{
+                oV.pause();
+                oInfo.innerHTML="暂停中："+oInfo.alt+" "+changeTime(oV.currentTime);
+               // oPauseplay.src="play-button.png";
+                clearInterval(timer);
+            }
+        }
+
+        function changeTime(iNum){
+
+            iNum = parseInt( iNum );
+
+            var iH = toZero(Math.floor(iNum/3600));
+            var iM = toZero(Math.floor(iNum%3600/60));
+            var iS = toZero(Math.floor(iNum%60));
+
+            return iM + ':' + iS;
+
+        }
+
+        function toZero(num){
+            if(num<=9){
+                return '0' + num;
+            }
+            else{
+                return '' + num;
+            }
+        }
+
+
+    };
+
+
+</script>
+</html>

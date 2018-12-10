@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no"-->
+    <meta charset="UTF-8">
+    <title>bridge</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+		body{
+			background-color: #bcccb4;
+		}
+		
+        #main{
+            position: relative;
+			left:760px;
+			top:600px;
+			-webkit-transform-style: preserve-3d; 
+            -webkit-transform: rotateY(0deg) rotateX(0deg);           
+        }
+        ul li{
+            list-style: none;
+            font-size: 60px;
+            text-align: center;
+			color: rgb(255,0,255,0.2);
+            line-height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+		
+		
+        #riverfloor{
+			width: 1320px;
+            height: 1600px;
+			margin-left: -660px;
+			margin-top: -800px;
+			background:url("6.png");
+            -webkit-transform: translateY(300px) rotateX(90deg);			
+        }
+		
+		#river{
+			width: 1320px;
+            height: 1600px;
+			margin-left: -660px;
+			margin-top: -800px;
+			background-color:#7d98e6;
+            -webkit-transform: translateY(100px) rotateX(90deg);
+			opacity:0.4;			
+        }	
+
+		.riverfront{	
+			width:1320px;		
+			height:200px;
+			margin-left: -660px;
+			margin-top: -75px;
+			background-color:#133082;	
+			opacity:0.4;
+		}
+		#riverfront1{	
+			-webkit-transform: translateZ(-800px)  translateY(175px);	
+		}
+		#riverfront2{	
+			-webkit-transform: translateZ(800px)  translateY(175px);	
+		}
+		
+		.footstonetop{	
+			width:200px;		
+			height:400px;
+			margin-left: -100px;
+			margin-top: -200px;
+			background:url("7.png");
+		}
+		
+		#footstonetop1{	
+			-webkit-transform: translateX(-345px) translateY(200px) rotateX(90deg);	
+		}
+		#footstonetop2{	
+			-webkit-transform: translateX(345px) translateY(200px) rotateX(90deg);	
+		}
+		
+		.footstonesidef{	
+			width:200px;		
+			height:100px;
+			margin-left: -100px;
+			margin-top: -50px;
+			background:url("7.png");
+		}
+		#footstonesidef1{	
+			-webkit-transform: translateX(-345px) translateY(250px) translateZ(200px);	
+		}
+		#footstonesidef2{	
+			-webkit-transform: translateX(-345px) translateY(250px) translateZ(-200px);	
+		}
+		#footstonesidef3{	
+			-webkit-transform: translateX(345px) translateY(250px) translateZ(200px);
+		}
+		#footstonesidef4{	
+			-webkit-transform: translateX(345px) translateY(250px) translateZ(-200px);	
+		}
+		
+		.footstonesides{	
+			width:400px;		
+			height:100px;
+			margin-left: -200px;
+			margin-top: -50px;
+			background:url("7.png");
+		}
+		#footstonesides1{	
+			-webkit-transform: translateX(-445px) translateY(250px) rotateY(90deg);	
+		}
+		#footstonesides2{	
+			-webkit-transform: translateX(-245px) translateY(250px) rotateY(90deg);	
+		}
+		#footstonesides3{	
+			-webkit-transform: translateX(245px) translateY(250px) rotateY(90deg);	
+		}
+		#footstonesides4{	
+			-webkit-transform: translateX(445px) translateY(250px) rotateY(90deg);	
+		}		
+		
+		.land{	
+			width: 300px;
+            height: 1600px;
+			margin-left: -150px;
+			margin-top: -800px;
+			background:url("6.png");
+		}
+		#land1{	
+			-webkit-transform: translateX(-810px) translateY(50px) rotateX(90deg);
+		}
+		#land2{	
+			-webkit-transform: translateX(810px) translateY(50px) rotateX(90deg);
+		}
+		
+		.land{	
+			width: 300px;
+            height: 1600px;
+			margin-left: -150px;
+			margin-top: -800px;
+			background:url("6.png");
+            	
+	
+		}
+		
+		.lands{	
+			width: 300px;
+            height: 300px;
+			margin-left: -150px;
+			margin-top: -150px;
+			background:url("bridge1.png");
+
+		}
+		#lands1{	
+			-webkit-transform: translateX(-810px) translateY(50px) rotateX(90deg);
+		}
+		#lands2{	
+			-webkit-transform: translateX(810px) translateY(50px) rotateX(90deg);
+		}
+		
+		.riverside{	
+			width:1600px;		
+			height:250px;
+			margin-left: -800px;
+			margin-top: -75px;
+			background:url("6.png");	
+		}
+		#riverside1{	
+			-webkit-transform: translateX(-660px)  translateY(125px) rotateY(90deg);	
+		}
+		#riverside2{	
+			-webkit-transform: translateX(660px)  translateY(125px) rotateY(-90deg);	
+		}
+		
+		.duns{
+			width:300px;
+			height:300px;
+			background:url("duns.png");
+		}
+		
+		#duns1a{
+			-webkit-transform: translateX(-550px) translateY(-100px) rotateY(90deg);
+		}
+		#duns1b{
+			-webkit-transform: translateX(-532px) translateY(-100px) rotateY(90deg);
+		}
+		#duns2a{
+			-webkit-transform: translateX(-450px) translateY(-100px) rotateY(90deg);
+		}
+		#duns2b{
+			-webkit-transform: translateX(-432px) translateY(-100px) rotateY(90deg);
+		}
+		#duns3a{
+			-webkit-transform: translateX(132px) translateY(-100px) rotateY(90deg);
+		}
+		#duns3b{
+			-webkit-transform: translateX(150px) translateY(-100px) rotateY(90deg);
+		}
+		#duns4a{
+			-webkit-transform: translateX(232px) translateY(-100px) rotateY(90deg);
+		}
+		#duns4b{
+			-webkit-transform: translateX(250px) translateY(-100px) rotateY(90deg);
+		}
+		
+		.dunf{
+			width:800px;
+			height:300px;
+			background:url("dunf.png");
+		}
+		#dunf1a{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(150px);
+		}
+		#dunf1b{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(132px);
+		}
+		#dunf2a{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(60px);
+		}
+		#dunf2b{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(42px);
+		}
+		#dunf3a{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(-37px);
+		}
+		#dunf3b{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(-55px);
+		}
+		#dunf4a{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(-132px);
+		}
+		#dunf4b{
+			-webkit-transform: translateX(-400px) translateY(-100px) translateZ(-150px);
+		}
+		
+		#dunf5a{
+			-webkit-transform: translateX(-400px) translateY(-98px) rotateX(90deg);
+		}
+		#dunf5b{
+			-webkit-transform: translateX(-400px) translateY(-118px) rotateX(90deg);
+		}
+
+		
+		.bridgebottom{		
+			height:300px;
+			background:url("bridge1.png");
+		}
+		
+		#bridgebottom1{
+			width:800px;
+			height:300px;			
+			-webkit-transform: translateX(-400px) translateY(-250px) rotateX(90deg);
+		}
+		
+		#bridgebottom2{
+			width:300px;
+			-webkit-transform: translateX(-680px) translateY(-175px) rotateX(90deg) rotateY(-30deg);
+		}
+		
+		#bridgebottom3{
+			width:300px;
+			-webkit-transform: translateX(380px) translateY(-175px) rotateX(90deg) rotateY(30deg);
+		}
+		
+		.bridgelan{	
+			width:800px;		
+			height:100px;
+			background:url("lan1.png");
+		}
+		
+		#bridgelan1{			
+			-webkit-transform: translateX(-400px) translateZ(150px) translateY(-200px);
+		}
+		
+		#bridgelan2{	
+			-webkit-transform: translateX(-400px) translateZ(-150px) translateY(-200px);
+		}
+		
+		.bridgelanside{	
+			width:350px;		
+			height:87px;
+			background:url("lan2.png") no-repeat;
+		}
+		
+		#bridgelanside1{			
+			-webkit-transform: translateX(-700px) translateZ(150px) translateY(-120px) rotateZ(-30deg);
+		}
+		
+		#bridgelanside2{	
+			-webkit-transform: translateX(-700px) translateZ(-150px) translateY(-120px) rotateZ(-30deg);
+		}
+		
+		#bridgelanside3{			
+			-webkit-transform: translateX(350px) translateZ(150px) translateY(-120px) rotateY(180deg) rotateZ(-30deg);
+		}		
+		#bridgelanside4{	
+			-webkit-transform: translateX(350px) translateZ(-150px) translateY(-120px) rotateY(180deg) rotateZ(-30deg);
+		}
+		
+		.bridgelanup{	
+			width:90px;		
+			height:300px;
+			background:url("lan3.png");
+		}
+		
+		#bridgelanup1a{	
+			-webkit-transform: translateX(-400px) translateZ(140px) translateY(-400px);
+		}
+		
+		#bridgelanup1b{	
+			-webkit-transform: translateX(-440px) translateZ(100px) translateY(-400px) rotateY(90deg);
+		}
+		
+		#bridgelanup2a{	
+			-webkit-transform: translateX(-400px) translateZ(-140px) translateY(-400px);
+		}
+		
+		#bridgelanup2b{	
+			-webkit-transform: translateX(-440px) translateZ(-100px) translateY(-400px) rotateY(90deg);
+		}
+		
+		#bridgelanup3a{	
+			-webkit-transform: translateX(310px) translateZ(140px) translateY(-400px);
+		}
+		
+		#bridgelanup3b{	
+			-webkit-transform: translateX(350px) translateZ(100px) translateY(-400px) rotateY(90deg);
+		}
+		
+		#bridgelanup4a{	
+			-webkit-transform: translateX(310px) translateZ(-140px) translateY(-400px);
+		}
+		
+		#bridgelanup4b{	
+			-webkit-transform: translateX(350px) translateZ(-100px) translateY(-400px) rotateY(90deg);
+		}
+		
+		.rooff{	
+			width:840px;		
+			height:230px;
+			background:url("roof1.png");
+		}
+		
+		#rooff1{	
+			-webkit-transform: translateX(-415px) translateZ(81px) translateY(-580px) rotateX(45deg);
+		}
+		
+		#rooff2{	
+			-webkit-transform: translateX(-415px) translateZ(-81px) translateY(-580px) rotateX(-45deg);
+		}
+		
+		.roofs{	
+			width:320px;		
+			height:230px;
+			background:url("roof2.png");
+		}
+		
+		#roofs1{	
+			-webkit-transform: translateX(-498px) translateY(-580px) rotateY(90deg) rotateX(-45deg);
+		}
+		
+		#roofs2{	
+			-webkit-transform: translateX(188px)  translateY(-580px) rotateY(90deg) rotateX(45deg);
+		}
+		
+		#fish{	
+			width:107px;		
+			height:121px;
+			background:url("fish.png");
+			-webkit-transform: translateZ(200px) translateY(50px);
+		}
+		
+		#xiao{	
+			width:143px;		
+			height:233px;
+			background:url("xiao.png");
+			-webkit-transform: translateY(-330px);
+		}
+		
+		#footer{
+            width:300px;
+            position:absolute;
+            text-align: center;
+            left:50%;
+            margin-left: -150px;
+            top:990px;
+        }
+
+
+    </style>
+</head>
+<body>
+<ul id="main">
+    <li id="riverfloor"></li>
+	<li id="river"></li>
+	<li class="riverfront" id="riverfront1"></li>
+	<li class="riverfront" id="riverfront2"></li>
+	<li class="riverside" id="riverside1"></li>
+	<li class="riverside" id="riverside2"></li>
+	<li class="land" id="land1"></li>
+	<li class="land" id="land2"></li>
+	<li class="lands" id="lands1"></li>
+	<li class="lands" id="lands2"></li>
+	<li class="footstonetop" id="footstonetop1"></li>
+	<li class="footstonetop" id="footstonetop2"></li>
+	<li class="footstonesidef" id="footstonesidef1"></li>
+	<li class="footstonesidef" id="footstonesidef2"></li>
+	<li class="footstonesidef" id="footstonesidef3"></li>
+	<li class="footstonesidef" id="footstonesidef4"></li>
+	<li class="footstonesides" id="footstonesides1"></li>
+	<li class="footstonesides" id="footstonesides2"></li>
+	<li class="footstonesides" id="footstonesides3"></li>
+	<li class="footstonesides" id="footstonesides4"></li>
+	<li class="duns" id="duns1a"></li>
+	<li class="duns" id="duns1b"></li>
+	<li class="duns" id="duns2a"></li>
+	<li class="duns" id="duns2b"></li>
+	<li class="duns" id="duns3a"></li>
+	<li class="duns" id="duns3b"></li>
+	<li class="duns" id="duns4a"></li>
+	<li class="duns" id="duns4b"></li>
+	<li class="dunf" id="dunf1a"></li>
+	<li class="dunf" id="dunf1b"></li>
+	<li class="dunf" id="dunf2a"></li>
+	<li class="dunf" id="dunf2b"></li>
+	<li class="dunf" id="dunf3a"></li>
+	<li class="dunf" id="dunf3b"></li>
+	<li class="dunf" id="dunf4a"></li>
+	<li class="dunf" id="dunf4b"></li>
+	<li class="dunf" id="dunf5a"></li>
+	<li class="dunf" id="dunf5b"></li>
+	<li class="bridgebottom" id="bridgebottom1"></li>
+	<li class="bridgebottom" id="bridgebottom2"></li>
+	<li class="bridgebottom" id="bridgebottom3"></li>
+	<li class="bridgelan" id="bridgelan1"></li>
+	<li class="bridgelan" id="bridgelan2"></li>
+	<li class="bridgelanside" id="bridgelanside1"></li>
+	<li class="bridgelanside" id="bridgelanside2"></li>
+	<li class="bridgelanside" id="bridgelanside3"></li>
+	<li class="bridgelanside" id="bridgelanside4"></li>
+	<li class="bridgelanup" id="bridgelanup1a"></li>
+	<li class="bridgelanup" id="bridgelanup1b"></li>
+	<li class="bridgelanup" id="bridgelanup2a"></li>
+	<li class="bridgelanup" id="bridgelanup2b"></li>
+	<li class="bridgelanup" id="bridgelanup3a"></li>
+	<li class="bridgelanup" id="bridgelanup3b"></li>
+	<li class="bridgelanup" id="bridgelanup4a"></li>
+	<li class="bridgelanup" id="bridgelanup4b"></li>
+	<li class="rooff" id="rooff1"></li>
+	<li class="rooff" id="rooff2"></li>
+	<li class="roofs" id="roofs1"></li>
+	<li class="roofs" id="roofs2"></li>
+	<li id="fish"></li>
+	<li id="xiao"></li>
+
+</ul>
+<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+window.onload=function (){
+	var oMain=document.getElementById('main');
+	oMain.style['transform'] = oMain.style['-webkit-transform']="rotateY(-17deg) rotateX(-7deg)";
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+
+		//oMain.style['transform-style']="";
+		var x=parseFloat (oMain.style['-webkit-transform'].split('rotateX(')[1].split('deg')[0])+(-b/4);
+		var y=parseFloat (oMain.style['-webkit-transform'].split('rotateY(')[1].split('deg')[0])+(a/4);
+		//console.log ("rotateY("+y+"deg) rotateX("+x+"deg)");
+		if(x<0 && x>(-30) && y>(-30) && y<(30))
+		{
+			oMain.style['transform'] ="rotateY("+y+"deg) rotateX("+x+"deg)";
+			oMain.style['-webkit-transform'] ="rotateY("+y+"deg) rotateX("+x+"deg)";
+			//oMain.style['perspective'] = "500px";
+			//oMain.style['-webkit-perspective'] = "500px";
+			//oMain.style['transform-style']="preserve-3d";
+		}
+
+	};
+}
+
+function move0(ev,mvfn)
+{
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn)
+{
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+
+</script>
+</html>

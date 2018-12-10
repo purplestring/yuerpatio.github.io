@@ -1,0 +1,247 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	/*background-color: #bcccb4;*/
+	background:url("bg.jpg");
+}
+#main {
+	width: 1280px;
+	height: 960px;
+	margin-left: -640px;
+	position: relative;
+	left:50%;
+	background:url("bg.jpg");
+	overflow:hidden;
+}
+#zhi {
+	width: 228px;
+	height: 307px;
+	left: 0px;
+	top: 193px;
+	position: absolute;
+	background:url("zhi.png") no-repeat;
+}
+#zhi1 {
+	width: 672px;
+	height: 543px;
+	left: 3px;
+	top: 408px;
+	position: absolute;
+	background:url("zhi1.png") no-repeat;
+	transform-origin:10% 10%;
+	animation: zhi1 2.5s ease 0s infinite normal;
+	-webkit-transform-origin:10% 10%;
+	-webkit-animation: zhi1 2.5s ease 0s infinite normal;
+}
+#zhi2 {
+	width: 530px;
+	height: 600px;
+	left: 11px;
+	top: 0px;
+	position: absolute;
+	background:url("zhi2.png") no-repeat;
+	transform-origin:20% 80%;
+	animation: zhi2 3.5s ease 0s infinite normal;
+	-webkit-transform-origin:20% 80%;
+	-webkit-animation: zhi2 3.5s ease 0s infinite normal;
+}
+#zhi3 {
+	width: 764px;
+	height: 467px;
+	left: 465px;
+	top: 396px;
+	position: absolute;
+	background:url("zhi3.png") no-repeat;
+	transform-origin:-10% 27%;
+	animation: zhi3 3.5s ease 0s infinite normal;
+	-webkit-transform-origin:-10% 27%;
+	-webkit-animation: zhi3 3.5s ease 0s infinite normal;
+}
+#yin {
+	width: 53px;
+	height: 54px;
+	left: 1100px;
+	top: 840px;
+	position: absolute;
+	background:url("yin.png") no-repeat;
+}
+#bird_tail {
+	width: 153px;
+	height: 120px;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+	background:url("bird_tail.png") no-repeat;
+	transform-origin:95% 70%;
+	animation: tail 1.5s ease 0s infinite normal;
+	-webkit-transform-origin:95% 70%;
+	-webkit-animation: tail 1.5s ease 0s infinite normal;
+}
+#bird {
+	width: 363px;
+	height: 313px;
+	left: 28px;
+	top: -101px;
+	position: absolute;
+	background:url("bird.png") no-repeat;
+}
+#bird_head {
+	width: 98px;
+	height: 102px;
+	left: 264px;
+	top: 86px;
+	position: absolute;
+	background:url("bird_head.png") no-repeat;
+	animation: nod 4s ease 0s infinite normal;
+	-webkit-animation: nod 4s ease 0s infinite normal;
+}
+#bird_eye {
+	width: 29px;
+	height: 29px;
+	left: 47px;
+	top: 16px;
+	position: absolute;
+	background:url("bird_eye.png") no-repeat;
+	animation: blink 1s ease 0s infinite normal;
+	-webkit-animation: blink 1s ease 0s infinite normal;
+}
+#bird_wind {
+	width: 77px;
+	height: 59px;
+	left: 212px;
+	top: 161px;
+	position: absolute;
+	background:url("bird_wind.png") no-repeat;
+	transform-origin:90% 80%;
+	animation: wind 1s ease 0s infinite normal;
+	-webkit-transform-origin:90% 80%;
+	-webkit-animation: wind 1s ease 0s infinite normal;
+}
+/*#bird_head:hover{
+	-webkit-animation-play-state: paused;
+}*/
+#footer{
+	width:200px;
+	position:absolute;
+	text-align: center;
+	left:50%;
+	top:930px;
+	margin-left: -100px;
+}
+@keyframes nod {
+	0%{
+		transform:rotate(0deg);
+	}
+	5%{
+		transform:rotate(27deg);					
+	}
+	10%{
+		transform:rotate(0deg);					
+	}
+	25%{
+		transform:rotate(0deg);
+	}
+	30%{
+		transform:rotate(23deg);					
+	}
+	35%{
+		transform:rotate(0deg);					
+	}
+	50%{
+		transform:rotate(0deg);
+	}
+	55%{
+		transform:rotate(32deg);					
+	}
+	60%{
+		transform:rotate(0deg);					
+	}
+}
+@keyframes blink {
+	0%{
+		background-position: 0 0;
+	}
+	20%{
+		background-position: 0 0;
+	}
+	21%{
+		background-position: -29px 0;
+	}
+	100%{
+		background-position: -29px 0;
+	}
+}
+@keyframes wind {
+	0%{
+		transform:rotate(0deg);
+	}
+	20%{
+		transform:rotate(-20deg);
+	}
+	80%{
+		transform:rotate(-20deg);
+	}
+}
+@keyframes tail {
+	0%{
+		transform:rotate(0deg);
+	}
+	20%{
+		transform:rotate(-7deg);
+	}
+	80%{
+		transform:rotate(-7deg);
+	}
+}
+@keyframes zhi1 {
+	0%{
+		transform:rotate(0deg);
+	}
+	20%{
+		transform:rotate(0.5deg);
+	}
+	70%{
+		transform:rotate(-0.5deg);
+	}
+}
+@keyframes zhi2 {
+	0%{
+		transform:rotate(0deg);
+	}
+	20%{
+		transform:rotate(-0.5deg);
+	}
+	70%{
+		transform:rotate(0.5deg);
+	}
+}
+@keyframes zhi3 {
+	0%{
+		transform:rotate(0deg);
+	}
+	30%{
+		transform:rotate(-1deg);
+	}
+	80%{
+		transform:rotate(1deg);
+	}
+}
+@keyframes zhi3a {
+	0%{
+		transform:rotate(0deg);
+	}
+	13%{
+		transform:rotate(7deg);
+	}
+	40%{
+		transform:rotate(-2deg);
+	}
+	60%{
+		transform:rotate(1.5deg);
+	}
+	80%{
+		transform:rotate(-1.2deg);
+	}
+}

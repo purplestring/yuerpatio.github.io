@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script>
+    <title>小橙的2018·紫月制作</title>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<style type="text/css">
+   .anchorBL{
+       display:none;
+   }
+</style>
+<script type="text/javascript">
+
+    var map = new BMap.Map("allmap",{mapType:BMAP_SATELLITE_MAP,minZoom:6});
+	map.addControl(new BMap.MapTypeControl());  
+    var point = new BMap.Point(120,30);
+	var zoom=7; map.centerAndZoom(point, zoom);
+    map.enableScrollWheelZoom(true); 
+	var picct=0;
+	var urlall= new Array();
+	var latall= new Array();
+	var lngall= new Array();
+	
+	map.addEventListener("zoomend", function () {
+	if(map.getZoom()>12)
+	{
+		 clng=map.getCenter().lng;
+		 clat=map.getCenter().lat;
+		 for(var ii=0;ii<picct;ii++)
+		 {
+			var d=(clng-lngall[ii])*(clng-lngall[ii])+(clat-latall[ii])*(clat-latall[ii]);
+			if(d<0.1) 
+			{
+				window.location.href=urlall[ii];
+			}
+		 }
+	 
+	}
+
+});
+	
+	
+	function addpic(map,picname,lng,lat,url,w,h,zoommin,zoommax, opac)
+	{
+		var SW = new BMap.Point(lng-w*2,lat-h*2);
+		var NE = new BMap.Point(lng+w*2,lat+h*2);
+		urlall[picct]=url;
+		latall[picct]=lat;
+		lngall[picct]=lng;
+		picct++;
+
+		groundOverlayOptions = 
+		{
+			opacity:  opac,
+			displayOnMinLevel: zoommin,
+			displayOnMaxLevel: zoommax
+		}
+
+		var groundOverlay = new BMap.GroundOverlay(new BMap.Bounds(SW, NE), groundOverlayOptions);
+		groundOverlay.setImageURL(picname);
+		map.addOverlay(groundOverlay);
+		groundOverlay.addEventListener("click", function (event) {
+		window.location.href=url;
+		});
+	}
+
+	addpic(map,"beijing.png",116.3,39.9,'http://weibo.com/1759006061/FEx0BvWuv',0.18,0.35,6,12,1);  //0112
+	//addpic(map,"binzhou.png",118.03,37.36,'http://weibo.com/1759006061/Eu66l6gGM',0.15,0.25,6,12,1);
+	addpic(map,"shanghai.png",121.48,31.02,'http://weibo.com/1759006061/G1AwSwYbI',0.12,0.20,6,12,1);	//0203
+	addpic(map,"shenzhen.png",114.07,22.62,'http://weibo.com/1759006061/G0WtbE6IO',0.15,0.25,6,12,1);	//0126
+	addpic(map,"dongjing.png",139.46,35.42,'https://weibo.com/1759006061/G6LOgbjl1',0.15,0.25,6,12,1); //0309
+	addpic(map,"suzhou.png",120.62,31.32,'https://weibo.com/1759006061/G8UfzFN2c',0.15,0.25,6,12,1); //0324
+	//addpic(map,"shanghai2.png",121.70,31.22,'http://weibo.com/1759006061/F8xDnvMw0',0.15,0.25,6,12,1);
+	//addpic(map,"chengdu.png",104.06,30.67,'http://weibo.com/1759006061/F2FwADVs7',0.09,0.38,6,12,1);
+	//addpic(map,"changsha.png",113.00,28.21,'http://weibo.com/1759006061/F0O8wwTXR',0.19,0.30,6,12,1);
+	//addpic(map,"laodifang.png",120.33,36.00 ,'http://weibo.com/1759006061/F0kSb8g9z',0.17,0.25,6,12,1);
+	//addpic(map,"wuzangye.png",139.46,35.42,'http://weibo.com/1759006061/F67Evngu9',0.17,0.25,6,12,1);
+	//addpic(map,"croatia.png",15.98,45.81,'http://weibo.com/1759006061/F8FZTxSz6',0.17,0.25,6,12,1);
+	
+
+  
+</script>

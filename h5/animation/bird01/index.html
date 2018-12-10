@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.25">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>果熟来禽图</title>
+	<link href="common.css" rel="stylesheet" />
+	<link href="webkit.css" rel="stylesheet" />
+	<script>
+	</script>
+<script src="MQuery.js"></script>
+<script src="MQuery_animate.js"></script>
+<!--script src="jquery-3.3.1.min.js"></script-->
+
+</head>
+
+<body>
+	<!--div id="title">果熟来禽图<div-->
+
+	<audio src='0.mp3' style='display:none' id='audio'></audio>
+	<div id="main">						
+		<div id="zhi2">
+			<div id="zhi3">
+				<div id="bird">		
+					<div id="bird_head">
+						<div id="bird_eye"></div>
+					</div>
+					<div id="bird_wind"></div>
+					<div id="bird_tail"></div>			
+				</div>
+			</div>
+		</div>	
+		<div id="zhi"></div>		
+		<div id="zhi1"></div>	
+		<div id="yin"></div>
+	</div>
+	<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+	window.onload = function(){
+		var oBird=document.getElementById('bird');
+		var oMain=document.getElementById('main');
+		var oBirdWind=document.getElementById('bird_wind');
+		var oBirdHead=document.getElementById('bird_head');
+		var oZhi3=document.getElementById('zhi3');
+		var oAudio = document.getElementById('audio');
+		var sing=false;
+		var leave=false;
+		var autoplay=false;
+		var doing=false;
+		
+		/* preload */
+		var newimages=[];
+		function preloadimages(arr){
+			
+			var arr=(typeof arr!="object")? [arr] : arr  ;
+			for (var i=0; i<arr.length; i++){
+				newimages[i]=new Image();
+				newimages[i].src=arr[i];
+			}
+		}		
+		preloadimages(['bird.png','bird_head.png', 'bird_head1.png', 
+		'bird_eye.png', 'bird_wind.png', 'bird_tail.png',
+		'zhi.png', 'zhi1.png', 'zhi2.png', 'zhi3.png'
+		]);
+		
+		//定时事件
+		setInterval(function(){
+			mouthOpen(2800);
+		}, 16000);
+		
+		oMain.onclick=oMain.ontouchstart=function(ev){
+			autoplay=true;
+			if(leave && Math.random()>0.6){
+				leave=false;
+				//返回
+				setTimeout(function(){ 
+					$('#bird').css('left', "-872px");
+					$('#bird').css('top', "-701px");
+
+					oBird.style['transform'] ="rotate(0deg)";
+					oBird.style['-webkit-transform'] ="rotate(0deg)";
+					$('#bird').animate({left: 28, top: -101},400,"swing");	
+					setTimeout(function(){ 
+						oZhi3Shake();	
+					},400);
+				},1000);
+			}
+		}
+		
+		oBird.ontouchstart=oBird.onclick = function(ev){
+			if(Math.random()>0.73) mouthOpen(3000);
+		}
+
+		oBirdWind.ontouchstart=oBirdWind.onmouseover = function(ev){
+			if(Math.random()>0.5 || doing || leave) return;
+			
+			var tmp=parseInt(5*Math.random());
+			//console.log(tmp);
+			switch(tmp)
+			{
+				case 0: //跳下枝正
+					if(oBird.offsetLeft!=171){
+						//oBird.style['transform'] ="rotate(-3deg) scale(1,1)";
+						//oBird.style['-webkit-transform'] ="rotate(-3deg) scale(1,1)";
+						$('#bird').css('transform', "rotate(-3deg) scale(1,1)");
+						$('#bird').animate({left: 171, top: 11},120);	
+						if(Math.random()>0.8) mouthOpen(3000);
+						oZhi3Shake();
+					}
+					break;
+				case 1: //跳下枝反
+					if(oBird.offsetLeft!=185){
+						//oBird.style['transform'] ="rotate(3deg) scale(-1,1)";
+						//oBird.style['-webkit-transform'] ="rotate(3deg) scale(-1,1)";
+						$('#bird').css('transform', "rotate(3deg) scale(-1,1)");
+						$('#bird').animate({left: 185, top: 28},120);	
+						if(Math.random()>0.4) mouthOpen(3000);
+						oZhi3Shake();
+					}
+					break;
+				case 2: //返上枝
+					if(oBird.offsetLeft!=28){	
+						//oBird.style['transform'] ="rotate(0deg) scale(1,1)";
+						//oBird.style['-webkit-transform'] ="rotate(0deg) scale(1,1)";						
+						$('#bird').css('transform', "rotate(0deg) scale(1,1)");
+						$('#bird').animate({left: 28, top: -101},120);	
+						if(Math.random()>0.7) mouthOpen(3000);
+						//oZhi3Shake();
+					}	
+				default: //为下枝正飞走
+					if(oBird.offsetLeft==171){
+						leave=true;
+						oAudio.currentTime=oAudio.duration;
+						oAudio.pause();
+						oZhi3Shake();
+						$('#bird').animate({left: 1000, top: -300},400,"linear"); 
+						return;	
+					}					
+					break;
+			}		
+			
+		};
+	
+		function oZhi3Shake(){	
+			$('#zhi3').css('animation', "zhi3a 3.5s ease 0s infinite normal");
+			//oZhi3.style['animation'] ="zhi3a 3.5s ease 0s infinite normal";
+			//oZhi3.style['-webkit-animation'] ="zhi3a 3.5s ease 0s infinite normal";
+			doing=true;//动作衔接中禁止新事件
+			//console.log(doing);
+			setTimeout(function(){
+				$('#zhi3').css('animation', "zhi3 3.5s ease 0s infinite normal");
+				//oZhi3.style['animation'] ="zhi3 3.5s ease 0s infinite normal";
+				//oZhi3.style['-webkit-animation'] ="zhi3 3.5s ease 0s infinite normal";
+				doing=false;
+			},3500);	
+		}				
+
+		function mouthOpen(opentime){
+			if(leave || sing || !autoplay) 
+			{
+				if(leave) mouthClose();
+				return;
+			}
+			sing=true;
+			oAudio.currentTime=0;
+			oAudio.play();
+			oBirdHead.style.background="url(bird_head1.png) no-repeat";
+			setTimeout(mouthClose,opentime);
+		}
+		function mouthClose(){
+			if(!sing) return;
+			sing=false;
+			oAudio.currentTime=oAudio.duration;
+			oAudio.pause();
+			oBirdHead.style.background="url(bird_head.png) no-repeat";
+		}
+			
+	};
+</script>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+*{ margin:0; padding:0;}
+body{background-color:#396065;}
+#main{height:960px; margin:5px; position: fixed; top:50%; margin-top:-480px;left: 0%; right: 0%; display:inline-block; background-color:#396065;}
+#left {float:left; width:100px; height:960px;background:url(left.jpg) no-repeat; position:relative;z-index:2;}
+#right {float:right; width:100px; height:960px; background:url(right.jpg) no-repeat; position:relative;z-index:2;}
+#roll0 {float:left;  left: 0px; right: 0px; height:960px;position:relative;overflow:hidden;}
+#roll {background:url(ltjx.jpg) no-repeat;width:2090px; height:744px; top:97px;position:absolute;}
+#ret{position: fixed; top:100%; margin-top:-60px;text-align:center;width: 100%;} 
+a{color:#fff;font-size:24px;}
+</style>
+<title>卷轴</title>
+
+<script>
+
+</script>
+</head>
+
+<body>
+	<div id="main">
+		<div id="left"> </div>
+		<div id="roll0">	
+			<div id="roll"> </div> 	
+		</div>	
+		<div id="right"> </div>
+	</div>
+	<br/>
+	<div id="ret"><a href="http://yuerpatio.com/">返回主页</a>	</div>
+</body>
+<script>
+window.onload=function ()
+{
+	var oMain=document.getElementById('main');
+	var oRoll=document.getElementById('roll');
+	var oRoll0=document.getElementById('roll0');
+	var oLeft=document.getElementById('left');
+	var oRight=document.getElementById('right');
+	oRoll0.style.width=main.offsetWidth-200+"px";
+	//alert(oRight.offsetLeft+100);
+	//oRight.offsetLeft='1820px';
+	//oLeft.ontouchmove=function(){ move(-10);};
+	//oLeft.onmousemove=function(){ move(-10);};
+	//oRight.ontouchmove=function(){ move(10);};
+	//oRight.onmousemove=function(){ move(10);};
+	
+	/********************************/
+
+	oRoll.onmousedown = function(ev){
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		
+		document.onmousemove = function(ev){
+			var ev = ev || window.event;			
+			move(ev.clientX - disX);
+			disX = ev.clientX;
+			
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+		return false;
+	};
+	
+	oRoll.ontouchstart = function(ev){
+		var disX = ev.changedTouches[0].clientX;	
+		document.ontouchmove = function(ev){			
+
+			move(ev.changedTouches[0].clientX - disX);
+			disX = ev.changedTouches[0].clientX;
+			
+		};
+		document.ontouchend = function(){			
+			document.ontouchstart = null;
+			document.ontouchmove = null;
+		};
+		return false;
+	};
+
+	oLeft.onmousedown = function(ev){
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		
+		document.onmousemove = function(ev){
+			var ev = ev || window.event;			
+			leftMove(ev.clientX - disX);
+			disX = ev.clientX;
+			
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+		return false;
+	};
+	
+	oLeft.ontouchstart = function(ev){
+		var disX = ev.changedTouches[0].clientX;	
+		document.ontouchmove = function(ev){			
+
+			leftMove(ev.changedTouches[0].clientX - disX);
+			disX = ev.changedTouches[0].clientX;
+			
+		};
+		document.ontouchend = function(){			
+			document.ontouchstart = null;
+			document.ontouchmove = null;
+		};
+		return false;
+	};
+	
+	oRight.onmousedown = function(ev){
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		
+		document.onmousemove = function(ev){
+			var ev = ev || window.event;				
+			//moveRight(ev.clientX - disX);
+			disX = ev.clientX;
+			
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+		return false;
+	};
+	/*********************************/
+	function move(d)
+	{
+	 ///document.title = oRoll.offsetLeft;
+	//alert(speed);
+		/*if(
+			( d<0 && ( oRoll.offsetLeft>=oMain.offsetWidth-oRoll.offsetWidth-190) ) ||
+			( d>0 && oRoll.offsetLeft<0)
+		) */
+		oRoll.style.left=oRoll.offsetLeft+d + 'px';
+		resetRoll();
+		
+		
+	};
+	
+	function resetRoll()
+	{
+		if(oRoll.offsetLeft>0) oRoll.style.left=0;
+		if(oRoll.offsetLeft<oMain.offsetWidth-oRoll.offsetWidth-190) oRoll.style.left=oMain.offsetWidth-oRoll.offsetWidth-190 + 'px';
+		//if(oRoll.offsetLeft>oLeft.offsetLeft) oRoll.style.left=oLeft.offsetLeft;
+		//if(oRoll.offsetLeft<oMain.offsetWidth-oRoll.offsetWidth-oLeft.offsetWidth-90) oRoll.style.left=oMain.offsetWidth-oRoll.offsetWidth-oLeft.offsetWidth-90 + 'px';
+	}
+	
+	
+	function leftMove(d)
+	{
+		if(oLeft.offsetLeft+d<0)d=-oLeft.offsetLeft;
+		oLeft.style.left=oLeft.offsetLeft+d + 'px';
+		oRoll0.style.left=oLeft.offsetLeft +'px';
+		oRoll0.style.width=oRoll0.offsetWidth-d+ 'px';
+		//document.title = oLeft.offsetLeft-oRight.offsetLeft+oRight.offsetWidth;
+		if(oLeft.offsetLeft<0) oLeft.style.left=0;
+		if(oLeft.offsetLeft>oRight.offsetLeft-oRight.offsetWidth) oLeft.style.left=oRight.offsetLeft-oRight.offsetWidth+ 'px';
+		//resetRoll();
+		
+	};
+	
+	function moveRight(d)
+	{
+		//alert("11");
+		document.title = oRoll0.offsetLeft+oRoll0.offsetWidth;//oRight.offsetLeft;
+		oRight.style.left=oRoll0.offsetLeft+oRoll0.offsetWidth+d + 'px';
+		//alert(oRight.style.left);
+		//oRoll.style.right=oRoll.offsetRight+d + 'px';
+		//if(oRight.offsetLeft<oLeft.offsetRight) oLeft.style.left=oLeft.offsetRight+ 'px';
+		//if(oLeft.offsetLeft>oRight.offsetLeft-oRight.offsetWidth) oLeft.style.left=oRight.offsetLeft-oRight.offsetWidth+ 'px';
+		//resetRoll();
+		
+	};
+	
+	window.onresize=function(){  
+		oRoll0.style.width=main.offsetWidth-200+"px";
+	}  
+
+}
+</script>
+</html>

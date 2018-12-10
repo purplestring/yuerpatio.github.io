@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>box</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+            margin: 100px auto;
+            position: relative;
+            transform: rotateY(0deg) rotateX(0deg);
+            transform-style: preserve-3d;
+        }
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            font-size: 60px;
+            text-align: center;
+            line-height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        ul li:nth-child(1){
+            background-color: red;
+            transform: rotateX(90deg) translateZ(100px);
+        }
+        ul li:nth-child(2){
+            background-color: green;
+            transform: rotateX(180deg) translateZ(100px);
+        }
+        ul li:nth-child(3){
+            background-color: blue;
+            transform: rotateX(270deg) translateZ(100px);
+        }
+        ul li:nth-child(4){
+            background-color: yellow;
+            transform: rotateX(360deg) translateZ(100px);
+        }
+        ul li:nth-child(5){
+            background-color: purple;
+            transform: translateX(-100px) rotateY(90deg);
+        }
+        ul li:nth-child(6){
+            background-color: pink;
+            transform: translateX(100px) rotateY(90deg);
+        }
+
+    </style>
+</head>
+<body>
+<ul id="main">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+</ul>
+</body>
+<script>
+window.onload=function (){
+	var oMain=document.getElementById('main');
+	oMain.style['-webkit-transform'] ="rotateY(0deg) rotateX(0deg)";
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+
+		var x=parseFloat (oMain.style['-webkit-transform'].split('rotateX(')[1].split('deg')[0])+(b);
+		var y=parseFloat (oMain.style['-webkit-transform'].split('rotateY(')[1].split('deg')[0])+(a);
+		//console.log ("rotateY("+y+"deg) rotateX("+x+"deg)");
+		oMain.style['-webkit-transform'] ="rotateY("+y+"deg) rotateX("+x+"deg)";
+
+	};
+}
+
+function move0(ev,mvfn)
+{
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn)
+{
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+
+</script>
+</html>

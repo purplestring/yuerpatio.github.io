@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.25">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>独钓寒江图</title>
+	<style>
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	body{
+		background-color: #333;
+		/*background:url("bg.jpg");*/
+	}
+	#main {
+		width: 1280px;
+		height: 960px;
+		margin-left: -640px;
+		position: relative;
+		left:50%;
+		background:url("bg.jpg");
+		/*background-color: #bcccb4;*/
+		overflow:hidden;
+	}
+	#boat {
+		width: 783px;
+		height: 175px;
+		left: 300px;
+		top: 493px;
+		position: absolute;
+		background:url("boat.png") no-repeat;
+		transform-origin:50% 70%;
+		-webkit-transform-origin:50% 70%;
+		animation: boat 4s ease 0s infinite normal;
+		-webkit-animation: boat 4s ease 0s infinite normal;
+	}
+	#poem {
+		width: 137px;
+		height: 171px;
+		left: 700px;
+		top: 130px;
+		position: absolute;
+		background:url("poem.png") no-repeat;
+	}
+	#yin {
+		width: 27px;
+		height: 27px;
+		left: 650px;
+		top: 295px;
+		position: absolute;
+		background:url("yin.png") no-repeat;
+	}
+	#hill {
+		width: 1093px;
+		height: 309px;
+		left: 100px;
+		top: 80px;
+		position: absolute;
+		background:url("hill.png") no-repeat;
+	}
+	#waterb {
+		width: 1469px;
+		height: 306px;
+		left: 0px;
+		top: 334px;
+		position: absolute;
+		background:url("water.png");
+		animation: water 4s linear 0s infinite normal;
+		-webkit-animation: water 4s linear 0s infinite normal;
+	}
+	#waterf {
+		width: 1469px;
+		height: 320px;
+		left: 0px;
+		top: 640px;
+		position: absolute;
+		background:url("water.png");
+		animation: water 4s linear 0s infinite normal;
+		-webkit-animation: water 4s linear 0s infinite normal;
+	}
+	#watermaskb {
+		width: 1280px;
+		height: 306px;
+		left: 0px;
+		top: 334px;
+		position: absolute;
+		background:url("watermask.png");
+	}
+	#watermaskf {
+		width: 1280px;
+		height: 320px;
+		left: 0px;
+		top: 640px;
+		position: absolute;
+		background:url("watermask.png");
+		background-position: 0px -306px;
+	}
+
+	#footer{
+		width:200px;
+		position:absolute;
+		text-align: center;
+		left:50%;
+		top:930px;
+		margin-left: -100px;
+	}
+	@keyframes boat {
+		0%{
+			left: 300px;
+			transform:rotate(0deg);		
+		}
+		50%{
+			left: 294px;
+			transform:rotate(2deg);
+		}
+		100%{
+			left: 300px;
+			transform:rotate(0deg);					
+		}
+	}
+	@keyframes water {
+		0%{
+			left: -189px;	
+		}
+		100%{
+			left: 0px;				
+		}
+	}
+	
+	@-webkit-keyframes boat {
+		0%{
+			left: 300px;
+			-webkit-transform:rotate(0deg);		
+		}
+		50%{
+			left: 294px;
+			-webkit-transform:rotate(2deg);
+		}
+		100%{
+			left: 300px;
+			-webkit-transform:rotate(0deg);					
+		}
+	}
+	@-webkit-keyframes water {
+		0%{
+			left: -189px;	
+		}
+		100%{
+			left: 0px;				
+		}
+	}
+		
+	</style>
+	<script>
+	</script>
+<script src="MQuery.js"></script>
+<script src="MQuery_animate.js"></script>
+<!--script src="jquery-3.3.1.min.js"></script-->
+
+</head>
+
+<body>
+
+	<audio src='0.mp3' style='display:none' id='audio'></audio>
+	<div id="main">								
+		<div id="waterb"></div>		
+		<div id="watermaskb"></div>
+		<div id="boat"></div>	
+		<div id="waterf"></div>
+		<div id="watermaskf"></div>
+		<div id="hill"></div>	
+		<div id="poem"></div>
+		<div id="yin"></div>		
+	</div>
+	<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+	window.onload = function(){
+		var oMain=document.getElementById('main');
+		var oAudio = document.getElementById('audio');
+		oMain.onclick=oMain.ontouchstart=function(ev){
+			oAudio.play();
+		}
+		
+			
+	};
+</script>
+</html>

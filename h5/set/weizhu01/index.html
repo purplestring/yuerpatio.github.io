@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title></title>
+	 <style type="text/css">
+	   body{
+		margin:0 auto;	
+		font-family: 宋体,sans-serif;
+		background-image: url(http://ww2.sinaimg.cn/woriginal/68d84d6dgw1eurpvggj66j21kw1esb29.jpg);
+	}
+	 #play{
+	 text-align:center;margin:0 auto;width:640px;
+	 }
+	 #info{
+	 text-align:center;margin:0 auto;width:100%;height:80px; top:20px;
+	 font-size:36px;
+	 color:#fff;
+	 }
+	 #topimg{
+	 top:-40px;
+	 }
+	 #dialog{
+	 text-align:center;margin:0 auto;width:100%;height:220px;
+	 font-size:24px;color:#fff;
+	 }
+	 #foot{
+	 text-align:center;margin:0 auto;width:100%;margin-top:580px;
+	 font-size:24px;color:#fff;
+	 }
+	.TYPE_UNSELECTED {
+
+	}
+	.TYPE_SELECTED {
+		background-color: yellow;
+		background-position:center;
+	}
+	.TYPE_WHERE_CAT_IS {
+		background-image:url(imgs/cb.jpg);
+		background-position:center;
+		background-color: orange;
+	}
+	a{color:#d4faba;font-size:24px;} 
+
+</style>
+
+</head>
+<body>
+<div id="info">~~ 围住璧 ~~</div>
+<div id="dialog">喵！<br/><br/>又一场演出结束<br/>面璧大学的小伙伴们很快在舞台下花现璧<br/>围住璧就有机会合影哦！<br/>（提示：一次一子，围住了，最后有。。）</div>
+<div id="play"></div>
+<br/><div id="foot"><a href="http://yuerpatio.com/">返回主页</a><br></div>
+</body>
+<script>
+	var oPlay = document.getElementById('play');
+	var oDialog = document.getElementById('dialog');
+	var currentCat;
+	var blocksize=53;
+	var blockline=11;
+	var MOVE_NONE = -1, MOVE_LEFT = 0, MOVE_UP_LEFT = 1, MOVE_UP_RIGHT = 2, MOVE_RIGHT = 3, MOVE_DOWN_RIGHT = 4, MOVE_DOWN_LEFT = 5;
+	var imgArr=[
+	[0,"xgg.jpg","小哥哥","11月1日 16:25","⚠️附近有采花大盗出没"],
+	[0,"srhb.jpg","笙人回璧","10月28日 17:42","小橙被切开了 嘤嘤嘤"],
+	[0,"zz.jpg","竹子","10月11日 17:13","刚刚在花店玩儿包的一束麦穗～<br/>是秋天的颜色呐🌾"],
+	[0,"tz.jpg","你數過天上的星星嗎","8月17日 23:34","每次看见你的笑 <br/>我都觉得我遇上了世间的美好事物"],
+	[0,"xb.jpg","LiveTogether一起过生活","11月5日 13:31","很多小伙伴私信小编，问是否真的是买两张CD<br>就能得到马克杯，这里统一回复：是！[憧憬]<br>再来一起阅读一遍活动海报吧！[偷乐] <a href='https://weibo.com/6200158898/H1fKmgo4d'>点此查看！</a>"],
+	[0,"zqh.jpg","周清欢","11月1日 17:29","真的好喜欢忍冬这个花的名字，有一种温柔的坚韧[鲜花]"],
+	[0,"tit.jpg","Titian_滕滕滕","10月30日 21:04","面璧大学全体同学表示要去院长家蹭饭。"],
+	[0,"blsr.jpg","板栗松仁","11月1日 18:21","真的好喜欢忍冬这个花的名字，<br/>有一种温柔的坚韧[鲜花]"],
+	[0,"krhb.jpg","衎仁会璧","11月1日 17:29","快把橙子皮裹紧了"],
+	[0,"syt.jpg","森屿塘_Neko","10月28日 17:28","饿啦饿啦饿啦饿啦"],
+	[0,"ay.jpg","a-韵微博","10月19日 18:33","想吃你做的杂酱面[馋嘴]"],
+	[0,"ay.jpg","亦墨momo","11月1日 22:30","冬天是个适合长膘的季节"],
+	[0,"kemm.jpg","卡尔麦麦小豆","11月1日 16:30","哈，我也认识了一种新植物"],
+	[0,"gyg.jpg","给一个watermelon呗2","10月30日 22:19","想要橙子🍊出烹饪教程啦😊"],
+	[0,"xg.jpg","拿相机的赵小赵","10月19日 18:10","告诉我，你怎么这么优秀[微笑]"],
+	[0,"lesp.jpg","-Lespetits","10月19日 23:43","院长，我饿了！[馋嘴]"],
+	[0,"xy.jpg","_须鱼","10月16日 20:38","比心心  好久不发长长长博了  要多发多发"],
+	[0,"lszh.jpg","XZ临水照花","10月11日 16:57","你的花园真漂亮，我如果经过，<br/>你如果不在家，我就在门口和花说说话～"],
+	[0,"xyd.jpg","幸运的山宝宝啊","10月8日 14:35","期待小姐姐和李健老师合作一次啊～"],
+	[0,"jcy.jpg","镜磁音","10月9日 20:04","只要人不死，文艺也不会死"],
+	[0,"cxc.jpg","柴小燦Leslie","10月3日 22:12","程璧同学古诗鉴赏题满分💯"],
+	[0,"jxw.jpg","璧姐姐的吉祥物","10月2日 16:31","好奇黄李是什么~？"],
+	[0,"wlx.jpg","王立夏","10月2日 15:34","我舍友说她初恋是青皮橘子的味道。"],
+	[0,"st.jpg","淑桃-","10月2日 14:48","小橙用的什么相机呢？能告知吗？"],
+	[0,"ytqz.jpg","月棠秋子","10月2日 17:45","秋风凉爽~"],
+	[0,"nn.jpg","暖暖","9月8日 23:50","一束蔷薇、一本书、一场电影<br/>以及傍晚三个女孩子小聚"],
+	[0,"mk.jpg","木可diamond","10月19日 19:12","捕捉璧姐一只"],
+	[0,"cp.jpg","陈萍AppleChen","10月19日 18:32","哇，程璧老师上得了厅堂，下得了厨房。"]
+	];
+	var sCount = 0;
+	var getMiao=false;
+
+	for (var indexY = 0; indexY < blockline; indexY++) {
+            for (var indexX = 0; indexX < blockline; indexX++) {
+			var div = document.createElement('div'); 
+			div.id="oDiv"+addZero(indexX)+addZero(indexY); 
+			var tmp= 'border:1px solid white; width:50px;height:50px; backgroundRepeat:no-repeat;position:absolute;margin-top:'; 
+			tmp += (indexY*blocksize); tmp += "px;margin-left:";tmp += (indexY % 2 ? indexX * blocksize + blocksize*0.5 : indexX * blocksize); tmp += "px;border-radius:";
+			tmp += blocksize*0.5;tmp += "px;";
+			
+			div.className = 'TYPE_UNSELECTED';
+			if (indexX == addZero(parseInt(blockline/2)) && indexY == addZero(parseInt(blockline/2))) {
+				div.className = 'TYPE_WHERE_CAT_IS';
+			} 
+			else if (Math.random() < 0.05) {
+                div.className = 'TYPE_SELECTED';
+				var imgid=getImg();
+				tmp+="background-image:url(imgs/"+imgArr[imgid][1]+");";
+            }
+			div.style.cssText = tmp;
+			div.addEventListener("click", blockClicked);
+			oPlay.appendChild(div); 
+
+		}
+	}
+	currentCat = document.getElementById('oDiv'+addZero(parseInt(blockline/2))+addZero(parseInt(blockline/2)));
+	
+	
+	function blockClicked() {
+
+		if(getMiao) {  return; }
+		//check if fail
+		var catX=parseInt(currentCat.id.substr(4,2));
+		var catY=parseInt(currentCat.id.substr(6,2));
+		if (catX == 0 || catY == 0 || catX == (blockline-1) || catY == (blockline-1)) {
+			currentCat.className = "TYPE_UNSELECTED";
+			//alert("溜了 溜了。。。");
+			oDialog.innerHTML="<img id='topimg' src='imgs/liule.jpg' /><br/><a href='javascript:void(0)' onclick='location.reload()'>再捉一次~</a>";
+			return;
+		}
+
+		if (this.className == "TYPE_UNSELECTED") {
+			this.className = 'TYPE_SELECTED';
+				if(sCount<imgArr.length){
+					var imgid=getImg();
+					this.style.backgroundImage="url(imgs/"+imgArr[imgid][1]+")";
+					oDialog.innerHTML="<br/><br/>@"+imgArr[imgid][2]+" "+imgArr[imgid][3]+"<br/><br/>"+imgArr[imgid][4];
+				}else oDialog.innerHTML="...";
+			} else {
+				return
+		}
+
+
+		var dir = getMoveDir();
+
+		if(dir == MOVE_NONE) getMiao=true;
+		if(getMiao) oDialog.innerHTML="<img id='topimg' src='imgs/weizhu.jpg' /><br/><a href='javascript:void(0)' onclick='location.reload()'>再捉一次~ </a><a href='https://item.taobao.com/item.htm?spm=a1z10.3-c-s.w4023-17092604569.16.91724e55SNl1P6&id=573793217266'>神秘链接</a>";
+		
+		else
+		{
+			currentCat.className = "TYPE_UNSELECTED";
+			switch (dir) {
+				case MOVE_LEFT:    currentCat = document.getElementById('oDiv'+addZero(catX - 1)+addZero(catY)); break ;
+				case MOVE_UP_LEFT: currentCat = document.getElementById('oDiv'+addZero(catY % 2 ? catX : catX - 1)+addZero(catY - 1)); break ;
+				case MOVE_UP_RIGHT:currentCat = document.getElementById('oDiv'+addZero(catY % 2 ? catX + 1 : catX)+addZero(catY - 1)); break ;
+				case MOVE_RIGHT:   currentCat = document.getElementById('oDiv'+addZero(catX + 1)+addZero(catY)); break ;
+				case MOVE_DOWN_LEFT:currentCat = document.getElementById('oDiv'+addZero(catY % 2 ? catX : catX - 1)+addZero(catY + 1)); break;
+				case MOVE_DOWN_RIGHT:currentCat = document.getElementById('oDiv'+addZero(catY % 2 ? catX + 1 : catX)+addZero(catY + 1));break;
+				default : ;					
+			}
+			currentCat.className = "TYPE_WHERE_CAT_IS";	
+		}	
+	}
+	
+var encode_version = 'sojson.v4';var __0x1fe33=['KntvGijCj0U3JQ==','F8OnVsKv','w7fDicOPwqjCmMKdwpZoEQ==','wpLDh8K4w7PCicKaSHzCkcOcbhZ+','A8OoHcK4dX5NJcK1','NsOPXxnCoMKawpTDicOPR3cAw7o=','ZnDCm8KgwqVAfMO8w7HCl0zDtm7CtA==','w4k1BsOmwrrDscOCwptQ','Mj4Zwqw=','AcO6bi/CjMKHwrDDqMOv','X0xHw5tWMgTCsV9iwo3CvMOt','H0YKUMKqw48hw67Dm8K6aMK0wqsQ','w5nCu8K/wrU=','VUzCv8KgwpZ2VMOVw5rCoFrDimM=','w7I3N8Og'];(function(_0x4a91d3,_0x5c0c79){var _0x7b42b6=function(_0x28b249){while(--_0x28b249){_0x4a91d3['push'](_0x4a91d3['shift']());}};_0x7b42b6(++_0x5c0c79);}(__0x1fe33,0xec));var _0x1264=function(_0x1adbdc,_0x2e7b9d){_0x1adbdc=_0x1adbdc-0x0;var _0x5f2338=__0x1fe33[_0x1adbdc];if(_0x1264['initialized']===undefined){(function(){var _0x5fe74c=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x3260c8='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x5fe74c['atob']||(_0x5fe74c['atob']=function(_0x500b86){var _0xddb439=String(_0x500b86)['replace'](/=+$/,'');for(var _0x16f4db=0x0,_0x5b48c9,_0x3e827e,_0x468220=0x0,_0x51ab7f='';_0x3e827e=_0xddb439['charAt'](_0x468220++);~_0x3e827e&&(_0x5b48c9=_0x16f4db%0x4?_0x5b48c9*0x40+_0x3e827e:_0x3e827e,_0x16f4db++%0x4)?_0x51ab7f+=String['fromCharCode'](0xff&_0x5b48c9>>(-0x2*_0x16f4db&0x6)):0x0){_0x3e827e=_0x3260c8['indexOf'](_0x3e827e);}return _0x51ab7f;});}());var _0x2e5b57=function(_0x439f25,_0x381f2e){var _0x10a334=[],_0x12fb7d=0x0,_0x4ef079,_0x3e2279='',_0x40be25='';_0x439f25=atob(_0x439f25);for(var _0x10dec9=0x0,_0x44a581=_0x439f25['length'];_0x10dec9<_0x44a581;_0x10dec9++){_0x40be25+='%'+('00'+_0x439f25['charCodeAt'](_0x10dec9)['toString'](0x10))['slice'](-0x2);}_0x439f25=decodeURIComponent(_0x40be25);for(var _0x72828d=0x0;_0x72828d<0x100;_0x72828d++){_0x10a334[_0x72828d]=_0x72828d;}for(_0x72828d=0x0;_0x72828d<0x100;_0x72828d++){_0x12fb7d=(_0x12fb7d+_0x10a334[_0x72828d]+_0x381f2e['charCodeAt'](_0x72828d%_0x381f2e['length']))%0x100;_0x4ef079=_0x10a334[_0x72828d];_0x10a334[_0x72828d]=_0x10a334[_0x12fb7d];_0x10a334[_0x12fb7d]=_0x4ef079;}_0x72828d=0x0;_0x12fb7d=0x0;for(var _0x2c54e=0x0;_0x2c54e<_0x439f25['length'];_0x2c54e++){_0x72828d=(_0x72828d+0x1)%0x100;_0x12fb7d=(_0x12fb7d+_0x10a334[_0x72828d])%0x100;_0x4ef079=_0x10a334[_0x72828d];_0x10a334[_0x72828d]=_0x10a334[_0x12fb7d];_0x10a334[_0x12fb7d]=_0x4ef079;_0x3e2279+=String['fromCharCode'](_0x439f25['charCodeAt'](_0x2c54e)^_0x10a334[(_0x10a334[_0x72828d]+_0x10a334[_0x12fb7d])%0x100]);}return _0x3e2279;};_0x1264['rc4']=_0x2e5b57;_0x1264['data']={};_0x1264['initialized']=!![];}var _0x111457=_0x1264['data'][_0x1adbdc];if(_0x111457===undefined){if(_0x1264['once']===undefined){_0x1264['once']=!![];}_0x5f2338=_0x1264['rc4'](_0x5f2338,_0x2e7b9d);_0x1264['data'][_0x1adbdc]=_0x5f2338;}else{_0x5f2338=_0x111457;}return _0x5f2338;};function getMoveDir(){var _0x2bd585=[];var _0x4952d9=parseInt(currentCat['id']['substr'](0x4,0x2));var _0xdfbca8=parseInt(currentCat['id']['substr'](0x6,0x2));var _0x196e94=!![];for(var _0x223bda=_0x4952d9;_0x223bda>=0x0;_0x223bda--){if(document[_0x1264('0x0','KJG8')](_0x1264('0x1','8j3z')+addZero(_0x223bda)+addZero(_0xdfbca8))['className']==_0x1264('0x2','WK14')){_0x196e94=![];_0x2bd585[MOVE_LEFT]=_0x4952d9-_0x223bda;break;}}if(_0x196e94){return MOVE_LEFT;}_0x196e94=!![];var _0x223bda=_0x4952d9,_0x2fedf4=_0xdfbca8;while(!![]){if(document['getElementById'](_0x1264('0x3','$Zs%')+addZero(_0x223bda)+addZero(_0x2fedf4))[_0x1264('0x4','58*k')]=='TYPE_SELECTED'){_0x196e94=![];_0x2bd585[MOVE_UP_LEFT]=_0xdfbca8-_0x2fedf4;break;}if(_0x2fedf4%0x2==0x0){_0x223bda--;}_0x2fedf4--;if(_0x2fedf4<0x0||_0x223bda<0x0){break;}}if(_0x196e94){return MOVE_UP_LEFT;}_0x196e94=!![];_0x223bda=_0x4952d9,_0x2fedf4=_0xdfbca8;while(!![]){if(document['getElementById'](_0x1264('0x5','xtdE')+addZero(_0x223bda)+addZero(_0x2fedf4))[_0x1264('0x6','[$[f')]==_0x1264('0x7','gNNS')){_0x196e94=![];_0x2bd585[MOVE_DOWN_LEFT]=_0x2fedf4-_0xdfbca8;break;}if(_0x2fedf4%0x2==0x0){_0x223bda--;}_0x2fedf4++;if(_0x2fedf4>blockline-0x1||_0x223bda<0x0){break;}}if(_0x196e94){return MOVE_DOWN_LEFT;}_0x196e94=!![];_0x223bda=_0x4952d9,_0x2fedf4=_0xdfbca8;while(!![]){if(document['getElementById']('oDiv'+addZero(_0x223bda)+addZero(_0x2fedf4))[_0x1264('0x8','2O6@')]==_0x1264('0x9','Yt7(')){_0x196e94=![];_0x2bd585[MOVE_UP_RIGHT]=_0xdfbca8-_0x2fedf4;break;}if(_0x2fedf4%0x2==0x1){_0x223bda++;}_0x2fedf4--;if(_0x2fedf4<0x0||_0x223bda>blockline-0x1){break;}}if(_0x196e94){return MOVE_UP_RIGHT;}_0x196e94=!![];for(var _0x223bda=_0x4952d9;_0x223bda<blockline;_0x223bda++){if(document[_0x1264('0xa','WK14')]('oDiv'+addZero(_0x223bda)+addZero(_0xdfbca8))[_0x1264('0xb','C5rx')]=='TYPE_SELECTED'){_0x196e94=![];_0x2bd585[MOVE_RIGHT]=_0x223bda-_0x4952d9;break;}}if(_0x196e94){return MOVE_RIGHT;}_0x196e94=!![];_0x223bda=_0x4952d9,_0x2fedf4=_0xdfbca8;while(!![]){if(document['getElementById'](_0x1264('0xc','GZED')+addZero(_0x223bda)+addZero(_0x2fedf4))[_0x1264('0xd','Yt7(')]==_0x1264('0xe','q02z')){_0x196e94=![];_0x2bd585[MOVE_DOWN_RIGHT]=_0x2fedf4-_0xdfbca8;break;}if(_0x2fedf4%0x2==0x1){_0x223bda++;}_0x2fedf4++;if(_0x2fedf4>blockline-0x1||_0x223bda>blockline-0x1){break;}}if(_0x196e94){return MOVE_DOWN_RIGHT;}var _0x550818=-0x1,_0x42062f=-0x1;for(var _0x131bf1=0x0;_0x131bf1<_0x2bd585['length'];_0x131bf1++){if(_0x2bd585[_0x131bf1]>_0x42062f){_0x42062f=_0x2bd585[_0x131bf1];_0x550818=_0x131bf1;}}if(_0x42062f>0x1){return _0x550818;}else{return MOVE_NONE;}};encode_version = 'sojson.v4';
+
+	
+	function addZero(num)
+	{
+		if(num<10) return '0'+num;
+		else return num;
+	}
+	
+	function getImg()
+	{
+		sCount++;
+		//parseInt(Math.random()*imgArr.length);
+		var num=parseInt(Math.random()*(imgArr.length));
+		//alert(num);
+		//alert(imgArr.length);
+		for(i=num;i<imgArr.length;i++) if(imgArr[i][0]==0) {imgArr[i][0]=1;return i;}
+		for(i=0;i<num;i++) if(imgArr[i][0]==0) {imgArr[i][0]=1;return i;}
+		return -1;
+		//return (sCount-1);
+	}
+	
+
+</script>
+</html>
