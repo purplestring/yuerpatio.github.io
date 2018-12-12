@@ -67,8 +67,8 @@
 	
 	/*******************************************************/
 
-		var qian = new C3D.Sprite();
-	qian.position(-40, -200, -400).update();
+	var qian = new C3D.Sprite();
+	qian.position(-20, -200, -300).update();
 	s.addChild(qian);
 	
 	var qian1 = new C3D.Plane();
@@ -176,11 +176,7 @@
     function go() {
 		movect++;
 
-		var tmp=parseInt(movect/1000)%2;
-		//console.log(tmp);
-		if(tmp==1)qian.move(-0.5,0,0).updateT();
-		else qian.move(0.5,0,0).updateT();
-		if(movect%1000==0) qian.rotate(0, 180, 0).updateT();
+		qian.rotate(0, -0.2, 0).updateT();
 
 		var tmp2=parseInt(movect/30)%2;
 		if(tmp2==1){
