@@ -67,54 +67,7 @@
 	
 	/*******************************************************/
 
-		var qian = new C3D.Sprite();
-	qian.position(-40, -200, -400).update();
-	s.addChild(qian);
 	
-	var qian1 = new C3D.Plane();
-	qian1.size(118)
-			.name('qian1')
-			.position(200, 200, 200)
-			.rotation(0, 0, 0)
-			.material({
-				/*color : "#cccccc",*/
-				image: 'img/qian1.png',
-				width: '118px',
-				height: '70px',
-			})
-			.buttonMode(true)
-			.update();
-	qian.addChild(qian1);
-	
-	var qian2 = new C3D.Plane();
-	qian2.size(140)
-			.name('qian2')
-			.position(200, 235, 200)
-			.rotation(70, 0, 0)
-			.material({
-				/*color : "#cccccc",*/
-				image: 'img/qian2.png',
-				width: '118px',
-				height: '140px',
-			})
-			.buttonMode(true)
-			.update();
-	qian.addChild(qian2);
-	
-	var qian3 = new C3D.Plane();
-	qian3.size(140)
-			.name('qian3')
-			.position(200, 235, 200)
-			.rotation(-70, 0, 0)
-			.material({
-				/*color : "#cccccc",*/
-				image: 'img/qian2.png',
-				width: '118px',
-				height: '140px',
-			})
-			.buttonMode(true)
-			.update();
-	qian.addChild(qian3);
 	/*******************************************************/
 	var myp1 = new C3D.Plane();
 	myp1.size(44).name('myp1').position(230, -576, 1052).rotation(0, 180, 0).material({image: 'img/feng01.gif',width: '31px',height: '44px',}).update();
@@ -171,27 +124,12 @@
                 setTimeout(callback, 1000 / 60);
             };
 
-	var movect=0;
-		
     function go() {
-		movect++;
+//            c.rotate(0, 0.1, 0).updateT();
 
-		var tmp=parseInt(movect/1000)%2;
-		//console.log(tmp);
-		if(tmp==1)qian.move(-0.5,0,0).updateT();
-		else qian.move(0.5,0,0).updateT();
-		if(movect%1000==0) qian.rotate(0, 180, 0).updateT();
+        s.camera.rotate(0, 0.3, 0).updateT();
 
-		var tmp2=parseInt(movect/30)%2;
-		if(tmp2==1){
-			qian2.rotate(-2, 0, 0).updateT();
-			qian3.rotate(2, 0, 0).updateT();
-		}
-		else {
-			qian2.rotate(2, 0, 0).updateT();
-			qian3.rotate(-2, 0, 0).updateT();
-		}
-		requestAnimationFrame(go);
+        requestAnimationFrame(go);
     }
 	
 	var oMain=document.getElementById('main');
@@ -207,7 +145,7 @@
 	{
 		c.rotate(b*0.1, -a*0.1, 0).updateT();
 		//sp.rotate(b*0.1, -a*0.15, 0).updateT();
-		mysp.rotate(b*0.1, -a*0.1, 0).updateT();qian.rotate(b*0.1, -a*0.1, 0).updateT();
+		mysp.rotate(b*0.1, -a*0.1, 0).updateT();
         //requestAnimationFrame(go);
 		
 	}
@@ -249,8 +187,7 @@
 		return false;
 	}
 
-    requestAnimationFrame(go);
-	move(1800,0);
+    //requestAnimationFrame(go);
 
 </script>
 </body>
