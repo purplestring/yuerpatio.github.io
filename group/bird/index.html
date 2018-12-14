@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=0.25,maximum-scale=0.25, user-scalable=no">
     <meta charset="UTF-8">
 	<style>
 	*{
@@ -73,8 +73,29 @@
 		color:#bbb;	
 		text-decoration: none;
 	} /* 悬停时链接颜色 */
+	
+	@media screen and (max-device-width:640px){
+		#main{
+			font-size:42px;
+		}
+		#title{
+			font-size:84px;
+		}
+		#desc1{
+			font-size:42px;
+		}
+		#desc2{
+			font-size:36px;
+		}
+		#family {
+			font-size:54px;	
+		}
+		#species{
+			font-size:42px;
+		}
+	}
 	</style>
-	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+	<meta name="viewport" content="width=device-width, initial-scale=0.32">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>鸟之册</title>
 	<script src="bird.js"></script>
@@ -95,7 +116,7 @@
 			var txt="<br><br>";
 			txt+='<div id="title" align="center">鳥之册</div><br><br>';
 			txt+='<div id="desc1">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。<br><br></div>';
-			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；鸟类数据参考《中国鸟类野外手册》。<br>';
+			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>';
 			txt+='转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<a href="">🔍</a></div><br><br><br>';
 			for(var i=0;i<1329;i++)
 			{				

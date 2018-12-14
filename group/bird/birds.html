@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
 	<style>
 	*{
@@ -17,6 +17,7 @@
 		width:960px;
 		position:absolute;
 		left:50%;
+		top:20px;
 		margin-left:-480px;
 		background: rgba(5,44,7,0.7);
 		padding-left:10px;
@@ -42,6 +43,14 @@
 		color:#FFF;	
 		text-decoration: none;
 	} /* 悬停时链接颜色 */
+	
+	@media screen and (max-device-width:640px){
+		#main{
+			width:640px;
+			margin-left:-320px;
+			font-size:28px;
+		}
+	}
 
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
@@ -108,7 +117,7 @@
 		var nextid=(cid+1)%birdjson.RECORDS.length;
 	
 		var txt="<br><br>";
-		txt+=("<div align='center'>"+
+		txt+=("<div id='title' align='center'>"+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastgrp+')">◀◀◀　</a>'+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastpic+')">◀◀　</a>'+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastid+')">◀　</a>'+
