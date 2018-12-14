@@ -1,0 +1,150 @@
+body{
+	font-family:"宋体","黑体","楷体";
+	color:#000;
+	background: #a57ba1;
+	margin: 0;
+    padding: 0;
+}
+a {
+	color:#000;
+	text-decoration: none;
+} /* 已或未访问链接颜色 */
+	
+a:hover {
+	color:#fff;	
+	text-decoration: none;
+} /* 悬停时链接颜色 */
+
+#footer{
+	color:#000;
+	font-size:14px;
+	text-align:center;
+	margin-top:20px;
+}
+
+#title{
+	font-size:50px;
+	text-align:center;
+	margin-top:80px;
+}	
+	
+#content{
+	width:960px;
+	min-height:540px;
+	font-size:30px;
+	position:absolute;
+	left:50%;
+	margin-left:-480px;
+	text-align:center;
+	background: url(img/bg01.jpg);
+	padding-top:0px;
+	padding-bottom:0px;
+}
+#lt{		
+		left:0px;
+		top:0px;
+		width:55px;
+		height:68px;
+		position:absolute;
+		background: url(img/01.png);
+	}
+#mt{
+	left:0px;
+	top:0px;
+	width:100%;
+	height:68px;
+	position:absolute;
+	background: url(img/02.png);
+}
+#rt{
+	right:0px;
+	top:0px;
+	width:55px;
+	height:68px;
+	position:absolute;
+	background: url(img/03.png);
+}
+#lm{
+	left:0px;
+	top:0px;
+	width:30px;
+	height:100%;
+	position:absolute;
+	background: url(img/04.png);
+}
+#rm{
+	right:0px;
+	top:0px;
+	width:30px;
+	height:100%;
+	position:absolute;
+	background: url(img/06.png);
+}
+#lb{
+	left:0px;
+	bottom:0px;
+	width:55px;
+	height:68px;
+	position:absolute;
+	background: url(img/07.png);
+}
+#mb{
+	left:0px;
+	bottom:0px;
+	width:100%;
+	height:68px;
+	position:absolute;
+	background: url(img/08.png);
+}
+#rb{
+	right:0px;
+	bottom:0px;
+	width:55px;
+	height:68px;
+	position:absolute;
+	background: url(img/09.png);
+}
+#ltx{		
+	left:35px;
+	top:45px;
+	width:32px; 
+	height:32px;
+	position:absolute;
+	background: url(img/xing1.gif);
+}
+#rtx{		
+	right:35px;
+	top:45px;
+	width:32px; 
+	height:32px;
+	position:absolute;
+	background: url(img/xing1.gif);
+}
+#lbx{		
+	left:35px;
+	bottom:45px;
+	width:32px; 
+	height:32px;
+	position:absolute;
+	background: url(img/xing1.gif);
+}
+#rbx{		
+	right:35px;
+	bottom:45px;
+	width:32px; 
+	height:32px;
+	position:absolute;
+	background: url(img/xing1.gif);
+}
+@media screen and (max-device-width:640px){
+	#title{
+		font-size:96px;
+	}
+	#content{
+		font-size:56px;
+	}
+	#footer{
+		font-size:30px;
+		margin-top:30px;
+	}
+}

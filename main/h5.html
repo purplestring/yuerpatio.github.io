@@ -1,53 +1,26 @@
 ﻿<!DOCTYPE html>
 <head>
-	<style type="text/css"> 
-	body
-	  {
-		background-color:#88ab83;
-	  }
-	  
-	a {
-		color:#aff;
-		text-decoration: none;
-	} /* 已或未访问链接颜色 */
-		
-	a:hover {
-		color:#fff;	
-		text-decoration: none;
-	} /* 悬停时链接颜色 */
-	
-	#foot{
-		color:#000;
-		font-size:14px;
-	}
-	
-	#foots{
-		color:#000;
-		font-size:18px;
-	}
-	
-	#title{
-		font-size:50px;
-	}	
-	
-	#sub{
-		font-size:40px;
-	}		
-	
-	#content{
-		font-size:30px;
-	}	
-	
-    </style>
 	<meta charste="utf-8">
-	<title>鱼儿</title>
-
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+	<link rel="stylesheet" href="style.css" type="text/css" />	
+	<style type="text/css"></style>
+	<title>h5设计</title>
 <body>
 
-<h1 id="title" align="center" >h5设计</h1><br>
-
-<div id="content" align="center">
-
+<div id="content">
+	<div id="mt"></div>	
+	<div id="lm"></div>
+	<div id="rm"></div>
+	<div id="mb"></div>
+	<div id="lt"></div>	
+	<div id="rt"></div>		
+	<div id="lb"></div>		
+	<div id="rb"></div>
+	<div id="ltx"></div>
+	<div id="rtx"></div>
+	<div id="lbx"></div>
+	<div id="rbx"></div>
+	<div id="title" >h5设计</div><br>
 	<a name="file" href="http://yuerpatio.com/h5/animation/reel02/">卷轴02</a><br>
 	<a name="file" href="http://yuerpatio.com/h5/animation/box03/">盒子</a><br>
 	<a name="file" href="http://yuerpatio.com/h5/animation/watch03/">手表</a><br>
@@ -67,47 +40,11 @@
 	<a name="file" href="http://yuerpatio.com/h5/set/pano02/">全景动图·古观象台</a><br>	
 	<a name="file" href="http://yuerpatio.com/h5/test/ios2/1.html">测试</a><br>
 	
-	<!--a name="file" href="/pano/61">喵喵喵喵</a><br-->
+	<div id="footer" align="center" >
+	<a href="http://yuerpatio.com/">返回主页</a><br>
+	Copyright © 2016~19 鱼儿. All Rights Reserved.<br>
+	</div><br><br>
 </div>
-
-<br>
-
-<div id="foot" align="center" >
-<a href="http://yuerpatio.com/">返回主页</a><br>
-Copyright © 2017~18 鱼儿. All Rights Reserved.<br>
-</div>
-
-<div id="foots" align="center" >
-</div>
-
-
-<br>
 
 </body>
-
-<script language=javascript>
-function IsPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone",
-                "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            flag = false;
-            break;
-        }
-    }
-    return flag;
-}
-if(IsPC()!=true)
-{	
-	document.getElementById('title').style.fontSize="72px";
-	//document.getElementById('sub').style.fontSize="54px";
-	document.getElementById('content').style.fontSize="48px";
-	document.getElementById('foot').style.fontSize="28px";
-	document.getElementById('foots').style.fontSize="42px";
-}
- </script>
- 
 </html>
