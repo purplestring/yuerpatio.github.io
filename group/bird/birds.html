@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+	<style>
+	*{
+            margin: 0;
+            padding: 0;
+			color:#fff;
+    }
+	body{
+		font-family:"宋体","黑体","楷体";
+		background: url("background.jpg");
+	}
+	#main{
+		width:960px;
+		position:absolute;
+		left:50%;
+		margin-left:-480px;
+		background: rgba(5,44,7,0.7);
+		padding-left:10px;
+		padding-right:10px;
+	}
+	
+	#birdpic{
+		width:100%;
+	}
+
+	#footer{
+		width:300px;
+		text-align: center;
+		margin:0 auto;
+	}
+	
+	a {
+		color:#00ff00;
+		text-decoration: none;
+	} /* 已或未访问链接颜色 */
+		
+	a:hover {
+		color:#FFF;	
+		text-decoration: none;
+	} /* 悬停时链接颜色 */
+
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<script src="bird.js"></script>
+
+</head>
+
+<body>	
+	<div id="main"></div>
+</body>
+<script>
+
+	function toZero(num){
+		if(num<=9){
+			return '000' + num;
+		}
+		else if(num<=99){
+			return '00' + num;
+		}
+		else if(num<=999){
+			return '0' + num;
+		}
+		else{
+			return '' + num;
+		}
+	}
+
+	function jumpto(cid)
+	{
+		var oMain = document.getElementById('main');
+		document.title=birdjson.RECORDS[cid].wu;
+		
+		var lastgrp=cid-1;
+		for(;lastgrp>0;lastgrp--)
+		{
+			if(birdjson.RECORDS[lastgrp].ke!=birdjson.RECORDS[lastgrp+1].ke) break;
+		}
+		if(cid==0)lastgrp=1242;
+		
+		var nextgrp=cid+1;
+		for(;nextgrp<birdjson.RECORDS.length;nextgrp++)
+		{
+			if(birdjson.RECORDS[nextgrp].ke!=birdjson.RECORDS[nextgrp-1].ke) break;
+		}
+		if(nextgrp>=1329)nextgrp=0;
+		
+		var lastpic=cid-1;
+		for(;lastpic>0;lastpic--)
+		{
+			if(birdjson.RECORDS[lastpic].pic!=null) break;
+		}
+		if(cid==0)lastpic=cid;
+		
+		var nextpic=cid+1;
+		for(;nextpic<birdjson.RECORDS.length;nextpic++)
+		{
+			if(birdjson.RECORDS[nextpic].pic!=null) break;
+		}
+		if(cid==birdjson.RECORDS.length)nextpic=cid;
+		
+		var lastid=(birdjson.RECORDS.length+cid-1)%birdjson.RECORDS.length;
+		var nextid=(cid+1)%birdjson.RECORDS.length;
+	
+		var txt="<br><br>";
+		txt+=("<div align='center'>"+
+		'<a href="javascript:void(0);" onclick="jumpto('+lastgrp+')">◀◀◀　</a>'+
+		'<a href="javascript:void(0);" onclick="jumpto('+lastpic+')">◀◀　</a>'+
+		'<a href="javascript:void(0);" onclick="jumpto('+lastid+')">◀　</a>'+
+		"【"+birdjson.RECORDS[cid].id+"】"+
+		'<a href="javascript:void(0);" onclick="jumpto('+nextid+')">　▶</a>'+
+		'<a href="javascript:void(0);" onclick="jumpto('+nextpic+')">　▶▶</a>'+
+		'<a href="javascript:void(0);" onclick="jumpto('+nextgrp+')">　▶▶▶</a><br>'+
+
+		birdjson.RECORDS[cid].mu+"->"+birdjson.RECORDS[cid].ke+
+		"->"+birdjson.RECORDS[cid].shu+"->"+birdjson.RECORDS[cid].wu+
+		"<br><br></div>");
+		
+		txt+=("【特征】"+birdjson.RECORDS[cid].des+"<br><br>");
+		txt+=("【分布】"+birdjson.RECORDS[cid].area+"<br><br>");
+		if(birdjson.RECORDS[cid].pic!=null) txt+="<img id='birdpic' src='birds/"+birdjson.RECORDS[cid].pic+"' >";
+		//else if(cid<1329) txt+="<img id='birdpic' src='http://photo.niaolei.org.cn/cnbird/image/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' >"; 
+		else if(cid<1329) txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm">更多参考</a>'; 
+		txt+='<br><br><div id="footer"><a href="index.html">返回册主页</a><br><br></div>';
+		oMain.innerHTML=txt;
+	}
+		
+	window.onload = function(){
+		id=window.location.hash.split('#')[1];		
+		jumpto(id-1);
+		//console.log(oMain.offsetHeight+20+"px");
+		//var oFooter = document.getElementById('footer');
+		//console.log( document.body.clientHeight );
+		//oFooter.style.top=oMain.offsetHeight+20+"px";
+	}
+</script>
+</html>

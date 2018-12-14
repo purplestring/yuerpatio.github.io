@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+	<style>
+	*{
+            margin: 0;
+            padding: 0;
+			
+    }
+	body{
+		font-family:"宋体","黑体","楷体";
+		background: url("background.jpg");
+		color:#fff;
+	}
+	#main{
+		width:960px;
+		position:absolute;
+		left:50%;
+		margin-left:-480px;
+		background: rgba(5,44,7,0.7);
+		padding-left:10px;
+		padding-right:10px;
+	}
+	#title{
+		color:#fff;
+		font-size:54px;
+	}
+	#desc1{
+		color:#fff;
+		font-size:22px;
+		text-align: center;
+	}
+	#desc2{
+		color:#fff;
+		font-size:14px;
+		text-align: center;
+	}
+	#family {
+		color:#fffa7a;
+		font-size:20px;	
+	}
+	
+	#species{
+		color:#eaf5eb;
+		font-size:16px;
+	}
+	#footer{
+		width:400px;
+		position:absolute;
+		text-align: center;
+		left:50%;
+		margin-left: -200px;
+	}
+	
+	a {
+		color:#00ff00;
+		text-decoration: none;
+	} /* 已或未访问链接颜色 */
+		
+	a:hover {
+		color:#FFF;	
+		text-decoration: none;
+	} /* 悬停时链接颜色 */
+	
+	#nopic {
+		color:#eaf5eb;
+		text-decoration: none;
+	} /* 已或未访问链接颜色 */
+		
+	#nopic:hover {
+		color:#bbb;	
+		text-decoration: none;
+	} /* 悬停时链接颜色 */
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>鸟之册</title>
+	<script src="bird.js"></script>
+
+</head>
+
+<body>	
+	<div id="main"></div>
+</body>
+<script>
+	window.onload = function(){
+
+		writejson(birdjson);
+		function writejson(json)
+		{
+			var oMain = document.getElementById('main');
+
+			var txt="<br><br>";
+			txt+='<div id="title" align="center">鳥之册</div><br><br>';
+			txt+='<div id="desc1">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。<br><br></div>';
+			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；鸟类数据参考《中国鸟类野外手册》。<br>';
+			txt+='转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<a href="">🔍</a></div><br><br><br>';
+			for(var i=0;i<1329;i++)
+			{				
+				if( (i>0 && json.RECORDS[i].ke!=json.RECORDS[i-1].ke) || i==0) 
+				{
+					if(i>0)txt+="<br><br><br>";
+					txt+="<a id='family'>"+json.RECORDS[i].mu+"->"+json.RECORDS[i].ke+"<br><br></a>"; 
+				}
+				txt+="<a ";
+				if(json.RECORDS[i].pic==null)txt+="id='nopic' ";
+				txt+="href='birds.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
+			}
+			txt+='<br><br><div id="footer"><br><br><br><a href="http://yuerpatio.com/">返回主页</a><br>';
+			txt+='Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+			oMain.innerHTML=txt;
+		}
+	
+	}
+</script>
+</html>
