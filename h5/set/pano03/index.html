@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<head>
+    <script src="../../js/css3d.js"></script>
+    <style>
+        #main {
+            width: 500px;
+            width: 500px;
+        }
+    </style>
+	<title>全景动图 · 古堡</title>
+</head>
+<body>
+
+<div id="main">
+
+</div>
+<script>
+    //创建场景
+    var s = new C3D.Stage();
+    s.size(window.innerWidth, window.innerHeight).material({
+        color: "#cccccc"
+    }).update();
+    document.getElementById('main').appendChild(s.el);
+
+    //创建1个立方体放入场景
+    var c = new C3D.Skybox();
+    c.size(1304).position(0, 0, 0).material({
+        front: {image: "../../../pano/draw/taprohm/pano_f.jpg"},
+        back: {image: "../../../pano/draw/taprohm/pano_b.jpg"},
+        left: {image: "../../../pano/draw/taprohm/pano_l.jpg"},
+        right: {image: "../../../pano/draw/taprohm/pano_r.jpg"},
+        up: {image: "../../../pano/draw/taprohm/pano_u.jpg"},
+        down: {image: "../../../pano/draw/taprohm/pano_d.jpg"},
+
+    }).update();
+    s.addChild(c);
+	
+	
+	
+	/*******************************************************/
+
+	var qian = new C3D.Sprite();
+	qian.position(-20, -200, -300).update();
+	s.addChild(qian);
+	
+	var qian1 = new C3D.Plane();
+	qian1.size(118)
+			.name('qian1')
+			.position(200, 200, 200)
+			.rotation(0, 0, 0)
+			.material({
+				/*color : "#cccccc",*/
+				image: 'img/qian1.png',
+				width: '118px',
+				height: '70px',
+			})
+			.buttonMode(true)
+			.update();
+	qian.addChild(qian1);
+	
+	var qian2 = new C3D.Plane();
+	qian2.size(140)
+			.name('qian2')
+			.position(200, 235, 200)
+			.rotation(70, 0, 0)
+			.material({
+				/*color : "#cccccc",*/
+				image: 'img/qian2.png',
+				width: '118px',
+				height: '140px',
+			})
+			.buttonMode(true)
+			.update();
+	qian.addChild(qian2);
+	
+	var qian3 = new C3D.Plane();
+	qian3.size(140)
+			.name('qian3')
+			.position(200, 235, 200)
+			.rotation(-70, 0, 0)
+			.material({
+				/*color : "#cccccc",*/
+				image: 'img/qian2.png',
+				width: '118px',
+				height: '140px',
+			})
+			.buttonMode(true)
+			.update();
+	qian.addChild(qian3);
+	/*******************************************************/
+	
+    //响应屏幕调整尺寸
+    function resize() {
+        s.size(window.innerWidth, window.innerHeight).update();
+    }
+
+    window.onresize = function () {
+        resize();
+    };
+    resize();
+
+    //刷新场景
+    requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame ||
+            function (callback) {
+                setTimeout(callback, 1000 / 60);
+            };
+
+	var movect=0;
+		
+    function go() {
+		movect++;
+
+		qian.rotate(0, -0.2, 0).updateT();
+
+		var tmp2=parseInt(movect/30)%2;
+		if(tmp2==1){
+			qian2.rotate(-2, 0, 0).updateT();
+			qian3.rotate(2, 0, 0).updateT();
+		}
+		else {
+			qian2.rotate(2, 0, 0).updateT();
+			qian3.rotate(-2, 0, 0).updateT();
+		}
+		requestAnimationFrame(go);
+    }
+	
+	var oMain=document.getElementById('main');
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+		c.rotate(b*0.1, -a*0.1, 0).updateT();
+		//sp.rotate(b*0.1, -a*0.15, 0).updateT();
+		//mysp.rotate(b*0.1, -a*0.1, 0).updateT();
+		qian.rotate(b*0.1, -a*0.1, 0).updateT();
+        //requestAnimationFrame(go);
+		
+	}
+
+
+	function move0(ev,mvfn)
+	{
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		var disY = ev.clientY;
+		
+		document.onmousemove = function(ev){
+			var ev = ev || window.event;				
+			mvfn(ev.clientX - disX,ev.clientY - disY);
+			disX = ev.clientX;disY = ev.clientY;
+			
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+		return false;
+	}
+
+	function move1(ev,mvfn)
+	{
+		var disX = ev.changedTouches[0].clientX;	
+		var disY = ev.changedTouches[0].clientY;	
+		document.ontouchmove = function(ev){			
+
+			mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+			disX = ev.changedTouches[0].clientX;
+			disY = ev.changedTouches[0].clientY;
+			
+		};
+		document.ontouchend = function(){			
+			document.ontouchstart = null;
+			document.ontouchmove = null;
+		};
+		return false;
+	}
+
+    requestAnimationFrame(go);
+	move(1800,0);
+
+</script>
+</body>
