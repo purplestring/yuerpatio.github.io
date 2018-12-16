@@ -100,6 +100,7 @@
 	</style>
 	<title>鸟之册</title>
 	<script src="bird.js"></script>
+	<script src="birdjson.js"></script>
 
 </head>
 
@@ -107,8 +108,11 @@
 	<div id="main"></div>
 </body>
 <script>
-	window.onload = function(){
 
+	window.onload = function(){
+		//var birdstr=JSON.stringify(birdjson).replace(/#b/g,"鸟").replace(/#1/g,"白色").replace(/#2/g,"雀形目");
+
+		 
 		writejson(birdjson);
 		function writejson(json)
 		{
