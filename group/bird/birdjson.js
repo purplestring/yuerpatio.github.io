@@ -16,12 +16,20 @@ function properties(obj) {
 }
  
 var replacements = {
-      "#b":"中国"
+/*	  "@":"'",*/
+	"#a":"中国"
+	, "#b":"中等"
 	, "#c":"体型"
 	, "#d":"上体"
-	, "#e":"厘米"
+	, "#e":"下体"
 	, "#f":"灰色"
 	, "#g":"雌鸟"
+	, "#h":"雌鸟"
+	, "#i":"东南亚"
+	, "#j":"繁殖"
+	, "#k":"叫声"
+	, "#l":"鸣声"
+	, "#m":"腹部"
     , "#1":"白色"
     , "#2":"雀形目"
 	, "#3":"黄色" 
@@ -29,14 +37,16 @@ var replacements = {
 	, "#5":"褐色"
     , "#6":"区别在"
 	, "#7":"黑色"
-	, "#8":"叫声"
-	, "#9":"下体"
+	, "#8":"区别"
+	, "#9":"厘米"
 	
 };
 
 var regex = new RegExp(properties(replacements).map(RegExp.escape).join("|"), "g");
 //console.time('global')
+//var birdstr = birdjs.replace(regex, function($0) { return replacements[$0]; }).replace(/#0/g, '\\"').replace(/#r/g,'<br>');
 var birdstr = JSON.stringify(birdjs).replace(regex, function($0) { return replacements[$0]; });
 //console.timeEnd('global')
+//console.log(birdstr);
 
 var birdjson=JSON.parse(birdstr);
