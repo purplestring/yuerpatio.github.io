@@ -165,20 +165,20 @@
 		if(birdjson.RECORDS[cid].pic) 
 		{ 
 			txt+=("【描述】"+birdjson.RECORDS[cid].de2+"<br><br>");
-			txt+="<img id='birdpic' src='birds/"+birdjson.RECORDS[cid].pic+"' >";
+			txt+="【俺拍嗒】<br><img id='birdpic' src='birds/"+birdjson.RECORDS[cid].pic+"' >";
 		}
 		//else if(cid<1329) txt+="<img id='birdpic' src='http://photo.niaolei.org.cn/cnbird/image/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' >"; 
 		//else if(cid<1329) txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a>'; 
 		if(cid<1329) {				
-			txt+='<div id="all_comments_a" align="center" style="display:none">';
+			txt+='<br><div id="all_comments_a" align="center" style="display:none">';
 			
-			txt+='<br><br>《中国鸟类野外手册》手绘图、分布图：<br>';
+			txt+='<br>《中国鸟类野外手册》手绘图、分布图：<br>';
 			txt+="<br><img id='birdpic' src='http://182.61.17.142/app/views/images/birdsall/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
 			txt+="<br><img id='birdpic' src='http://182.61.17.142/app/views/images/birdmap/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
 			//txt+='以上手绘图、分布图引自《中国鸟类野外手册》，更多参考<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">这里</a><br>';
-			txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br>';
+			txt+='<br><a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br><br>';
 			txt+='</div>';
-			txt+='<div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▼</div>';
+			txt+='<br><div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▼</div>';
 		}
 		txt+='<br><br><div id="footer"><a href="index.html">返回册主页</a><br><br></div>';
 		oMain.innerHTML=txt;
