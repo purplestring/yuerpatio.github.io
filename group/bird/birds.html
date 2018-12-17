@@ -169,8 +169,7 @@
 		}
 		//else if(cid<1329) txt+="<img id='birdpic' src='http://photo.niaolei.org.cn/cnbird/image/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' >"; 
 		//else if(cid<1329) txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a>'; 
-		if(cid<1329) {
-			txt+='<div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▲</div>';	
+		if(cid<1329) {				
 			txt+='<div id="all_comments_a" align="center" style="display:none">';
 			
 			txt+='《中国鸟类野外手册》手绘图、分布图：<br>';
@@ -179,6 +178,7 @@
 			//txt+='以上手绘图、分布图引自《中国鸟类野外手册》，更多参考<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">这里</a><br>';
 			txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br>';
 			txt+='</div>';
+			txt+='<div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▼</div>';
 		}
 		txt+='<br><br><div id="footer"><a href="index.html">返回册主页</a><br><br></div>';
 		oMain.innerHTML=txt;
