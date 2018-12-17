@@ -134,6 +134,14 @@
 				if(json.RECORDS[i].pic==null)txt+="id='nopic' ";
 				txt+="href='birds.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
 			}
+			txt+="<br><br><br><a id='family'>番外<br><br></a>";
+			for(var i=1329;i<json.RECORDS.length;i++)
+			{
+				if(json.RECORDS[i].id==3001) txt+="<br><br><br><a id='family'>未知<br><br></a>";
+				txt+="<a ";
+				if(json.RECORDS[i].pic==null)txt+="id='nopic' ";
+				txt+="href='birds.html#"+parseInt(i+1)+"'>"+json.RECORDS[i].wu+"</a> ";
+			}
 			txt+='<br><br><div id="footer"><br><br><br><a href="http://yuerpatio.com/">返回主页</a><br>';
 			txt+='Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
 			oMain.innerHTML=txt;
