@@ -3,6 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
+	<!--link rel="stylesheet" href="../main/style.css" type="text/css" /-->
 	<style>
 	*{
             margin: 0;
@@ -47,11 +48,20 @@
 		font-size:16px;
 	}
 	#footer{
-		width:640px;
 		position:absolute;
+		text-align: center;
+		width:640px;
+		left:50%;
+		margin-left: -320px;
+		margin-top:60px;
+	}
+	#ret{
+		position:absolute;
+		width:640px;
 		text-align: center;
 		left:50%;
 		margin-left: -320px;
+		margin-top:-50px;
 	}
 	
 	a {
@@ -96,11 +106,17 @@
 		#species{
 			font-size:42px;
 		}
+		#footer{
+			font-size:26px;
+			margin-top:120px;
+		}
+		#ret{
+			margin-top:-120px;
+		}
 	}
 	</style>
-	<title>鸟之册</title>
-	<script src="bird.js"></script>
-	<script src="birdjson.js"></script>
+	<title>风之册</title>
+	<script src="scenes.js"></script>
 
 </head>
 
@@ -109,41 +125,25 @@
 </body>
 <script>
 
-	window.onload = function(){
-		//var birdstr=JSON.stringify(birdjson).replace(/#b/g,"鸟").replace(/#1/g,"白色").replace(/#2/g,"雀形目");
-
-		 
-		writejson(birdjson);
+	window.onload = function(){		 
+		writejson(myjson);
 		function writejson(json)
 		{
 			var oMain = document.getElementById('main');
 
 			var txt="<br><br>";
-			txt+='<div id="title" align="center">鳥之册</div><br><br>';
-			txt+='<div id="desc1">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。<br><br></div>';
+			txt+='<div id="title" align="center">风之册</div><br><br>';
+			txt+='<div id="desc1">人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之<br><br></div>';
 			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>';
-			txt+='转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<a href="">🔍</a></div><br><br><br>';
-			for(var i=0;i<1329;i++)
+			txt+='所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
+			for(var i=0;i<json.RECORDS.length;i++)
 			{				
-				if( (i>0 && json.RECORDS[i].ke!=json.RECORDS[i-1].ke) || i==0) 
-				{
-					if(i>0)txt+="<br><br><br>";
-					txt+="<a id='family'>"+json.RECORDS[i].mu+"->"+json.RECORDS[i].ke+"<br><br></a>"; 
-				}
-				txt+="<a ";
-				if(json.RECORDS[i].pic==null)txt+="id='nopic' ";
-				txt+="href='birds.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
+				//txt+="<a id='family'>"+json.RECORDS[i].mu+"->"+json.RECORDS[i].ke+"<br><br></a>"; 
+				txt+="<a href='page.html#"+json.RECORDS[i].S_ID+"'>"+json.RECORDS[i].S_NAME+"</a> ";
 			}
-			txt+="<br><br><br><a id='family'>番外<br><br></a>";
-			for(var i=1329;i<json.RECORDS.length;i++)
-			{
-				if(json.RECORDS[i].id==3001) txt+="<br><br><br><br><a id='family'>未知<br><br></a>";
-				txt+="<a ";
-				if(json.RECORDS[i].pic==null)continue;//txt+="id='nopic' ";
-				txt+="href='birds.html#"+parseInt(i+1)+"'>"+json.RECORDS[i].wu+"</a> ";
-			}
-			txt+='<br><br><div id="footer"><br><br><br><a href="http://yuerpatio.com/">返回主页</a><br>';
-			txt+='Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+
+			txt+='<br><br><div id="ret"><br><br><br><a href="http://yuerpatio.com/">返回主页</a><br></div>';
+			txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
 			oMain.innerHTML=txt;
 		}
 	
