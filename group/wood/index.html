@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+	</style>
+	<title>草木篇</title>
+	<script src="woods.js"></script>
+
+</head>
+
+<body>	
+	<div id="main"></div>
+</body>
+<script>
+
+	window.onload = function(){		 
+		writejson(myjson);
+		function writejson(json)
+		{
+			var oMain = document.getElementById('main');
+
+			var txt="<br><br>";
+			txt+='<div id="title" align="center">草木篇</div><br><br>';
+			txt+='<div id="desc1">长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之<br><br></div>';
+			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>';
+			txt+='所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
+			for(var i=0;i<json.RECORDS.length;i++)
+			{				
+				if( (i>0 && json.RECORDS[i].W_KEY!=json.RECORDS[i-1].W_KEY) || i==0) 
+				{
+					if(i>0)txt+="<br><br><br>";
+					txt+="<a id='family'>"+json.RECORDS[i].W_KEY+"<br><br></a>"; 
+				}
+				txt+="<a href='page.html#"+i+"'>"+json.RECORDS[i].W_NAME+"</a> ";
+			}
+
+			txt+='<br><br><div id="ret"><a href="http://yuerpatio.com/"> ▶返回主页◀</a></div>';
+			txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+			oMain.innerHTML=txt;
+		}
+	
+	}
+</script>
+</html>

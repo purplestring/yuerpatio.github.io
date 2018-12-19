@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+		<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<script src="utensils.js"></script>
+	<!--script src="../group.js"></script-->
+
+</head>
+
+<body>	
+	<div id="pmain"></div>
+</body>
+<script>
+
+	function jumpto(cid)
+	{
+		var oMain = document.getElementById('pmain');
+		document.title=myjson.RECORDS[cid].U_NAME;
+		var txt="<br><br><div id='ptitle' align='center'>"+myjson.RECORDS[cid].U_NAME+"<br><br></div>";
+		if(myjson.RECORDS[cid].U_DESC) txt+=(myjson.RECORDS[cid].U_DESC+"<br>");
+		txt+="<br><img id='myimg' src='img/"+myjson.RECORDS[cid].U_PICS+"' >";		
+		txt+='<br><br><div align="center"><a href="index.html">▶返回册主页◀</a></div>';
+		txt+='<div id="pfooter">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br> ';
+		oMain.innerHTML=txt;
+	}
+		
+	window.onload = function(){
+		id=window.location.hash.split('#')[1];		
+		jumpto(id);
+	}
+</script>
+</html>
