@@ -26,7 +26,7 @@ a:hover {
 	padding-left:10px;
 	padding-right:10px;
 }
-#title{
+#title,#ptitle{
 	color:#fff;
 	font-size:54px;
 }
@@ -88,6 +88,9 @@ a:hover {
 	}
 	#title{
 		font-size:84px;
+	}
+	#ptitle{
+		font-size:56px;
 	}
 	#desc1{
 		font-size:42px;
