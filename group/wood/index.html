@@ -22,11 +22,11 @@
 		{
 			var oMain = document.getElementById('main');
 
-			var txt="<br><br>";
+			var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
+			txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
 			txt+='<div id="title" align="center">草木篇</div><br><br>';
 			txt+='<div id="desc1">长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之<br><br></div>';
-			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>';
-			txt+='所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
+			txt+='<div id="desc2">所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
 			for(var i=0;i<json.RECORDS.length;i++)
 			{				
 				if( (i>0 && json.RECORDS[i].W_KEY!=json.RECORDS[i-1].W_KEY) || i==0) 

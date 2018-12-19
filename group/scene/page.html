@@ -23,7 +23,9 @@
 	{
 		var oMain = document.getElementById('pmain');
 		document.title=myjson.RECORDS[cid].S_NAME;
-		var txt="<br><br><div id='ptitle' align='center'>"+myjson.RECORDS[cid].S_NAME+"<br><br></div>";
+		var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
+		txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
+		txt="<div id='ptitle' align='center'>"+myjson.RECORDS[cid].S_NAME+"<br><br></div>";
 		if(myjson.RECORDS[cid].S_DESC) txt+=(myjson.RECORDS[cid].S_DESC+"<br>");
 		txt+="<br><img id='myimg' src='img/"+myjson.RECORDS[cid].S_PICS+"' >";		
 		txt+='<br><br><div align="center"><a href="index.html">▶返回册主页◀</a></div>';

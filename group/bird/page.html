@@ -55,7 +55,8 @@
 		var lastid=(birdjson.RECORDS.length+cid-1)%birdjson.RECORDS.length;
 		var nextid=(cid+1)%birdjson.RECORDS.length;
 	
-		var txt="<br><br>";
+		var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
+		txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
 		txt+=("<div id='navi' align='center'>"+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastgrp+')">◀◀◀　</a>'+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastpic+')">◀◀　</a>'+
