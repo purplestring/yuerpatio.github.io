@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title></title>
-	<script src="scenes.js"></script>
+	<script src="bugs.js"></script>
 	<!--script src="../group.js"></script-->
 
 </head>
@@ -22,10 +22,10 @@
 	function jumpto(cid)
 	{
 		var oMain = document.getElementById('pmain');
-		document.title=myjson.RECORDS[cid].S_NAME;
-		var txt="<br><br><div id='title' align='center'>"+myjson.RECORDS[cid].S_NAME+"<br><br></div>";
-		if(myjson.RECORDS[cid].S_DESC) txt+=(myjson.RECORDS[cid].S_DESC+"<br>");
-		txt+="<br><img id='myimg' src='img/"+myjson.RECORDS[cid].S_PICS+"' >";		
+		document.title=myjson.RECORDS[cid].BUGS_NAME;
+		var txt="<br><br><div id='title' align='center'>"+myjson.RECORDS[cid].BUGS_NAME+"<br><br></div>";
+		if(myjson.RECORDS[cid].BUGS_DESC) txt+=(myjson.RECORDS[cid].BUGS_DESC+"<br>");
+		txt+="<br><img id='myimg' src='img/"+myjson.RECORDS[cid].BUGS_PICS+"' >";		
 		txt+='<br><br><div align="center"><a href="index.html">▶返回册主页◀</a></div>';
 		txt+='<div id="pfooter">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br> ';
 		oMain.innerHTML=txt;

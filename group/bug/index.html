@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="../style.css" type="text/css" />
 	<style>
 	</style>
-	<title>风之册</title>
-	<script src="scenes.js"></script>
+	<title>虫之册</title>
+	<script src="bugs.js"></script>
 
 </head>
 
@@ -23,18 +23,18 @@
 			var oMain = document.getElementById('main');
 
 			var txt="<br><br>";
-			txt+='<div id="title" align="center">风之册</div><br><br>';
-			txt+='<div id="desc1">人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之<br><br></div>';
+			txt+='<div id="title" align="center">虫之册</div><br><br>';
+			txt+='<div id="desc1">雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之<br><br></div>';
 			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>';
 			txt+='所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
 			for(var i=0;i<json.RECORDS.length;i++)
 			{				
-				if( (i>0 && json.RECORDS[i].S_KEY!=json.RECORDS[i-1].S_KEY) || i==0) 
+				if( (i>0 && json.RECORDS[i].BUGS_ORDER!=json.RECORDS[i-1].BUGS_ORDER) || i==0) 
 				{
 					if(i>0)txt+="<br><br><br>";
-					txt+="<a id='family'>"+json.RECORDS[i].S_KEY+"<br><br></a>"; 
+					txt+="<a id='family'>"+json.RECORDS[i].BUGS_ORDER+"<br><br></a>"; 
 				}
-				txt+="<a href='page.html#"+i+"'>"+json.RECORDS[i].S_NAME+"</a> ";
+				txt+="<a href='page.html#"+i+"'>"+json.RECORDS[i].BUGS_NAME+"</a> ";
 			}
 
 			txt+='<br><br><div id="ret"><a href="http://yuerpatio.com/"> ▶返回主页◀</a></div>';

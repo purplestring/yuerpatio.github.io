@@ -3,100 +3,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
 	<style>
-	*{
-            margin: 0;
-            padding: 0;
-			
-    }
-	body{
-		font-family:"宋体","黑体","楷体";
-		background: url("../background.jpg");
-		color:#fff;
-	}
-	#main{
-		width:960px;
-		position:absolute;
-		left:50%;
-		margin-left:-480px;
-		background: rgba(5,44,7,0.7);
-		padding-left:10px;
-		padding-right:10px;
-	}
-	#title{
-		color:#fff;
-		font-size:54px;
-	}
-	#desc1{
-		color:#fff;
-		font-size:22px;
-		text-align: center;
-	}
-	#desc2{
-		color:#fff;
-		font-size:14px;
-		text-align: center;
-	}
-	#family {
-		color:#fffa7a;
-		font-size:20px;	
-	}
-	
-	#species{
-		color:#eaf5eb;
-		font-size:16px;
-	}
-	#footer{
-		width:640px;
-		position:absolute;
-		text-align: center;
-		left:50%;
-		margin-left: -320px;
-	}
-	
-	a {
-		color:#00ff00;
-		text-decoration: none;
-	} /* 已或未访问链接颜色 */
-		
-	a:hover {
-		color:#FFF;	
-		text-decoration: none;
-	} /* 悬停时链接颜色 */
-	
-	#nopic {
-		color:#eaf5eb;
-		text-decoration: none;
-	} /* 已或未访问链接颜色 */
-		
-	#nopic:hover {
-		color:#bbb;	
-		text-decoration: none;
-	} /* 悬停时链接颜色 */
-	
-	@media screen and (max-device-width:640px){
-		#main{
-			font-size:42px;
-			left:50%;
-			width:960px;
-			margin-left:-490px;
-		}
-		#title{
-			font-size:84px;
-		}
-		#desc1{
-			font-size:42px;
-		}
-		#desc2{
-			font-size:36px;
-		}
-		#family {
-			font-size:54px;	
-		}
-		#species{
-			font-size:42px;
-		}
-	}
 	</style>
 	<title>鸟之册</title>
 	<script src="bird.js"></script>
@@ -132,7 +40,7 @@
 				}
 				txt+="<a ";
 				if(json.RECORDS[i].pic==null)txt+="id='nopic' ";
-				txt+="href='birds.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
+				txt+="href='page.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
 			}
 			txt+="<br><br><br><a id='family'>番外<br><br></a>";
 			for(var i=1329;i<json.RECORDS.length;i++)
@@ -140,10 +48,10 @@
 				if(json.RECORDS[i].id==3001) txt+="<br><br><br><br><a id='family'>未知<br><br></a>";
 				txt+="<a ";
 				if(json.RECORDS[i].pic==null)continue;//txt+="id='nopic' ";
-				txt+="href='birds.html#"+parseInt(i+1)+"'>"+json.RECORDS[i].wu+"</a> ";
+				txt+="href='page.html#"+parseInt(i+1)+"'>"+json.RECORDS[i].wu+"</a> ";
 			}
-			txt+='<br><br><div id="footer"><br><br><br><a href="http://yuerpatio.com/">返回主页</a><br>';
-			txt+='Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+			txt+='<br><br><div id="ret"><a href="http://yuerpatio.com/"> ▶返回主页◀</a></div>';
+			txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
 			oMain.innerHTML=txt;
 		}
 	

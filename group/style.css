@@ -8,6 +8,15 @@ body{
 	background: url("background.jpg");
 	color:#fff;
 }
+a {
+	color:#0f0;
+	text-decoration: none;
+}
+	
+a:hover {
+	color:#FFF;	
+	text-decoration: none;
+}
 #main,#pmain{
 	width:960px;
 	position:absolute;
@@ -31,9 +40,22 @@ body{
 	font-size:14px;
 	text-align: center;
 }
+#nopic {
+	color:#eaf5eb;
+	text-decoration: none;
+}
+	
+#nopic:hover {
+	color:#bbb;	
+	text-decoration: none;
+} 
 #myimg{
-		width:100%;
-	}
+	width:100%;
+}
+#family {
+	color:#fffa7a;
+	font-size:20px;	
+}
 #footer,#pfooter{
 	position:absolute;
 	text-align: center;
@@ -50,16 +72,6 @@ body{
 	text-align: center;
 	left:50%;
 	margin-left: -480px;
-}
-
-a {
-	color:#00ff00;
-	text-decoration: none;
-}
-	
-a:hover {
-	color:#FFF;	
-	text-decoration: none;
 }
 
 @media screen and (max-device-width:640px){
@@ -83,13 +95,18 @@ a:hover {
 	#desc2{
 		font-size:36px;
 	}
+	#family {
+		font-size:54px;	
+	}
 	#footer{
 		font-size:36px;
 		margin-top:120px;
 	}
 	#pfooter{
-			font-size:26px;
-			margin-top:45px;
-			margin-bottom:30px;
+		width:640px;
+		font-size:26px;
+		margin-top:45px;
+		margin-bottom:30px;
+		margin-left: -320px;
 	}
 }

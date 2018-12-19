@@ -3,111 +3,25 @@
 <head>
 		<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
 	<style>
-	*{
-            margin: 0;
-            padding: 0;
-			color:#fff;
-    }
-	body{
-		font-family:"宋体","黑体","楷体";
-		background: url("../background.jpg");
-	}
-	#main{
-		width:960px;
-		position:absolute;
-		left:50%;
-		top:20px;
-		margin-left:-480px;
-		background: rgba(5,44,7,0.7);
-		padding-left:10px;
-		padding-right:10px;
-	}
-	
-	#birdpic{
-		width:100%;
-	}
-
-	#footer{
-		width:300px;
-		text-align: center;
-		margin:0 auto;
-	}
-	
-	a {
-		color:#00ff00;
-		text-decoration: none;
-	} /* 已或未访问链接颜色 */
-		
-	a:hover {
-		color:#FFF;	
-		text-decoration: none;
-	} /* 悬停时链接颜色 */
-	
-	@media screen and (max-device-width:640px){
-		#main{
-			width:640px;
-			margin-left:-330px;
-			font-size:28px;
-		}
-	}
-
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title></title>
+	<script src="../group.js"></script>
 	<script src="bird.js"></script>
 	<script src="birdjson.js"></script>
 
 </head>
 
 <body>	
-	<div id="main"></div>
+	<div id="pmain"></div>
 </body>
 <script>
-
-	function toZero(num){
-		if(num<=9){
-			return '000' + num;
-		}
-		else if(num<=99){
-			return '00' + num;
-		}
-		else if(num<=999){
-			return '0' + num;
-		}
-		else{
-			return '' + num;
-		}
-	}
-	
-	function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
-
-    var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
-    var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
-    var openTip = oOpenTip || "";
-    var shutTip = oShutTip || "";
-
-
-		if(targetObj.style.display!="none"){
-			oSourceObj.innerHTML=oSourceObj.innerHTML.replace(/▲/, "▼");
-			if(shutAble) return;
-			targetObj.style.display="none";
-			if(openTip  &&  shutTip){
-				sourceObj.innerHTML = shutTip;
-			}
-		} else {
-			oSourceObj.innerHTML=oSourceObj.innerHTML.replace(/▼/, "▲");
-			targetObj.style.display="block";
-			if(openTip  &&  shutTip){
-				sourceObj.innerHTML = openTip;
-			}
-		}
-	}
-
 	function jumpto(cid)
 	{
-		var oMain = document.getElementById('main');
+		var oMain = document.getElementById('pmain');
 		document.title=birdjson.RECORDS[cid].wu;
 		
 		var lastgrp=cid-1;
@@ -142,7 +56,7 @@
 		var nextid=(cid+1)%birdjson.RECORDS.length;
 	
 		var txt="<br><br>";
-		txt+=("<div id='title' align='center'>"+
+		txt+=("<div id='navi' align='center'>"+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastgrp+')">◀◀◀　</a>'+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastpic+')">◀◀　</a>'+
 		'<a href="javascript:void(0);" onclick="jumpto('+lastid+')">◀　</a>'+
@@ -165,22 +79,22 @@
 		if(birdjson.RECORDS[cid].pic) 
 		{ 
 			txt+=("【描述】"+birdjson.RECORDS[cid].de2+"<br><br>");
-			txt+="【俺拍嗒】<br><img id='birdpic' src='birds/"+birdjson.RECORDS[cid].pic+"' >";
+			txt+="【俺拍嗒】<br><img id='myimg' src='birds/"+birdjson.RECORDS[cid].pic+"' >";
 		}
-		//else if(cid<1329) txt+="<img id='birdpic' src='http://photo.niaolei.org.cn/cnbird/image/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' >"; 
+		//else if(cid<1329) txt+="<img id='myimg' src='http://photo.niaolei.org.cn/cnbird/image/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' >"; 
 		//else if(cid<1329) txt+='<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a>'; 
 		if(cid<1329) {				
 			txt+='<br><div id="all_comments_a" align="center" style="display:none">';
 			
 			txt+='<br>《中国鸟类野外手册》手绘图、分布图：<br>';
-			txt+="<br><img id='birdpic' src='http://182.61.17.142/app/views/images/birdsall/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
-			txt+="<br><img id='birdpic' src='http://182.61.17.142/app/views/images/birdmap/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
+			txt+="<br><img id='myimg' src='http://182.61.17.142/app/views/images/birdsall/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
+			txt+="<br><img id='myimg' src='http://182.61.17.142/app/views/images/birdmap/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
 			//txt+='以上手绘图、分布图引自《中国鸟类野外手册》，更多参考<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">这里</a><br>';
 			txt+='<br><a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br><br>';
 			txt+='</div>';
 			txt+='<br><div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▼</div>';
 		}
-		txt+='<br><br><div id="footer"><a href="index.html">返回册主页</a><br><br></div>';
+		txt+='<br><br><div id="pfooter"><a href="index.html">▶返回册主页◀</a><br><br></div>';
 		oMain.innerHTML=txt;
 	}
 		
