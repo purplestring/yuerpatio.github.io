@@ -3,156 +3,37 @@
 <head>
 		<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
 	<style>
-	*{
-            margin: 0;
-            padding: 0;
-			color:#fff;
-    }
-	body{
-		font-family:"宋体","黑体","楷体";
-		background: url("../background.jpg");
-	}
-	#main{
-		width:960px;
-		position:absolute;
-		left:50%;
-		top:20px;
-		margin-left:-480px;
-		background: rgba(5,44,7,0.7);
-		padding-left:10px;
-		padding-right:10px;
-	}
-	
-	#birdpic{
-		width:100%;
-	}
-
-	#footer{
-		text-align: center;
-		margin:0 auto;
-	}
-	
-	a {
-		color:#00ff00;
-		text-decoration: none;
-	} /* 已或未访问链接颜色 */
-		
-	a:hover {
-		color:#FFF;	
-		text-decoration: none;
-	} /* 悬停时链接颜色 */
-	
-	@media screen and (max-device-width:640px){
-		#main{
-			width:640px;
-			margin-left:-330px;
-			font-size:28px;
-		}
-		#footer{
-			font-size:26px;
-			margin-top:30px;
-		}
-	}
-
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title></title>
 	<script src="scenes.js"></script>
+	<!--script src="../group.js"></script-->
 
 </head>
 
 <body>	
-	<div id="main"></div>
+	<div id="pmain"></div>
 </body>
 <script>
-	
-	function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
-
-    var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
-    var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
-    var openTip = oOpenTip || "";
-    var shutTip = oShutTip || "";
-
-
-		if(targetObj.style.display!="none"){
-			oSourceObj.innerHTML=oSourceObj.innerHTML.replace(/▲/, "▼");
-			if(shutAble) return;
-			targetObj.style.display="none";
-			if(openTip  &&  shutTip){
-				sourceObj.innerHTML = shutTip;
-			}
-		} else {
-			oSourceObj.innerHTML=oSourceObj.innerHTML.replace(/▼/, "▲");
-			targetObj.style.display="block";
-			if(openTip  &&  shutTip){
-				sourceObj.innerHTML = openTip;
-			}
-		}
-	}
 
 	function jumpto(cid)
 	{
-		var oMain = document.getElementById('main');
+		var oMain = document.getElementById('pmain');
 		document.title=myjson.RECORDS[cid].S_NAME;
-/*		
-		var lastgrp=cid-1;
-		for(;lastgrp>0;lastgrp--)
-		{
-			if(myjson.RECORDS[lastgrp].ke!=myjson.RECORDS[lastgrp+1].ke) break;
-		}
-		if(cid==0)lastgrp=1242;
-		
-		var nextgrp=cid+1;
-		for(;nextgrp<myjson.RECORDS.length;nextgrp++)
-		{
-			if(myjson.RECORDS[nextgrp].ke!=myjson.RECORDS[nextgrp-1].ke) break;
-		}
-		if(nextgrp>=1329)nextgrp=0;
-		
-		var lastpic=cid-1;
-		for(;lastpic>0;lastpic--)
-		{
-			if(myjson.RECORDS[lastpic].pic!=null) break;
-		}
-		if(cid==0)lastpic=cid;
-		
-		var nextpic=cid+1;
-		for(;nextpic<myjson.RECORDS.length;nextpic++)
-		{
-			if(myjson.RECORDS[nextpic].pic!=null) break;
-		}
-		if(cid==myjson.RECORDS.length)nextpic=cid;
-		
-		var lastid=(myjson.RECORDS.length+cid-1)%myjson.RECORDS.length;
-		var nextid=(cid+1)%myjson.RECORDS.length;
-	
-		//var txt="<br><br>";
-		txt+=("<div id='title' align='center'>"+
-		'<a href="javascript:void(0);" onclick="jumpto('+lastgrp+')">◀◀◀　</a>'+
-		'<a href="javascript:void(0);" onclick="jumpto('+lastpic+')">◀◀　</a>'+
-		'<a href="javascript:void(0);" onclick="jumpto('+lastid+')">◀　</a>'+
-		"【"+myjson.RECORDS[cid].id+"】"+
-		'<a href="javascript:void(0);" onclick="jumpto('+nextid+')">　▶</a>'+
-		'<a href="javascript:void(0);" onclick="jumpto('+nextpic+')">　▶▶</a>'+
-		'<a href="javascript:void(0);" onclick="jumpto('+nextgrp+')">　▶▶▶</a><br>'+
-*/
-
 		var txt="<br><br><div id='title' align='center'>"+myjson.RECORDS[cid].S_NAME+"<br><br></div>";
-		if(myjson.RECORDS[cid].S_DESC) txt+=myjson.RECORDS[cid].S_DESC;
-		txt+="<br><img id='birdpic' src='img/"+myjson.RECORDS[cid].S_PICS+"' >";		
-		txt+='<br><br><div align="center"><a href="index.html">返回册主页</a></div><div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br>';
+		if(myjson.RECORDS[cid].S_DESC) txt+=(myjson.RECORDS[cid].S_DESC+"<br>");
+		txt+="<br><img id='myimg' src='img/"+myjson.RECORDS[cid].S_PICS+"' >";		
+		txt+='<br><br><div align="center"><a href="index.html">返回册主页</a></div>';
+		txt+='<div id="pfooter">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br> ';
 		oMain.innerHTML=txt;
 	}
 		
 	window.onload = function(){
 		id=window.location.hash.split('#')[1];		
 		jumpto(id-1);
-		//console.log(oMain.offsetHeight+20+"px");
-		//var oFooter = document.getElementById('footer');
-		//console.log( document.body.clientHeight );
-		//oFooter.style.top=oMain.offsetHeight+20+"px";
 	}
 </script>
 </html>
