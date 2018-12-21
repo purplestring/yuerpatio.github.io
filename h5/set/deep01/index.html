@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title></title>
+	 <style type="text/css">
+  *{
+		margin: 0;
+		padding: 0;			
+	}
+	body{
+		font-family:"宋体","黑体","楷体";
+		color:#000;
+		background: #add0b1;
+		margin: 0;
+		padding: 0;
+	}
+	#view{
+		position: relative;
+		width:960px;
+		height:480px;
+		overflow:hidden;
+		left:50%;
+		top:200px;
+		border-style:solid;
+		border-color:#aaa;	
+		margin-left:-480px;
+	}
+	#main{
+		position: relative;
+		width:960px;
+		height:720px;
+		overflow:hidden;
+		top:-90px;
+		background: #5ca2e9;
+ 
+		-webkit-transform-style: preserve-3d; 
+        -webkit-transform: translateZ(-100px);   
+		/*-webkit-perspective: 10px;	*/	
+				
+	}
+	ul li{
+		list-style: none;
+		font-size: 60px;
+		text-align: center;
+		width:4200px;
+		height:720px;
+		color: rgb(255,0,255,0.2);
+		line-height: 200px;
+		position: absolute;
+		background: rgb(155,55,155,0.2);
+		background: url(img/hill.png);
+		background-repeat: no-repeat;
+		background-position:bottom;
+
+	}
+	a {
+		color:#137f05;	
+	}
+		
+	a:hover {
+		color:#FFF;	
+		text-decoration: none;
+	}
+	.floor{
+		width:3600px;
+		height:300px;	
+		left:-1300px;
+		background: url(img/6.png);
+		background-repeat: repeat;
+
+	}
+
+	
+	#footer{
+		width:300px;
+		position:absolute;
+		text-align: center;
+		left:50%;
+		margin-left: -150px;
+		bottom:10px;
+	}
+	
+
+</style>
+
+</head>
+<body>
+<!--div id="info">~~ 古画合集 ~~</div-->
+<div id="view">
+<ul id="main">
+
+</ul>
+</div>
+<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+	
+
+	
+window.onload=function (){
+var oMain=document.getElementById('main');
+	oMain.style['perspective'] = oMain.style['-webkit-perspective']="400px";
+	var txt="";
+	picct=6;picd=400;
+	for(var i=1;i<=picct;i++) txt+='<li class="floor" id="floor'+i+'"></li>';
+	for(var i=picct;i>0;i--) {
+		txt+='<li class="pic" id="pic'+i+'"></li>';
+		//document.getElementById('pic'+i).backgroundImage="url(img/1.png)";
+	}
+	oMain.innerHTML=txt;
+	for(var i=1;i<=picct;i++) {
+		document.getElementById('pic'+i).style.background="url(img/"+(i%3+1)+".png) bottom repeat-x";
+		document.getElementById('pic'+i).style.left="-1600px";
+	}
+
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	var currentz=0;
+	move(0,0);
+	function getOpacity(z)
+	{
+		length=picd*picct;
+		margin=picd*0.7;
+		while(z<0) z+=length;
+		while(z>picd*picct) z-=length;
+		//z=z%length;
+		if (z<margin) return z/margin;
+		margin*=0.2;
+		if (z>(length-margin)) return (length-z)/margin;
+		return 1;
+		
+	}
+	function getPos(z)
+	{
+		length=picd*picct;
+		start=-picd*picct;
+		while(z<start) z+=length;
+		while(z>(start+length)) z-=length;
+		return z;	
+	}
+	
+	function getZ(z)
+	{
+		length=picd*picct;
+		while(z<0) z+=length;
+		while(z>picd*picct) z-=length;
+		return parseInt(z/picd);	
+	}
+	
+	function move(a,b)
+	{
+		currentz+=(-b);	
+		for(var i=1;i<=picct;i++){
+			document.getElementById('pic'+i).style['-webkit-transform'] ='translateZ('+getPos(currentz-picd*i+picd)+"px)";
+			document.getElementById('pic'+i).style.zIndex=getZ(currentz-picd*i+picd);
+			document.getElementById('floor'+i).style.opacity = document.getElementById('pic'+i).style.opacity = getOpacity(currentz-picd*i+picd); 
+			document.getElementById('floor'+i).style['-webkit-transform'] ='translateZ('+getPos(currentz-picd*i+picd)+"px) translateY(500px) rotateX(90deg)";
+			document.getElementById('floor'+i).style.height = picd+"px";
+		}
+	};	
+	
+	
+	
+	
+	/**********************************************************/
+		//兼容性写法，
+		//判断鼠标滚轮滚动方向
+		if (window.addEventListener)//FF,火狐浏览器会识别该方法
+			window.addEventListener('DOMMouseScroll', wheel, false);
+		window.onmousewheel = document.onmousewheel = wheel;//W3C
+		//统一处理滚轮滚动事件
+		function wheel(event){
+			var delta = 0;
+			if (!event) event = window.event;
+			if (event.wheelDelta) {//IE、chrome浏览器使用的是wheelDelta，并且值为“正负120”
+				delta = event.wheelDelta/120; 
+				if (window.opera) delta = -delta;//因为IE、chrome等向下滚动是负值，FF是正值，为了处理一致性，在此取反处理
+			} else if (event.detail) {//FF浏览器使用的是detail,其值为“正负3”
+				delta = -event.detail/3;
+			}
+			if (delta)
+				handle(delta);
+		}
+		//上下滚动时的具体处理函数
+		function handle(delta) {
+			move(0,20*delta);
+		}
+		/******************************************************/
+	
+	
+	
+	
+}
+
+function move0(ev,mvfn)
+{
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn)
+{
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+</script>
+</html>
