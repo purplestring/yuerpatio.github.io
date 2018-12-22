@@ -99,7 +99,7 @@ window.onload=function (){
 var oMain=document.getElementById('main');
 	oMain.style['perspective'] = oMain.style['-webkit-perspective']="400px";
 	var txt="";
-	picct=6;picd=400;
+	picct=12;picd=200;
 	for(var i=1;i<=picct;i++) txt+='<li class="floor" id="floor'+i+'"></li>';
 	for(var i=picct;i>0;i--) {
 		txt+='<li class="pic" id="pic'+i+'"></li>';
@@ -107,8 +107,11 @@ var oMain=document.getElementById('main');
 	}
 	oMain.innerHTML=txt;
 	for(var i=1;i<=picct;i++) {
-		document.getElementById('pic'+i).style.background="url(img/"+(i%3+1)+".png) bottom repeat-x";
-		document.getElementById('pic'+i).style.left="-1600px";
+		if(i%2==0) document.getElementById('pic'+i).style.background="url(img/"+((i/2)%3+1)+".png) bottom repeat-x";
+		else document.getElementById('pic'+i).style.background="url(img/cloud.png) top repeat-x";
+		
+		if(i%4==1) document.getElementById('pic'+i).style.left="-1000px";//cloud
+		else document.getElementById('pic'+i).style.left="-1600px";
 	}
 
 	oMain.onmousedown = function(ev){
@@ -157,8 +160,19 @@ var oMain=document.getElementById('main');
 			document.getElementById('pic'+i).style['transform'] = document.getElementById('pic'+i).style['-webkit-transform'] ='translateZ('+getPos(currentz-picd*i+picd)+"px)";
 			document.getElementById('pic'+i).style.zIndex=getZ(currentz-picd*i+picd);
 			document.getElementById('floor'+i).style.opacity = document.getElementById('pic'+i).style.opacity = getOpacity(currentz-picd*i+picd); 
-			document.getElementById('floor'+i).style['transform'] = document.getElementById('floor'+i).style['-webkit-transform'] ='translateZ('+getPos(currentz-picd*i+picd)+"px) translateY(500px) rotateX(90deg)";
-			document.getElementById('floor'+i).style.height = picd+"px";
+			document.getElementById('floor'+i).style['transform'] = document.getElementById('floor'+i).style['-webkit-transform'] ='translateZ('+getPos(currentz-picd*i+picd)+"px) translateY(700px) rotateX(90deg)";
+			//document.getElementById('floor'+i).style.height = picd+"px";
+			
+			//cloudmove
+			if(i%2!=0)
+			{	
+				//console.log(document.getElementById('pic'+i).offsetLeft);
+				var myleft=document.getElementById('pic'+i).offsetLeft+0.5*b;
+				console.log(myleft);
+				if(myleft<-2600)myleft+=1280;
+				if(myleft>-800)myleft-=1280;
+				document.getElementById('pic'+i).style.left=myleft+"px";
+			}
 		}
 	};	
 	
