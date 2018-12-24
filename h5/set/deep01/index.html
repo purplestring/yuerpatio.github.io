@@ -143,6 +143,15 @@ window.onload=function (){
 	oMain.onmousewheel = function(ev){ return move2(ev,move); };
 
 	move(0,0);
+	
+	//boatmove
+	setInterval(function(){ 
+	
+	boatleft=document.getElementById('pic2').offsetLeft+2;
+	//if(boatleft<-2600)boatleft+=1280;
+	if(boatleft>2400)boatleft-=3600;
+	document.getElementById('pic2').style.left=(boatleft)+"px";	
+	}, 100);
 /*******************************/
 	function getOpacity(z)
 	{
