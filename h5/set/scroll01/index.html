@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>洛神赋</title>
+	 <style type="text/css">
+  *{
+		margin: 0;
+		padding: 0;			
+	}
+	body{
+		font-family:"宋体","黑体","楷体";
+		color:#000;
+		background: #add0b1;
+		margin: 0;
+		padding: 0;
+	}
+	#view{
+		position: relative;
+		width:1280px;
+		height:960px;
+		overflow:hidden;
+		left:50%;
+		top:0px;
+		border-style:solid;
+		border-color:#aaa;	
+		margin-left:-640px;
+	}
+	#main{
+		position: relative;
+		width:1280px;
+		height:960px;
+		overflow:hidden;
+		top:0px;
+		background: #5ca2e9;
+				
+	}
+	ul li{
+		list-style: none;
+		font-size: 60px;
+		text-align: center;		
+		height:720px;
+		color: rgb(255,0,255,0.2);
+		line-height: 200px;
+		position: absolute;
+		
+
+
+	}
+	a {
+		color:#FFF;	
+		text-decoration: none;
+	}
+		
+	a:hover {
+		color:#137f05;	
+		text-decoration: none;
+	}
+
+	
+	#footer{
+		width:300px;
+		position:absolute;
+		text-align: center;
+		left:50%;
+		margin-left: -150px;
+		top:950px;
+	}
+	
+	@media screen and (max-device-width:640px){
+	
+	#view{
+		top:60px;
+		width:640px;	
+		margin-left:-320px;
+	}
+	
+	#main{
+
+		width:640px;
+				
+	}
+	
+	#footer{
+		top:1040px;
+		font-size:45px;
+	}
+
+}
+	
+
+</style>
+
+</head>
+<body>
+<div id="view">
+<ul id="main">
+
+</ul>
+</div>
+<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+
+window.onload=function (){
+
+/*******************************/
+
+	var picjson=[
+	{ "dis":854,"width":1280,"background":"url(img/lsf_0.jpg) no-repeat"},
+	{ "dis":426,"class":"my","width":612,"top":120,"background":"url(img/01.png) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_1.jpg) no-repeat"},	
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_2.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_3.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_4.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_5.jpg) no-repeat"},
+	{ "dis":1094,"width":1280,"background":"url(img/lsf_6.jpg) no-repeat"},
+	{ "dis":186,"class":"my","width":286,"top":343,"background":"url(img/02.png) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_7.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_8.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_9.jpg) no-repeat"},
+	{ "dis":928,"width":1280,"background":"url(img/lsf_10.jpg) no-repeat"},
+	{ "dis":352,"class":"my","width":493,"top":609,"background":"url(img/03.png) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_11.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_12.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_13.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_14.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_15.jpg) no-repeat"},
+	{ "dis":1280,"width":1280,"background":"url(img/lsf_16.jpg) no-repeat"}
+	];
+	var picct=picjson.length;
+	picjson[0].dis0=0;
+	for(var i=1;i<picct;i++) picjson[i].dis0=picjson[i-1].dis0+picjson[i-1].dis;
+	
+	var currentx=0;
+	//var scrct=4;
+	
+	//var pwidth=1280;
+	var swidth=1280;
+	if(window.screen.width<=640) swidth=640;
+	//var slen=scrct*pwidth;
+	//var sct=0;
+	var plen=0; for(var i=0;i<picct;i++) plen+=picjson[i].dis;
+	//console.log(plen);
+	var oMain=document.getElementById('main');
+
+	var txt="";	
+	for(var i=0;i<picct;i++) {
+		txt+='<li id="pic'+i+'"></li>';
+	}
+	oMain.innerHTML=txt;
+	
+	for(var i=0;i<picct;i++) {
+		document.getElementById('pic'+i).style.height="960px";
+		document.getElementById('pic'+i).style.width=picjson[i].width+"px";
+		document.getElementById('pic'+i).style.background=picjson[i].background;
+		document.getElementById('pic'+i).style.display="none";
+		if(picjson[i].top)
+		{
+			document.getElementById('pic'+i).style.top=picjson[i].top+"px";;
+		}
+		if(picjson[i].class)
+		{
+			document.getElementById('pic'+i).className = picjson[i].class;
+			document.getElementById('pic'+i).style.zIndex="2";
+		}
+	}
+
+
+	oMain.onmousedown = function(ev){ return move0(ev,move); };	
+	oMain.ontouchstart = function(ev){ return move1(ev,move); };
+	oMain.onmousewheel = function(ev){ return move2(ev,move); };
+
+	//move(pwidth,0);
+	move(0,0);
+	
+	
+/*******************************/	
+	function mod(a,b)
+	{	
+		if(a>0) return a%b;
+		if(a%b) return b-((-a)%b);
+		return 0;
+	}
+	
+	function getOpacity(m)
+	{
+		m=Math.abs(m-swidth*0.5);
+		m=1-(0.8*2*m/swidth);		
+		if(m<0) return 0;
+		if(m>1) return 1;
+		return m;
+		
+	}
+	
+	function move(a,b)
+	{
+		currentx+=(-a);
+		//console.log(currentx);
+		for(var i=0;i<picct;i++) {
+			right=mod(currentx+picjson[i].dis0,plen);
+			left=mod(currentx+picjson[i].dis0+picjson[i].width,plen);
+			if(left<picjson[i].width) right-=plen;
+			//console.log("i"+i+"  l "+left+"  r "+right);
+			if(right<swidth) 
+			{
+				//console.log("get");
+				document.getElementById('pic'+i).style.display="block";
+				document.getElementById('pic'+i).style.right=right+"px";
+				if(document.getElementById('pic'+i).className=="my") document.getElementById('pic'+i).style.opacity =  getOpacity((left+right)/2); 
+			}else document.getElementById('pic'+i).style.display="none";
+		}
+		/*
+		for(var i=0;i<scrct;i++) {
+			left=mod(currentx+pwidth*i,slen)-2*pwidth;		
+			picn=mod(Math.floor((currentx-left)/pwidth-1),picct);
+			//document.getElementById('pic'+i).innerHTML=picn;
+			document.getElementById('pic'+i).style.background=picjson[picn].background;
+			document.getElementById('pic'+i).style.left=left+"px";
+		}*/
+	};	
+	
+	
+}
+
+/*******************************/
+
+function move0(ev,mvfn)
+{
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn)
+{
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+function move2(ev,mvfn)
+{
+	var delta = 0;
+	if (ev.wheelDelta) {
+		delta = ev.wheelDelta/120; 
+		if (window.opera) delta = -delta;
+	} else if (ev.detail) {
+		delta = -ev.detail/3;
+	}
+	if (delta) mvfn(40*delta,0);
+	return false;
+}
+	
+
+</script>
+</html>
