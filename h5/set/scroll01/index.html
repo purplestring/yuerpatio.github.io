@@ -109,7 +109,8 @@ window.onload=function (){
 
 	var picjson=[
 	{ "dis":854,"width":1280,"background":"url(img/lsf_0.jpg) no-repeat"},
-	{ "dis":426,"class":"my","width":612,"top":120,"background":"url(img/01.png) no-repeat"},
+	{ "dis":187,"class":"my","width":612,"top":120,"background":"url(img/01.png) no-repeat"},
+	{ "dis":239,"class":"tree","width":291,"top":22,"background":"url(img/tree01.png) no-repeat"},
 	{ "dis":1280,"width":1280,"background":"url(img/lsf_1.jpg) no-repeat"},	
 	{ "dis":1280,"width":1280,"background":"url(img/lsf_2.jpg) no-repeat"},
 	{ "dis":1280,"width":1280,"background":"url(img/lsf_3.jpg) no-repeat"},
@@ -163,7 +164,8 @@ window.onload=function (){
 		if(picjson[i].class)
 		{
 			document.getElementById('pic'+i).className = picjson[i].class;
-			document.getElementById('pic'+i).style.zIndex="2";
+			if(picjson[i].class=="tree") document.getElementById('pic'+i).style.zIndex="2";
+			else document.getElementById('pic'+i).style.zIndex="3";
 		}
 	}
 
@@ -186,8 +188,11 @@ window.onload=function (){
 	
 	function getOpacity(m)
 	{
-		m=Math.abs(m-swidth*0.5);
-		m=1-(0.8*2*m/swidth);		
+		m=Math.abs(m);
+		
+		m=1-(1.2*2*m/swidth);	
+		m+=0.3;
+		//console.log(m);		
 		if(m<0) return 0;
 		if(m>1) return 1;
 		return m;
@@ -208,7 +213,17 @@ window.onload=function (){
 				//console.log("get");
 				document.getElementById('pic'+i).style.display="block";
 				document.getElementById('pic'+i).style.right=right+"px";
-				if(document.getElementById('pic'+i).className=="my") document.getElementById('pic'+i).style.opacity =  getOpacity((left+right)/2); 
+				mdis=(left+right-swidth)/2;
+				if(document.getElementById('pic'+i).className=="my") 
+				{					
+					document.getElementById('pic'+i).style.opacity =  getOpacity(mdis); 
+					//document.getElementById('pic'+i).style.right=right+mdis*0.1+"px";
+				}
+				if(document.getElementById('pic'+i).className=="tree") 
+				{					
+					document.getElementById('pic'+i).style.opacity =  getOpacity(mdis); 
+					document.getElementById('pic'+i).style.right=right-mdis*0.08+"px";
+				}
 			}else document.getElementById('pic'+i).style.display="none";
 		}
 		/*
