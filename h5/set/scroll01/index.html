@@ -250,7 +250,7 @@ window.onload=function (){
 		}
 		
 		var oAudio = document.getElementById('audio');
-		oMain.onclick=oMain.ontouchstart=function(ev){
+		oMain.onclick=function(ev){
 			var asrc= oAudio.src.split("mp3/")[1];
 		//console.log(cmp3+" "+oAudio.src.split("mp3/")[1]);
 			if(cmp3 && cmp3!=asrc)
