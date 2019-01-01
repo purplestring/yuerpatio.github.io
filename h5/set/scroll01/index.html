@@ -155,6 +155,7 @@ window.onload=function (){
 		{
 			clearInterval(imgLoad);
 			imgReady();
+			return;
 		}	
 		ready=0;
 		for (var i=0; i<newimages.length; i++) if(newimages[i].height)ready++;
