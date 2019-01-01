@@ -156,6 +156,7 @@ window.onload=function (){
 			clearInterval(imgLoad);
 			imgReady();
 		}	
+		ready=0;
 		for (var i=0; i<newimages.length; i++) if(newimages[i].height)ready++;
 		document.getElementById('num').innerHTML="加载中<br>"+parseInt(100*ready/newimages.length)+"%";		
 	}, 100);
