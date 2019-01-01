@@ -16,6 +16,24 @@
 		margin: 0;
 		padding: 0;
 	}
+	 
+	 
+	
+	.loading {width:200px;height:200px;top:20%;position:relative;margin:50px auto;border:1px solid #f90;border-radius:50%;}
+	.info{line-height:200px;text-align:center;top:-50px;font-size:30px;color:#fff;}
+	.dot {width:100%;;height:100%;animation:rond .8s infinite;-webkit-animation:rond 3s infinite;}
+	.dot:after {width:10px;height:10px;position:absolute;top:-5px;left:90px;content:"";display:table;background-color:#f50;border-radius:50%;}
+	.num {width:100%;height:100%;position:absolute;top:80px;left:0;text-align:center;font-size:20px;color:#fff;}
+	@keyframes rond {
+		0% {transform:rotate(0deg);}
+		100% {transform:rotate(360deg);}
+	}
+	@-webkit-keyframes rond {
+		0% {-webkit-transform:rotate(0deg);}
+		100% {-webkit-transform:rotate(360deg);}
+	} 
+	 
+	 
 	#view{
 		position: relative;
 		width:1280px;
@@ -95,8 +113,13 @@
 </head>
 <body>
 <div id="view">
-<ul id="main">
 
+<ul id="main">
+	<div class="loading">	
+		<div class="dot"></div>
+		<div class="num" id="num">加载中<br>0%</div>
+		<div class="info">洛神赋图</div>
+	</div>
 </ul>
 </div>
 <div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
@@ -107,6 +130,40 @@ window.onload=function (){
 
 /*******************************/
 
+	
+	/* preload */
+	var newimages=[];
+	function preloadimages(arr){
+		
+		var arr=(typeof arr!="object")? [arr] : arr  ;
+		for (var i=0; i<arr.length; i++){
+			newimages[i]=new Image();
+			newimages[i].src="img/"+arr[i];			
+		}
+	}		
+	preloadimages(['bg.png','01.png','02.png','03.png', 'tree01.png',
+	'w_1.png','w_2.png','w_3.png','w_4.png','w_5.png',
+	'w_6.png','w_7.png','w_8.png','w_9.png',	
+	'lsf_0.jpg', 'lsf_1.jpg', 'lsf_2.jpg', 'lsf_3.jpg', 'lsf_4.jpg', 'lsf_5.jpg', 
+	'lsf_6.jpg', 'lsf_7.jpg', 'lsf_8.jpg', 'lsf_9.jpg', 'lsf_10.jpg', 'lsf_11.jpg', 
+	'lsf_12.jpg', 'lsf_13.jpg', 'lsf_14.jpg', 'lsf_15.jpg', 'lsf_16.jpg'
+	]);
+	
+	var ready=0;
+	var imgLoad=setInterval(function(){ 
+		if(ready==newimages.length) 
+		{
+			clearInterval(imgLoad);
+			imgReady();
+		}	
+		for (var i=0; i<newimages.length; i++) if(newimages[i].height)ready++;
+		document.getElementById('num').innerHTML="加载中<br>"+parseInt(100*ready/newimages.length)+"%";		
+	}, 100);
+	
+	/* preload end */
+	
+	/*initial*/
+	
 	var picjson=[
 	{ "dis":554,"width":1280,"background":"url(img/lsf_0.jpg) no-repeat"},
 	{ "dis":0,"class":"word","width":150,"height":436,"top":0,"background":"url(img/bg.png)"},
@@ -150,54 +207,50 @@ window.onload=function (){
 	];
 	var picct=picjson.length;
 	picjson[0].dis0=0;
-	for(var i=1;i<picct;i++) picjson[i].dis0=picjson[i-1].dis0+picjson[i-1].dis;
-	
+	for(var i=1;i<picct;i++) picjson[i].dis0=picjson[i-1].dis0+picjson[i-1].dis;	
 	var currentx=0;
-	//var scrct=4;
-	
-	//var pwidth=1280;
 	var swidth=1280;
 	if(window.screen.width<=640) swidth=640;
-	//var slen=scrct*pwidth;
-	//var sct=0;
 	var plen=0; for(var i=0;i<picct;i++) plen+=picjson[i].dis;
-	//console.log(plen);
-	var oMain=document.getElementById('main');
-
 	var txt="";	
-	for(var i=0;i<picct;i++) {
-		txt+='<li id="pic'+i+'"></li>';
-	}
-	oMain.innerHTML=txt;
+	for(var i=0;i<picct;i++)  txt+='<li id="pic'+i+'"></li>';
 	
-	for(var i=0;i<picct;i++) {
-		document.getElementById('pic'+i).style.height="960px";
-		if(picjson[i].height) document.getElementById('pic'+i).style.height=picjson[i].height+"px";
-		document.getElementById('pic'+i).style.width=picjson[i].width+"px";
-		document.getElementById('pic'+i).style.background=picjson[i].background;
-		document.getElementById('pic'+i).style.display="none";
-		if(picjson[i].top)
-		{
-			document.getElementById('pic'+i).style.top=picjson[i].top+"px";;
-		}
-		if(picjson[i].class)
-		{
-			document.getElementById('pic'+i).className = picjson[i].class;
-			if(picjson[i].class=="tree") document.getElementById('pic'+i).style.zIndex="2";
-			else document.getElementById('pic'+i).style.zIndex="3";
-		}
-	}
-
-
-	oMain.onmousedown = function(ev){ return move0(ev,move); };	
-	oMain.ontouchstart = function(ev){ return move1(ev,move); };
-	oMain.onmousewheel = function(ev){ return move2(ev,move); };
-
-	//move(pwidth,0);
-	move(0,0);
-	
-	
+	/*initial end*/
 /*******************************/	
+	
+	function imgReady()
+	{
+		var oMain=document.getElementById('main');
+		oMain.innerHTML=txt;
+		
+		for(var i=0;i<picct;i++) {
+			document.getElementById('pic'+i).style.height="960px";
+			if(picjson[i].height) document.getElementById('pic'+i).style.height=picjson[i].height+"px";
+			document.getElementById('pic'+i).style.width=picjson[i].width+"px";
+			document.getElementById('pic'+i).style.background=picjson[i].background;
+			document.getElementById('pic'+i).style.display="none";
+			if(picjson[i].top)
+			{
+				document.getElementById('pic'+i).style.top=picjson[i].top+"px";;
+			}
+			if(picjson[i].class)
+			{
+				document.getElementById('pic'+i).className = picjson[i].class;
+				if(picjson[i].class=="tree") document.getElementById('pic'+i).style.zIndex="2";
+				else document.getElementById('pic'+i).style.zIndex="3";
+			}
+		}
+
+
+		oMain.onmousedown = function(ev){ return move0(ev,move); };	
+		oMain.ontouchstart = function(ev){ return move1(ev,move); };
+		oMain.onmousewheel = function(ev){ return move2(ev,move); };
+
+		//move(pwidth,0);
+		move(0,0);
+		
+	}	
+
 	function mod(a,b)
 	{	
 		if(a>0) return a%b;
