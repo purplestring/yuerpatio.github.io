@@ -107,7 +107,7 @@ window.onload=function (){
 
 /*******************************/
 
-	var oMain=document.getElementById('main');
+	
 	/* preload */
 	var newimages=[];
 	function preloadimages(arr){
@@ -115,9 +115,7 @@ window.onload=function (){
 		var arr=(typeof arr!="object")? [arr] : arr  ;
 		for (var i=0; i<arr.length; i++){
 			newimages[i]=new Image();
-			newimages[i].src="img/"+arr[i];
-			oMain.innerHTML=100*i/arr.length+"%";
-			console.log(parseInt(100*i/arr.length)+"%");
+			newimages[i].src="img/"+arr[i];			
 		}
 	}		
 	preloadimages(['bg.png','01.png','02.png','03.png', 'tree01.png',
@@ -127,8 +125,35 @@ window.onload=function (){
 	'lsf_6.jpg', 'lsf_7.jpg', 'lsf_8.jpg', 'lsf_9.jpg', 'lsf_10.jpg', 'lsf_11.jpg', 
 	'lsf_12.jpg', 'lsf_13.jpg', 'lsf_14.jpg', 'lsf_15.jpg', 'lsf_16.jpg'
 	]);
-	/* preload end */
+	
+	var imgLoad=setInterval(function(){ 
+	//alert(newimages.length);
+	var ready=0;
+		for (var i=0; i<newimages.length; i++){
+			//oMain.innerHTML=parseInt(100*i/arr.length)+"%";
+			//console.log(parseInt(100*i/arr.length)+"%");
+			 //document.title=i;
+			 //if(newimages[i].readyState=="complete"||newimages[i].readyState=="loaded") 
+			 if(newimages[i].height)ready++;
 
+			 
+		}	
+		//console.log(newimages[3].height==0);
+		console.log(parseInt(100*ready/newimages.length)+"%");
+		document.title=parseInt(100*ready/newimages.length)+"%";
+		document.getElementById('main').innerHTML=parseInt(100*ready/newimages.length)+"%";
+		if(ready==newimages.length) 
+		{
+			clearInterval(imgLoad);
+			imgReady();
+		}
+	}, 500);
+	
+	/* preload end */
+	
+
+	
+	var oMain=document.getElementById('main');
 	var picjson=[
 	{ "dis":554,"width":1280,"background":"url(img/lsf_0.jpg) no-repeat"},
 	{ "dis":0,"class":"word","width":150,"height":436,"top":0,"background":"url(img/bg.png)"},
@@ -188,6 +213,9 @@ window.onload=function (){
 	for(var i=0;i<picct;i++) {
 		txt+='<li id="pic'+i+'"></li>';
 	}
+	
+function imgReady()
+{
 	oMain.innerHTML=txt;
 	
 	for(var i=0;i<picct;i++) {
@@ -216,7 +244,7 @@ window.onload=function (){
 	//move(pwidth,0);
 	move(0,0);
 	
-	
+}	
 /*******************************/	
 	function mod(a,b)
 	{	
