@@ -41,14 +41,14 @@
 		var lastpic=cid-1;
 		for(;lastpic>0;lastpic--)
 		{
-			if(birdjson.RECORDS[lastpic].pic!=null) break;
+			if(birdjson.RECORDS[lastpic].pic!=null && birdjson.RECORDS[lastpic].pic!="") break;
 		}
 		if(cid==0)lastpic=cid;
 		
 		var nextpic=cid+1;
 		for(;nextpic<birdjson.RECORDS.length;nextpic++)
 		{
-			if(birdjson.RECORDS[nextpic].pic!=null) break;
+			if(birdjson.RECORDS[nextpic].pic!=null && birdjson.RECORDS[lastpic].pic!="") break;
 		}
 		if(cid==birdjson.RECORDS.length)nextpic=cid;
 		
