@@ -14,7 +14,7 @@
        background: #cbf3fa;
    }
    #info{ 
-    width: 640px; 
+    width: 640px;
 	position: absolute;
 	left:50%;
 	margin-left:-320px;
@@ -67,13 +67,17 @@
     cursor: pointer; 
    } 
    #date > .hover:hover{ 
-    border: 2px solid red; 
+    border: 2px solid red;
    } 
      
    .active{ 
     color: red; 
-   } 
-   
+   }
+
+   .thisday{
+    color: #ff98e6;
+   }
+
    .infohere{ 
     color: #e24913;
    }
@@ -93,7 +97,26 @@
    .innerpic{
        position: relative;
        left:12%;
+       max-weight:100%;
 
+   }
+
+   #footer,#pfooter{
+    position:absolute;
+    text-align: center;
+    width:640px;
+    left:50%;
+    margin-left: -320px;
+    margin-top:30px;
+    margin-bottom:30px;
+   }
+   #ret{
+    position:absolute;
+    width:640px;
+    height:36px;
+    text-align: center;
+    left:50%;
+    margin-left: -320px;
    }
 
 
@@ -106,6 +129,9 @@
        #data{
            width: 560px;
            border: 2px solid #000000;
+       }
+       #date > .hover:hover{
+        border: 1px solid red;
        }
 
        #data > p > span{
@@ -126,6 +152,17 @@
            line-height: 68px;
            text-align: center;
            cursor: pointer;
+       }
+       #footer{
+        font-size:36px;
+        margin-top:120px;
+       }
+       #pfooter{
+        width:640px;
+        font-size:26px;
+        margin-top:45px;
+        margin-bottom:30px;
+        margin-left: -320px;
        }
 
 
@@ -156,6 +193,7 @@
    </ul> 
   </div> 
   <div id="info"></div>
+
     
   <script type="text/javascript"> 
    var dat = new Date(); //当前时间 
@@ -228,7 +266,7 @@
 
 /*
 SELECT * FROM
-(SELECT * FROM `weibo` where pubdate>"2019-01-01 00:00:00") as tableA
+(SELECT * FROM `weibo` where author="5679301959" and visible=1 and pubdate>"2018-01-01 00:00:00" and pubdate<"2018-04-01 00:00:00") as tableA
 LEFT JOIN
 (SELECT link as linkb,mid as midb,author as authorb,name as nameb,pubdate as pubdateb,
 text as textb, source as sourceb, pic_ids as pic_idsb
@@ -258,7 +296,16 @@ function getJson(nian,yue)
     {
         var jsonFile="2014.json";
         if(nian<=2014) jsonFile="2014.json";
-        if(nian==2019) jsonFile="2019.json";
+        else if(nian==2015 && yue<12) jsonFile="201512.json";
+        else if(nian==2016 && yue<6) jsonFile="201606.json";
+        else if(nian==2016 && yue<12) jsonFile="201612.json";
+        else if(nian==2017 && yue<6) jsonFile="201706.json";
+        else if(nian==2017 && yue<12) jsonFile="201712.json";
+        else if(nian==2018 && yue<3) jsonFile="201803.json";
+        else if(nian==2018 && yue<6) jsonFile="201806.json";
+        else if(nian==2018 && yue<9) jsonFile="201809.json";
+        else if(nian==2018 && yue<12) jsonFile="201812.json";
+        else if(nian==2019) jsonFile="2019.json";
         test.open("GET",jsonFile,true);
         test.send(null);
         test.onreadystatechange=function()
@@ -270,7 +317,9 @@ function getJson(nian,yue)
                 lastnian=lastyue=lastday=daytext="";
                 for(var key in info.RECORDS)
                 {
-                    if(info.RECORDS[key].visible==0) continue;
+                    if(info.RECORDS[key].visible==0 ||
+                        (info.RECORDS[key].author!="5679301959" && info.RECORDS[key].author!="5027860414" && info.RECORDS[key].author!="1759006061")
+                    ) continue;
                     thisnian=info.RECORDS[key].pubdate.split('/')[2].split(' ')[0];
                     thisyue=info.RECORDS[key].pubdate.split('/')[1];
                     thisday=info.RECORDS[key].pubdate.split('/')[0];
@@ -324,11 +373,16 @@ function getJson(nian,yue)
                         if(lastnian!=thisnian || lastyue!=thisyue || lastday!=thisday) daytext="";
                         daytext+=thistxt;
 
-                        (function (daytext) {
+                        (function (daytext,thisday) {
                             document.getElementById('d'+thisday).addEventListener('click', function () {
+                                daytext+= '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
+                                daytext+='<a href="http://yuerpatio.com/"> ▶返回主页◀</a></div><br><br>';
+
+                                //daytext+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
                                 document.getElementById('info').innerHTML=daytext;
+                                document.getElementById('d'+thisday).className = "thisday";
                             }, false);
-                        })(daytext);
+                        })(daytext,thisday);
                     }
                     lastnian=thisnian;lastyue=thisyue;lastday=thisday;
                 }
