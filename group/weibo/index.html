@@ -273,6 +273,15 @@ ON tableA.link2=tableB.linkb
 ORDER BY tableA.pubdate
  */
 
+function changeTime(pubdate)
+{
+    nian=pubdate.split('/')[2].split(' ')[0];
+    yue=pubdate.split('/')[1];
+    day=pubdate.split('/')[0];
+    hms=pubdate.split(' ')[1];
+    return yue+"月"+day+"日 "+hms;
+}
+
   
 function getJson(nian,yue)
 {
@@ -324,6 +333,7 @@ function getJson(nian,yue)
                     thisnian=info.RECORDS[key].pubdate.split('/')[2].split(' ')[0];
                     thisyue=info.RECORDS[key].pubdate.split('/')[1];
                     thisday=info.RECORDS[key].pubdate.split('/')[0];
+
                     if(thisyue==(yue+1) && thisnian==nian)
                     {
                         //console.log(info.RECORDS[key].pubdate);
@@ -332,7 +342,8 @@ function getJson(nian,yue)
                         if(info.RECORDS[key].link2!="")
                         {
                             nexttxt='<div class="smallbox" id="pic'+key+'">'+
-                            '<a href="https://weibo.com/'+info.RECORDS[key].authorb+'/'+info.RECORDS[key].linkb+'" target="_blank">'+info.RECORDS[key].pubdateb+"</a> "+
+                            '<a href="https://weibo.com/'+info.RECORDS[key].authorb+'/'+info.RECORDS[key].linkb+'" target="_blank">'+
+                            changeTime(info.RECORDS[key].pubdateb)+"</a> "+
                             info.RECORDS[key].nameb+'<br>'+
                             info.RECORDS[key].textb+'<br>';
 
@@ -352,7 +363,8 @@ function getJson(nian,yue)
                         }
 
                         thistxt='<div class="bigbox" id="pic'+key+'">'+
-                            '<a href="https://weibo.com/'+info.RECORDS[key].author+'/'+info.RECORDS[key].link+'" target="_blank">'+info.RECORDS[key].pubdate+"</a> "+
+                            '<a href="https://weibo.com/'+info.RECORDS[key].author+'/'+info.RECORDS[key].link+'" target="_blank">'+
+                            changeTime(info.RECORDS[key].pubdate)+"</a> "+
                             info.RECORDS[key].name+'<br>'+
                             info.RECORDS[key].text+'<br>';
 
