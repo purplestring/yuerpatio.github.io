@@ -66,16 +66,16 @@
     text-align: center; 
     cursor: pointer; 
    } 
-   #date > .hover:hover{ 
-    border: 2px solid red;
-   } 
+   #date > .hover:hover{
+     background: green;
+   }
      
    .active{ 
     color: red; 
    }
 
    .thisday{
-    color: #ff98e6;
+    color: green;
    }
 
    .infohere{ 
@@ -130,11 +130,10 @@
            width: 560px;
            border: 2px solid #000000;
        }
-       #date > .hover:hover{
-        border: 1px solid red;
-       }
 
-       #data > p > span{
+
+
+     #data > p > span{
            padding: 0 20px;
        }
 
@@ -298,8 +297,11 @@ function getJson(nian,yue)
         if(nian<=2014) jsonFile="2014.json";
         else if(nian==2015 && yue<12) jsonFile="201512.json";
         else if(nian==2016 && yue<6) jsonFile="201606.json";
+        else if(nian==2016 && yue<9) jsonFile="201609.json";
         else if(nian==2016 && yue<12) jsonFile="201612.json";
+        else if(nian==2017 && yue<3) jsonFile="201703.json";
         else if(nian==2017 && yue<6) jsonFile="201706.json";
+        else if(nian==2017 && yue<9) jsonFile="201709.json";
         else if(nian==2017 && yue<12) jsonFile="201712.json";
         else if(nian==2018 && yue<3) jsonFile="201803.json";
         else if(nian==2018 && yue<6) jsonFile="201806.json";
