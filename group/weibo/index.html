@@ -324,7 +324,10 @@ function getJson(nian,yue)
             {
                 var info = JSON.parse(test.responseText);
                 document.getElementById('info').innerHTML="";
-                lastnian=lastyue=lastday=daytext="";
+                lastnian=lastyue=lastday=yuetext=daytext="";
+                footer = '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
+                footer+='<a href="http://yuerpatio.com/"> ▶返回主页◀</a></div><br><br>';
+                //footer+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
                 for(var key in info.RECORDS)
                 {
                     if(info.RECORDS[key].visible==0 ||
@@ -339,7 +342,7 @@ function getJson(nian,yue)
                         //console.log(info.RECORDS[key].pubdate);
                         document.getElementById('d'+thisday).className = "infohere";
                         nexttxt="";
-                        if(info.RECORDS[key].link2!="")
+                        if(info.RECORDS[key].pubdateb)
                         {
                             nexttxt='<div class="smallbox" id="pic'+key+'">'+
                             '<a href="https://weibo.com/'+info.RECORDS[key].authorb+'/'+info.RECORDS[key].linkb+'" target="_blank">'+
@@ -353,8 +356,8 @@ function getJson(nian,yue)
                                 for(picn in picArr)
                                 {
                                     nexttxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
-                                    nexttxt+='" class="innerpic"><img src="http://ww4.sinaimg.cn/orj360/';
-                                    nexttxt+=picArr[picn]+'" style="width:87.662337%"</a><br>';
+                                    nexttxt+='" class="innerpic" target="_blank"><img src="http://ww4.sinaimg.cn/orj360/';
+                                    nexttxt+=picArr[picn]+'" style="width:87.662337%"></a><br>';
                                 }
 
                             }
@@ -374,8 +377,8 @@ function getJson(nian,yue)
                             for(picn in picArr)
                             {
                                 thistxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
-                                thistxt+='" class="innerpic"><img src="http://ww4.sinaimg.cn/orj360/';
-                                thistxt+=picArr[picn]+'" style="width:84.375%"</a><br>';
+                                thistxt+='" class="innerpic" target="_blank"><img src="http://ww4.sinaimg.cn/orj360/';
+                                thistxt+=picArr[picn]+'" style="width:84.375%"></a><br>';
                             }
 
                         }
@@ -388,17 +391,16 @@ function getJson(nian,yue)
 
                         (function (daytext,thisday) {
                             document.getElementById('d'+thisday).addEventListener('click', function () {
-                                daytext+= '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
-                                daytext+='<a href="http://yuerpatio.com/"> ▶返回主页◀</a></div><br><br>';
-
-                                //daytext+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
-                                document.getElementById('info').innerHTML=daytext;
+                                document.getElementById('info').innerHTML=daytext+footer;
                                 document.getElementById('d'+thisday).className = "thisday";
                             }, false);
                         })(daytext,thisday);
+
+                        if(info.RECORDS[key].author=="5679301959" && info.RECORDS[key].link2=="")yuetext+=thistxt;
                     }
                     lastnian=thisnian;lastyue=thisyue;lastday=thisday;
                 }
+                if(yuetext) document.getElementById('info').innerHTML=yuetext+footer;
 
             }
         };
