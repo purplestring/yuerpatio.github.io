@@ -14,10 +14,10 @@
        background: #cbf3fa;
    }
    #info{ 
-    width: 640px;
+    width: 960px;
 	position: absolute;
 	left:50%;
-	margin-left:-320px;
+	margin-left:-480px;
    } 
    #data{ 
     width: 280px; 
@@ -84,13 +84,13 @@
 
     .bigbox{
         background: #7ac4df;
-        padding: 12px;
-        width:640px;
+        padding: 18px;
+        width:960px;
 
     }
    .smallbox{
        position: relative;
-       padding: 12px;
+       padding: 18px;
        background: #b5e1fa;
 
    }
@@ -103,19 +103,19 @@
    #footer,#pfooter{
     position:absolute;
     text-align: center;
-    width:640px;
+    width:960px;
     left:50%;
-    margin-left: -320px;
+    margin-left: -480px;
     margin-top:30px;
     margin-bottom:30px;
    }
    #ret{
     position:absolute;
-    width:640px;
+    width:960px;
     height:36px;
     text-align: center;
     left:50%;
-    margin-left: -320px;
+    margin-left: -480px;
    }
 
 
@@ -125,7 +125,12 @@
            font-size: 36px;
        }
 
-       #data{
+    #info{
+     width: 640px;
+     margin-left:-320px;
+    }
+
+    #data{
            width: 560px;
            border: 2px solid #000000;
        }
@@ -151,6 +156,17 @@
            text-align: center;
            cursor: pointer;
        }
+
+
+    .bigbox{
+     padding: 12px;
+     width:640px;
+
+    }
+    .smallbox{
+     padding: 12px;
+
+    }
        #footer{
         font-size:36px;
         margin-top:120px;
@@ -201,7 +217,7 @@
      
    add(); //进入页面第一次渲染 
      
-   function add(){ 
+   function add(){
     document.getElementById('date').innerHTML = ""; 
       
     var nian = dat.getFullYear();//当前年份 
@@ -356,7 +372,9 @@ function getJson(nian,yue)
                                 for(picn in picArr)
                                 {
                                     nexttxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
-                                    nexttxt+='" class="innerpic" target="_blank"><img src="http://ww4.sinaimg.cn/orj360/';
+                                    nexttxt+='" class="innerpic" target="_blank"><img src="';
+                                    if(window.screen.width<640) nexttxt+='http://ww4.sinaimg.cn/orj360/';
+                                    else nexttxt+='http://ww4.sinaimg.cn/large/';
                                     nexttxt+=picArr[picn]+'" style="width:87.662337%"></a><br>';
                                 }
 
@@ -377,7 +395,9 @@ function getJson(nian,yue)
                             for(picn in picArr)
                             {
                                 thistxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
-                                thistxt+='" class="innerpic" target="_blank"><img src="http://ww4.sinaimg.cn/orj360/';
+                                thistxt+='" class="innerpic" target="_blank"><img src="';
+                                if(window.screen.width<640) thistxt+='http://ww4.sinaimg.cn/orj360/';
+                                else thistxt+='http://ww4.sinaimg.cn/large/';
                                 thistxt+=picArr[picn]+'" style="width:84.375%"></a><br>';
                             }
 
