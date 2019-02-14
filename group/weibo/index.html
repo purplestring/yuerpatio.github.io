@@ -317,8 +317,8 @@ function getJson(nian,yue)
 
     if(test !=null)
     {
-        var jsonFile="2014.json";
-        if(nian<=2014) jsonFile="2014.json";
+        var jsonFile="201412.json";
+        if(nian<=2014) jsonFile="201412.json";
         else if(nian==2015 && yue<12) jsonFile="201512.json";
         else if(nian==2016 && yue<6) jsonFile="201606.json";
         else if(nian==2016 && yue<9) jsonFile="201609.json";
@@ -420,7 +420,7 @@ function getJson(nian,yue)
                     }
                     lastnian=thisnian;lastyue=thisyue;lastday=thisday;
                 }
-                if(yuetext) document.getElementById('info').innerHTML=yuetext+footer;
+                document.getElementById('info').innerHTML=yuetext+footer;
 
             }
         };
