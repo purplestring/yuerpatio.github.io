@@ -298,12 +298,11 @@ function changeTime(pubdate)
     return yue+"月"+day+"日 "+hms;
 }
 
-function setText(str) {
+function setText(str)
+{
     reg = new RegExp('\\[\\[EMOJI:(.+?)\\]\\]',"g");
-    return decodeURIComponent(str.replace(reg,'$1'));
+    return str.replace(reg,function($1){ return decodeURIComponent($1);}).replace(reg,'$1');
 }
-
-
 
   
 function getJson(nian,yue)
