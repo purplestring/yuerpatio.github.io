@@ -298,6 +298,13 @@ function changeTime(pubdate)
     return yue+"月"+day+"日 "+hms;
 }
 
+function setText(str) {
+    reg = new RegExp('\\[\\[EMOJI:(.+?)\\]\\]',"g");
+    return decodeURIComponent(str.replace(reg,'$1'));
+}
+
+
+
   
 function getJson(nian,yue)
 {
@@ -343,6 +350,7 @@ function getJson(nian,yue)
                 lastnian=lastyue=lastday=yuetext=daytext="";
                 footer = '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
                 footer+='<a href="http://yuerpatio.com/"> ▶返回主页◀</a></div><br><br>';
+                //footer+=decodeURIComponent('%F0%9F%99%8F');
                 //footer+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
                 for(var key in info.RECORDS)
                 {
@@ -364,7 +372,7 @@ function getJson(nian,yue)
                             '<a href="https://weibo.com/'+info.RECORDS[key].authorb+'/'+info.RECORDS[key].linkb+'" target="_blank">'+
                             changeTime(info.RECORDS[key].pubdateb)+"</a> "+
                             info.RECORDS[key].nameb+'<br>'+
-                            info.RECORDS[key].textb+'<br>';
+                            setText(info.RECORDS[key].textb)+'<br>';
 
                             if(info.RECORDS[key].pic_idsb!="")
                             {
@@ -387,7 +395,7 @@ function getJson(nian,yue)
                             '<a href="https://weibo.com/'+info.RECORDS[key].author+'/'+info.RECORDS[key].link+'" target="_blank">'+
                             changeTime(info.RECORDS[key].pubdate)+"</a> "+
                             info.RECORDS[key].name+'<br>'+
-                            info.RECORDS[key].text+'<br>';
+                            setText(info.RECORDS[key].text)+'<br>';
 
                         if(info.RECORDS[key].pic_ids!="")
                         {
