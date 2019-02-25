@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+	</style>
+	<title>画之册</title>
+	<script src="paints.js"></script>
+
+</head>
+
+<body>	
+	<div id="star" style="display:none;">4</div>
+	<div id="shuimo" style="display:none;">0</div>
+	<div id="shese" style="display:none;">0</div>
+	<div id="juanzhou" style="display:none;">0</div>
+	<div id="lizhou" style="display:none;">0</div>
+	<div id="ceye" style="display:none;">0</div>
+	<div id="juanben" style="display:none;">0</div>
+	<div id="zhiben" style="display:none;">0</div>
+	<div id="main"></div>
+</body>
+<script>
+/*
+UPDATE paints SET DYN_ID = '13' WHERE P_DYNASTY = '东晋';
+UPDATE paints SET DYN_ID = '18' WHERE P_DYNASTY = '南朝';
+UPDATE paints SET DYN_ID = '20' WHERE P_DYNASTY = '隋';
+UPDATE paints SET DYN_ID = '21' WHERE P_DYNASTY = '唐';
+UPDATE paints SET DYN_ID = '28' WHERE P_DYNASTY = '五代';
+UPDATE paints SET DYN_ID = '30' WHERE P_DYNASTY = '北宋';
+UPDATE paints SET DYN_ID = '31' WHERE P_DYNASTY = '南宋';
+UPDATE paints SET DYN_ID = '35' WHERE P_DYNASTY = '金';
+UPDATE paints SET DYN_ID = '40' WHERE P_DYNASTY = '元';
+
+select `P_ID`,`P_NAME`,`P_AUTHOR`,`P_DYNASTY`,`P_TYPE`,`P_INFO`,`P_PICS`,`P_WIDTH`,`P_HEIGHT`,`P_STAR`  from paints ORDER BY DYN_ID,P_AUTHOR
+
+*/
+
+// UPDATE paints SET P_NAME=SUBSTRING(P_NAME,2,length(P_NAME)/4-1);
+
+	window.onload = function(){		 
+		writejson(myjson);
+	}
+	
+	function astar()
+	{
+		c=document.getElementById('star').innerHTML;
+		if(c==4) document.getElementById('star').innerHTML=5;
+		else document.getElementById('star').innerHTML=4;
+		writejson(myjson);
+	}
+	
+	function anti(type)
+	{
+		//console.log(type);
+		if(document.getElementById(type).innerHTML==1) document.getElementById(type).innerHTML=0;
+		else if(document.getElementById(type).innerHTML==0) 
+		{
+			document.getElementById(type).innerHTML=1;
+			if(type=="juanzhou") { document.getElementById("lizhou").innerHTML=0; document.getElementById("ceye").innerHTML=0; }
+			if(type=="lizhou") { document.getElementById("juanzhou").innerHTML=0; document.getElementById("ceye").innerHTML=0; }
+			if(type=="ceye") { document.getElementById("juanzhou").innerHTML=0; document.getElementById("lizhou").innerHTML=0; }
+			if(type=="zhiben") document.getElementById("juanben").innerHTML=0;
+			if(type=="juanben") document.getElementById("zhiben").innerHTML=0;
+			if(type=="shese") document.getElementById("shuimo").innerHTML=0;
+			if(type=="shuimo") document.getElementById("shese").innerHTML=0;
+		}
+		
+		writejson(myjson);
+	}
+	
+	function writejson(json)
+	{
+		var oMain = document.getElementById('main');
+		star=document.getElementById('star').innerHTML;
+		shuimo=document.getElementById('shuimo').innerHTML;
+		shese=document.getElementById('shese').innerHTML;
+		juanzhou=document.getElementById('juanzhou').innerHTML;
+		lizhou=document.getElementById('lizhou').innerHTML;
+		ceye=document.getElementById('ceye').innerHTML;
+		juanben=document.getElementById('juanben').innerHTML;
+		zhiben=document.getElementById('zhiben').innerHTML;
+		
+		var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
+		txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
+		txt+='<div id="title" align="center">画之册</div><br><br>';
+		//txt+='<div id="desc1">雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之<br><br></div>';
+		//txt+='<div id="desc2">所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
+
+		txt+='<div id="desc2"><a href="#" style="color:'+(star<5?"white":"black")+';" onclick="astar();return false;">精</a> ';
+		txt+='<a href="#" style="color:'+(shuimo==0?"white":"black")+';" onclick="anti('+"'shuimo'"+');return false;">水墨</a> ';
+		txt+='<a href="#" style="color:'+(shese==0?"white":"black")+';" onclick="anti('+"'shese'"+');return false;">设色</a> ';
+		txt+='<a href="#" style="color:'+(juanzhou==0?"white":"black")+';" onclick="anti('+"'juanzhou'"+');return false;">卷轴</a> ';
+		txt+='<a href="#" style="color:'+(lizhou==0?"white":"black")+';" onclick="anti('+"'lizhou'"+');return false;">立轴</a> ';
+		txt+='<a href="#" style="color:'+(ceye==0?"white":"black")+';" onclick="anti('+"'ceye'"+');return false;">册页 扇</a> ';
+		txt+='<a href="#" style="color:'+(juanben==0?"white":"black")+';" onclick="anti('+"'juanben'"+');return false;">绢本</a> ';
+		txt+='<a href="#" style="color:'+(zhiben==0?"white":"black")+';" onclick="anti('+"'zhiben'"+');return false;">纸本</a> ';
+		txt+='</div><br><br><br>';
+
+		
+		lasti=0;
+		for(var i=0;i<json.RECORDS.length;i++)
+		{		
+			if(json.RECORDS[i].P_STAR<star) continue;
+			if(shuimo==1 && json.RECORDS[i].P_TYPE.indexOf("水墨")<=-1) continue; 
+			if(juanzhou==1 && json.RECORDS[i].P_TYPE.indexOf("卷轴")<=-1) continue; 
+			if(lizhou==1 && json.RECORDS[i].P_TYPE.indexOf("立轴")<=-1) continue;
+			if(ceye==1 && (json.RECORDS[i].P_TYPE.indexOf("册页")<=-1 && json.RECORDS[i].P_TYPE.indexOf("扇")<=-1) ) continue;
+			if(shese==1 && json.RECORDS[i].P_TYPE.indexOf("设色")<=-1) continue; 
+			if(juanben==1 && json.RECORDS[i].P_TYPE.indexOf("绢本")<=-1) continue; 
+			if(zhiben==1 && json.RECORDS[i].P_TYPE.indexOf("纸本")<=-1) continue; 
+			
+			if( (i>0 && json.RECORDS[i].P_DYNASTY!=json.RECORDS[lasti].P_DYNASTY) || i==0) 
+			{
+				if(lasti>0)txt+="<br><br><br>";
+				txt+="<a id='family'>"+json.RECORDS[i].P_DYNASTY+"<br></a>"; 
+			}
+			if( (i>0 && json.RECORDS[i].P_AUTHOR!=json.RECORDS[lasti].P_AUTHOR) || i==0) 
+			{
+				//if(i>0)txt+="<br><br><br>";
+				txt+="<br>【"+json.RECORDS[i].P_AUTHOR+"】"; 
+			}
+			if(json.RECORDS[i].P_INFO=="img") txt+="<a href='page.html#"+i+"'>";
+			else txt+="<a href='https://baike.baidu.com/item/"+json.RECORDS[i].P_NAME+"'>";
+			txt+=json.RECORDS[i].P_NAME+"</a> ";
+			
+			lasti=i;
+		}
+
+		txt+='<br><br><div id="ret"><a href="http://yuerpatio.com/"> ▶返回主页◀</a></div>';
+		txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+		oMain.innerHTML=txt;
+	}
+</script>
+</html>
