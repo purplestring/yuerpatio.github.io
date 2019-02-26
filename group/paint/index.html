@@ -26,31 +26,25 @@ UPDATE paints SET DYN_ID = '31' WHERE P_DYNASTY = '南宋';
 UPDATE paints SET DYN_ID = '35' WHERE P_DYNASTY = '金';
 UPDATE paints SET DYN_ID = '40' WHERE P_DYNASTY = '元';
 
-select `P_ID`,`P_NAME`,`P_AUTHOR`,`P_DYNASTY`,`P_TYPE`,`P_INFO`,`P_PICS`,`P_WIDTH`,`P_HEIGHT`,`P_STAR`  from paints ORDER BY DYN_ID,P_AUTHOR
+select `P_ID`,`P_NAME`,`P_AUTHOR`,`P_DYNASTY`,`P_TYPE`,`P_INFO`,`P_PICS`,`P_WIDTH`,`P_HEIGHT`,`P_STAR`  from paints ORDER BY DYN_ID,P_AUTHOR,P_YEAR
 
 */
 
 // UPDATE paints SET P_NAME=SUBSTRING(P_NAME,2,length(P_NAME)/4-1);
 
-	star=4;var type = {}; 
-	type["shuimo"]=type["shese"]=type["juanzhou"]=type["lizhou"]=
+	var type = {}; 
+	type["star"]=type["shuimo"]=type["shese"]=type["juanzhou"]=type["lizhou"]=
 	type["ceye"]=type["juanben"]=type["zhiben"]=type["shufa"]=0;
+	var typecolor=["#888","#000","#fff"];
 		
 	window.onload = function(){		 
-		writejson(myjson);
-	}
-	
-	function astar()
-	{
-		if(star==4) star=5;
-		else star=4;
 		writejson(myjson);
 	}
 	
 	function anti(t)
 	{
 		//console.log(type);
-		if(type[t]==1) type[t]=0;
+		if(type[t]==1) type[t]=2;
 		else if(type[t]==0) 
 		{
 			type[t]=1;
@@ -63,6 +57,7 @@ select `P_ID`,`P_NAME`,`P_AUTHOR`,`P_DYNASTY`,`P_TYPE`,`P_INFO`,`P_PICS`,`P_WIDT
 			if(t=="shese") type["shuimo"]=type["shufa"]=0;
 			if(t=="shuimo") type["shese"]=type["shufa"]=0;
 		}
+		else if(type[t]==2) type[t]=0;
 		
 		writejson(myjson);
 	}
@@ -77,30 +72,41 @@ select `P_ID`,`P_NAME`,`P_AUTHOR`,`P_DYNASTY`,`P_TYPE`,`P_INFO`,`P_PICS`,`P_WIDT
 		//txt+='<div id="desc1">雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之<br><br></div>';
 		//txt+='<div id="desc2">所有图图均嵌有紫月数字水印，<br>转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a></div><br><br><br>';
 
-		txt+='<div id="desc2"><a href="#" style="color:'+(star<5?"white":"black")+';" onclick="astar();return false;">精</a> ';
-		txt+='<a href="#" style="color:'+(type["shuimo"]==0?"white":"black")+';" onclick="anti('+"'shuimo'"+');return false;">水墨</a> ';
-		txt+='<a href="#" style="color:'+(type["shese"]==0?"white":"black")+';" onclick="anti('+"'shese'"+');return false;">设色</a> ';
-		txt+='<a href="#" style="color:'+(type["juanzhou"]==0?"white":"black")+';" onclick="anti('+"'juanzhou'"+');return false;">卷轴</a> ';
-		txt+='<a href="#" style="color:'+(type["lizhou"]==0?"white":"black")+';" onclick="anti('+"'lizhou'"+');return false;">立轴</a> ';
-		txt+='<a href="#" style="color:'+(type["ceye"]==0?"white":"black")+';" onclick="anti('+"'ceye'"+');return false;">册页 扇</a> ';
-		txt+='<a href="#" style="color:'+(type["juanben"]==0?"white":"black")+';" onclick="anti('+"'juanben'"+');return false;">绢本</a> ';
-		txt+='<a href="#" style="color:'+(type["zhiben"]==0?"white":"black")+';" onclick="anti('+"'zhiben'"+');return false;">纸本</a> ';
-		txt+='<a href="#" style="color:'+(type["shufa"]==0?"white":"black")+';" onclick="anti('+"'shufa'"+');return false;">书法</a> ';
+		txt+='<div id="desc2">';
+		txt+='<a href="#" style="color:'+typecolor[type["star"]]+';" onclick="anti('+"'star'"+');return false;">精</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["shuimo"]]+';" onclick="anti('+"'shuimo'"+');return false;">水墨</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["shese"]]+';" onclick="anti('+"'shese'"+');return false;">设色</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["juanzhou"]]+';" onclick="anti('+"'juanzhou'"+');return false;">卷轴</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["lizhou"]]+';" onclick="anti('+"'lizhou'"+');return false;">立轴</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["ceye"]]+';" onclick="anti('+"'ceye'"+');return false;">册页 扇</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["juanben"]]+';" onclick="anti('+"'juanben'"+');return false;">绢本</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["zhiben"]]+';" onclick="anti('+"'zhiben'"+');return false;">纸本</a> ';
+		txt+='<a href="#" style="color:'+typecolor[type["shufa"]]+';" onclick="anti('+"'shufa'"+');return false;">书法</a> ';
 		txt+='</div><br><br><br>';
 
 		
 		lasti=-1;
 		for(var i=0;i<json.RECORDS.length;i++)
 		{		
-			if(json.RECORDS[i].P_STAR<star) continue;
-			if(type["shuimo"]==1 && json.RECORDS[i].P_TYPE.indexOf("水墨")<=-1) continue; 
+			//if(json.RECORDS[i].P_STAR<star) continue;
+			if(type["star"]==1 && json.RECORDS[i].P_STAR<5) continue;
+			if(type["star"]==2 && json.RECORDS[i].P_STAR==5) continue;
+			if(type["shuimo"]==1 && json.RECORDS[i].P_TYPE.indexOf("水墨")<=-1) continue;
+			if(type["shuimo"]==2 && json.RECORDS[i].P_TYPE.indexOf("水墨")>-1) continue;			
 			if(type["juanzhou"]==1 && json.RECORDS[i].P_TYPE.indexOf("卷轴")<=-1) continue; 
+			if(type["juanzhou"]==2 && json.RECORDS[i].P_TYPE.indexOf("卷轴")>-1) continue; 
 			if(type["lizhou"]==1 && json.RECORDS[i].P_TYPE.indexOf("立轴")<=-1) continue;
+			if(type["lizhou"]==2 && json.RECORDS[i].P_TYPE.indexOf("立轴")>-1) continue;
 			if(type["ceye"]==1 && (json.RECORDS[i].P_TYPE.indexOf("册页")<=-1 && json.RECORDS[i].P_TYPE.indexOf("扇")<=-1) ) continue;
+			if(type["ceye"]==2 && (json.RECORDS[i].P_TYPE.indexOf("册页")>-1 || json.RECORDS[i].P_TYPE.indexOf("扇")>-1) ) continue;
 			if(type["shese"]==1 && json.RECORDS[i].P_TYPE.indexOf("设色")<=-1) continue; 
+			if(type["shese"]==2 && json.RECORDS[i].P_TYPE.indexOf("设色")>-1) continue; 
 			if(type["juanben"]==1 && json.RECORDS[i].P_TYPE.indexOf("绢本")<=-1) continue; 
+			if(type["juanben"]==2 && json.RECORDS[i].P_TYPE.indexOf("绢本")>-1) continue; 
 			if(type["zhiben"]==1 && json.RECORDS[i].P_TYPE.indexOf("纸本")<=-1) continue; 
+			if(type["zhiben"]==2 && json.RECORDS[i].P_TYPE.indexOf("纸本")>-1) continue; 
 			if(type["shufa"]==1 && json.RECORDS[i].P_TYPE.indexOf("书法")<=-1) continue; 
+			if(type["shufa"]==2 && json.RECORDS[i].P_TYPE.indexOf("书法")>-1) continue; 
 			
 			if( (lasti>=0 && json.RECORDS[i].P_DYNASTY!=json.RECORDS[lasti].P_DYNASTY) || lasti==-1) 
 			{
