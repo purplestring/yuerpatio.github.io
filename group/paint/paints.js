@@ -3768,7 +3768,7 @@ var myjson={
             "P_POSTIL": "",
             "P_WIDTH": "39",
             "P_HEIGHT": "44.5",
-            "P_STAR": "4"
+            "P_STAR": "5"
         },
         {
             "P_ID": "272",
@@ -3820,7 +3820,7 @@ var myjson={
             "P_POSTIL": "",
             "P_WIDTH": "70",
             "P_HEIGHT": "88",
-            "P_STAR": "4"
+            "P_STAR": "5"
         },
         {
             "P_ID": "258",
@@ -3976,7 +3976,7 @@ var myjson={
             "P_POSTIL": "",
             "P_WIDTH": "716",
             "P_HEIGHT": "491",
-            "P_STAR": "4"
+            "P_STAR": "5"
         },
         {
             "P_ID": "333",
