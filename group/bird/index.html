@@ -17,32 +17,76 @@
 </body>
 <script>
 
-	window.onload = function(){
-		//var birdstr=JSON.stringify(birdjson).replace(/#b/g,"鸟").replace(/#1/g,"白色").replace(/#2/g,"雀形目");
-
-		 
-		writejson(birdjson);
-		function writejson(json)
+	var typename =["hui_huang","hui_hui","hm_he","hm_ch","hm_hong","zu_hei","zu_fh","area_xmly","area_ts","area_qzgy","area_yn"];
+	var typeinfo =["黄色","灰色","褐色","橙红","红色","黑色","粉褐","喜马拉雅","天山","青藏高原","云南"];
+	var typetype =["hui","hui","hm","hm","hm","zu","zu","area","area","area","area"];
+	var type = {}; 
+	for ( var i = 0; i < typename.length; i++ ) type[typename[i]]=0;
+	var typecolor=["#888","#000","#fff"];
+	
+	function c(t)
+	{
+		if(type[t]==1) type[t]=2;	
+	};
+	
+	function anti(t)
+	{
+		//console.log(type);
+		if(type[t]==1) type[t]=2;
+		else if(type[t]==0) 
 		{
-			var oMain = document.getElementById('main');
+			type[t]=1;
+		}
+		else if(type[t]==2) type[t]=0;
+		
+		writejson(birdjson);
+	};
+	
+	function writejson(json)
+	{
+		var oMain = document.getElementById('main');
 
-			var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
-			txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
-			txt+='<div id="title" align="center">鳥之册</div><br><br>';
-			txt+='<div id="desc1">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。<br><br></div>';
-			txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>';
-			txt+='转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<a href="">🔍</a></div><br><br><br>';
-			for(var i=0;i<1329;i++)
-			{				
-				if( (i>0 && json.RECORDS[i].ke!=json.RECORDS[i-1].ke) || i==0) 
-				{
-					if(i>0)txt+="<br><br><br>";
-					txt+="<a id='family'>"+json.RECORDS[i].mu+"->"+json.RECORDS[i].ke+"<br><br></a>"; 
-				}
-				txt+="<a ";
-				if(json.RECORDS[i].pic==null || json.RECORDS[i].pic=="")txt+="id='nopic' ";
-				txt+="href='page.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
+		var txt='<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>';	
+		txt+='<div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>';
+		txt+='<div id="title" align="center">鳥之册</div><br><br>';
+		txt+='<div id="desc1">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。<br><br></div>';
+		txt+='<div id="desc2">绿链主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>';
+		txt+='转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<a href="">🔍</a></div><br>';
+		
+		txt+='<div id="desc2">';
+		ischeck=false;		
+		for ( var i = 0; i < typename.length; i++ )
+		{
+			if(i==0) txt+="<br>喙：";
+			if(i==2) txt+="<br>虹膜：";
+			if(i==5) txt+="<br>脚：";
+			if(i==7) txt+="<br>分布：";
+			txt+='<a href="#" style="color:'+typecolor[type[typename[i]]]+';" onclick="anti('+"'"+typename[i]+"'"+');return false;">'+typeinfo[i]+'</a> ';	
+			if(type[typename[i]]!=0) ischeck=true;		
+		}
+		txt+='</div><br><br><br>';
+		
+		lasti=-1;
+		outer:
+		for(var i=0;i<1329;i++)
+		{				
+			for ( var j = 0; j < typename.length; j++ )
+			{
+				if(type[typename[j]]==1 && eval('json.RECORDS[i].'+typetype[j]+'.indexOf(typeinfo[j])<=-1')) {continue outer;};
+				if(type[typename[j]]==2 && eval('json.RECORDS[i].'+typetype[j]+'.indexOf(typeinfo[j])>-1')) {continue outer;};
 			}
+			if( (lasti>=0 && json.RECORDS[i].ke!=json.RECORDS[lasti].ke) || lasti==-1) 
+			{
+				if(lasti>=0)txt+="<br><br><br>";
+				txt+="<a id='family'>"+json.RECORDS[i].mu+"->"+json.RECORDS[i].ke+"<br><br></a>"; 
+			}
+			txt+="<a ";
+			if(json.RECORDS[i].pic==null || json.RECORDS[i].pic=="")txt+="id='nopic' ";
+			txt+="href='page.html#"+json.RECORDS[i].id+"'>"+json.RECORDS[i].wu+"</a> ";
+			lasti=i;
+		}
+		if(!ischeck)
+		{
 			txt+="<br><br><br><a id='family'>番外<br><br></a>";
 			for(var i=1329;i<json.RECORDS.length;i++)
 			{
@@ -51,11 +95,15 @@
 				if(json.RECORDS[i].pic==null || json.RECORDS[i].pic=="")continue;//txt+="id='nopic' ";
 				txt+="href='page.html#"+parseInt(i+1)+"'>"+json.RECORDS[i].wu+"</a> ";
 			}
-			txt+='<br><br><div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>';
-			txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
-			oMain.innerHTML=txt;
 		}
-	
+		txt+='<br><br><div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>';
+		txt+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+		oMain.innerHTML=txt;
+	}
+
+	window.onload = function(){
+		//var birdstr=JSON.stringify(birdjson).replace(/#b/g,"鸟").replace(/#1/g,"白色").replace(/#2/g,"雀形目");	 
+		writejson(birdjson);
 	}
 </script>
 </html>
