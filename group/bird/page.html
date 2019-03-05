@@ -88,17 +88,23 @@
 			txt+='<br><div id="all_comments_a" align="center" style="display:none">';
 			
 			txt+='<br>《中国鸟类野外手册》手绘图、分布图：<br>';
-			txt+="<br><img id='myimg' src='http://182.61.17.142/app/views/images/birdsall/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
-			txt+="<br><img id='myimg' src='http://182.61.17.142/app/views/images/birdmap/b"+toZero(birdjson.RECORDS[cid].id)+".jpg' ><br>"; 
+			txt+="<br><img id='myimgbirdsall' ><br>"; 
+			txt+="<br><img id='myimgbirdmap' ><br>"; 
 			//txt+='以上手绘图、分布图引自《中国鸟类野外手册》，更多参考<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">这里</a><br>';
 			txt+='<br><a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br><br>';
 			txt+='</div>';
-			txt+='<br><div id="showmore" align="center" onclick="openShutManager(this,\'all_comments_a\')">▼</div>';
+			txt+='<br><div id="showmore" align="center" onclick="showclose(this,\'all_comments_a\','+birdjson.RECORDS[cid].id+')">▼</div>';
 		}else txt+='<br><div></div>';
 		txt+='<br><br><div id="pfooter"><a href="index.html">▶返回册主页◀</a><br><br></div>';
 		oMain.innerHTML=txt;
 	}
 		
+	function showclose(obj,objid,thisid)
+	{
+		openShutManager(obj,'all_comments_a');
+		document.getElementById("myimgbirdsall").src="http://182.61.17.142/app/views/images/birdsall/b"+toZero(thisid)+".jpg";
+		document.getElementById("myimgbirdmap").src="http://182.61.17.142/app/views/images/birdmap/b"+toZero(thisid)+".jpg";
+	}
 	window.onload = function(){
 		id=window.location.hash.split('#')[1];		
 		jumpto(id-1);
