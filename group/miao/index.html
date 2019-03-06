@@ -15,7 +15,7 @@
 	<div id="main"></div>
 </body>
 <script>
-
+//SELECT * FROM `miaos` ORDER BY M_CLASS,M_NAME
 	window.onload = function(){		 
 		writejson(myjson);
 		function writejson(json)
@@ -34,7 +34,8 @@
 					if(i>0)txt+="<br><br><br>";
 					txt+="<a id='family'>"+json.RECORDS[i].M_CLASS+"<br><br></a>"; 
 				}
-				txt+="<a href='page.html#"+i+"'>"+json.RECORDS[i].M_NAME+"</a> ";
+				if(json.RECORDS[i].M_PICS!="" && json.RECORDS[i].M_PICS!=null) txt+="<a href='page.html#"+i+"'>"+json.RECORDS[i].M_NAME+"</a> ";
+				else txt+=json.RECORDS[i].M_NAME+" ";
 			}
 
 			txt+='<br><br><div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>';
