@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+        .v-enter,
+        .v-leave-to{
+            /*transform: translateX(960px);*/
+            opacity: 0;
+        }
+        .v-enter-active,
+        .v-leave-active{
+            animation-delay:0.2s;
+            transition: all 0.8s ease;
+        }
+	</style>
+	<title>画之册</title>
+	<script src="paintsmi.js"></script>
+	<script src="../vue.min.js"></script>
+    <!--script src="../../../../web/vue/vue.js"></script-->
+
+</head>
+
+<body>	
+	<div id="main">
+        <div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>
+        <div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
+        <div id='app'>
+            <transition mode='out-in'>
+                <component :is="comName" @picpage="picpage" @paintpage="paintpage" :parentmsg="picinfo" :parenttype="type"></component>
+            </transition>
+        </div>
+        <div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
+    </div>
+
+    <template id="paint">
+        <div>
+            <div id="title" align="center">画之册</div><br><br>
+            <div id="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>可简单筛选，随便翻翻便好。<br>（灰：无；黑：是；白：非）
+                <a @click.prevent="anti(-1)">重置</a><br><br><br></div>
+            <div id="desc2"><span v-for="(item,i) in typename" :style="{'color': typecolor[type[typename[i]]]}"
+                                  @click="anti(typename[i])" v-html="filterType(i)"></span></div>
+            <span v-for="(item, i) in list">
+                <span class='family' v-if="i==0 || (i>0 && list[i].P_DYNASTY!=list[i-1].P_DYNASTY)">
+                    <br><br><br>{{list[i].P_DYNASTY}}<br></span>
+                <span v-if="i==0 || (i>0 && ( list[i].P_AUTHOR!=list[i-1].P_AUTHOR || list[i].P_DYNASTY!=list[i-1].P_DYNASTY ))"
+                      v-html='authorFormat(list[i].P_AUTHOR,list[i].A_EN)' > </span>
+                <a v-if="list[i].P_INFO=='http'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='img'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
+            </span>
+            <br><br><br><div id="ret3"><a href="../../index.html"> ▶返回主页◀</a></div>
+        </div>
+    </template>
+
+    <template id="pic">
+        <div>
+            <div id='ptitle' align='center'>{{parentmsg.P_NAME}}</div>
+            <div id='desc2'>
+                <br>{{parentmsg.P_DYNASTY}} {{parentmsg.P_AUTHOR}} 《{{parentmsg.P_NAME}}》。<br>
+                {{parentmsg.P_TYPE}}。<br>
+                <span v-if="parentmsg.P_WIDTH!=0">宽：{{parentmsg.P_WIDTH}}厘米；</span>
+                <span v-if="parentmsg.P_HEIGHT!=0">长：{{parentmsg.P_HEIGHT}}厘米。</span><br>
+            </div>
+            <img id='myimg' :src='"img/"+parentmsg.P_PICS'>
+            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+        </div>
+    </template>
+
+    <template id="baidupic">
+        <div>
+            <iframe id="iframes" :src='"https://baike.baidu.com/item/"+parentmsg.P_NAME'></iframe>
+            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+        </div>
+    </template>
+
+</body>
+<script>
+
+    var paint= {
+        template: '#paint',
+        props:{
+            "parenttype": Object,
+        },
+        data: function(){
+            return {
+                list: [],
+                type:{},
+                typecolor:["#888","#000","#fff"],
+                typename:["star","shuimo","shese","youcai","juanben","zhiben","bumian","muban","bihua",
+                    "juanzhou","lizhou","ceye","shan","shufa","renwu","shanshui","huaniao","zongjiao",
+                    "zhongguo","yidali","faguo","xibanya","helan","bilishi","deguo","yingguo","eguo",
+                    "flc","wwns","beifang","baluoke","luokeke","xingudian","langman","xieshi","yinxiang",
+                    "jgdj","sssj","ysj","wm","yzbg","sw","ss"],
+                typeinfo:["精","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
+                    "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","宗教",
+                    "中国","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
+                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧"],
+            }
+        },
+        methods: {
+
+            authorFormat(author,link){
+                if(link=="" || link==null) return "<br>【"+author+"】";
+                else return "<br>【<a style='color:blue;' target='_blank' href='https://en.wikipedia.org/wiki/"+link+"'>"+author+"</a>】";
+            },
+
+            filterType(i){
+                rtinfo=this.typeinfo[i]+" ";
+                if(i==8 || i==17 || i==26 || i==34) rtinfo+="<br>";
+                return rtinfo;
+            },
+
+            c(t) {
+                if(this.type[t]==1) this.type[t]=2;
+            },
+
+            cleararea(t) {
+                this.c("flc");this.c("wwns");this.c("beifang");this.c("baluoke");this.c("luokeke");this.c("xingudian");this.c("langman");this.c("xieshi");
+                this.c("yinxiang");this.c("jgdj");this.c("sssj");this.c("ysj");this.c("wm");this.c("yzbg");this.c("sw");this.c("ss");
+                this.type[t]=1;
+            },
+
+            setList(){
+                var k=0;
+                this.list= [];
+
+                for(var i=0;i<myjson.RECORDS.length;i++) {
+
+                    if(this.type["star"]==1 && myjson.RECORDS[i].P_STAR<5) continue;
+                    if(this.type["star"]==2 && myjson.RECORDS[i].P_STAR==5) continue;
+
+                    var iscontinue=false;
+                    for ( var j = 1; j < this.typename.length; j++ )
+                    {
+                        if(this.type[this.typename[j]]==1 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])<=-1) {iscontinue=true;break;};
+                        if(this.type[this.typename[j]]==2 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])>-1) {iscontinue=true;break;};
+                    }
+                    if(iscontinue) continue;
+
+                    this.list[k++]= myjson.RECORDS[i];
+
+                }
+            },
+
+            anti(t){
+                if(t==-1)
+                {
+                    for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+                }
+                else
+                {
+                    if(this.type[t]==1) this.type[t]=2;
+                    else if(this.type[t]==0)
+                    {
+
+                        this.type[t]=1;
+                        if(t=="shufa") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("youcai");this.c("renwu");this.c("shanshui");this.c("huaniao");
+                            this.c("bumian");this.c("bihua");this.c("zongjiao");};
+                        if(t=="juanzhou") {this.c("lizhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="lizhou") {this.c("juanzhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="ceye") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("shan");this.c("zongjiao");};
+                        if(t=="shan") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("ceye");this.c("zongjiao");};
+                        if(t=="zhiben") {this.c("juanben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="juanben") {this.c("zhiben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="bumian") {this.c("zhiben");this.c("juanben");this.c("shuimo");this.c("shese");this.c("shufa");this.c("lizhou");this.c("juanzhou");
+                            this.c("ceye");this.c("muban");this.c("bihua");};
+                        if(t=="shese") {this.c("youcai");this.c("shufa");this.c("bumian");this.c("zongjiao");};
+                        if(t=="shuimo") {this.c("youcai");this.c("bumian");this.c("youcai");};
+                        if(t=="youcai") {this.c("shese");this.c("shuimo");this.c("shufa");this.c("zhiben");this.c("juanben");this.c("shan");};
+                        if(t=="renwu") {this.c("shufa");};
+                        if(t=="shanshui") {this.c("shufa");this.c("zongjiao");};
+                        if(t=="muban") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("bihua");this.c("shufa");};
+                        if(t=="bihua") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("muban");this.c("shufa");};
+                        if(t=="huaniao") {this.c("shufa");};
+                        if(t=="zongjiao") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("ceye");this.c("shan");this.c("shanshui");this.c("zhiben");this.c("juanben");("shufa");};
+
+                        if(t=="zhongguo") {this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="yidali") {this.c("zhongguo");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="faguo") {this.c("zhongguo");this.c("yidali");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="xibanya") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="helan") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="bilishi") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="deguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("yingguo");this.c("eguo");};
+                        if(t=="yingguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("eguo");};
+                        if(t=="eguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");};
+
+                        if(t=="flc")this.cleararea("flc");
+                        if(t=="wwns")this.cleararea("wwns");
+                        if(t=="beifang")this.cleararea("beifang");
+                        if(t=="baluoke")this.cleararea("baluoke");
+                        if(t=="luokeke")this.cleararea("luokeke");
+                        if(t=="xingudian")this.cleararea("xingudian");
+                        if(t=="langman")this.cleararea("langman");
+                        if(t=="xieshi")this.cleararea("xieshi");
+                        if(t=="yinxiang")this.cleararea("yinxiang");
+                        if(t=="jgdj")this.cleararea("jgdj");
+                        if(t=="sssj")this.cleararea("sssj");
+                        if(t=="ysj")this.cleararea("ysj");
+                        if(t=="wm")this.cleararea("wm");
+                        if(t=="yzbg")this.cleararea("yzbg");
+                        if(t=="sw")this.cleararea("sw");
+                        if(t=="ss")this.cleararea("ss");
+                    }
+                    else if(this.type[t]==2) this.type[t]=0;
+                }
+                this.setList();
+            },
+
+            picpage(id){
+                //alert(document.documentElement.scrollTop);
+                this.$emit('picpage',this.list[id],this.type,true);
+            },
+
+            baidupicpage(id){
+                //alert(document.documentElement.scrollTop);
+                this.$emit('picpage',this.list[id],this.type,false);
+            },
+
+        },
+
+        created() {
+            //console.log(this.parenttype.star);
+            if(typeof(this.parenttype.star) != "undefined")
+            {
+                //console.log(this.parenttype.star);
+                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=this.parenttype[this.typename[i]];
+            }
+            else
+            {
+                //console.log("0");
+                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+            }
+           // for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+            this.setList();
+
+        },
+
+        mounted() {
+        },
+
+
+    }
+
+    var pic= {
+        template: '#pic',
+        data: function(){
+            return {
+                id:0,
+            }
+        },
+        methods: {
+
+            paintpage(){
+                this.$emit('paintpage');
+            },
+        },
+
+        created() {
+
+        },
+
+        props: ['parentmsg'] ,
+
+    }
+
+    var baidupic= {
+        template: '#baidupic',
+        data: function(){
+            return {
+                id:0,
+            }
+        },
+        methods: {
+
+            paintpage(){
+                this.$emit('paintpage');
+            },
+
+        },
+
+        created() {
+
+        },
+
+        props: ['parentmsg'] ,
+
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            comName: 'paint',
+            picinfo:'',
+            //scrollTop: 0,
+            type:{},
+
+         },
+        methods: {
+            picpage(id,type,ishere){
+                this.type=type;
+                //this.scrollTop = document.body.scrollTop|| document.documentElement.scrollTop;
+                this.picinfo = id;
+                if(ishere) this.comName = 'pic';
+                else this.comName = 'baidupic';
+                //console.log(this.picinfo);
+            },
+
+            paintpage(){
+                this.comName= 'paint';
+            },
+
+            created() {
+
+            },
+
+
+        },
+        components: {
+            paint,pic,baidupic
+        },
+    })
+
+</script>
+</html>
