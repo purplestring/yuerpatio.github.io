@@ -5,15 +5,360 @@
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="../style.css" type="text/css" />
 	<style>
+        .v-enter,
+        .v-leave-to{
+            /*transform: translateX(960px);*/
+            opacity: 0;
+        }
+        .v-enter-active,
+        .v-leave-active{
+            animation-delay:0.2s;
+            transition: all 0.8s ease;
+        }
 	</style>
 	<title>画之册</title>
 	<script src="paints.js"></script>
+	<script src="../vue.min.js"></script>
+    <!--script src="../../../../web/vue/vue.js"></script-->
 
 </head>
 
 <body>	
-	<div id="main"></div>
+	<div id="main">
+        <div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>
+        <div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
+        <div id='app'>
+            <transition mode='out-in'>
+                <component :is="comName" @changepage="changepage" @paintpage="paintpage" :parentmsg="picinfo" :parenttype="type"></component>
+            </transition>
+        </div>
+        <div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
+    </div>
+
+    <template id="paint">
+        <div>
+            <div id="title" align="center">画之册</div><br><br>
+            <div id="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
+			可简单筛选，随便翻翻便好。<br>
+			（灰：无；黑：是；白：非）
+                <a @click.prevent="anti(-1)">重置</a><br><br><br></div>
+            <div id="desc2">
+				<span v-for="(item,i) in typename" >
+					<span :style="{'color': typecolor[type[typename[i]]],'cursor':'pointer'}" @click="anti(typename[i])">{{typeinfo[i]}}</span> 
+					<span v-if="i==8 || i==17 || i==26 || i==34" ><br></span>
+				</span>	
+			</div>
+            <span v-for="(item, i) in list">
+                <span class='family' v-if="i==0 || (i>0 && list[i].P_DYNASTY!=list[i-1].P_DYNASTY)">
+                    <br><br><br>{{list[i].P_DYNASTY}}<br></span>
+                <span v-if="i==0 || (i>0 && ( list[i].P_AUTHOR!=list[i-1].P_AUTHOR || list[i].P_DYNASTY!=list[i-1].P_DYNASTY ))">
+					<br>【<span><span v-if="list[i].A_EN==''">{{list[i].P_AUTHOR}}</span><span
+                        v-if="list[i].A_EN!=''" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
+					</span>】
+				</span>
+                <a v-if="list[i].P_INFO=='http'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='img' || list[i].P_INFO=='imgl'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
+            </span>
+            <br><br><br><div id="ret3"><a href="../../index.html"> ▶返回主页◀</a></div>
+        </div>
+    </template>
+
+    <template id="pic">
+        <div>
+            <div id='ptitle' align='center'>{{parentmsg.P_NAME}}</div>
+            <div id='desc2'>
+                <br>{{parentmsg.P_DYNASTY}} <span v-if="parentmsg.P_YEAR!=''">{{parentmsg.P_YEAR}}年 </span>
+				{{parentmsg.P_AUTHOR}} 《{{parentmsg.P_NAME}}》<br>
+                {{parentmsg.P_TYPE}}<br>
+                <span v-if="parentmsg.P_WIDTH!=0">横：{{parentmsg.P_WIDTH}}厘米；</span>
+                <span v-if="parentmsg.P_HEIGHT!=0">纵：{{parentmsg.P_HEIGHT}}厘米</span><br>
+            </div>
+            <span v-if="parentmsg.P_INFO=='img'"><img id='myimg' :src='"img/"+parentmsg.P_PICS'></span>
+			<a :href='"imgl/"+parentmsg.P_PICS' target="_blank">
+				<span v-if="parentmsg.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+parentmsg.P_PICS'></span>
+			</a>
+			<!--img id='myimg' :src='"../../../../../images/largeimg/"+parentmsg.P_PICS'-->
+            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+        </div>
+    </template>
+
+    <template id="baidupic">
+        <div>
+            <iframe id="iframes" :src='"https://baike.baidu.com/item/"+parentmsg.P_NAME'></iframe>
+            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+        </div>
+    </template>
+	
+	<template id="wikiinfo">
+        <div>
+            <iframe id="iframes" :src='"https://en.wikipedia.org/wiki/"+parentmsg.A_EN'></iframe>
+            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+        </div>
+    </template>
+
 </body>
-<script>eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('m s=["L","F","x","g","w","u","f","n","h","p","q","r","v","l","J","G","O","k"];m D=["13","11","1g","1u","1v","1t","1r","1s","1z","1A","1y","1w","1x","1k","1n","1m","1o","1q"];m e={};A(m i=0;i<s.B;i++)e[s[i]]=0;m Q=["#1p","#1i","#1h"];1j.1l=C(){P(Y)};C c(t){4(e[t]==1)e[t]=2};C Z(t){4(e[t]==1)e[t]=2;M 4(e[t]==0){e[t]=1;4(t=="l"){c("x");c("p");c("q");c("g");c("J");c("G");c("O");c("f");c("h");c("k")};4(t=="p"){c("q");c("r");c("f");c("g");c("n");c("h");c("k")};4(t=="q"){c("p");c("r");c("f");c("g");c("n");c("h");c("k")};4(t=="r"){c("p");c("q");c("f");c("g");c("n");c("h");c("v");c("k")};4(t=="v"){c("p");c("q");c("f");c("g");c("n");c("h");c("r");c("k")};4(t=="u"){c("w");c("f");c("g");c("n");c("h");c("k")};4(t=="w"){c("u");c("f");c("g");c("n");c("h");c("k")};4(t=="f"){c("u");c("w");c("F");c("x");c("l");c("q");c("p");c("r");c("n");c("h")};4(t=="x"){c("g");c("l");c("f");c("k")};4(t=="F"){c("g");c("f");c("g")};4(t=="g"){c("x");c("F");c("l");c("u");c("w");c("v")};4(t=="J"){c("l")};4(t=="G"){c("l");c("k")};4(t=="n"){c("q");c("r");c("v");c("p");c("f");c("u");c("h");c("l")};4(t=="h"){c("q");c("r");c("v");c("p");c("f");c("u");c("n");c("l")};4(t=="O"){c("l")};4(t=="k"){c("x");c("p");c("q");c("r");c("v");c("G");c("u");c("w");("l")}}M 4(e[t]==2)e[t]=0;P(Y)};C P(7){m V=1c.1b(\'1d\');m b=\'<3 d="1f"></3><3 d="1e"></3><3 d="1a"></3><3 d="15"></3><3 d="14"></3><3 d="16"></3><3 d="18"></3>\';b+=\'<3 d="17"></3><3 d="12"></3><3 d="28"></3><3 d="27"></3><3 d="26"></3><6><6>\';b+=\'<3 d="U" 29="2c">2b</3><6><6>\';b+=\'<3 d="10">2a，21。20，1Z。<6>22，25。<6>（24：23；2d：2k；2j：2i）<6><6></3>\';b+=\'<3 d="10">\';A(m i=0;i<s.B;i++){b+=\'<a z="#" 2f="2g:\'+Q[e[s[i]]]+\';" 2e="Z(\'+"\'"+s[i]+"\'"+\');2h 1J;">\'+D[i]+\'</a> \';4(i==8)b+="<6>"}b+=\'</3><6><6><6>\';o=-1;I:A(m i=0;i<7.9.B;i++){4(e["L"]==1&&7.9[i].W<5)E;4(e["L"]==2&&7.9[i].W==5)E;A(m j=1;j<s.B;j++){4(e[s[j]]==1&&7.9[i].S.T(D[j])<=-1){E I};4(e[s[j]]==2&&7.9[i].S.T(D[j])>-1){E I}}4((o>=0&&7.9[i].y!=7.9[o].y)||o==-1){4(o>=0)b+="<6><6><6>";b+="<a d=\'1H\'>"+7.9[i].y+"<6></a>";}4((o>=0&&(7.9[i].K!=7.9[o].K||7.9[i].y!=7.9[o].y))||o==-1){b+="<6>【"+7.9[i].K+"】"}H="";4(7.9[i].N!=""&&7.9[i].N!=1M)H=\' U="\'+7.9[i].N+\'" \';b+="<a "+H;4(7.9[i].1L=="1K")b+="z=\'1D.R#"+i+"\'>";M b+="1C=\'1B\' z=\'1G://1F.1E.1V/1U/"+7.9[i].X+"\'>";b+=7.9[i].X+"</a> ";o=i}b+=\'<6><6><3 d="1T"><a z="../../1Y.R"> ▶1X◀</a></3>\';b+=\'<3 d="1W">1P © 1O~19 1N. 1S 1R 1Q.</3><6><6>\';V.1I=b};',62,145,'|||div|if||br|json||RECORDS||txt||id|type|bumian|youcai|bihua|||zongjiao|shufa|var|muban|lasti|juanzhou|lizhou|ceye|typename||zhiben|shan|juanben|shese|P_DYNASTY|href|for|length|function|typeinfo|continue|shuimo|shanshui|thistitle|outer|renwu|P_AUTHOR|star|else|P_POSTIL|huaniao|writejson|typecolor|html|P_TYPE|indexOf|title|oMain|P_STAR|P_NAME|myjson|anti|desc2|水墨|ltx|精|lt|mb|rt|rb|lb||rm|getElementById|document|main|lm|mt|设色|fff|000|window|书法|onload|山水|人物|花鸟|888|宗教|布面|木板|纸本|油彩|绢本|册页|扇|立轴|壁画|卷轴|_0|target|page|baidu|baike|https|family|innerHTML|false|img|P_INFO|null|鱼儿|2017|Copyright|Reserved|Rights|All|ret|item|com|footer|返回主页|index|搁这了|整理了些|记不住|可简单筛选|无|灰|随便翻翻便好|rbx|lbx|rtx|align|大师的画作有些多|画之册|center|黑|onclick|style|color|return|非|白|是'.split('|'),0,{}))
+<script>
+
+    var paint= {
+        template: '#paint',
+        props:{
+            "parenttype": Object,
+        },
+        data: function(){
+            return {
+                list: [],
+                type:{},
+                typecolor:["#888","#000","#fff"],
+                typename:["star","shuimo","shese","youcai","juanben","zhiben","bumian","muban","bihua",
+                    "juanzhou","lizhou","ceye","shan","shufa","renwu","shanshui","huaniao","zongjiao",
+                    "zhongguo","yidali","faguo","xibanya","helan","bilishi","deguo","yingguo","eguo",
+                    "flc","wwns","beifang","baluoke","luokeke","xingudian","langman","xieshi","yinxiang",
+                    "jgdj","sssj","ysj","wm","yzbg","sw","ss"],
+                typeinfo:["精","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
+                    "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","宗教",
+                    "中国","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
+                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧"],
+            }
+        },
+        methods: {
+
+            authorFormat(author,link){
+                if(link=="" || link==null) return "<br>"+author;
+                else return "<br><a style='color:blue;' target='_blank' href='https://en.wikipedia.org/wiki/"+link+"'>"+author+"</a>";
+            },
+
+            c(t) {
+                if(this.type[t]==1) this.type[t]=2;
+            },
+
+            cleararea(t) {
+                this.c("flc");this.c("wwns");this.c("beifang");this.c("baluoke");this.c("luokeke");this.c("xingudian");this.c("langman");this.c("xieshi");
+                this.c("yinxiang");this.c("jgdj");this.c("sssj");this.c("ysj");this.c("wm");this.c("yzbg");this.c("sw");this.c("ss");
+                this.type[t]=1;
+            },
+
+            setList(){
+                var k=0;
+                this.list= [];
+
+                for(var i=0;i<myjson.RECORDS.length;i++) {
+
+                    if(this.type["star"]==1 && myjson.RECORDS[i].P_STAR<5) continue;
+                    if(this.type["star"]==2 && myjson.RECORDS[i].P_STAR==5) continue;
+
+                    var iscontinue=false;
+                    for ( var j = 1; j < this.typename.length; j++ )
+                    {
+                        if(this.type[this.typename[j]]==1 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])<=-1) {iscontinue=true;break;};
+                        if(this.type[this.typename[j]]==2 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])>-1) {iscontinue=true;break;};
+                    }
+                    if(iscontinue) continue;
+
+                    this.list[k++]= myjson.RECORDS[i];
+
+                }
+            },
+
+            anti(t){
+				if(t==-1)
+                {
+                    for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+                }
+                else
+                {
+                    if(this.type[t]==1) this.type[t]=2;
+                    else if(this.type[t]==0)
+                    {
+
+                        this.type[t]=1;
+                        if(t=="shufa") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("youcai");this.c("renwu");this.c("shanshui");this.c("huaniao");
+                            this.c("bumian");this.c("bihua");this.c("zongjiao");};
+                        if(t=="juanzhou") {this.c("lizhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="lizhou") {this.c("juanzhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="ceye") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("shan");this.c("zongjiao");};
+                        if(t=="shan") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("ceye");this.c("zongjiao");};
+                        if(t=="zhiben") {this.c("juanben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="juanben") {this.c("zhiben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
+                        if(t=="bumian") {this.c("zhiben");this.c("juanben");this.c("shuimo");this.c("shese");this.c("shufa");this.c("lizhou");this.c("juanzhou");
+                            this.c("ceye");this.c("muban");this.c("bihua");};
+                        if(t=="shese") {this.c("youcai");this.c("shufa");this.c("bumian");this.c("zongjiao");};
+                        if(t=="shuimo") {this.c("youcai");this.c("bumian");this.c("youcai");};
+                        if(t=="youcai") {this.c("shese");this.c("shuimo");this.c("shufa");this.c("zhiben");this.c("juanben");this.c("shan");};
+                        if(t=="renwu") {this.c("shufa");};
+                        if(t=="shanshui") {this.c("shufa");this.c("zongjiao");};
+                        if(t=="muban") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("bihua");this.c("shufa");};
+                        if(t=="bihua") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("muban");this.c("shufa");};
+                        if(t=="huaniao") {this.c("shufa");};
+                        if(t=="zongjiao") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("ceye");this.c("shan");this.c("shanshui");this.c("zhiben");this.c("juanben");("shufa");};
+
+                        if(t=="zhongguo") {this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="yidali") {this.c("zhongguo");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="faguo") {this.c("zhongguo");this.c("yidali");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="xibanya") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="helan") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="bilishi") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("deguo");this.c("yingguo");this.c("eguo");};
+                        if(t=="deguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("yingguo");this.c("eguo");};
+                        if(t=="yingguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("eguo");};
+                        if(t=="eguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");};
+
+                        if(t=="flc")this.cleararea("flc");
+                        if(t=="wwns")this.cleararea("wwns");
+                        if(t=="beifang")this.cleararea("beifang");
+                        if(t=="baluoke")this.cleararea("baluoke");
+                        if(t=="luokeke")this.cleararea("luokeke");
+                        if(t=="xingudian")this.cleararea("xingudian");
+                        if(t=="langman")this.cleararea("langman");
+                        if(t=="xieshi")this.cleararea("xieshi");
+                        if(t=="yinxiang")this.cleararea("yinxiang");
+                        if(t=="jgdj")this.cleararea("jgdj");
+                        if(t=="sssj")this.cleararea("sssj");
+                        if(t=="ysj")this.cleararea("ysj");
+                        if(t=="wm")this.cleararea("wm");
+                        if(t=="yzbg")this.cleararea("yzbg");
+                        if(t=="sw")this.cleararea("sw");
+                        if(t=="ss")this.cleararea("ss");
+                    }
+                    else if(this.type[t]==2) this.type[t]=0;
+                }
+                this.setList();
+            },
+
+            picpage(id){
+                this.$emit('changepage',this.list[id],this.type,'pic');
+            },
+
+            baidupicpage(id){
+                this.$emit('changepage',this.list[id],this.type,'baidupic');
+            },
+			
+			wikiinfo(id){
+                this.$emit('changepage',this.list[id],this.type,'wikiinfo');
+            },
+
+        },
+
+        created() {
+            //console.log(this.parenttype.star);
+            if(typeof(this.parenttype.star) != "undefined")
+            {
+                //console.log(this.parenttype.star);
+                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=this.parenttype[this.typename[i]];
+            }
+            else
+            {
+                //console.log("0");
+                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+            }
+           // for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+            this.setList();
+
+        },
+
+        mounted() {
+        },
+
+
+    }
+
+    var pic= {
+        template: '#pic',
+        data: function(){
+            return {
+                id:0,
+            }
+        },
+        methods: {
+
+            paintpage(){
+                this.$emit('paintpage');
+            },
+        },
+
+        created() {
+
+        },
+
+        props: ['parentmsg'] ,
+
+    }
+
+    var baidupic= {
+        template: '#baidupic',
+        data: function(){
+            return {
+                id:0,
+            }
+        },
+        methods: {
+
+            paintpage(){
+                this.$emit('paintpage');
+            },
+        },
+
+        created() {
+
+        },
+
+        props: ['parentmsg'] ,
+
+    }
+	
+	var wikiinfo= {
+        template: '#wikiinfo',
+        data: function(){
+            return {
+                id:0,
+            }
+        },
+        methods: {
+
+            paintpage(){
+                this.$emit('paintpage');
+            },
+        },
+
+        created() {
+
+        },
+
+        props: ['parentmsg'] ,
+
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            comName: 'paint',
+            picinfo:'',
+            //scrollTop: 0,
+            type:{},
+
+         },
+        methods: {
+            changepage(id,type,topage){
+                this.type=type;
+                //this.scrollTop = document.body.scrollTop|| document.documentElement.scrollTop;
+                this.picinfo = id;
+                this.comName = topage;
+                //console.log(this.picinfo);
+            },
+
+            paintpage(){
+                this.comName= 'paint';
+            },
+
+            created() {
+
+            },
+
+
+        },
+        components: {
+            paint,pic,baidupic,wikiinfo
+        },
+    })
+
 </script>
 </html>
