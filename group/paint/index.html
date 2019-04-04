@@ -56,8 +56,8 @@
                         v-if="list[i].A_EN!=''" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
 					</span>】
 				</span>
-                <a v-if="list[i].P_INFO=='http' || list[i].P_INFO=='imgl'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
-                <a v-if="list[i].P_INFO=='img'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='http'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='img' || list[i].P_INFO=='imgl'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
             </span>
             <br><br><br><div id="ret3"><a href="../../index.html"> ▶返回主页◀</a></div>
         </div>

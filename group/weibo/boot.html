@@ -1,0 +1,449 @@
+<!DOCTYPE html> 
+<html> 
+ <head> 
+  <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
+  <title></title>
+
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <script src="../jquery-3.3.1.min.js"></script>
+  <script src="../bootstrap.min.js"></script>
+
+  <style type="text/css"> 
+   *{ 
+    margin: 0px; 
+    padding: 0px; 
+   }
+   body{
+       background: #cbf3fa;
+   }
+   #info{ 
+    width: 960px;
+	position: absolute;
+	left:50%;
+	margin-left:-480px;
+   } 
+   #data{ 
+    width: 280px; 
+    border: 1px solid #000000; 
+    margin: 20px auto; 
+   } 
+   #data > p{ 
+    display: flex; 
+   } 
+   #data > h5{ 
+    text-align: center; 
+   } 
+   #data > p > span{ 
+    padding: 0 10px; 
+   } 
+   #prev,#next,#prevn,#nextn{
+    cursor: pointer; 
+   } 
+   #nian{ 
+    flex: 1; 
+    text-align: center; 
+   } 
+   #title{ 
+    overflow: hidden; 
+    list-style: none; 
+    background: #88cca7;
+   } 
+   #title > li{ 
+    float: left; 
+    width: 40px; 
+    height: 26px; 
+    line-height: 26px; 
+    text-align: center; 
+   } 
+   #date{ 
+    overflow: hidden; 
+    list-style: none; 
+   } 
+   #date > li{ 
+    float: left; 
+    width: 34px; 
+    height: 34px; 
+    margin: 1px 1px; 
+    border: 2px solid rgba(0,0,0,0); 
+    line-height: 34px; 
+    text-align: center; 
+    cursor: pointer; 
+   } 
+   #date > .hover:hover{
+     background: green;
+   }
+     
+   .active{ 
+    color: red; 
+   }
+
+   .thisday{
+    color: green;
+   }
+
+   .infohere{ 
+    color: #fff;
+   }
+
+    .bigbox{
+        background: #7ac4df;
+        padding: 18px;
+        width:960px;
+
+    }
+   .smallbox{
+       position: relative;
+       padding: 18px;
+       background: #b5e1fa;
+
+   }
+   .innerpic{
+       position: relative;
+       left:3%;
+
+   }
+
+   #footer,#pfooter{
+    position:absolute;
+    text-align: center;
+    width:960px;
+    left:50%;
+    margin-left: -480px;
+    margin-top:30px;
+    margin-bottom:30px;
+   }
+   #ret{
+    position:absolute;
+    width:960px;
+    height:36px;
+    text-align: center;
+    left:50%;
+    margin-left: -480px;
+   }
+
+
+   @media screen and (max-device-width:640px){
+
+       *{
+           font-size: 36px;
+       }
+
+    #info{
+     width: 640px;
+     margin-left:-332px;
+    }
+
+    #data{
+           width: 560px;
+           border: 2px solid #000000;
+       }
+
+
+
+     #data > p > span{
+           padding: 0 20px;
+       }
+
+       #title > li{
+           width: 80px;
+           height: 52px;
+           line-height: 52px;
+       }
+
+       #date > li{
+           width: 68px;
+           height: 68px;
+           margin: 2px 2px;
+           border: 4px solid rgba(0,0,0,0);
+           line-height: 68px;
+           text-align: center;
+           cursor: pointer;
+       }
+
+
+    .bigbox{
+     padding: 12px;
+     width:640px;
+
+    }
+    .smallbox{
+     padding: 12px;
+
+    }
+       #footer{
+        font-size:36px;
+        margin-top:120px;
+       }
+       #pfooter{
+        width:640px;
+        font-size:26px;
+        margin-top:45px;
+        margin-bottom:30px;
+        margin-left: -320px;
+       }
+
+    #ret{
+     width:640px;
+     margin-left: -320px;
+    }
+
+
+   }
+  </style> 
+ </head> 
+ <body> 
+    
+  <div id="data"> 
+   <p> 
+    <span id="prevn">上年</span> 
+	<span id="prev">上月</span> 
+    <span id="nian">2017</span> 
+    <span id="next">下月</span> 
+	<span id="nextn">下年</span> 
+   </p> 
+   <h5 id="yue">一月</h5> 
+   <ul id="title"> 
+    <li>日</li> 
+    <li>一</li> 
+    <li>二</li> 
+    <li>三</li> 
+    <li>四</li> 
+    <li>五</li> 
+    <li>六</li> 
+   </ul> 
+   <ul id="date"> 
+   </ul> 
+  </div> 
+  <div id="info"></div>
+
+    
+  <script type="text/javascript"> 
+   var dat = new Date(); //当前时间 
+   var nianD = dat.getFullYear();//当前年份 
+   var yueD = dat.getMonth(); //当前月 
+   var tianD = dat.getDate(); //当前天 这保存的年月日 是为了 当到达当前日期 有对比 
+     
+   add(); //进入页面第一次渲染 
+     
+   function add(){
+    document.getElementById('date').innerHTML = ""; 
+      
+    var nian = dat.getFullYear();//当前年份 
+    var yue = dat.getMonth(); //当前月 
+    var tian = dat.getDate(); //当前天 
+    var arr=["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]; 
+    document.getElementById('nian').innerText = nian; 
+    document.getElementById('yue').innerText = arr[yue]; 
+      
+    var setDat = new Date(nian,yue + 1,1 - 1); //把时间设为下个月的1号 然后天数减去1 就可以得到 当前月的最后一天; 
+    var setTian = setDat.getDate(); //获取 当前月最后一天 
+    var setZhou = new Date(nian,yue,1).getDay(); //获取当前月第一天 是 周几 
+      
+    for(var i=0;i<setZhou ;i++){//渲染空白 与 星期 对应上 
+     var li=document.createElement('li'); 
+     document.getElementById('date').appendChild(li); 
+    } 
+      
+    for(var i=1;i<=setTian;i++){//利用获取到的当月最后一天 把 前边的 天数 都循环 出来 
+     var li=document.createElement('li'); 
+     li.innerText = i; 
+	 li.id= "d"+i;
+     if(nian == nianD && yue == yueD && i == tianD){ 
+      li.className = "active"; 
+     }else{ 
+      li.className = "hover"; 
+     } 
+      //li.onclick =function(){alert(this.id);};
+     document.getElementById('date').appendChild(li); 
+    } 
+	
+	//console.log(nian+" "+yue+" "+i);
+	
+	//var txt="";
+
+	
+	//document.getElementById('info').innerHTML=txt;
+       getJson(nian,yue);
+	
+      
+   } 
+     
+   document.getElementById("next").onclick = function(){ 
+    dat.setMonth(dat.getMonth() + 1); //当点击下一个月时 对当前月进行加1; 
+    add(); //重新执行渲染 获取去 改变后的 年月日 进行渲染; 
+   }; 
+   document.getElementById("prev").onclick = function(){ 
+    dat.setMonth(dat.getMonth() - 1); //与下一月 同理 
+    add(); 
+   }; 
+   document.getElementById("nextn").onclick = function(){ 
+    dat.setMonth(dat.getMonth() + 12); 
+    add(); 
+   }; 
+   document.getElementById("prevn").onclick = function(){ 
+    dat.setMonth(dat.getMonth() - 12); 
+    add(); 
+   }; 
+  
+
+/*
+SELECT * FROM
+(SELECT * FROM `weibo` where author="5679301959" and visible=1 and pubdate>"2018-01-01 00:00:00" and pubdate<"2018-04-01 00:00:00") as tableA
+LEFT JOIN
+(SELECT link as linkb,mid as midb,author as authorb,name as nameb,pubdate as pubdateb,
+text as textb, source as sourceb, pic_ids as pic_idsb
+FROM `weibo`) as tableB
+ON tableA.link2=tableB.linkb
+ORDER BY tableA.pubdate
+ */
+
+function changeTime(pubdate)
+{
+    nian=pubdate.split('/')[2].split(' ')[0];
+    yue=pubdate.split('/')[1];
+    day=pubdate.split('/')[0];
+    hms=pubdate.split(' ')[1];
+    return yue+"月"+day+"日 "+hms;
+}
+
+function setText(str)
+{
+    reg = new RegExp('\\[\\[EMOJI:(.+?)\\]\\]',"g");
+    return str.replace(reg,function($1){ return decodeURIComponent($1);}).replace(reg,'$1');
+}
+
+  
+function getJson(nian,yue)
+{
+    var test;
+    if(window.XMLHttpRequest)
+    {
+        test = new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject)
+    {
+        test = new window.ActiveXObject();
+    }
+    else
+    {
+        alert("请升级至最新版本的浏览器");
+    }
+
+    if(test !=null)
+    {
+        var jsonFile="201412.json";
+        if(nian<=2014) jsonFile="201412.json";
+        else if(nian==2015 && yue<12) jsonFile="201512.json";
+        else if(nian==2016 && yue<6) jsonFile="201606.json";
+        else if(nian==2016 && yue<9) jsonFile="201609.json";
+        else if(nian==2016 && yue<12) jsonFile="201612.json";
+        else if(nian==2017 && yue<3) jsonFile="201703.json";
+        else if(nian==2017 && yue<6) jsonFile="201706.json";
+        else if(nian==2017 && yue<9) jsonFile="201709.json";
+        else if(nian==2017 && yue<12) jsonFile="201712.json";
+        else if(nian==2018 && yue<3) jsonFile="201803.json";
+        else if(nian==2018 && yue<6) jsonFile="201806.json";
+        else if(nian==2018 && yue<9) jsonFile="201809.json";
+        else if(nian==2018 && yue<12) jsonFile="201812.json";
+        else if(nian==2019) jsonFile="2019.json";
+        test.open("GET",jsonFile,true);
+        test.send(null);
+        test.onreadystatechange=function()
+        {
+            if(test.readyState==4&&test.status==200)
+            {
+                var info = JSON.parse(test.responseText);
+                document.getElementById('info').innerHTML="";
+                lastnian=lastyue=lastday=yuetext=daytext="";
+                footer = '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
+                footer+='<a href="http://yuerpatio.com/"> ▶返回主页◀</a></div><br><br>';
+                //footer+=decodeURIComponent('%F0%9F%99%8F');
+                //footer+='<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>';
+                for(var key in info.RECORDS)
+                {
+                    if(info.RECORDS[key].visible==0 ||
+                        (info.RECORDS[key].author!="5679301959" && info.RECORDS[key].author!="5027860414" && info.RECORDS[key].author!="1759006061")
+                    ) continue;
+                    thisnian=info.RECORDS[key].pubdate.split('/')[2].split(' ')[0];
+                    thisyue=info.RECORDS[key].pubdate.split('/')[1];
+                    thisday=info.RECORDS[key].pubdate.split('/')[0];
+
+                    if(thisyue==(yue+1) && thisnian==nian)
+                    {
+                        //console.log(info.RECORDS[key].pubdate);
+                        document.getElementById('d'+thisday).className = "infohere";
+                        nexttxt="";
+                        if(info.RECORDS[key].pubdateb)
+                        {
+                            nexttxt='<div class="smallbox" id="pic'+key+'">'+
+                            '<a href="https://weibo.com/'+info.RECORDS[key].authorb+'/'+info.RECORDS[key].linkb+'" target="_blank">'+
+                            changeTime(info.RECORDS[key].pubdateb)+"</a> "+
+                            info.RECORDS[key].nameb+'<br>'+
+                            setText(info.RECORDS[key].textb)+'<br>';
+
+                            if(info.RECORDS[key].pic_idsb!="")
+                            {
+                                var picArr=JSON.parse(info.RECORDS[key].pic_idsb);
+                                for(picn in picArr)
+                                {
+                                    nexttxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
+                                    nexttxt+='" class="innerpic" target="_blank"><img src="';
+                                    if(window.screen.width<640) nexttxt+='http://ww4.sinaimg.cn/orj360/';
+                                    else nexttxt+='http://ww4.sinaimg.cn/large/';
+                                    nexttxt+=picArr[picn]+'" style="width:87.662337%"></a><br>';
+                                }
+
+                            }
+
+                            nexttxt+='<br></div>';
+                        }
+
+                        thistxt='<div class="bigbox" id="pic'+key+'">'+
+                            '<a href="https://weibo.com/'+info.RECORDS[key].author+'/'+info.RECORDS[key].link+'" target="_blank">'+
+                            changeTime(info.RECORDS[key].pubdate)+"</a> "+
+                            info.RECORDS[key].name+'<br>'+
+                            setText(info.RECORDS[key].text)+'<br>';
+
+                        if(info.RECORDS[key].pic_ids!="")
+                        {
+                            var picArr=JSON.parse(info.RECORDS[key].pic_ids);
+                            for(picn in picArr)
+                            {
+                                thistxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
+                                thistxt+='" class="innerpic" target="_blank"><img src="';
+                                if(window.screen.width<640) thistxt+='http://ww4.sinaimg.cn/orj360/';
+                                else thistxt+='http://ww4.sinaimg.cn/large/';
+                                thistxt+=picArr[picn]+'" style="width:84.375%"></a><br>';
+                            }
+
+                        }
+
+                        thistxt+=nexttxt+'<br></div><br>';
+
+
+                        if(lastnian!=thisnian || lastyue!=thisyue || lastday!=thisday) daytext="";
+                        daytext+=thistxt;
+
+                        (function (daytext,thisday) {
+                            document.getElementById('d'+thisday).addEventListener('click', function () {
+                                document.getElementById('info').innerHTML=daytext+footer;
+                                document.getElementById('d'+thisday).className = "thisday";
+                            }, false);
+                        })(daytext,thisday);
+
+                        if(info.RECORDS[key].author=="5679301959" && info.RECORDS[key].link2=="")yuetext+=thistxt;
+                    }
+                    lastnian=thisnian;lastyue=thisyue;lastday=thisday;
+                }
+                document.getElementById('info').innerHTML=yuetext+footer;
+
+            }
+        };
+    }
+}
+
+
+  </script> 
+ </body> 
+</html>
