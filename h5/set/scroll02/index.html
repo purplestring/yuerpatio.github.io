@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>女史箴图</title>
+	 <style type="text/css">
+  *{
+		margin: 0;
+		padding: 0;			
+	}
+	body{
+		font-family:"宋体","黑体","楷体";
+		color:#000;
+		background: #add0b1;
+		margin: 0;
+		padding: 0;
+	}
+	 
+	 
+	
+	.loading {width:200px;height:200px;top:20%;position:relative;margin:50px auto;border:1px solid #f90;border-radius:50%;}
+	.info{line-height:200px;text-align:center;top:-50px;font-size:30px;color:#fff;}
+	.dot {width:100%;;height:100%;animation:rond .8s infinite;-webkit-animation:rond 3s infinite;}
+	.dot:after {width:10px;height:10px;position:absolute;top:-5px;left:90px;content:"";display:table;background-color:#f50;border-radius:50%;}
+	.num {width:100%;height:100%;position:absolute;top:80px;left:0;text-align:center;font-size:20px;color:#fff;}
+	@keyframes rond {
+		0% {transform:rotate(0deg);}
+		100% {transform:rotate(360deg);}
+	}
+	@-webkit-keyframes rond {
+		0% {-webkit-transform:rotate(0deg);}
+		100% {-webkit-transform:rotate(360deg);}
+	} 
+	 
+	 
+	#view{
+		position: relative;
+		width:1280px;
+		height:900px;
+		overflow:hidden;
+		left:50%;
+		top:20px;
+		border-style:solid;
+		border-color:#aaa;	
+		margin-left:-640px;
+	}
+	#main{
+		position: relative;
+		width:1280px;
+		height:900px;
+		overflow:hidden;
+		top:0px;
+		background: #5ca2e9;
+				
+	}
+	ul li{
+		list-style: none;
+		font-size: 60px;
+		text-align: center;		
+		height:720px;
+		color: rgb(255,0,255,0.2);
+		line-height: 200px;
+		position: absolute;
+		
+
+
+	}
+	a {
+		color:#FFF;	
+		text-decoration: none;
+	}
+		
+	a:hover {
+		color:#137f05;	
+		text-decoration: none;
+	}
+
+	#footer{
+		width:300px;
+		position:absolute;
+		text-align: center;
+		left:50%;
+		margin-left: -150px;
+		top:950px;
+	}
+	
+	@media screen and (max-device-width:640px){
+	
+	#view{
+		top:20px;
+		width:640px;	
+		margin-left:-320px;
+	}
+	
+	#main{
+
+		width:640px;
+				
+	}
+	
+	#footer{
+		top:1000px;
+		font-size:45px;
+	}
+
+}
+	
+
+</style>
+
+</head>
+<body>
+<audio src='#' style='display:none' id='audio'></audio>
+<div id="view">
+
+<ul id="main">
+	<div class="loading">	
+		<div class="dot"></div>
+		<div class="num" id="num">加载中<br>0%</div>
+		<div class="info">女史箴图</div>
+	</div>
+</ul>
+</div>
+<div id="footer"><a href="../../index.html">返回主页</a></div>
+</body>
+<script>
+
+window.onload=function (){
+	loading();
+}
+
+/**************************************************/
+var picjson=[
+	{ "dis":2494,"width":2494,"background":"url(img/nsz_0.jpg) no-repeat"},
+	{ "dis":117,"width":2507,"background":"url(img/nsz_1.jpg) no-repeat"},
+	{ "dis":866,"width":361,"background":"url(img/word_1.png) no-repeat","class":"word"},
+	{ "dis":1524,"width":55,"background":"url(img/word_2.png) no-repeat","class":"word"},	
+	{ "dis":0,"width":1546,"background":"url(img/nsz_2.jpg) no-repeat"},
+	{ "dis":1546,"width":157,"background":"url(img/word_3.png) no-repeat","class":"word"},
+	{ "dis":0,"width":186,"background":"url(img/word_4.png) no-repeat","class":"word"},
+	{ "dis":2502,"width":2502,"background":"url(img/nsz_3.jpg) no-repeat"},
+	{ "dis":0,"width":2577,"background":"url(img/nsz_4.jpg) no-repeat"},
+	{ "dis":2398,"width":179,"background":"url(img/word_5.png) no-repeat","class":"word"},
+	{ "dis":130, "width":2110,"background":"url(img/nsz_5.jpg) no-repeat"},
+	{ "dis":223,"width":130,"background":"url(img/word_6.png) no-repeat","class":"word"},
+	{ "dis":1757,"width":1282,"background":"url(img/my_1.jpg) no-repeat","class":"my"},
+	{ "dis":100,"width":1602,"background":"url(img/nsz_6.jpg) no-repeat"},
+	{ "dis":188,"width":121,"background":"url(img/word_7.png) no-repeat","class":"word"},
+	{ "dis":1314,"width":1106,"background":"url(img/my_2.jpg) no-repeat","class":"my"},
+	{ "dis":140,"width":1050,"background":"url(img/nsz_7.jpg) no-repeat"},
+	{ "dis":860,"width":121,"background":"url(img/word_8.png) no-repeat","class":"word"},
+	{ "dis":0,"width":1440,"background":"url(img/nsz_8.jpg) no-repeat"},
+	{ "dis":1440,"width":290,"background":"url(img/word_9.png) no-repeat","class":"word"},
+	{ "dis":0,"width":1146,"background":"url(img/nsz_9.jpg) no-repeat"},
+	{ "dis":1146,"width":271,"background":"url(img/word_10.png) no-repeat","class":"word"},
+	{ "dis":0, "width":742, "background":"url(img/nsz_10.jpg) no-repeat"},
+	{ "dis":742,"width":120,"background":"url(img/word_11.png) no-repeat","class":"word"},
+	{ "dis":70,"width":2034,"background":"url(img/nsz_11.jpg) no-repeat"},
+	{ "dis":1964,"width":61,"background":"url(img/word_12.png) no-repeat","class":"word"},
+	{ "dis":3124,"width":3124,"background":"url(img/nsz_12.jpg) no-repeat"},
+	{ "dis":4155,"width":4155,"background":"url(img/nsz_13.jpg) no-repeat"},
+];
+var picct=picjson.length; var currentx=0; var cmp3=""; var plen=0;
+var swidth=1280; if(window.screen.width<=640) swidth=640;
+
+for(var i=0;i<picct;i++)
+{
+    plen+=picjson[i].dis;
+
+    if(i==0)picjson[0].dis0=0;
+    else picjson[i].dis0=picjson[i-1].dis0+picjson[i-1].dis;
+
+    if(picjson[i].class)
+    {
+        picjson[i].zindex="3";
+        if(picjson[i].class=="tree") picjson[i].zindex="2";
+		if(picjson[i].class=="word") picjson[i].voicefile=picjson[i].background.split('_')[1].split('.')[0];
+    }
+
+    if(picjson[i].height==null)
+	{
+        picjson[i].height=960;
+	}
+};
+
+/***********************************************************/
+
+function preloadimages(arr,img,srcfile){
+
+	var arr=(typeof arr!="object")? [arr] : arr  ;
+	for (var i=0; i<arr.length; i++){
+		img[i]=new Image();
+		img[i].src=srcfile+arr[i];
+	}
+};
+
+function loading(){
+
+    var newimages=[];
+
+    Array.prototype.myPush = function(){
+        for(var i=0; i<arguments.length; i++){
+            var ele = arguments[i];
+            if(this.indexOf(ele) == -1){
+                this.push(ele);
+            }
+        }
+    };
+
+    var picarr = new Array();
+    for(var i=0;i<picjson.length;i++) {
+        picarr.myPush(picjson[i].background.split('/')[1].split(')')[0]);
+    }
+
+    preloadimages(picarr,newimages,"img/");
+
+    var ready=0;
+    var imgLoad=setInterval(function(){
+        if(ready==newimages.length)
+        {
+            clearInterval(imgLoad);
+            imgReady();
+            return;
+        }
+        ready=0;
+        for (var i=0; i<newimages.length; i++) if(newimages[i].height)ready++;
+        document.getElementById('num').innerHTML="加载中<br>"+parseInt(100*ready/newimages.length)+"%";
+    }, 100);
+};
+
+function changeMp3() {
+    var oAudio = document.getElementById('audio');
+    var asrc= oAudio.src.split("mp3/")[1];
+    if(cmp3 && cmp3!=asrc)
+    {
+        oAudio.src = "mp3/"+cmp3;
+        oAudio.load();
+        oAudio.play();
+    }
+    return;
+}
+
+function imgReady() {
+    var oMain=document.getElementById('main');
+
+    var txt=""; for(var i=0;i<picct;i++)  txt+='<li id="pic'+i+'"></li>';
+    oMain.innerHTML=txt;
+
+    for(var i=0;i<picct;i++) {
+        document.getElementById('pic'+i).style.display="none";
+        if(picjson[i].background)document.getElementById('pic'+i).style.background=picjson[i].background;
+        if(picjson[i].width) document.getElementById('pic'+i).style.width=picjson[i].width+"px";
+        if(picjson[i].height) document.getElementById('pic'+i).style.height=picjson[i].height+"px";
+        if(picjson[i].top) document.getElementById('pic'+i).style.top=picjson[i].top+"px";
+        if(picjson[i].class) document.getElementById('pic'+i).className = picjson[i].class;
+        if(picjson[i].zindex) document.getElementById('pic'+i).style.zIndex=picjson[i].zindex;
+    }
+
+    oMain.onclick=function(ev){ changeMp3();}
+    oMain.onmousedown = function(ev){ return move0(ev,move); };
+    oMain.ontouchstart = function(ev){ changeMp3(); return move1(ev,move); };
+    oMain.onmousewheel = function(ev){ return move2(ev,move); };
+    move(0,0);
+}
+
+function mod(a,b) {
+    if(a>0) return a%b;
+    if(a%b) return b-((-a)%b);
+    return 0;
+}
+
+function getOpacity(m,s) {
+    m=Math.abs(m);
+    m=1-(s*2*m/swidth);
+    m+=0.3;
+    if(m<0) return 0;
+    if(m>1) return 1;
+    return m;
+}
+
+function move(a,b) {
+    currentx+=(-a);
+    for(var i=0;i<picct;i++) {
+        right=mod(currentx+picjson[i].dis0,plen);
+        left=mod(currentx+picjson[i].dis0+picjson[i].width,plen);
+        if(left<picjson[i].width) right-=plen;
+        if(right<swidth)
+        {
+            document.getElementById('pic'+i).style.display="block";
+            document.getElementById('pic'+i).style.right=right+"px";
+            mdis=(left+right-swidth)/2;
+            if(document.getElementById('pic'+i).className=="my")
+            {
+                document.getElementById('pic'+i).style.opacity =  getOpacity(mdis,1.2);
+            }
+            if(document.getElementById('pic'+i).className=="word")
+            {
+                document.getElementById('pic'+i).style.opacity =  getOpacity(mdis,3);
+                if(picjson[i].voicefile && Math.abs(mdis)<200) cmp3= picjson[i].voicefile+".mp3";
+            }
+            if(document.getElementById('pic'+i).className=="tree")
+            {
+                document.getElementById('pic'+i).style.opacity =  getOpacity(mdis,1.2);
+                document.getElementById('pic'+i).style.backgroundPosition=(picjson[i].bgleft-mdis*0.08)+"px 0px";
+            }
+        }else document.getElementById('pic'+i).style.display="none";
+    }
+
+};
+
+function move0(ev,mvfn) {
+	var ev = ev || window.event;
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+	
+	document.onmousemove = function(ev){
+		var ev = ev || window.event;				
+		mvfn(ev.clientX - disX,ev.clientY - disY);
+		disX = ev.clientX;disY = ev.clientY;
+		
+	};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	};
+	return false;
+}
+
+function move1(ev,mvfn) {
+	var disX = ev.changedTouches[0].clientX;	
+	var disY = ev.changedTouches[0].clientY;	
+	document.ontouchmove = function(ev){			
+
+		mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+		disX = ev.changedTouches[0].clientX;
+		disY = ev.changedTouches[0].clientY;
+		
+	};
+	document.ontouchend = function(){			
+		document.ontouchstart = null;
+		document.ontouchmove = null;
+	};
+	return false;
+}
+
+function move2(ev,mvfn) {
+	var delta = 0;
+	if (ev.wheelDelta) {
+		delta = ev.wheelDelta/120; 
+		if (window.opera) delta = -delta;
+	} else if (ev.detail) {
+		delta = -ev.detail/3;
+	}
+	if (delta) mvfn(40*delta,0);
+	return false;
+}
+	
+
+</script>
+</html>
