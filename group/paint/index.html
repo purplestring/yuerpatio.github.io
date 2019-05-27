@@ -39,7 +39,7 @@
         <div>
             <div id="title" align="center">画之册</div><br><br>
             <div id="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
-			这里仅索引，图片跳转外部，部分为空，需图请自寻。<br>可简单筛选，随便翻翻便好。<br>
+			可简单筛选，随便翻翻便好。<br>
 			（灰：无；黑：是；白：非）
                 <a @click.prevent="anti(-1)">重置</a><br><br><br></div>
             <div id="desc2">
@@ -56,7 +56,8 @@
                         v-if="list[i].A_EN!=''" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
 					</span>】
 				</span>
-                <a style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='http'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
+                <a v-if="list[i].P_INFO=='img' || list[i].P_INFO=='imgl'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
             </span>
             <br><br><br><div id="ret3"><a href="../../index.html"> ▶返回主页◀</a></div>
         </div>
