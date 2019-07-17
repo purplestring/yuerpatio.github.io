@@ -383,11 +383,11 @@ function getJson(nian,yue)
                                 var picArr=JSON.parse(info.RECORDS[key].pic_idsb);
                                 for(picn in picArr)
                                 {
-                                    nexttxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn]+'.jpg';
+                                    nexttxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
                                     nexttxt+='" class="innerpic" target="_blank"><img src="';
                                     if(window.screen.width<640) nexttxt+='http://ww4.sinaimg.cn/orj360/';
                                     else nexttxt+='http://ww4.sinaimg.cn/large/';
-                                    nexttxt+=picArr[picn]+'.jpg'+'" style="width:87.662337%"></a><br>';
+                                    nexttxt+=picArr[picn]+'" style="width:87.662337%"></a><br>';
                                 }
 
                             }
@@ -406,11 +406,11 @@ function getJson(nian,yue)
                             var picArr=JSON.parse(info.RECORDS[key].pic_ids);
                             for(picn in picArr)
                             {
-                                thistxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn]+'.jpg';
+                                thistxt+='<a href="http://ww4.sinaimg.cn/large/'+picArr[picn];
                                 thistxt+='" class="innerpic" target="_blank"><img src="';
                                 if(window.screen.width<640) thistxt+='http://ww4.sinaimg.cn/orj360/';
                                 else thistxt+='http://ww4.sinaimg.cn/large/';
-                                thistxt+=picArr[picn]+'.jpg'+'" style="width:84.375%"></a><br>';
+                                thistxt+=picArr[picn]+'" style="width:84.375%"></a><br>';
                             }
 
                         }
