@@ -308,9 +308,9 @@ function changeTime(pubdate)
        nian=pubdate.split('/')[2].split(' ')[0];
        yue=pubdate.split('/')[1];if(yue<10) yue="0"+yue;
        day=pubdate.split('/')[0];if(day<10) day="0"+day;
-       hour=pubdate.split(' ')[1].split(':')[0];if(hour!=0 &&hour<10) hour="0"+hour;
-       min=pubdate.split(' ')[1].split(':')[1];if(min!=0 && min<10) min="0"+min;
-       return nian+yue+day+hour+min;
+       //hour=pubdate.split(' ')[1].split(':')[0];
+       //min=pubdate.split(' ')[1].split(':')[1];
+       return nian+yue+day+pubdate.split(' ')[1].split(':')[0]+pubdate.split(' ')[1].split(':')[1];
    }
 
 function setText(str)
