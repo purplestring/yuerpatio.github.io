@@ -352,7 +352,8 @@ function getJson(nian,yue)
         else if(nian==2018 && yue<6) jsonFile="201806.json";
         else if(nian==2018 && yue<9) jsonFile="201809.json";
         else if(nian==2018 && yue<12) jsonFile="201812.json";
-        else if(nian==2019) jsonFile="2019.json";
+        else if(nian==2019 && yue<3) jsonFile="201903.json";
+		else if(nian==2019 && yue<8) jsonFile="201906.json";
         test.open("GET",jsonFile,true);
         test.send(null);
         test.onreadystatechange=function()
