@@ -26,25 +26,27 @@ body {
 	font-size: 16px;
 	top:-5px;
 	left:20%;
-	width:auto;
-	height: 40px;
+	width:80%;
+	height: 30px;
 }
 .mainnavi li {
 	float: left;
 	list-style: none;	
+	width:16%;
+	box-sizing:border-box;
 	/*border-right:1px solid #fff;*/
 }
 .mainnavi li a {
 	text-decoration: none;
 	color: white;
-	padding: 0 2px;
-	height: 40px;
-	line-height: 40px;
+	height: 30px;
+	line-height: 30px;
 	display: block;
-	padding-right: 2px;
 }
 .mainnavi li a:hover {
-	background: #333;
+	/*background: #333;
+	border-bottom:1px solid #fff;*/
+	text-decoration:underline;
 }
 #main {
 	position:relative;

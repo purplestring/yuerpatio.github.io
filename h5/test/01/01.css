@@ -49,6 +49,7 @@ body {
 }
 .mainnavi li a:hover {
 	background: #333;
+	text-decoration:underline;
 }
 #main {
 	position:relative;
