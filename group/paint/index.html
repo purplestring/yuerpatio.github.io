@@ -92,7 +92,7 @@
 	
 	<template id="wikiinfo">
         <div>
-            <iframe id="iframes" :src='"https://en.wikipedia.org/wiki/"+parentmsg.A_EN'></iframe>
+            <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+parentmsg.A_EN.replace(/ /g,"_")'></iframe>
             <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
         </div>
     </template>

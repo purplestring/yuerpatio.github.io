@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>综合</title>
+		<style id="style"></style>
+		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="info.js"></script>
+		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
+    </head>
+	<body>
+		<div class="mainnaviback"></div>
+		<div class="mainnavi">
+			<div id="logo"></div>
+            <ul id="navi"></ul>
+        </div>
+		<div id="main">
+		
+			<div id="Home">
+				<div class="slidershow">
+					<div class="slides" id="slides"></div>
+					<div class="slidenavi" id="slidenavi"></div>
+					<div id="slidesinfo"></div>	
+				</div>
+				<div class="homelist">
+					<div>
+						<h2>Coffee</h2><br>
+						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
+						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
+					</div>
+				   <div>
+						<h2>Tea</h2><br>
+						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
+						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
+					</div>
+					<div>
+						<h2>Milk</h2><br>
+						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
+						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
+					</div>
+				</div>
+			</div>
+			
+			<div id="About">
+				About
+			</div>
+			
+			<div id="Gallerys">
+				<div id="waterfall" class="waterfall"></div>
+			</div>
+			
+			<div id="Clients">
+				Clients
+			</div>
+			
+			<div id="Contacts">
+		
+				<div id="misinfo">
+						<h2>Miscellaneous Info:</h2><br>
+						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
+						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. Namlibero tempore, 
+						cum soluta nobis est eligendi optio cumque nihil impedit quo.</p>
+				</div>	
+				
+				<div id="contactinfo">
+					<h2>Our Contacts</h2><br>
+					<p>
+						<strong>Country:</strong>USA<br>
+						<strong>State:</strong>California<br>
+						<strong>City:</strong>San Diego<br>
+						<strong>Telephone:</strong>+354 5635600<br>
+						<strong>Email:</strong><a href="mailto:">smartnet@mail.com</a>
+					</p>
+				</div>
+				
+				<div id="map"></div>
+				
+				<div id="contactarea">
+				<h2>Contact Form</h2><br>
+					<form id="ContactForm" action="">
+						<div class="wrapper">
+							<div><p>Your Name:</p><input type="text" class="input"></div>
+							<div><p>Your E-mail:</p><input type="text" class="input"></div>
+							<div><p>Your Message:</p>							
+								<textarea cols="1" rows="1" class="text"></textarea>
+							</div>
+							<a href="#" class="send" onclick="document.getElementById('ContactForm').submit()">Send</a>
+							<a href="#" class="send" onclick="document.getElementById('ContactForm').reset()">Clear</a>				
+						</div>
+					</form>
+				</div>
+					
+			</div>
+		
+		</div>
+		<div class="footerbox"></div>
+		<div class="footer" id="footer">
+			Copyright 2015~2019 ABC
+		</div>
+	</body>
+	<script>
+	//Common
+	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
+			
+	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; var current=page[0];
+	for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="Current(this.innerHTML)">'+page[i]+'</a></li>');
+	function Current(c){
+		current = c;
+		for(let i in page) {
+			if(page[i]==current)
+				$("#"+page[i]).css('display','block'); 
+			else 
+				$("#"+page[i]).css('display','none'); 
+		}
+	}
+	
+	//Slidershow
+	for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+'>');
+	for(let i in slidepics) $("#slides").html($("#slides").html()+'<div class="slide'+(i==0?' s1':'')+'"><img src="'+slidepics[i].img+'" alt=""></div>');
+	for(let i in slidepics) $("#slidenavi").html($("#slidenavi").html()+'<label for="r'+i+'" class="slidebar"></label>');	
+	for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
+	$("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
+	$("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
+	$('#slidesinfo').html(slidepics[0].info);
+	$('#slides input').change(function () {		
+		$('#slidesinfo').html(slidepics[this["id"].split("r")[1]].info);
+	});
+	
+	//Waterfall
+	for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info+'</p></div>');
+	
+	//Contacts Map
+	/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
+	map.addControl(new BMap.MapTypeControl());  
+	map.setDefaultCursor("crosshair");
+    var point = new BMap.Point(116.404, 39.915);
+	var zoom=7; map.centerAndZoom(point, zoom);
+    map.enableScrollWheelZoom(true); 
+	var marker = new BMap.Marker(point);   
+	map.addOverlay(marker);  */
+	
+	console.log("common");
+	
+	window.onload = function(){
+		Current(current);
+		$("#main").css('display','block'); 
+		console.log("window.onload");
+	}
+	</script>
+</html>
