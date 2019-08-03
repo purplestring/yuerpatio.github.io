@@ -53,8 +53,8 @@
 				<div id="waterfall" class="waterfall"></div>
 			</div>
 			
-			<div id="Clients">
-				Clients
+			<div id="News">
+				News
 			</div>
 			
 			<div id="Contacts">
@@ -106,13 +106,14 @@
 	<script>
 	//Common
 	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
-			
+	
+	var langid=0; var current = 0;
 	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; var current=page[0];
-	for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="Current(this.innerHTML)">'+page[i]+'</a></li>');
-	function Current(c){
-		current = c;
+	for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="Current('+i+')">'+navinames[langid][page[i]]+'</a></li>');
+	function Current(i){
+		current = i;
 		for(let i in page) {
-			if(page[i]==current)
+			if(i==current)
 				$("#"+page[i]).css('display','block'); 
 			else 
 				$("#"+page[i]).css('display','none'); 
@@ -147,7 +148,7 @@
 	console.log("common");
 	
 	window.onload = function(){
-		Current(current);
+		Current(0);
 		$("#main").css('display','block'); 
 		console.log("window.onload");
 	}

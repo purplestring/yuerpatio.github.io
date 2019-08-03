@@ -23,3 +23,8 @@ var waterpics=[
 { "img":"images/11.jpg","info":"美丽洲的神秘"},
 { "img":"images/12.jpg","info":"曲院风荷的优雅曲院风荷的优雅曲院风荷的优"},
 ];	
+
+var navinames= [
+{ "Home":"Home","About":"About","Photos":"Photos","News":"News","Contacts":"Contacts"},
+{ "Home":"首页","About":"关于","Photos":"照片","News":"最新","Contacts":"联系"},
+];

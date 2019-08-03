@@ -124,7 +124,7 @@ input[name="slide_r"]{
 }
 .homelist{
 	color:white;
-	
+	padding-top:10px;
 }
 .homelist>div{
 	float: left;
@@ -203,6 +203,6 @@ input[name="slide_r"]{
 	left:255px;
 } 
 
-#Home,#About,#Clients,#Contacts{
+#Home,#About,#News,#Contacts{
 	position:absolute;
 }

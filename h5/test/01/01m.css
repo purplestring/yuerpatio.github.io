@@ -33,6 +33,7 @@ body {
 	float: left;
 	list-style: none;	
 	width:16%;
+	padding-right:5px;
 	box-sizing:border-box;
 	font-weight:900;
 	/*border-right:1px solid #fff;*/
