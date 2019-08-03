@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	font-family: "Times New Roman","宋体","黑体";
-	font-size: 18px;
+	font-size: 16px;
 }
 body {
 	background: #555;
@@ -23,12 +23,11 @@ body {
 }
 #navi{
 	position:absolute;
-	font-size: 18px;
+	font-size: 16px;
 	top:-5px;
 	left:20%;
 	width:auto;
 	height: 40px;
-	font-size:100%;
 }
 .mainnavi li {
 	float: left;
