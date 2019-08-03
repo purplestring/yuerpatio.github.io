@@ -1,8 +1,8 @@
 //Slidershow
 var slidepics=[
-{ "img":"images/0.jpg","info":"夫子庙的夜晚夫子庙的夜晚夫子庙的 夜晚夫子庙的夜晚夫子庙的夜晚"},
-{ "img":"images/a.jpg","info":"秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦"},
-{ "img":"images/b.jpg","info":"集贤亭的风光集贤亭的风光集贤亭的 风光集贤亭的风光集贤亭的风光集贤亭"},
+{ "img":"images/0.jpg","info":"夫子庙的夜晚夫子庙的夜晚夫子庙的"},
+{ "img":"images/a.jpg","info":"秦淮河的故事秦淮河的故事"},
+{ "img":"images/b.jpg","info":"集贤亭的风光集贤亭的风光集贤亭的"},
 { "img":"images/c.jpg","info":"茅家铺的清新茅家铺的清新茅家铺的清新"},
 { "img":"images/d.jpg","info":"美丽洲的神秘"},
 { "img":"images/e.jpg","info":"曲院风荷的优雅曲院风荷的优雅曲"},

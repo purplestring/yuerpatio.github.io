@@ -4,7 +4,7 @@
 	font-family: "Times New Roman","宋体","黑体";
 }
 body {
-	background: #555;
+	background: #333;
 }
 .mainnaviback {
 	position:absolute;
@@ -124,6 +124,7 @@ input[name="slide_r"]{
 }
 .homelist{
 	color:white;
+	
 }
 .homelist>div{
 	float: left;
@@ -133,6 +134,7 @@ input[name="slide_r"]{
 	height:230px;
 	border:1px solid #fff;
 	padding:10px;
+	background:#222;
 }
 
 
