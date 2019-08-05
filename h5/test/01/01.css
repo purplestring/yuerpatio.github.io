@@ -7,10 +7,10 @@ body {
 	background: #333;
 }
 .mainnaviback {
-	position:absolute;
 	width: 100%;
 	height: 42px;
 	background: #666;
+	margin-bottom: 5px;
 }
 .mainnavi {
 	width: 1000px;
@@ -20,7 +20,6 @@ body {
 	margin-top: 0;
 }
 #logo{
-	position:relative;
 	width:180px;
 	height: 42px;
 	background:url("images/logo.png") no-repeat;
@@ -30,26 +29,40 @@ body {
 	position:relative;
 	top:-42px;
 	left:180px;
-	width:820px;
-	height: 42px;
+	width:720px;
+	height: 42px;	
 }
 .mainnavi li {
 	float: left;
 	list-style: none;
-	padding-right: 2px;
+	padding-right: 2px;	
 }
-.mainnavi li a {
+.mainnavi li a,#lang {
 	text-decoration: none;
 	color: white;
-	padding: 0 26px;
+	width:140px;
 	height: 37px;
 	line-height: 37px;
 	display: block;
 	font-size: 28px;
+	font-family: "Times New Roman","黑体";
+	text-align:center;
 }
 .mainnavi li a:hover {
 	background: #333;
 	text-decoration:underline;
+}
+#lang{	
+	position:relative;
+	width:100px;
+	top:-84px;
+	left:900px;
+	width:100px;
+	text-align:right;
+}
+#lang a{
+	text-decoration: none;
+	color: white;
 }
 #main {
 	position:relative;
@@ -72,7 +85,7 @@ body {
 }	
 .footerbox {
 	height: 20px;
-}			
+}
 
 
 .slidershow{
@@ -149,12 +162,31 @@ input[name="slide_r"]{
 	margin-bottom: 10px;
 	break-inside: avoid;
 	border: 1px solid #000;
+	background:#ccc;
 }
 .water img {
 	width: 100%;
 }
 .water p {
 	line-height: 30px;
+}
+
+.newsone{
+	padding:10px;
+	float:left;
+	background:#ccc;
+	border: 1px solid #000;
+	margin:10px;
+	margin-bottom:5px;
+}
+.newsdate{
+	color:#666;
+}
+.newstitle{
+	font-size:28px;
+	font-weight:900;
+}
+.newsinfo{
 }
 	
 	

@@ -10,11 +10,14 @@
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
 	<body>
-		<div class="mainnaviback"></div>
-		<div class="mainnavi">
-			<div id="logo"></div>
-            <ul id="navi"></ul>
-        </div>
+		<div class="mainnaviback">
+			<div class="mainnavi">
+				<div id="logo"></div>
+				<ul id="navi"></ul>
+				<div id="lang"></div>
+			</div>
+		</div>
+
 		<div id="main">
 		
 			<div id="Home">
@@ -54,43 +57,32 @@
 			</div>
 			
 			<div id="News">
-				News
+				<div id="newsbox"></div>
+				<div style="clear:both;"></div>
 			</div>
-			
+		
 			<div id="Contacts">
 		
 				<div id="misinfo">
-						<h2>Miscellaneous Info:</h2><br>
-						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
-						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. Namlibero tempore, 
-						cum soluta nobis est eligendi optio cumque nihil impedit quo.</p>
+						<h2></h2><br>
+						<p></p>
 				</div>	
 				
-				<div id="contactinfo">
-					<h2>Our Contacts</h2><br>
-					<p>
-						<strong>Country:</strong>USA<br>
-						<strong>State:</strong>California<br>
-						<strong>City:</strong>San Diego<br>
-						<strong>Telephone:</strong>+354 5635600<br>
-						<strong>Email:</strong><a href="mailto:">smartnet@mail.com</a>
-					</p>
-				</div>
+				<div id="contactinfo"></div>
 				
 				<div id="map"></div>
 				
 				<div id="contactarea">
-				<h2>Contact Form</h2><br>
+				<h2></h2><br>
 					<form id="ContactForm" action="">
 						<div class="wrapper">
-							<div><p>Your Name:</p><input type="text" class="input"></div>
-							<div><p>Your E-mail:</p><input type="text" class="input"></div>
-							<div><p>Your Message:</p>							
+							<div><p></p><input type="text" class="input"></div>
+							<div><p></p><input type="text" class="input"></div>
+							<div><p></p>							
 								<textarea cols="1" rows="1" class="text"></textarea>
 							</div>
-							<a href="#" class="send" onclick="document.getElementById('ContactForm').submit()">Send</a>
-							<a href="#" class="send" onclick="document.getElementById('ContactForm').reset()">Clear</a>				
+							<a href="#" class="send" onclick="document.getElementById('ContactForm').submit()"></a>
+							<a href="#" class="send" onclick="document.getElementById('ContactForm').reset()"></a>				
 						</div>
 					</form>
 				</div>
@@ -106,12 +98,16 @@
 	<script>
 	//Common
 	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
+	var langid=1; var current = 0;
+	if(localStorage.getItem("lang")!=null)langid=localStorage.getItem("lang");
+	$('#lang').html('<a href="javascript:;" onclick="localStorage.setItem(\'lang\', '+(parseInt(langid)+1)%2+
+	');window.location.reload();">'+lang[(parseInt(langid)+1)%2]+'</a>');
 	
-	var langid=0; var current = 0;
 	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; var current=page[0];
 	for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="Current('+i+')">'+navinames[langid][page[i]]+'</a></li>');
 	function Current(i){
 		current = i;
+		localStorage.setItem('current',i);
 		for(let i in page) {
 			if(i==current)
 				$("#"+page[i]).css('display','block'); 
@@ -135,6 +131,26 @@
 	//Waterfall
 	for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info+'</p></div>');
 	
+	//News
+	//$("#News").html('<div class="newsone"></div>');
+	for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone"><div class="newsdate">'+news[i].date+'</div><div class="newstitle">'+
+	news[i].title+'</div><div class="newsinfo">'+news[i].info+'</div></div>');
+	
+	//Contacts
+	$("#misinfo>h2").html(misinfo[langid][0]);
+	$("#misinfo>p").html(misinfo[langid][1]);
+	
+	$("#contactinfo").html('<h2>'+address[langid][0]+'</h2><br><p>');
+	for(let i=1;i<address[langid].length;i+=2) $("#contactinfo").html($("#contactinfo").html()+'<strong>'+address[langid][i]+'</strong> '+address[langid][i+1]+'<br>');
+	$("#contactinfo").html($("#contactinfo").html()+'<p>');
+	
+	$("#contactarea>h2").html(contactform[langid][0]);
+	$("#contactarea>form>div p:eq(0)").html(contactform[langid][1]);
+	$("#contactarea>form>div p:eq(1)").html(contactform[langid][2]);
+	$("#contactarea>form>div p:eq(2)").html(contactform[langid][3]);
+	$("#contactarea>form>div a:eq(0)").html(contactform[langid][4]);
+	$("#contactarea>form>div a:eq(1)").html(contactform[langid][5]);
+	
 	//Contacts Map
 	/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
 	map.addControl(new BMap.MapTypeControl());  
@@ -148,7 +164,8 @@
 	console.log("common");
 	
 	window.onload = function(){
-		Current(0);
+		if(localStorage.getItem("current")!=null) Current(localStorage.getItem("current"));
+		else Current(0);
 		$("#main").css('display','block'); 
 		console.log("window.onload");
 	}
