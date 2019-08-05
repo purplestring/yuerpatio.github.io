@@ -93,14 +93,13 @@ body {
 	color: #fff;
 }	
 .footerbox {
-	height: 40px;
+	height: 75px;
 }			
 
 .slidershow{
 	width:100%;
 	height:240px;
 	overflow:hidden;
-	padding-bottom:10px;
 }
 .slidenavi{
 	position:absolute;
@@ -145,7 +144,8 @@ input[name="slide_r"]{
 	background: rgba(0, 0, 0, 0.5);
 }
 .homelist{
-	color:#fff;
+	color:white;
+	padding-top:3px;
 }
 .homelist>div{
 	list-style: none;
@@ -153,7 +153,7 @@ input[name="slide_r"]{
 	width:100%;
 	border:1px solid #fff;
 	padding:10px;
-	background:#222;
+	background:#444;
 	color:white;
 }
 
