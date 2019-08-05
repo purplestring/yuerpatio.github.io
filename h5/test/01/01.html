@@ -98,75 +98,88 @@
 	<script>
 	//Common
 	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
-	var langid=1; var current = 0;
-	if(localStorage.getItem("lang")!=null)langid=localStorage.getItem("lang");
-	$('#lang').html('<a href="javascript:;" onclick="localStorage.setItem(\'lang\', '+(parseInt(langid)+1)%2+
-	');window.location.reload();">'+lang[(parseInt(langid)+1)%2]+'</a>');
-	
-	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; var current=page[0];
-	for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="Current('+i+')">'+navinames[langid][page[i]]+'</a></li>');
-	function Current(i){
-		current = i;
-		localStorage.setItem('current',i);
+	var langid=1; var current = 0;	
+	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; 
+
+	function Load(){
+		$("#navi").html("");
+		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
+		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
+		
 		for(let i in page) {
-			if(i==current)
+			if(i==current){
 				$("#"+page[i]).css('display','block'); 
+				eval("load"+page[i]+"();");
+			}
 			else 
 				$("#"+page[i]).css('display','none'); 
 		}
+		$("#main").css('display','block'); 
 	}
 	
-	//Slidershow
-	for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+'>');
-	for(let i in slidepics) $("#slides").html($("#slides").html()+'<div class="slide'+(i==0?' s1':'')+'"><img src="'+slidepics[i].img+'" alt=""></div>');
-	for(let i in slidepics) $("#slidenavi").html($("#slidenavi").html()+'<label for="r'+i+'" class="slidebar"></label>');	
-	for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
-	$("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
-	$("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
-	$('#slidesinfo').html(slidepics[0].info);
-	$('#slides input').change(function () {		
-		$('#slidesinfo').html(slidepics[this["id"].split("r")[1]].info);
-	});
+	function loadHome(){
+		//Slidershow		
+		if($("#slides").html()!="") {$('#slidenavi>label:eq(0)').click(); $('#slidesinfo').html(slidepics[0].info[langid]); return;}
+		
+		for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+'>');
+		for(let i in slidepics) $("#slides").html($("#slides").html()+'<div class="slide'+(i==0?' s1':'')+'"><img src="'+slidepics[i].img+'" alt=""></div>');
+		for(let i in slidepics) $("#slidenavi").html($("#slidenavi").html()+'<label for="r'+i+'" class="slidebar"></label>');		
+		for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
+		$("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
+		$("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
+		
+		$('#slidesinfo').html(slidepics[0].info[langid]);
+		$('#slides input').change(function () {		
+			$('#slidesinfo').html(slidepics[this["id"].split("r")[1]].info[langid]);
+		});
+
+	}
 	
-	//Waterfall
-	for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info+'</p></div>');
+	function loadPhotos(){
+		//Waterfall
+		$("#waterfall").html("");
+		for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+
+		'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info[langid]+'</p></div>');
+	}
 	
-	//News
-	//$("#News").html('<div class="newsone"></div>');
-	for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone"><div class="newsdate">'+news[i].date+'</div><div class="newstitle">'+
-	news[i].title+'</div><div class="newsinfo">'+news[i].info+'</div></div>');
+	function loadAbout(){
+	}
 	
-	//Contacts
-	$("#misinfo>h2").html(misinfo[langid][0]);
-	$("#misinfo>p").html(misinfo[langid][1]);
+	function loadNews(){
+		$("#newsbox").html("");
+		for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone"><div class="newsdate">'+news[i].date[langid]+'</div><div class="newstitle">'+
+		news[i].title[langid]+'</div><div class="newsinfo">'+news[i].info[langid]+'</div></div>');
+	}	
 	
-	$("#contactinfo").html('<h2>'+address[langid][0]+'</h2><br><p>');
-	for(let i=1;i<address[langid].length;i+=2) $("#contactinfo").html($("#contactinfo").html()+'<strong>'+address[langid][i]+'</strong> '+address[langid][i+1]+'<br>');
-	$("#contactinfo").html($("#contactinfo").html()+'<p>');
-	
-	$("#contactarea>h2").html(contactform[langid][0]);
-	$("#contactarea>form>div p:eq(0)").html(contactform[langid][1]);
-	$("#contactarea>form>div p:eq(1)").html(contactform[langid][2]);
-	$("#contactarea>form>div p:eq(2)").html(contactform[langid][3]);
-	$("#contactarea>form>div a:eq(0)").html(contactform[langid][4]);
-	$("#contactarea>form>div a:eq(1)").html(contactform[langid][5]);
-	
-	//Contacts Map
-	/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
-	map.addControl(new BMap.MapTypeControl());  
-	map.setDefaultCursor("crosshair");
-    var point = new BMap.Point(116.404, 39.915);
-	var zoom=7; map.centerAndZoom(point, zoom);
-    map.enableScrollWheelZoom(true); 
-	var marker = new BMap.Marker(point);   
-	map.addOverlay(marker);  */
-	
-	console.log("common");
+	function loadContacts(){
+		$("#misinfo>h2").html(misinfo[langid][0]);
+		$("#misinfo>p").html(misinfo[langid][1]);
+		
+		$("#contactinfo").html('<h2>'+address[langid][0]+'</h2><br><p>');
+		for(let i=1;i<address[langid].length;i+=2) $("#contactinfo").html($("#contactinfo").html()+'<strong>'+address[langid][i]+'</strong> '+address[langid][i+1]+'<br>');
+		$("#contactinfo").html($("#contactinfo").html()+'<p>');
+		
+		$("#contactarea>h2").html(contactform[langid][0]);
+		$("#contactarea>form>div p:eq(0)").html(contactform[langid][1]);
+		$("#contactarea>form>div p:eq(1)").html(contactform[langid][2]);
+		$("#contactarea>form>div p:eq(2)").html(contactform[langid][3]);
+		$("#contactarea>form>div a:eq(0)").html(contactform[langid][4]);
+		$("#contactarea>form>div a:eq(1)").html(contactform[langid][5]);
+		
+		//Contacts Map
+		/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
+		map.addControl(new BMap.MapTypeControl());  
+		map.setDefaultCursor("crosshair");
+		var point = new BMap.Point(116.404, 39.915);
+		var zoom=7; map.centerAndZoom(point, zoom);
+		map.enableScrollWheelZoom(true); 
+		var marker = new BMap.Marker(point);   
+		map.addOverlay(marker);  */
+	}	
 	
 	window.onload = function(){
-		if(localStorage.getItem("current")!=null) Current(localStorage.getItem("current"));
-		else Current(0);
-		$("#main").css('display','block'); 
+		//if(localStorage.getItem("current")!=null) Current(localStorage.getItem("current"));
+		Load();		
 		console.log("window.onload");
 	}
 	</script>

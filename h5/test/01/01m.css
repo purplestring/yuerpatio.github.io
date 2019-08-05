@@ -7,33 +7,41 @@
 body {
 	background: #555;
 }
+.mainnaviback {
+	position:fixed;
+	z-index:999;
+	width: 100%;
+	height: 32px;
+	background: #666;
+	margin-bottom: 5px;	
+}
 .mainnavi {
-	height: 40px;
-	margin: 5px auto;
+	height: 32px;
+	margin: 3px auto;
 	margin-top: 0;
 	background: #666;
 	box-sizing:border-box;
 }
 #logo{
 	position:absolute;
-	width:18%;
-	top:5px;
+	width:16%;
+	top:3px;
 	height: 30px;
 	background:url("images/logo.png") no-repeat;
 	background-size:contain;
 }
 #navi{
 	position:absolute;
-	top:5px;
-	left:18%;
-	width:80%;
+	top:3px;
+	left:16%;
+	width:72%;
 	height: 30px;
 }
 .mainnavi li,#lang {
 	float: left;
 	list-style: none;	
-	width:14%;
-	padding-right:5px;
+	width:20%;
+	padding-right:2px;
 	box-sizing:border-box;
 	font-weight:900;
 	/*border-right:1px solid #fff;*/
@@ -51,10 +59,12 @@ body {
 	text-decoration:underline;
 }
 #lang{	
-	position:relative;
+	position:absolute;
+	height: 30px;
+	line-height:30px;
+	top:3px;
 	left:88%;
 	width:12%;
-	top:10px;
 	text-align:right;
 }
 #lang a{
@@ -64,6 +74,7 @@ body {
 #main {
 	position:relative;
 	width: 96%;
+	top:40px;
 	margin: 0 auto;
 	background: #bbb;
 	margin: 0px auto;	
@@ -142,6 +153,8 @@ input[name="slide_r"]{
 	width:100%;
 	border:1px solid #fff;
 	padding:10px;
+	background:#222;
+	color:white;
 }
 
 

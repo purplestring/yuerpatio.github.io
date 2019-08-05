@@ -1,8 +1,8 @@
 //Slidershow
 var slidepics=[
-{ "img":"images/0.jpg","info":"夫子庙的夜晚夫子庙的夜晚夫子庙的"},
-{ "img":"images/a.jpg","info":"秦淮河的故事秦淮河的故事"},
-{ "img":"images/b.jpg","info":"集贤亭的风光集贤亭的风光集贤亭的"},
+{ "img":"images/0.jpg","info":["01 At vero eos et accusamus","01 夫子庙的夜晚夫子庙的夜晚夫子庙的"]},
+{ "img":"images/a.jpg","info":["02 et iusto odio dignissimos","02 秦淮河的故事秦淮河的故事"]},
+{ "img":"images/b.jpg","info":["03 blanditiis praesentium voluptatum","03 夫子庙的夜晚夫子庙的夜晚夫子庙的"]},
 /*{ "img":"images/c.jpg","info":"茅家铺的清新茅家铺的清新茅家铺的清新"},
 { "img":"images/d.jpg","info":"美丽洲的神秘"},
 { "img":"images/e.jpg","info":"曲院风荷的优雅曲院风荷的优雅曲"},*/
@@ -10,26 +10,26 @@ var slidepics=[
 	
 //Waterfall
 var waterpics=[
-{ "img":"images/1.jpg","info":"夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"},
-{ "img":"images/2.jpg","info":"秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"},
-{ "img":"images/3.jpg","info":"集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"},
-{ "img":"images/4.jpg","info":"茅家铺的清新茅家铺的清新茅家铺的清新"},
-{ "img":"images/5.jpg","info":"美丽洲的神秘"},
-{ "img":"images/6.jpg","info":"曲院风荷的优雅曲院风荷的优雅曲院风荷的优"},
-{ "img":"images/7.jpg","info":"夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"},
-{ "img":"images/8.jpg","info":"秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"},
-{ "img":"images/9.jpg","info":"集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"},
-{ "img":"images/10.jpg","info":"茅家铺的清新茅家铺的清新茅家铺的清新"},
-{ "img":"images/11.jpg","info":"美丽洲的神秘"},
-{ "img":"images/12.jpg","info":"曲院风荷的优雅曲院风荷的优雅曲院风荷的优"},
+{ "img":"images/1.jpg","info":["Qu Yuan fENG hE","夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"]},
+{ "img":"images/2.jpg","info":["Qu Yuan fENG hE","秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"]},
+{ "img":"images/3.jpg","info":["Qu Yuan fENG hE","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"]},
+{ "img":"images/4.jpg","info":["Qu Yuan fENG hE","茅家铺的清新茅家铺的清新茅家铺的清新"]},
+{ "img":"images/5.jpg","info":["Qu Yuan fENG hE","美丽洲的神秘"]},
+{ "img":"images/6.jpg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
+{ "img":"images/7.jpg","info":["Qu Yuan fENG hE","夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"]},
+{ "img":"images/8.jpg","info":["Qu Yuan fENG hE","秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"]},
+{ "img":"images/9.jpg","info":["Qu Yuan fENG hE","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"]},
+{ "img":"images/10.jpg","info":["Qu Yuan fENG hE","茅家铺的清新茅家铺的清新茅家铺的清新"]},
+{ "img":"images/11.jpg","info":["Qu Yuan fENG hE","美丽洲的神秘"]},
+{ "img":"images/12.jpg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
 ];	
 
 //News
 var news=[
-{ "date":"Wednesday, 10 August 2011 4:14","title":"子庙的夜晚夫子庙的夜晚","info":"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga."},
-{ "date":"Tuesday, 2 August 2011 16:32","title":"曲院风荷的优雅曲院风荷的","info":"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga."},
-{ "date":"Monday, 8 August 2011 6:18","title":"茅家铺的清新茅家铺的清新","info":"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga."},
-{ "date":"Monday, 8 August 2013 9:18","title":"茅家铺的清新茅的清新","info":"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga."},
+{ "date":["Wednesday, 10 August 2011 4:14","2011年8月10日 4:14，星期三"],"title":["imus qui blanditii","子庙的夜晚夫子庙的夜晚"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","Z-index 可用于将在一个元素放置于另一元素之后。"]},
+{ "date":["Tuesday, 2 August 2011 16:32","2011年8月2日 16:32，星期二"],"title":["iis praesentium volupt","曲院风荷的优雅曲院风荷的"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","Z-index 可用于将在一个元素放置于另一元素之后。"]},
+{ "date":["Monday, 8 August 2011 6:18","2011年8月8日 6:18，星期一"],"title":["tiis praesentium","茅家铺的清新茅家铺的清新"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","JavaScript 是世界上最流行的脚本语言。最流行的脚本语言"]},
+{ "date":["Wednesday, 10 August 2011 14:14","2011年8月10日 14:14，星期三"],"title":["At vero eos et accusamus","茅家铺的清新茅的清新"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","Z-index 可用于将在一个元素放置于另一元素之后。"]},
 ];	
 
 var lang=["EN","中"];
