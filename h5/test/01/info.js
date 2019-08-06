@@ -24,10 +24,10 @@ var waterpics=[
 { "img":"images/6.jpg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
 { "img":"images/7.jpg","info":["Qu Yuan fENG hE","夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"]},
 { "img":"images/8.jpg","info":["Qu Yuan fENG hE","秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"]},
-{ "img":"images/9.jpg","info":["Qu Yuan fENG hE","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"]},
-{ "img":"images/10.jpg","info":["Qu Yuan fENG hE","茅家铺的清新茅家铺的清新茅家铺的清新"]},
-{ "img":"images/11.jpg","info":["Qu Yuan fENG hE","美丽洲的神秘"]},
-{ "img":"images/12.jpg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
+{ "img":"images/camera.svg","info":["A camera is an optical instrument to capture still images or to record moving images, which are stored in a physical medium such as in a digital system or on photographic film. ","最早的照相机结构十分简单，仅包括暗箱、镜头和感光材料。"]},
+{ "img":"images/glasses.svg","info":["Glasses, also known as eyeglasses or spectacles, are devices consisting of glass or hard plastic lenses mounted in a frame that holds them in front of a person's eyes, typically using a bridge over the nose and arms which rest over the ears.","据说是一位名叫阿尔马托的光学家和一位生活在比萨市的意大利人斯皮纳发明的。"]},
+{ "img":"images/shoes.svg","info":["A shoe is an item of footwear intended to protect and comfort the human foot, while the wearer is doing various activities.","以皮、布、木、草、塑料丝等为材料制作的穿在脚上、走路时着地的物品，是人类必不可少的生活用品。"]},
+{ "img":"images/bag.svg","info":["A bag (also known regionally as a sack) is a common tool in the form of a non-rigid container. ","布艺包的面料一般为帆布、牛仔、棉的内衬一般为尼龙和棉质，一般来说，布艺包都可干洗或者水洗，条纹较多、颜色较亮丽的布艺包一定要干洗，否则会褪色。"]},
 ];	
 
 //News
@@ -42,7 +42,7 @@ var lang=["EN","中"];
 
 var navinames= [
 { "Home":"Home","About":"About","Photos":"Photos","News":"News","Contacts":"Contacts"},
-{ "Home":"首页","About":"关于","Photos":"照片","News":"最新","Contacts":"联系"},
+{ "Home":"首页","About":"关于","Photos":"图册","News":"最新","Contacts":"联系"},
 ];
 
 var address= [

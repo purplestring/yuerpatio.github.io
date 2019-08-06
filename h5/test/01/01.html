@@ -130,7 +130,14 @@
 	function loadPhotos(){
 		//Waterfall
 		$("#waterfall").html("");
-		for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+
+		for(let i in waterpics){
+			let picdiv="";
+			if(waterpics[i].img.indexOf("svg")>-1) picdiv='<iframe src="'+waterpics[i].img+'"></iframe>';
+			else picdiv='<img src="'+waterpics[i].img+'" alt="" />';
+			$("#waterfall").html($("#waterfall").html()+'<div class="water">'+picdiv+'<p>'+waterpics[i].info[langid]+'</p></div>');
+		}
+		
+		$("#waterfall").html($("#waterfall").html()+
 		'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info[langid]+'</p></div>');
 	}
 	

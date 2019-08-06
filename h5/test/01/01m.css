@@ -182,6 +182,11 @@ input[name="slide_r"]{
 .water p {
 	line-height: 20px;
 }
+.waterfall iframe{
+	width:100%;
+	height:100%;
+	border: medium none;
+}
 
 .newsone{
 	padding:5px;
