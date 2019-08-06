@@ -196,6 +196,34 @@ input[name="slide_r"]{
 }
 .newsinfo{
 }
+
+#timeline {
+	position:absolute;
+	background:url("images/timeline.png");
+	background-repeat: repeat-y;
+	height:600px;
+	width:50px;
+	top:30px;
+	left:100px;
+}
+.history_trail {
+	position:absolute;
+	background:url("images/history_trail.png") no-repeat;
+	height:50px;
+	left:150px;
+	top:5px;
+	width:300px;
+}
+.timebox {
+	position:absolute;
+	left:250px;
+	background:#ccc;
+	width:680px;
+}
+.yearbox {
+	position:absolute;
+	left:40px;
+}
 	
 	
 #misinfo{

@@ -34,7 +34,8 @@
 			</div>
 			
 			<div id="About">
-				About
+				<div id="history"></div>
+				<div id="timeline"></div>
 			</div>
 			
 			<div id="News">
@@ -89,7 +90,8 @@
 	function Load(){
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
-		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
+		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');	
+		$("#main").css("height","");		
 		
 		for(let i in page) {
 			if(i==current){
@@ -133,6 +135,21 @@
 	}
 	
 	function loadAbout(){
+		$("#history").html("");
+		var startyear=2010; var endyear=2020; 
+		for(let i in historylist) {
+			if(historylist[i].year<startyear) startyear=historylist[i].year;
+			if(historylist[i].year>endyear) endyear=historylist[i].year;
+		}
+		for(let i in historylist) {	
+			var totop=60*(historylist[i].year-startyear)+5*(historylist[i].month-1)+23;
+			$("#history").html($("#history").html()+
+			'<div class="history_trail" style="top: '+totop+'px;"></div>'+
+			'<div class="timebox" style="top: '+totop+'px;">'+historylist[i].year+' '+historylist[i].month+' '+historylist[i].info[langid]+'</div>');
+		}
+		for(let i=startyear;i<=endyear;i++) $("#history").html($("#history").html()+'<div class="yearbox" style="top: '+((i-startyear)*60+22)+'px;">'+i+'</div>');
+		 $("#main").css("height",((endyear-startyear)*60+60)+'px');
+		 $("#timeline").css("height",60*(endyear-startyear)+'px');
 	}
 	
 	function loadNews(){

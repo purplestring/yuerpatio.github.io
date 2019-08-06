@@ -60,3 +60,11 @@ var misinfo= [
 ["更多信息：","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"],
 ];
 
+var historylist= [
+{"year":2009,"month":3,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
+{"year":2007,"month":7,"info":["Namlibero tempore, cum soluta nobis est eligendi optio","茅家铺的清新茅家铺的清"]},
+{"year":2011,"month":12,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},
+{"year":2019,"month":5,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},
+{"year":2014,"month":2,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","夫子庙的夜晚夫子庙子庙的夜晚夫子庙的"]},
+];
+
