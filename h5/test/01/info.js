@@ -21,7 +21,7 @@ var waterpics=[
 { "img":"images/3.jpg","info":["Qu Yuan fENG hE","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"]},
 { "img":"images/4.jpg","info":["Qu Yuan fENG hE","茅家铺的清新茅家铺的清新茅家铺的清新"]},
 { "img":"images/5.jpg","info":["Qu Yuan fENG hE","美丽洲的神秘"]},
-{ "img":"images/6.jpg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
+{ "img":"images/black cat.svg","info":["Qu Yuan fENG hE","曲院风荷的优雅曲院风荷的优雅曲院风荷的优"]},
 { "img":"images/7.jpg","info":["Qu Yuan fENG hE","夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚夫子庙的夜晚"]},
 { "img":"images/8.jpg","info":["Qu Yuan fENG hE","秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事秦淮河的故事"]},
 { "img":"images/camera.svg","info":["A camera is an optical instrument to capture still images or to record moving images, which are stored in a physical medium such as in a digital system or on photographic film. ","最早的照相机结构十分简单，仅包括暗箱、镜头和感光材料。"]},
@@ -61,7 +61,7 @@ var misinfo= [
 ];
 
 var historylist= [
-{"year":2009,"month":3,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
+{"year":2004,"month":3,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
 {"year":2007,"month":7,"info":["Namlibero tempore, cum soluta nobis est eligendi optio","茅家铺的清新茅家铺的清"]},
 {"year":2011,"month":12,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},
 {"year":2019,"month":5,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},

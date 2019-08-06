@@ -91,7 +91,7 @@
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');	
-		$("#main").css("height","");		
+		$("#main").css({"height":"","background":"#aaa","background-image":""});		
 		
 		for(let i in page) {
 			if(i==current){
@@ -136,9 +136,6 @@
 			else picdiv='<img src="'+waterpics[i].img+'" alt="" />';
 			$("#waterfall").html($("#waterfall").html()+'<div class="water">'+picdiv+'<p>'+waterpics[i].info[langid]+'</p></div>');
 		}
-		
-		$("#waterfall").html($("#waterfall").html()+
-		'<div class="water"><img src="'+waterpics[i].img+'" alt="" /><p>'+waterpics[i].info[langid]+'</p></div>');
 	}
 	
 	function loadAbout(){
@@ -156,6 +153,7 @@
 		}
 		for(let i=startyear;i<=endyear;i++) $("#history").html($("#history").html()+'<div class="yearbox" style="top: '+((i-startyear)*60+22)+'px;">'+i+'</div>');
 		 $("#main").css("height",((endyear-startyear)*60+60)+'px');
+		 $("#main").css({"background":"#ccc","background-image":"url(images/flowers.png)"});
 		 $("#timeline").css("height",60*(endyear-startyear)+'px');
 	}
 	
