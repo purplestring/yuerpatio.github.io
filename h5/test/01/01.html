@@ -26,25 +26,10 @@
 					<div class="slidenavi" id="slidenavi"></div>
 					<div id="slidesinfo"></div>	
 				</div>
-				<div class="homelist">
-					<div>
-						<h2>Coffee</h2><br>
-						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
-						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
-					</div>
-				   <div>
-						<h2>Tea</h2><br>
-						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
-						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
-					</div>
-					<div>
-						<h2>Milk</h2><br>
-						<p>Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
-						omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-						et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. </p>
-					</div>
+				<div id="homelist" class="homelist">
+					<div><h2></h2><br><p></p></div>
+					<div><h2></h2><br><p></p></div>
+					<div><h2></h2><br><p></p></div>
 				</div>
 			</div>
 			
@@ -52,13 +37,13 @@
 				About
 			</div>
 			
-			<div id="Photos">
-				<div id="waterfall" class="waterfall"></div>
-			</div>
-			
 			<div id="News">
 				<div id="newsbox"></div>
 				<div style="clear:both;"></div>
+			</div>	
+			
+			<div id="Photos">
+				<div id="waterfall" class="waterfall"></div>
 			</div>
 		
 			<div id="Contacts">
@@ -118,6 +103,11 @@
 	}
 	
 	function loadHome(){
+		for(let i in hometext) { 
+			$("#homelist>div:eq("+i+")>h2").html(hometext[i].title[langid]);
+			$("#homelist>div:eq("+i+")>p").html(hometext[i].info[langid]);
+		}
+		
 		//Slidershow		
 		if($("#slides").html()!="") {$('#slidenavi>label:eq(0)').click(); $('#slidesinfo').html(slidepics[0].info[langid]); return;}
 		
@@ -147,7 +137,7 @@
 	
 	function loadNews(){
 		$("#newsbox").html("");
-		for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone"><div class="newsdate">'+news[i].date[langid]+'</div><div class="newstitle">'+
+		for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone '+(i%2?"":"singular")+'"><div class="newsdate">'+news[i].date[langid]+'</div><div class="newstitle">'+
 		news[i].title[langid]+'</div><div class="newsinfo">'+news[i].info[langid]+'</div></div>');
 	}	
 	

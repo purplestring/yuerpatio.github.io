@@ -60,7 +60,6 @@ body {
 	top:-84px;
 	left:900px;
 	width:100px;
-	text-align:right;
 }
 #lang a{
 	text-decoration: none;
@@ -184,6 +183,9 @@ input[name="slide_r"]{
 	border: 1px solid #000;
 	margin:10px;
 	margin-bottom:5px;
+}
+.singular{
+	background:#ddd;
 }
 .newsdate{
 	color:#666;
