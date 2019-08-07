@@ -1,0 +1,65 @@
+﻿body{
+	background:#0a2c03;
+	color:white;
+	font-size:16px;
+}
+a:link {color: #fff} 
+a:visited {color: #aaa} 
+a:hover,a:active {color: #fff} 
+
+#title{
+	text-align:center;
+}
+#box {
+	position:relative;
+	width: 1000px;
+	height:900px;
+	background:url("flowers.png");
+	margin: 0px auto;	
+}
+#history {	
+}
+#timeline {
+	position:absolute;
+	background:url("timeline.png");
+	background-repeat: repeat-y;
+	height:600px;
+	width:50px;
+	top:30px;
+	left:100px;
+}
+.history_trail,.history_trailleft,.history_trailright {
+	position:absolute;
+	background:url("history_trail.png") no-repeat;
+	height:50px;
+	left:150px;
+	width:100px;
+}
+.history_trailright{
+	width:430px;
+}
+
+.timebox {
+	position:absolute;
+	left:250px;
+	background:rgba(255, 255, 255, 0.1);
+	width:680px;
+}
+.yearbox {
+	position:absolute;
+	left:40px;
+	color:orange;
+}
+.monthbox {
+	position:absolute;
+	left:85px;
+	color:orange;
+}
+.left {
+	left:200px;
+	width:360px;
+}
+.right {
+	left:590px;
+	width:360px;
+}
