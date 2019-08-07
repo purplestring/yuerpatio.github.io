@@ -14,7 +14,6 @@ a:hover,a:active {color: #fff}
 	position:relative;
 	width: 100%;
 	background:url("flowers.png");
-	margin: 0px auto;	
 }
 #history {	
 }
@@ -24,7 +23,7 @@ a:hover,a:active {color: #fff}
 	background-repeat: repeat-y;
 	width:45px;
 	top:30px;
-	left:-33px;
+	left:-30px;
 }
 .history_trail{
 	position:absolute;
@@ -39,7 +38,7 @@ a:hover,a:active {color: #fff}
 	position:absolute;
 	left:12%;
 	background:rgba(255, 255, 255, 0.1);
-	width:85%;
+	width:87%;
 }
 .yearbox {
 	position:absolute;
