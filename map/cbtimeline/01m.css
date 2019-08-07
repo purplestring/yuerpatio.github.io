@@ -1,4 +1,9 @@
-﻿body{
+﻿* {
+	margin: 0;
+	padding: 0;
+	font-family: "Times New Roman","宋体","黑体";
+}
+body{
 	background:#0a2c03;
 	color:white;
 	font-size:12px;
@@ -9,6 +14,8 @@ a:hover,a:active {color: #fff}
 
 #title{
 	text-align:center;
+	height:50px;
+	line-height:40px;
 }
 #box {
 	position:relative;
@@ -23,13 +30,13 @@ a:hover,a:active {color: #fff}
 	background-repeat: repeat-y;
 	width:45px;
 	top:30px;
-	left:-30px;
+	left:-22px;
 }
 .history_trail{
 	position:absolute;
 	background:url("history_trail.png") no-repeat;
 	height:50px;
-	left:14px;
+	left:17px;
 	width:10%;
 }
 
@@ -42,11 +49,12 @@ a:hover,a:active {color: #fff}
 }
 .yearbox {
 	position:absolute;
-	left:20px;
+	left:27px;
 	color:orange;
 }
 .monthbox {
 	position:absolute;
-	left:8px;
+	left:11px;
 	color:orange;
+	z-index:999;
 }
