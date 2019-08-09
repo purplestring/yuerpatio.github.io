@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
     <head>
-        <title>程璧年谱（紫月整理）</title>
+        <title>璧之年谱（紫月整理）</title>
 		<script src="jquery-3.3.1.min.js"></script>
 		<script src="vue.min.js"></script>
 		<link href="02.css" id="css" rel="stylesheet" type="text/css" />
@@ -11,13 +11,13 @@
 		</style>
     </head>
 	<body>
-		<div id="title"><h2>程璧年谱</h2></div>
+		<div id="title"><h2>璧之年谱</h2></div>
 		<div id="box">
 			<div id="history">
 				<div class="history_trail" v-for="(item, i) in list" :style="{ 'top': (60*i+24) + 'px' }"></div>
 				<div class="timebox" v-for="(item, i) in list" :style="{ 'top': (60*i+22) + 'px' }">
 					【{{list[i].year}}年{{list[i].month}}月{{list[i].date}}日 {{list[i].n}} {{list[i].site}}】<br>
-					<div class="info">{{list[i].info}}<a href={{list[i].url}}>>></a></div>
+					<div class="info">{{list[i].info}}<a :href="list[i].url">>></a></div>
 				</div>
 			</div>
 			<div id="timeline"></div>
