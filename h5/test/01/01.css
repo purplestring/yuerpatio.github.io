@@ -6,6 +6,9 @@
 body {
 	background: #333;
 }
+[v-cloak] {
+  display: none;
+}
 .mainnaviback {
 	position:fixed;
 	z-index:999;
@@ -72,7 +75,6 @@ body {
 	min-height: 600px;
 	background: #aaa;
 	margin: 0px auto;	
-	display:none;
 }			
 #footer {
 	text-align:center;
@@ -217,12 +219,12 @@ input[name="slide_r"]{
 	height:50px;
 	left:150px;
 	top:5px;
-	width:300px;
+	width:100px;
 }
 .timebox {
 	position:absolute;
 	left:250px;
-	background:#ccc;
+	border:1px solid #000;
 	width:680px;
 }
 .yearbox {

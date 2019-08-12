@@ -7,6 +7,9 @@
 body {
 	background: #555;
 }
+[v-cloak] {
+  display: none;
+}
 .mainnaviback {
 	position:fixed;
 	z-index:999;
@@ -78,7 +81,6 @@ body {
 	margin: 0 auto;
 	background: #bbb;
 	margin: 0px auto;	
-	display:none;
 }			
 #footer {
 	text-align:center;

@@ -22,8 +22,8 @@
 		
 			<div id="Home">
 				<div class="slidershow">
-					<div class="slides" id="slides"></div>
-					<div class="slidenavi" id="slidenavi"></div>
+					<div id="slides" class="slides" ></div>
+					<div id="slidenavi" class="slidenavi"></div>
 					<div id="slidesinfo"></div>	
 				</div>
 				<div id="homelist" class="homelist">
@@ -130,12 +130,8 @@
 	function loadPhotos(){
 		//Waterfall
 		$("#waterfall").html("");
-		for(let i in waterpics){
-			let picdiv="";
-			if(waterpics[i].img.indexOf("svg")>-1) picdiv='<iframe src="'+waterpics[i].img+'"></iframe>';
-			else picdiv='<img src="'+waterpics[i].img+'" alt="" />';
-			$("#waterfall").html($("#waterfall").html()+'<div class="water">'+picdiv+'<p>'+waterpics[i].info[langid]+'</p></div>');
-		}
+		for(let i in waterpics) $("#waterfall").html($("#waterfall").html()+'<div class="water">'+
+			'<img src="'+waterpics[i].img+'" alt="" />'+'<p>'+waterpics[i].info[langid]+'</p></div>');
 	}
 	
 	function loadAbout(){
@@ -179,14 +175,15 @@
 		$("#contactarea>form>div a:eq(1)").html(contactform[langid][5]);
 		
 		//Contacts Map
-		/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
+		/*$("#map").css({"background-image":""});
+		var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
 		map.addControl(new BMap.MapTypeControl());  
 		map.setDefaultCursor("crosshair");
 		var point = new BMap.Point(116.404, 39.915);
 		var zoom=7; map.centerAndZoom(point, zoom);
 		map.enableScrollWheelZoom(true); 
 		var marker = new BMap.Marker(point);   
-		map.addOverlay(marker);  */
+		map.addOverlay(marker); */
 	}	
 	
 	window.onload = function(){
