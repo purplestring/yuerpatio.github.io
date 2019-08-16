@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Points</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		font-family: "Times New Roman","Cambria","宋体","黑体";
+	}
+	#main{
+		position:relative;
+		top:30px;
+		width:432px;
+		height:432px;
+		background:#bbb;
+		margin:0 auto;
+	}
+	.points{
+		position:absolute;
+		width:16px;
+		height:16px;
+		border-radius:8px;
+		background:#000;
+		font-size:8px;
+		color:#fff;
+		text-align:center;
+	}
+	#footer{
+		position:relative;
+		text-align:center;
+		margin:0 auto;
+		width:200px;
+		padding-top:80px;
+		z-index:-1;
+	}
+	#para {
+		position:relative;
+		text-align:center;
+		top:440px;
+	}
+	input{
+		width:120px;
+	}
+	</style>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+</head>
+
+<body>
+
+	<div id="main">	
+		<div class="points" v-for="i in 12" :style="Pos(i)">{{i}}</div>	
+		<div id="para">
+			a: <input type="text" v-model="a" />
+			b: <input type="text" v-model="b" />
+		</div>
+	</div>
+
+	<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+
+	var main=new Vue({
+		el: '#main',
+		data:{ 
+			ct:0,
+			left:[],
+			top:[],
+			a:75,
+			b:165,
+			c:60,
+		},
+		beforeCreated() {			
+		},
+		created() {	
+		},
+		mounted() {
+			setInterval(function(){ main.ct++;},60);
+		},
+		updated() {
+
+		},
+		methods: {
+			Pos(i) {
+				let a =Number(this.a);let b=Number(this.b);let c=Number(this.c);
+				let s =150;
+				let x= Math.cos( (i*a+this.ct)* (Math.PI / 180) );
+				let y= Math.sin( (i*a+this.ct +c)* (Math.PI / 180) );
+				let del= b*i*(Math.PI / 180);
+				let u= x*Math.cos(del)+y*Math.sin(del);
+				let v= x*Math.sin(del)-y*Math.cos(del);
+				return 'left:'+(1.4*s+s*u)+'px;top:'+(1.4*s+s*v)+'px';
+			},
+
+		}
+	});
+
+	
+	
+</script>
+</html>
