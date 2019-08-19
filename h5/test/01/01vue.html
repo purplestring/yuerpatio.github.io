@@ -176,55 +176,5 @@
 		}
 	});
 	
-	
-	
-	$("#main").on("touchstart", function(e) {
-		// 判断默认行为是否可以被禁用
-		if (e.cancelable) {
-			// 判断默认行为是否已经被禁用
-			if (!e.defaultPrevented) {
-				e.preventDefault();
-			}
-		}   
-		startX = e.originalEvent.changedTouches[0].pageX,
-		startY = e.originalEvent.changedTouches[0].pageY;
-	});
-	$("#main").on("touchend", function(e) {         
-			// 判断默认行为是否可以被禁用
-		if (e.cancelable) {
-			// 判断默认行为是否已经被禁用
-			if (!e.defaultPrevented) {
-				e.preventDefault();
-			}
-		}               
-		moveEndX = e.originalEvent.changedTouches[0].pageX,
-		moveEndY = e.originalEvent.changedTouches[0].pageY,
-		X = moveEndX - startX,
-		Y = moveEndY - startY;
-		//左滑
-		if ( X > 160 ) {
-			all.current=(all.current+all.page.length-1)%all.page.length;
-		}
-		//右滑
-		else if ( X < -160 ) {
-			all.current=(all.current+1)%all.page.length;
-			//alert('右滑');    
-		}
-		//下滑
-		else if ( Y > 0) {
-			//alert('下滑');    
-		}
-		//上滑
-		else if ( Y < 0 ) {
-			//alert('上滑');    
-		}
-		//单击
-		else{
-			//alert('单击');    
-		}
-	});
-	
-		
-	
 	</script>
 </html>
