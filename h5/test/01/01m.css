@@ -48,18 +48,21 @@ body {
 	font-weight:900;
 	/*border-right:1px solid #fff;*/
 }
-.mainnavi li a {
+.mainnavilia,#lang,.currentmainnavi {
 	text-decoration: none;
 	color: white;
 	height: 30px;
 	line-height: 30px;
 	font-family: "Times New Roman","黑体";
 }
-.mainnavi li a:hover {
-	/*background: #333;
-	border-bottom:1px solid #fff;*/
+.mainnavilia{
+	text-decoration:none;
+}
+.mainnavi li a:hover,#lang :hover,.currentmainnavi{
 	text-decoration:underline;
 }
+
+
 #lang{	
 	position:absolute;
 	height: 30px;
@@ -110,7 +113,7 @@ body {
 	transform:translateX(-50%);
 	display:flex;
 }
-.slidebar{
+.slidebar,.currentslidebar{
 	width: 25px;
 	height:5px;
 	border:1px solid #fff;
@@ -118,7 +121,7 @@ body {
 	cursor:pointer;
 	transition:0.4s;
 }
-.slidebar:hover{
+.slidebar:hover,.currentslidebar{
 	background:#fff;
 }			
 input[name="slide_r"]{

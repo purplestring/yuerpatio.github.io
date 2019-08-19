@@ -89,7 +89,8 @@
 
 	function Load(){
 		$("#navi").html("");
-		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
+		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
+		+'" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');	
 		$("#main").css({"height":"","background":"#999","background-image":""});		
 		

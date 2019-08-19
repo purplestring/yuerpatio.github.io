@@ -42,8 +42,7 @@ body {
 	list-style: none;
 	padding-right: 2px;	
 }
-.mainnavi li a,#lang {
-	text-decoration: none;
+.mainnavilia,#lang,.currentmainnavi{
 	color: white;
 	width:140px;
 	height: 37px;
@@ -53,10 +52,14 @@ body {
 	font-family: "Times New Roman","黑体";
 	text-align:center;
 }
-.mainnavi li a:hover,#lang a:hover{
+.mainnavilia{
+	text-decoration:none;
+}
+.mainnavi li a:hover,#lang :hover,.currentmainnavi{
 	background: #000;
 	text-decoration:underline;
 }
+
 #lang{	
 	position:relative;
 	width:100px;
