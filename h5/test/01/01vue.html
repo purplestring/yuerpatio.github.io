@@ -6,7 +6,7 @@
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
-		<script src="vue.js"></script>
+		<script src="vue.min.js"></script>
 		<script src="info.js"></script>
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
@@ -29,7 +29,7 @@
 							<div v-for="(item, i) in slidepics" :class="'slide'+(i==0?' s1':'')"><img :src="item.img" alt=""></div>					
 						</div>
 						<div class="slidenavi" id="slidenavi">
-							<label v-for="(item, i) in slidepics" :for="'r'+i" class="slidebar"></label>
+							<label v-for="(item, i) in slidepics" :for="'r'+i" :class="(i==currentslide?'currentslidebar':'slidebar')"></label>
 						</div>
 						<div id="slidesinfo">{{slidepics[currentslide].info[langid]}}</div>	
 					</div>
@@ -173,6 +173,58 @@
 			}
 		}
 	});
+	
+	
+	
+		$("body").on("touchstart", function(e) {
+    // 判断默认行为是否可以被禁用
+    if (e.cancelable) {
+        // 判断默认行为是否已经被禁用
+        if (!e.defaultPrevented) {
+            e.preventDefault();
+        }
+    }   
+    startX = e.originalEvent.changedTouches[0].pageX,
+    startY = e.originalEvent.changedTouches[0].pageY;
+});
+$("body").on("touchend", function(e) {         
+    // 判断默认行为是否可以被禁用
+    if (e.cancelable) {
+        // 判断默认行为是否已经被禁用
+        if (!e.defaultPrevented) {
+            e.preventDefault();
+        }
+    }               
+    moveEndX = e.originalEvent.changedTouches[0].pageX,
+    moveEndY = e.originalEvent.changedTouches[0].pageY,
+    X = moveEndX - startX,
+    Y = moveEndY - startY;
+    //左滑
+    if ( X > 200 ) {
+        //alert('左滑');  
+		//console.log('#navi>li:eq('+(all.current+1)%all.page.length+')');
+//console.log((all.current+all.page.length-1)%all.page.length);		
+//$('#navi>li:eq('+(all.current+1)%all.page.length+')').click();
+all.current=(all.current+all.page.length-1)%all.page.length;
+    }
+    //右滑
+    else if ( X < -200 ) {
+all.current=(all.current+1)%all.page.length;
+        //alert('右滑');    
+    }
+    //下滑
+    else if ( Y > 0) {
+        //alert('下滑');    
+    }
+    //上滑
+    else if ( Y < 0 ) {
+        //alert('上滑');    
+    }
+    //单击
+    else{
+        //alert('单击');    
+    }
+});
 	
 			
 	

@@ -111,7 +111,7 @@
 		}
 		
 		//Slidershow		
-		if($("#slides").html()!="") {$('#slidenavi>label:eq(0)').click(); $('#slidesinfo').html(slidepics[0].info[langid]); return;}
+		if($("#slides").html()!="") {$('#slidenavi>label:eq('+currentslide+')').click(); $('#slidesinfo').html(slidepics[currentslide].info[langid]); return;}
 		
 		for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+' onchange="currentslide='+i+';">');
 		for(let i in slidepics) $("#slides").html($("#slides").html()+'<div class="slide'+(i==0?' s1':'')+'"><img src="'+slidepics[i].img+'" alt=""></div>');
@@ -123,6 +123,10 @@
 		$('#slidesinfo').html(slidepics[0].info[langid]);
 		$('#slides input').change(function () {		
 			$('#slidesinfo').html(slidepics[this["id"].split("r")[1]].info[langid]);
+			for(let i in slidepics) {
+				if(i==this["id"].split("r")[1]) $('#slidenavi>label:eq('+i+')').attr("class","currentslidebar");
+				else $('#slidenavi>label:eq('+i+')').attr("class","slidebar");
+			}
 		});
 		
 		$(".slidershow").mousemove(function(){stop=2;});
@@ -186,8 +190,7 @@
 		map.enableScrollWheelZoom(true); 
 		var marker = new BMap.Marker(point);   
 		map.addOverlay(marker); */
-	}	
-	
+	}		
 	
 	window.onload = function(){
 		//if(localStorage.getItem("current")!=null) Current(localStorage.getItem("current"));
