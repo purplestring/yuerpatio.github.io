@@ -42,7 +42,7 @@
 		z-index:2;
 	}
 	input{
-		width:120px;
+		width:80px;
 		z-index:20;
 	}
 	</style>
@@ -54,8 +54,8 @@
 	<div id="main">	
 		<div class="points" v-for="i in 12" :style="Pos(i)">{{i}}</div>	
 		<div id="para">
-			a: <input type="text" v-model="a" />
-			b: <input type="text" v-model="b" />
+			相邻点相位差 a: <input type="text" v-model="a" />
+			相邻点旋转角差 b: <input type="text" v-model="b" />
 		</div>
 	</div>
 

@@ -5,7 +5,7 @@
 	font-size: 14px;
 }
 body {
-	background: #555;
+	background: #222;
 }
 [v-cloak] {
   display: none;
@@ -13,16 +13,15 @@ body {
 .mainnaviback {
 	position:fixed;
 	z-index:999;
+	background: #222;
 	width: 100%;
 	height: 32px;
-	background: #666;
 	margin-bottom: 5px;	
 }
 .mainnavi {
 	height: 32px;
 	margin: 3px auto;
 	margin-top: 0;
-	background: #666;
 	box-sizing:border-box;
 }
 #logo{
@@ -79,15 +78,16 @@ body {
 	width: 96%;
 	top:40px;
 	margin: 0 auto;
-	background: #bbb;
+	background: #888;
 	margin: 0px auto;	
+	padding-bottom:5px;
 }			
 #footer {
 	text-align:center;
 	padding: 5px 0;
 	width: 100%;
 	height: 20px;
-	background: #666;
+	background: #222;
 	margin: 5px auto;	
 	margin-bottom:0;
 	bottom:0px;
@@ -165,6 +165,7 @@ input[name="slide_r"]{
 	column-gap:10px;
 	column-count: 1;
 	margin: 0 auto;
+	padding-top: 10px;
 }
 @media (min-width: 667px) {
 	.waterfall {
@@ -190,6 +191,9 @@ input[name="slide_r"]{
 	border: medium none;
 }
 
+#news{
+	padding-bottom:100px;
+}
 .newsone{
 	padding:5px;
 	float:left;
@@ -205,10 +209,12 @@ input[name="slide_r"]{
 	color:#666;
 }
 .newstitle{
+	margin:10px;
 	font-size:18px;
 	font-weight:900;
 }
 .newsinfo{
+	text-indent:2em;
 }
 
 

@@ -6,7 +6,7 @@
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
-		<script src="vue.min.js"></script>
+		<script src="vue.js"></script>
 		<script src="info.js"></script>
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
@@ -22,7 +22,7 @@
 
 			<div id="main" :style="current==1? 'height:'+60*(endyear-startyear+1)+'px;background:#ccc;background-image:url(images/flowers.png);' :''">
 			
-				<div id="Home" v-if="current==0">
+				<div id="Home" v-show="page[current]=='Home'">
 					<div class="slidershow">
 						<div class="slides" id="slides">
 							<input v-for="(item, i) in slidepics" type="radio" name="slide_r" :id="'r'+i" :checked="i==0" @change="currentslide=i;">
@@ -38,17 +38,17 @@
 					</div>
 				</div>
 				
-				<div id="About" v-if="current==1">
+				<div id="About" v-show="page[current]=='About'">
 					<div id="history">
 						<div class="history_trail" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'"></div>
 						<div class="timebox" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'">
 							{{item.year}} {{item.month}} {{item.info[langid]}}</div>
-						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>;
+						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>
 					</div>
 					<div id="timeline" :style="'height:'+60*(endyear-startyear)+'px'"></div>
 				</div>
 				
-				<div id="News" v-if="current==2">
+				<div id="News" v-show="page[current]=='News'">
 					<div id="newsbox" v-for="(item, i) in news" :class="'newsone '+(i%2?'':'singular')">
 							<div class="newsdate">{{item.date[langid]}}</div>
 							<div class="newstitle">{{item.title[langid]}}</div>
@@ -57,7 +57,7 @@
 					<div style="clear:both;"></div>
 				</div>	
 				
-				<div id="Photos" v-if="current==3">
+				<div id="Photos" v-show="page[current]=='Photos'">
 					<div id="waterfall" class="waterfall" >
 						<div class="water" v-for="(item, i) in waterpics">
 							<img :src="item.img" alt="" />
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 			
-				<div id="Contacts" v-if="current==4">	
+				<div id="Contacts" v-show="page[current]=='Contacts'">	
 					<div id="misinfo">
 							<h2>{{misinfo[langid][0]}}</h2><br>
 							<p>{{misinfo[langid][1]}}</p>
@@ -87,12 +87,12 @@
 					<h2>{{contactform[langid][0]}}</h2><br>
 						<form id="ContactForm" action="">
 							<div class="wrapper">
-								<div><p>{{contactform[langid][1]}}</p><input type="text" class="input"></div>
-								<div><p>{{contactform[langid][2]}}</p><input type="text" class="input"></div>
+								<div><p>{{contactform[langid][1]}}</p><input type="text" class="input" v-model="contactName"></div>
+								<div><p>{{contactform[langid][2]}}</p><input type="text" class="input" v-model="contactEmail"></div>
 								<div><p>{{contactform[langid][3]}}</p>							
-									<textarea cols="1" rows="1" class="text"></textarea>
+									<textarea cols="1" rows="1" class="text" v-model="contactMsg"></textarea>
 								</div>
-								<a href="#" class="send" onclick="document.getElementById('ContactForm').submit()">{{contactform[langid][4]}}</a>
+								<a href="#" class="send" @click="contactSubmit()">{{contactform[langid][4]}}</a>
 								<a href="#" class="send" onclick="document.getElementById('ContactForm').reset()">{{contactform[langid][5]}}</a>				
 							</div>
 						</form>
@@ -115,32 +115,44 @@
 		el: '#all',
 		data:{ 
 			lang:lang, langid:1, page:[], current:0, navinames:navinames,
-			slidepics:slidepics, currentslide:0, hometext:hometext,
+			slidepics:slidepics, currentslide:0, stop:2, hometext:hometext,
 			historylist:historylist, startyear:2010, endyear:2020,			
 			news:news,			
 			waterpics:waterpics,					
-			misinfo:misinfo, address:address, contactform:contactform,
+			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
 		},
 		beforeCreated() {			
 		},
 		created() {		
 			
 			if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");		
-			for(let i=0;i<5;i++) this.page[i]=$("#main>div")[i].id; 
+			for(let i=0;i<$("#main>div").length;i++) this.page[i]=$("#main>div")[i].id; 
 		
 		//Home
 			for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
 			$("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
-			$("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
+			$("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');			
 			
 		//About
 			for(let i in historylist) {
 				if(historylist[i].year<this.startyear) this.startyear=historylist[i].year;
 				if(historylist[i].year>this.endyear) this.endyear=historylist[i].year;
 			} 
+		
 		},
 		updated() {
 			//if(this.current==4) this.LoadMap();
+		},
+		mounted() {
+		//Home
+			$(".slidershow").mousemove(function(){all.stop=2;});
+			setInterval(function(){ 
+				if(all.page[all.current]!="Home") return;
+				if(all.stop>0) all.stop--;
+				if(all.stop!=0) return;
+				all.currentslide=(all.currentslide+1)%slidepics.length;
+				$("#r"+all.currentslide).click();
+			},3000);
 		},
 		methods: {
 			LoadMap() {
@@ -154,6 +166,11 @@
 				var marker = new BMap.Marker(point);   
 				map.addOverlay(marker);
 			},
+			contactSubmit() {
+				var contactInfo = { name: this.contactName, email: this.contactEmail, msg: this.contactMsg };
+				console.log(contactInfo);
+				this.contactName=this.contactEmail=this.contactMsg="";
+			}
 		}
 	});
 	

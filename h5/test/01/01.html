@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			
-			<div id="About">
+			<div id="About">								
 				<div id="history"></div>
 				<div id="timeline"></div>
 			</div>
@@ -84,14 +84,14 @@
 	<script>
 	//Common
 	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
-	var langid=1; var current = 0;	
+	var langid=1; var current = 0;	var stop=2; var currentslide=0;
 	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; 
 
 	function Load(){
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');	
-		$("#main").css({"height":"","background":"#aaa","background-image":""});		
+		$("#main").css({"height":"","background":"#999","background-image":""});		
 		
 		for(let i in page) {
 			if(i==current){
@@ -113,7 +113,7 @@
 		//Slidershow		
 		if($("#slides").html()!="") {$('#slidenavi>label:eq(0)').click(); $('#slidesinfo').html(slidepics[0].info[langid]); return;}
 		
-		for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+'>');
+		for(let i in slidepics) $("#slides").html($("#slides").html()+'<input type="radio" name="slide_r" id="r'+i+'"'+(i==0?' checked':'')+' onchange="currentslide='+i+';">');
 		for(let i in slidepics) $("#slides").html($("#slides").html()+'<div class="slide'+(i==0?' s1':'')+'"><img src="'+slidepics[i].img+'" alt=""></div>');
 		for(let i in slidepics) $("#slidenavi").html($("#slidenavi").html()+'<label for="r'+i+'" class="slidebar"></label>');		
 		for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
@@ -124,6 +124,8 @@
 		$('#slides input').change(function () {		
 			$('#slidesinfo').html(slidepics[this["id"].split("r")[1]].info[langid]);
 		});
+		
+		$(".slidershow").mousemove(function(){stop=2;});
 
 	}
 	
@@ -186,9 +188,17 @@
 		map.addOverlay(marker); */
 	}	
 	
+	
 	window.onload = function(){
 		//if(localStorage.getItem("current")!=null) Current(localStorage.getItem("current"));
 		Load();		
+		setInterval(function(){ 
+			if(page[current]!="Home") return;
+			if(stop>0) stop--;
+			if(stop!=0) return;
+			currentslide=(currentslide+1)%slidepics.length;
+			$("#r"+currentslide).click();
+		},3000);
 		console.log("window.onload");
 	}
 	</script>
