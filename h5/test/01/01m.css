@@ -27,7 +27,7 @@ body {
 #logo{
 	position:absolute;
 	width:16%;
-	top:3px;
+	top:7px;
 	height: 30px;
 	background:url("images/logo.png") no-repeat;
 	background-size:contain;
@@ -35,7 +35,7 @@ body {
 #navi{
 	position:absolute;
 	top:3px;
-	left:16%;
+	left:18%;
 	width:72%;
 	height: 30px;
 }
@@ -81,9 +81,8 @@ body {
 	width: 96%;
 	top:40px;
 	margin: 0 auto;
-	background: #888;
+	background: #ddd;
 	margin: 0px auto;	
-	padding-bottom:5px;
 }			
 #footer {
 	text-align:center;
@@ -150,7 +149,7 @@ input[name="slide_r"]{
 }
 .homelist{
 	color:white;
-	padding-top:3px;
+	padding-top:1px;
 }
 .homelist>div{
 	list-style: none;
@@ -180,7 +179,7 @@ input[name="slide_r"]{
 	margin-bottom: 10px;
 	break-inside: avoid;
 	border: 1px solid #000;
-	background:#ccc;
+	background:#fff;
 }
 .water img {
 	width: 100%;
@@ -194,19 +193,16 @@ input[name="slide_r"]{
 	border: medium none;
 }
 
-#news{
-	padding-bottom:100px;
-}
 .newsone{
 	padding:5px;
 	float:left;
-	background:#ccc;
+	background:#eee;
 	border: 1px solid #000;
 	margin:10px;
 	margin-bottom:5px;
 }
 .singular{
-	background:#ddd;
+	background:#fff;
 }
 .newsdate{
 	color:#666;
@@ -219,7 +215,6 @@ input[name="slide_r"]{
 .newsinfo{
 	text-indent:2em;
 }
-
 
 #timeline {
 	position:absolute;
@@ -241,12 +236,20 @@ input[name="slide_r"]{
 .timebox {
 	position:absolute;
 	left:35%;
-	background:#ccc;
+	background:#eee;
 	width:60%;
+	border: 1px solid #000;
+	/*border-radius: 5px;*/
 }
 .yearbox {
 	position:absolute;
 	left:1%;
+}
+#sizebox{
+	position:relative;
+	width:100%;
+	background:#ddd;
+	/*background-image:url(images/flowers.png);*/
 }
 
 
@@ -254,10 +257,14 @@ input[name="slide_r"]{
 	padding:10px;
 	padding-bottom:30px;
 	padding-top:30px;
+	border-bottom:1px dotted #000;
 }				
 #contactinfo{
 	padding:10px;
 	padding-bottom:30px;
+	border-bottom:1px dotted #000;
+	margin-bottom:6px;
+	margin-top:6px;
 }
 #map{
 	position:relative;
@@ -265,7 +272,8 @@ input[name="slide_r"]{
 	left:2%;
 	height:180px;
 	background:url("images/map.jpg") no-repeat;
-	background-size:cover;			
+	background-size:cover;
+	padding-top:3px;
 }
 #map .anchorBL{
    display:none;
@@ -273,9 +281,11 @@ input[name="slide_r"]{
 #contactarea{
 	width:100%;
 	padding:10px;
+	margin-top:6px;
 	padding-top:30px;
 	padding-bottom:30px;
 	box-sizing:border-box;
+	border-top:1px dotted #000;
 }
 .input{
 	width:100%;
@@ -292,6 +302,3 @@ input[name="slide_r"]{
 	padding:5px;
 	height:30px;
 } 
-
-#Home,#About,#Clients,#Contacts{
-}

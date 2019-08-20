@@ -47,12 +47,12 @@ var navinames= [
 
 var address= [
 ["Our Contacts","Country:","USA","State:","California","City:","San Diego","Telephone:","+354 5635600","Email:","smartnet@mail.com"],
-["联系方式","省份:","淮海省","城市:","桐津市","地址:","乌古木大街117号","电话:","1585635600X","Email:","abc@abc.com"],
+["联系方式：","省份：","淮海省","城市：","桐津市","地址：","乌古木大街117号","电话：","1585635600X","邮箱：","abc@abc.com"],
 ];
 
 var contactform= [
 ["Contact Form","Your Name:","Your E-mail:","Your Message:","Send","Clear"],
-["留言板","姓名:","邮箱:","内容:","发送","清空"],
+["留言板：","姓名：","邮箱：","内容：","发送","清空"],
 ];
 
 var misinfo= [

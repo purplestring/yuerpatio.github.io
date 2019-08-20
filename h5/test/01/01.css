@@ -4,7 +4,7 @@
 	font-family: "Times New Roman","宋体","黑体";
 }
 body {
-	background: #333;
+	background: #222;
 }
 [v-cloak] {
   display: none;
@@ -59,7 +59,6 @@ body {
 	background: #000;
 	text-decoration:underline;
 }
-
 #lang{	
 	position:relative;
 	width:100px;
@@ -76,9 +75,8 @@ body {
 	top:46px;
 	width: 1000px;
 	min-height: 600px;
-	background: #999;
+	background: #ddd;
 	margin: 0px auto;	
-	padding-bottom:5px;
 }			
 #footer {
 	text-align:center;
@@ -176,7 +174,7 @@ input[name="slide_r"]{
 	margin-bottom: 10px;
 	break-inside: avoid;
 	border: 1px solid #000;
-	background:#ccc;
+	background:#fff;
 }
 .water img {
 	width: 100%;
@@ -190,20 +188,17 @@ input[name="slide_r"]{
 	border: medium none;
 }
 
-#news{
-	padding-bottom:100px;
-}
 .newsone{
 	padding:10px;
 	float:left;
 	width:96%;
-	background:#ccc;
+	background:#eee;
 	border: 1px solid #000;
 	margin:10px;
 	margin-bottom:5px;
 }
 .singular{
-	background:#ddd;
+	background:#fff;
 }
 .newsdate{
 	color:#666;
@@ -238,11 +233,18 @@ input[name="slide_r"]{
 	position:absolute;
 	left:250px;
 	border:1px solid #000;
-	width:680px;
+	background:#eee;
+	max-width:680px;
 }
 .yearbox {
 	position:absolute;
 	left:40px;
+}
+#sizebox{
+	position:relative;
+	width:100%;
+	background:#ddd;
+	/*background-image:url(images/flowers.png);*/
 }
 	
 	
@@ -291,6 +293,3 @@ input[name="slide_r"]{
 	left:255px;
 } 
 
-#News,#Contacts{
-	position:absolute;
-}

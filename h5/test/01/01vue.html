@@ -6,7 +6,8 @@
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
-		<script src="vue.min.js"></script>
+		<!--script src="vue.js"></script-->
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
 		<script src="info.js"></script>
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
@@ -22,7 +23,7 @@
 				</div>
 			</div>
 
-			<div id="main" :style="current==1? 'height:'+60*(endyear-startyear+1)+'px;background:#ccc;background-image:url(images/flowers.png);' :''">
+			<div id="main">
 			
 				<div id="Home" v-show="page[current]=='Home'">
 					<div class="slidershow">
@@ -41,6 +42,7 @@
 				</div>
 				
 				<div id="About" v-show="page[current]=='About'">
+					<div id="sizebox" :style="'height:'+60*(endyear-startyear+1)+'px'"></div>
 					<div id="history">
 						<div class="history_trail" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'"></div>
 						<div class="timebox" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'">
@@ -48,6 +50,7 @@
 						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>
 					</div>
 					<div id="timeline" :style="'height:'+60*(endyear-startyear)+'px'"></div>
+					
 				</div>
 				
 				<div id="News" v-show="page[current]=='News'">
@@ -175,6 +178,56 @@
 			}
 		}
 	});
+	
+	
+/*	
+	$("#main").on("touchstart", function(e) {
+		// 判断默认行为是否可以被禁用
+		if (e.cancelable) {
+			// 判断默认行为是否已经被禁用
+			if (!e.defaultPrevented) {
+				e.preventDefault();
+			}
+		}   
+		startX = e.originalEvent.changedTouches[0].pageX,
+		startY = e.originalEvent.changedTouches[0].pageY;
+	});
+	$("#main").on("touchend", function(e) {         
+			// 判断默认行为是否可以被禁用
+		if (e.cancelable) {
+			// 判断默认行为是否已经被禁用
+			if (!e.defaultPrevented) {
+				e.preventDefault();
+			}
+		}               
+		moveEndX = e.originalEvent.changedTouches[0].pageX,
+		moveEndY = e.originalEvent.changedTouches[0].pageY,
+		X = moveEndX - startX,
+		Y = moveEndY - startY;
+		//左滑
+		if ( X > 160 ) {
+			all.current=(all.current+all.page.length-1)%all.page.length;
+		}
+		//右滑
+		else if ( X < -160 ) {
+			all.current=(all.current+1)%all.page.length;
+			//alert('右滑');    
+		}
+		//下滑
+		else if ( Y > 0) {
+			//alert('下滑');    
+		}
+		//上滑
+		else if ( Y < 0 ) {
+			//alert('上滑');    
+		}
+		//单击
+		else{
+			//alert('单击');    
+		}
+	});
+*/	
+		
 	
 	</script>
 </html>

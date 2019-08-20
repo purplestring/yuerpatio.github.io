@@ -33,7 +33,8 @@
 				</div>
 			</div>
 			
-			<div id="About">								
+			<div id="About">	
+				<div id="sizebox"></div>			
 				<div id="history"></div>
 				<div id="timeline"></div>
 			</div>
@@ -91,8 +92,7 @@
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
 		+'" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
-		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');	
-		$("#main").css({"height":"","background":"#999","background-image":""});		
+		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
 		
 		for(let i in page) {
 			if(i==current){
@@ -155,9 +155,8 @@
 			'<div class="timebox" style="top: '+totop+'px;">'+historylist[i].year+' '+historylist[i].month+' '+historylist[i].info[langid]+'</div>');
 		}
 		for(let i=startyear;i<=endyear;i++) $("#history").html($("#history").html()+'<div class="yearbox" style="top: '+((i-startyear)*60+22)+'px;">'+i+'</div>');
-		 $("#main").css("height",((endyear-startyear)*60+60)+'px');
-		 $("#main").css({"background":"#ccc","background-image":"url(images/flowers.png)"});
 		 $("#timeline").css("height",60*(endyear-startyear)+'px');
+		 $("#sizebox").css("height",60*(endyear-startyear+1)+'px');
 	}
 	
 	function loadNews(){
