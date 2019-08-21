@@ -97,7 +97,7 @@
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
 		+'" onclick="current='+i+';cpage=0;Load();">'+navinames[langid][page[i]]+'</a></li>');
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
-		
+		document.documentElement.scrollTop=0;
 		for(let i in page) {
 			if(i==current){
 				$("#"+page[i]).css('display','block'); 
