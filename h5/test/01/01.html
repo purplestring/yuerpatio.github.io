@@ -73,10 +73,13 @@
 							<a href="#" class="send" onclick="document.getElementById('ContactForm').reset()"></a>				
 						</div>
 					</form>
-				</div>
-					
+				</div>					
 			</div>
 		
+		</div>
+		<div id="page">
+			<div id="pagetext"></div>
+			<div id="pagereturn" onclick="cpage=0;Load();" >返回</div><br>
 		</div>
 		<div class="footerbox"></div>
 		<div class="footer" id="footer">
@@ -86,13 +89,13 @@
 	<script>
 	//Common
 	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
-	var langid=1; var current = 0;	var stop=2; var currentslide=0;
+	var langid=1; var current = 0;	var stop=2; var currentslide=0; var cpage=0;
 	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; 
 
 	function Load(){
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
-		+'" onclick="current='+i+';Load();">'+navinames[langid][page[i]]+'</a></li>');
+		+'" onclick="current='+i+';cpage=0;Load();">'+navinames[langid][page[i]]+'</a></li>');
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
 		
 		for(let i in page) {
@@ -103,7 +106,15 @@
 			else 
 				$("#"+page[i]).css('display','none'); 
 		}
-		$("#main").css('display','block'); 
+		if(cpage==0) { 
+			$("#main").css('display','block'); 
+			$("#page").css('display','none'); 
+		}
+		else { 
+			$("#main").css('display','none'); 
+			$("#pagetext").html(pageinfo[cpage]); 
+			$("#page").css('display','block'); 
+		}
 	}
 	
 	function loadHome(){
@@ -155,9 +166,9 @@
 			let d = new Date(historylist[i].date); let t="";
 			if(this.langid==1) t=(d.getMonth()+1)+"月"+d.getDate()+"日";
 			else t=d.getDate()+" "+EnMonth[d.getMonth()]+" ";
-			$("#history").html($("#history").html()+
-			'<div class="history_trail" style="top: '+totop+'px;"></div>'+
-			'<div class="timebox" style="top: '+totop+'px;">'+t+' '+historylist[i].info[langid]+'</div>');
+			let panglink=""; if(historylist[i].page) panglink= '<span class="pagelink" onclick="cpage='+historylist[i].page+';Load();"> >></span>';
+			$("#history").html($("#history").html()+ '<div class="history_trail" style="top: '+totop+'px;"></div>'+
+			'<div class="timebox" style="top: '+totop+'px;">'+t+' '+historylist[i].info[langid]+panglink+'</div>');
 		}
 		for(let i=startyear;i<=endyear;i++) $("#history").html($("#history").html()+'<div class="yearbox" style="top: '+((i-startyear)*60+22)+'px;">'+i+'</div>');
 		 $("#timeline").css("height",60*(endyear-startyear)+'px');

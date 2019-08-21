@@ -17,13 +17,12 @@
 				<div class="mainnavi">
 					<div id="logo"></div>
 					<ul id="navi"><li v-for="(item, i) in page">
-						<a href="javascript:;" @click="current=i;" :class="(i==current?'currentmainnavi':'mainnavilia')">{{navinames[langid][page[i]]}}</a>
+						<a href="javascript:;" @click="current=i;cpage=0;" :class="(i==current?'currentmainnavi':'mainnavilia')">{{navinames[langid][page[i]]}}</a>
 					</li></ul>
 					<div id="lang"><a href="javascript:;" @click="langid=(parseInt(langid)+1)%2;">{{lang[(parseInt(langid)+1)%2]}}</a></div>
 				</div>
 			</div>
-
-			<div id="main">
+			<div id="main" v-show="cpage==0">
 			
 				<div id="Home" v-show="page[current]=='Home'">
 					<div class="slidershow">
@@ -46,7 +45,8 @@
 					<div>
 						<div class="history_trail" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'"></div>
 						<div class="timebox" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'">
-							{{toDate(item.date)}}  {{item.info[langid]}}</div>
+							{{toDate(item.date)}}  {{item.info[langid]}} <span class="pagelink" v-if="item.page" @click="cpage=item.page">>></span>
+						</div>
 						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>
 					</div>
 					<div id="timeline" :style="'height:'+60*(endyear-startyear)+'px'"></div>					
@@ -116,6 +116,10 @@
 				</div>
 			
 			</div>
+			<div id="page" v-if="cpage!=0">
+				<div v-html="pageinfo[cpage]"></div>
+				<div id="pagereturn" @click="cpage=0;" >返回</div><br>
+			</div>
 			<div class="footerbox"></div>
 			<div class="footer" id="footer">
 				Copyright 2015~2019 ABC
@@ -128,13 +132,14 @@
 	var all=new Vue({
 		el: '#all',
 		data:{ 
-			lang:lang, langid:1, page:[], current:0, navinames:navinames,
+			lang:lang, langid:1, page:[], current:0, cpage:0,navinames:navinames,
 			slidepics:slidepics, currentslide:0, stop:2, hometext:hometext,
 			historylist:historylist, startyear:2010, endyear:2016,		
-			historylist2:historylist2,			
+			//historylist2:historylist2,			
 			news:news,			
 			waterpics:waterpics,					
 			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
+			pageinfo:pageinfo,
 		},
 		beforeCreate() {			
 		},
@@ -163,7 +168,7 @@
 		//Home
 			$(".slidershow").mousemove(function(){all.stop=2;});
 			setInterval(function(){ 
-				if(all.page[all.current]!="Home") return;
+				if(all.page[all.current]!="Home" || all.cpage!=0) return;
 				if(all.stop>0) all.stop--;
 				if(all.stop!=0) return;
 				all.currentslide=(all.currentslide+1)%slidepics.length;

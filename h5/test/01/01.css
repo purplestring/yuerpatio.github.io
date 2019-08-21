@@ -70,7 +70,7 @@ body {
 	text-decoration: none;
 	color: white;
 }
-#main {
+#main,#page {
 	position:relative;
 	top:46px;
 	width: 1000px;
@@ -338,3 +338,21 @@ input[name="slide_r"]{
 	left:255px;
 } 
 
+#page{
+	padding:5px;
+	min-height:720px;
+}
+#page h1 {
+	text-align:center;
+}
+#pagereturn {
+	position: relative;
+	float:right;
+	font-weight:800;
+	text-decoration:underline;
+}
+.pagelink{
+	font-weight:800;
+	text-decoration:underline;
+	color:red;
+}
