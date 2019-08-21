@@ -1,3 +1,7 @@
+var EnMonth=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Spt","Oct","Nov","Dec"];
+var EnDay=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+var CnDay=["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+
 //Slidershow
 var slidepics=[
 { "img":"images/0.jpg","info":["01 At vero eos et accusamus","01 夫子庙的夜晚夫子庙的夜晚夫子庙的"]},
@@ -32,11 +36,28 @@ var waterpics=[
 
 //News
 var news=[
-{ "date":["Wednesday, 10 August 2011 4:14","2011年8月10日 4:14，星期三"],"title":["imus qui blanditii","第二张专辑《范特西》"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","发行个人第二张专辑《范特西》，专辑名称来自英文“Fantasy”的音译[10]；凭借这张专辑周杰伦在2002年度台湾第13届金曲奖颁奖典礼中斩获“最佳作曲人奖”、“最佳专辑制作人奖”以及“最佳流行音乐演唱专辑奖”等五项大奖。"]},
-{ "date":["Tuesday, 2 August 2011 16:32","2011年8月2日 16:32，星期二"],"title":["iis praesentium volupt","第三张专辑《八度空间》"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","发行个人第三张专辑《八度空间》；9月28日个人首次世界巡回演唱会“THE ONE”于台北市立体育场拉开帷幕。"]},
-{ "date":["Monday, 8 August 2011 6:18","2011年8月8日 6:18，星期一"],"title":["tiis praesentium","《时代》杂志专访"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","出道仅三年便接受美国《时代》杂志专访，并成为亚洲版的封面人物[7]；周杰伦是继王菲、张惠妹之后，第三位出现在《时代》杂志亚洲版封面的华人歌手，并被该杂志赞誉为“新一代亚洲流行天王”[7]；2003年7月，全亚洲超过50家电台定7月16日为周杰伦日，并同步首播其第四张个人新专辑《叶惠美》中的主打歌曲《以父之名》[12]，此后每张专辑必定有一首中国风的歌曲。"]},
-{ "date":["Wednesday, 10 August 2011 14:14","2011年8月10日 14:14，星期三"],"title":["At vero eos et accusamus","第五张专辑《七里香》"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","发行个人第五张专辑《七里香》，并凭借该专辑首次获得世界音乐大奖“大中华区最畅销艺人”[13]；同时，根据国际唱片业协会IFPI的统计，专辑七里香销量位居年度世界第42位，[14]；同年以歌曲《龙拳》首次亮相春节联欢晚会。"]},
-];	
+{ "d":"2001/09/14 9:00:00","title":["Fantasy","第二张专辑《范特西》"],"info":["Fantasy is the second studio album by Taiwanese singer Jay Chou, released on 14 September 2001 by BMG Taiwan.<br>&#12288;&#12288;The album was nominated for ten Golden Melody Awards and won five awards, including Best Pop Vocal Album, Best Album Producer, and Best Composer.<br>&#12288;&#12288;The album also won for an IFPI Hong Kong Top Sales Music Award for Top 10 Best Selling Mandarin Albums of the Year.<br>The tracks, \"Simple Love\" and \"I Find It Hard to Say\", are listed at number 2 and number 17 respectively on the 2001's Hit FM Top 100 Singles of the Year chart.","发行个人第二张专辑《范特西》，专辑名称来自英文“Fantasy”的音译；凭借这张专辑周杰伦在2002年度台湾第13届金曲奖颁奖典礼中斩获“最佳作曲人奖”、“最佳专辑制作人奖”以及“最佳流行音乐演唱专辑奖”等五项大奖。"]},
+{ "d":"2011/08/02 16:32:00","title":["iis praesentium volupt","第三张专辑《八度空间》"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","发行个人第三张专辑《八度空间》；9月28日个人首次世界巡回演唱会“THE ONE”于台北市立体育场拉开帷幕。"]},
+{ "d":"2011/08/08 6:18:00","title":["tiis praesentium","《时代》杂志专访"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","出道仅三年便接受美国《时代》杂志专访，并成为亚洲版的封面人物[7]；周杰伦是继王菲、张惠妹之后，第三位出现在《时代》杂志亚洲版封面的华人歌手，并被该杂志赞誉为“新一代亚洲流行天王”[7]；2003年7月，全亚洲超过50家电台定7月16日为周杰伦日，并同步首播其第四张个人新专辑《叶惠美》中的主打歌曲《以父之名》[12]，此后每张专辑必定有一首中国风的歌曲。"]},
+{ "d":"2011/08/10 14:14:00","title":["At vero eos et accusamus","第五张专辑《七里香》"],"info":["At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.","发行个人第五张专辑《七里香》，并凭借该专辑首次获得世界音乐大奖“大中华区最畅销艺人”[13]；同时，根据国际唱片业协会IFPI的统计，专辑七里香销量位居年度世界第42位，[14]；同年以歌曲《龙拳》首次亮相春节联欢晚会。"]},
+{ "d":"2012/12/12 12:12:12","title":["Opus 12","第十二张专辑《12新作》"],
+"info":["Opus 12 is the twelfth studio album by Taiwanese singer Jay Chou, released on 28 December 2012 by Sony Music Taiwan. The album was nominated for four Golden Melody Awards.",
+"《12新作》是台湾男歌手周杰伦的第12张录音室专辑，收录12首歌曲，2012年12月12日开始预购，12月28日发行。以发行3天的时间就成为五大唱片2012年年榜第5名。2013年，专辑入围第24届金曲奖“最佳国语专辑奖”，周杰伦凭借这张专辑入围“最佳专辑制作人奖”以及“最佳国语男歌手奖”，黄雨勋凭借收录于这张专辑中的歌曲《比较大的大提琴》入围“最佳编曲人奖”。"]},
+{ "d":"2016/06/24 9:00:00","title":["Jay Chou's Bedtime Stories","第十四张专辑《床边故事》"],
+"info":["Jay Chou's Bedtime Stories is the fourteenth studio album by Taiwanese singer Jay Chou, released on 24 June 2016 by Sony Music Taiwan. The album was nominated for three Golden Melody Awards.",
+"《周杰伦的床边故事》 是台湾男歌手周杰伦的第14张录音室专辑，2016年6月8日开始预购，6月24日正式发行。在中国大陆发行时，将专辑名《周杰伦的床边故事》改名为《周杰伦的睡前故事》，将歌曲《床边故事》改为《睡前故事》"]},
+];
+// "date":["Friday, 14 September 2001 9:00","2001年9月14日 9:00，星期五"],
+function add0(t){
+	 if(t <=9) return '0'+t;
+	 else return t;
+}
+for(let i in news) {
+	var d = new Date(news[i].d);
+	news[i].date=[EnDay[d.getDay()-1]+", "+d.getDate()+" "+EnMonth[d.getMonth()]+" "+d.getFullYear()+" "+add0(d.getHours())+":"+add0(d.getMinutes()),
+	d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日 "+add0(d.getHours())+":"+add0(d.getMinutes())+"，"+CnDay[d.getDay()-1]];
+};
+
 
 var lang=["EN","中"];
 
@@ -57,16 +78,31 @@ var contactform= [
 
 var misinfo= [
 ["Miscellaneous Info:","Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo."],
-["更多信息：","集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光集贤亭的风光"],
+["更多信息：","秦时明月汉时关，万里长征人未还。但使龙城飞将在，不教胡马度阴山。青海长云暗雪山，孤城遥望玉门关。黄沙百战穿金甲，不破楼兰终不还。"],
 ];
 
 var historylist= [
-{"year":2004,"month":3,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
-{"year":2007,"month":7,"info":["Namlibero tempore, cum soluta nobis est eligendi optio","茅家铺的清新茅家铺的清"]},
-{"year":2011,"month":12,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},
-{"year":2019,"month":5,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","的夜晚夫子庙的夜晚夫子庙的"]},
-{"year":2014,"month":2,"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque","夫子庙的夜晚夫子庙子庙的夜晚夫子庙的"]},
+{"date":"11/7/2000","info":["Jay","Jay"]},
+{"date":"09/14/2001","info":["Fantasy","《范特西》"]},
+{"date":"6/18/2002","info":["The Eight Dimensions","《八度空间》"]},
+{"date":"6/29/2003","info":["Ye Hui Mei","《叶惠美》"]},
+{"date":"8/3/2004","info":["Common Jasmin Orange","《七里香》"]},
+{"date":"11/1/2005","info":["Nov's Chopin","《11月的萧邦》"]},
+{"date":"9/5/2006","info":["Still Fantasy","《依然范特西》"]},
+{"date":"11/1/2007","info":["On the Run!","《我很忙》"]},
+{"date":"10/14/2008","info":["Capricorn","《魔杰座》"]},
+{"date":"5/18/2010","info":["The Era","《跨时代》"]},
+{"date":"11/11/2011","info":["Exclamation Mark","《惊叹号》"]},
+{"date":"12/28/2012","info":["Opus 12","《12新作》"]},
+{"date":"12/26/2014","info":["Aiyo, Not Bad","《哎呦，不错哦》"]},
+{"date":"06/24/2016","info":["Jay Chou's Bedtime Stories","《周杰伦的床边故事》"]},
+//{"date":"06/24/2004","info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
 ];
+for(let i in historylist) {
+	let d = new Date(historylist[i].date);
+	historylist[i].year=d.getFullYear();
+	historylist[i].month=d.getMonth()+1;
+};
 
 var historylist2= [
 //{"year":2012,"month":7,"date":7,"site":"北京 南锣鼓巷69cafe","n":"","class":"","info":"日式乡村民谣弹唱会","url":"http://weibo.com/2158787251/yrm7ffGg5"},

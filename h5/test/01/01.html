@@ -61,7 +61,7 @@
 				
 				<div id="contactarea">
 				<h2></h2><br>
-					<form id="ContactForm" action="">
+					<form id="ContactForm" action="https://formspree.io/axvq@sina.cn" method="post">
 						<div class="wrapper">
 							<div><p></p><input type="text" class="input"></div>
 							<div><p></p><input type="text" class="input"></div>
@@ -143,16 +143,20 @@
 	
 	function loadAbout(){
 		$("#history").html("");
-		var startyear=2010; var endyear=2020; 
+		var startyear=2010; var endyear=2016; 
 		for(let i in historylist) {
 			if(historylist[i].year<startyear) startyear=historylist[i].year;
-			if(historylist[i].year>endyear) endyear=historylist[i].year;
+			if(historylist[i].year>endyear) endyear=historylist[i].year;		
 		}
+		endyear++;
 		for(let i in historylist) {	
 			var totop=60*(historylist[i].year-startyear)+5*(historylist[i].month-1)+23;
+			let d = new Date(historylist[i].date); let t="";
+			if(this.langid==1) t=(d.getMonth()+1)+"月"+d.getDate()+"日";
+			else t=d.getDate()+" "+EnMonth[d.getMonth()]+" ";
 			$("#history").html($("#history").html()+
 			'<div class="history_trail" style="top: '+totop+'px;"></div>'+
-			'<div class="timebox" style="top: '+totop+'px;">'+historylist[i].year+' '+historylist[i].month+' '+historylist[i].info[langid]+'</div>');
+			'<div class="timebox" style="top: '+totop+'px;">'+t+' '+historylist[i].info[langid]+'</div>');
 		}
 		for(let i=startyear;i<=endyear;i++) $("#history").html($("#history").html()+'<div class="yearbox" style="top: '+((i-startyear)*60+22)+'px;">'+i+'</div>');
 		 $("#timeline").css("height",60*(endyear-startyear)+'px');

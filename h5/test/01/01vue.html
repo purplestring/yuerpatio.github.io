@@ -43,21 +43,31 @@
 				
 				<div id="About" v-show="page[current]=='About'">
 					<div id="sizebox" :style="'height:'+60*(endyear-startyear+1)+'px'"></div>
-					<div id="history">
+					<div>
 						<div class="history_trail" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'"></div>
 						<div class="timebox" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'">
-							{{item.year}} {{item.month}} {{item.info[langid]}}</div>
+							{{toDate(item.date)}}  {{item.info[langid]}}</div>
 						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>
 					</div>
-					<div id="timeline" :style="'height:'+60*(endyear-startyear)+'px'"></div>
-					
+					<div id="timeline" :style="'height:'+60*(endyear-startyear)+'px'"></div>					
 				</div>
+				
+				<!-- <div id="History" v-show="page[current]=='History'" cssid="History">				
+					<div class="Htimebox" v-for="(item, i) in historylist2">
+						<div class="Hhistory_trail"></div>
+						<span class="Hdate">{{item.year}}.{{item.month}}.{{item.date}}</span>
+						<span class="Hsite">　{{item.site}} </span>
+						<div class="Hnum" v-if="item.n != ''">{{item.n}}</div><br>
+						<div class="Hinfo"><span v-html="item.info"></span> <a :href="item.url">>></a></div>
+					</div>
+					<div id="Htimeline"></div>
+				</div> -->
 				
 				<div id="News" v-show="page[current]=='News'">
 					<div id="newsbox" v-for="(item, i) in news" :class="'newsone '+(i%2?'':'singular')">
 							<div class="newsdate">{{item.date[langid]}}</div>
 							<div class="newstitle">{{item.title[langid]}}</div>
-							<div class="newsinfo">{{item.info[langid]}}</div>
+							<div class="newsinfo" v-html="item.info[langid]"></div>
 					</div>
 					<div style="clear:both;"></div>
 				</div>	
@@ -114,19 +124,19 @@
 	</body>
 	<script>
 	//Common
-	
-	
+
 	var all=new Vue({
 		el: '#all',
 		data:{ 
 			lang:lang, langid:1, page:[], current:0, navinames:navinames,
 			slidepics:slidepics, currentslide:0, stop:2, hometext:hometext,
-			historylist:historylist, startyear:2010, endyear:2020,			
+			historylist:historylist, startyear:2010, endyear:2016,		
+			historylist2:historylist2,			
 			news:news,			
 			waterpics:waterpics,					
 			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
 		},
-		beforeCreated() {			
+		beforeCreate() {			
 		},
 		created() {		
 			
@@ -141,8 +151,9 @@
 		//About
 			for(let i in historylist) {
 				if(historylist[i].year<this.startyear) this.startyear=historylist[i].year;
-				if(historylist[i].year>this.endyear) this.endyear=historylist[i].year;
-			} 
+				if(historylist[i].year>this.endyear) this.endyear=historylist[i].year				
+			};
+			this.endyear++;
 		
 		},
 		updated() {
@@ -175,6 +186,11 @@
 				var contactInfo = { name: this.contactName, email: this.contactEmail, msg: this.contactMsg };
 				console.log(contactInfo);
 				this.contactName=this.contactEmail=this.contactMsg="";
+			},
+			toDate(date) {
+				var d = new Date(date);
+				if(this.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
+				else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
 			}
 		}
 	});
