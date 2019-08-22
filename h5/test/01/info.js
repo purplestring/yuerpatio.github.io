@@ -85,7 +85,7 @@ var historylist= [
 {"date":"11/7/2000","info":["Jay","Jay"],"page":"zjl01.html"},
 {"date":"09/14/2001","info":["Fantasy","《范特西》"]},
 {"date":"6/18/2002","info":["The Eight Dimensions","《八度空间》"]},
-{"date":"6/29/2003","info":["Ye Hui Mei","《叶惠美》"]},
+{"date":"6/29/2003","info":["Ye Hui Mei","《叶惠美》"],"page":"zjl04.html"},
 {"date":"8/3/2004","info":["Common Jasmin Orange","《七里香》"],"page":"zjl05.html"},
 {"date":"11/1/2005","info":["Nov's Chopin","《11月的萧邦》"],"page":"zjl06.html"},
 {"date":"9/5/2006","info":["Still Fantasy","《依然范特西》"]},
@@ -94,7 +94,7 @@ var historylist= [
 {"date":"5/18/2010","info":["The Era","《跨时代》"]},
 {"date":"11/11/2011","info":["Exclamation Mark","《惊叹号》"]},
 {"date":"12/28/2012","info":["Opus 12","《12新作》"],"page":"zjl12.html"},
-{"date":"12/26/2014","info":["Aiyo, Not Bad","《哎呦，不错哦》"]},
+{"date":"12/26/2014","info":["Aiyo, Not Bad","《哎呦，不错哦》"],"page":"zjl13.html"},
 {"date":"06/24/2016","info":["Jay Chou's Bedtime Stories","《周杰伦的床边故事》"]},
 //{"date":"06/24/2004","info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id","风光集贤亭的风光集贤亭的风光集贤亭的风"]},
 ];
