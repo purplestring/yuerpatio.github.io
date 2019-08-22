@@ -350,9 +350,11 @@ input[name="slide_r"]{
 	float:right;
 	font-weight:800;
 	text-decoration:underline;
+	cursor:pointer;
 }
 .pagelink{
 	font-weight:800;
 	text-decoration:underline;
 	color:red;
+	cursor:pointer;
 }

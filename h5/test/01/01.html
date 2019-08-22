@@ -112,7 +112,8 @@
 		}
 		else { 
 			$("#main").css('display','none'); 
-			$("#pagetext").html(pageinfo[cpage]); 
+			//$("#pagetext").html(pageinfo[cpage]);
+            $("#pagetext").html($.ajax({url:"pages/"+cpage+".html",async:false}).responseText);
 			$("#page").css('display','block'); 
 		}
 	}

@@ -45,7 +45,7 @@
 					<div>
 						<div class="history_trail" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'"></div>
 						<div class="timebox" v-for="(item, i) in historylist" :style="'top:'+(60*(item.year-startyear)+5*(item.month-1)+23)+'px'">
-							{{toDate(item.date)}}  {{item.info[langid]}} <span class="pagelink" v-if="item.page" @click="cpage=item.page">>></span>
+							{{toDate(item.date)}}  {{item.info[langid]}} <span class="pagelink" v-if="item.page" @click="cpage=item.page;LoadPages();">>></span>
 						</div>
 						<div class="yearbox" v-for="(item, i) in (endyear-startyear+1)" :style="'top:'+(i*60+22)+'px'">{{i+startyear}}</div>
 					</div>
@@ -117,7 +117,7 @@
 			
 			</div>
 			<div id="page" v-if="cpage!=0">
-				<div v-html="pageinfo[cpage]"></div>
+				<div id="pagetext" v-html="pages"></div>
 				<div id="pagereturn" @click="cpage=0;" >返回</div><br>
 			</div>
 			<div class="footerbox"></div>
@@ -139,7 +139,7 @@
 			news:news,			
 			waterpics:waterpics,					
 			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
-			pageinfo:pageinfo,
+			pages:"",//pageinfo:pageinfo,
 		},
 		beforeCreate() {			
 		},
@@ -197,6 +197,9 @@
 				var d = new Date(date);
 				if(this.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
 				else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
+			},
+			LoadPages() {
+				this.pages=$.ajax({url:"pages/"+this.cpage+".html",async:false}).responseText;
 			}
 		}
 	});
