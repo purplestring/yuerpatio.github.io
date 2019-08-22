@@ -117,7 +117,7 @@
 			
 			</div>
 			<div id="page" v-show="cpage!=0">
-				<div id="pagetext" v-html="pages"></div>
+				<div id="pagetext"></div>
 				<div id="pagereturn" @click="cpage=0;" >返回</div><br>
 			</div>
 			<div class="footerbox"></div>
@@ -199,8 +199,8 @@
 				else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
 			},
 			LoadPages() {
-				this.pages=$.ajax({url:"pages/"+this.cpage,async:false}).responseText;
-                //$("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
+				//this.pages=$.ajax({url:"pages/"+this.cpage,async:false}).responseText;
+                $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
 			}
 		}
 	});
