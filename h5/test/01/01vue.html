@@ -116,7 +116,7 @@
 				</div>
 			
 			</div>
-			<div id="page" v-if="cpage!=0">
+			<div id="page" v-show="cpage!=0">
 				<div id="pagetext" v-html="pages"></div>
 				<div id="pagereturn" @click="cpage=0;" >返回</div><br>
 			</div>
@@ -132,14 +132,14 @@
 	var all=new Vue({
 		el: '#all',
 		data:{ 
-			lang:lang, langid:1, page:[], current:0, cpage:0,navinames:navinames,
+			lang:lang, langid:1, page:[], current:0, navinames:navinames,
 			slidepics:slidepics, currentslide:0, stop:2, hometext:hometext,
 			historylist:historylist, startyear:2010, endyear:2016,		
 			//historylist2:historylist2,			
 			news:news,			
 			waterpics:waterpics,					
 			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
-			pages:"",//pageinfo:pageinfo,
+			cpage:0,pages:"",
 		},
 		beforeCreate() {			
 		},
@@ -199,7 +199,8 @@
 				else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
 			},
 			LoadPages() {
-				this.pages=$.ajax({url:"pages/"+this.cpage+".html",async:false}).responseText;
+				this.pages=$.ajax({url:"pages/"+this.cpage,async:false}).responseText;
+                //$("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
 			}
 		}
 	});

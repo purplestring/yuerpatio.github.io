@@ -113,7 +113,7 @@
 		else { 
 			$("#main").css('display','none'); 
 			//$("#pagetext").html(pageinfo[cpage]);
-            $("#pagetext").html($.ajax({url:"pages/"+cpage+".html",async:false}).responseText);
+            $("#pagetext").html($.ajax({url:"pages/"+cpage,async:false}).responseText);
 			$("#page").css('display','block'); 
 		}
 	}
@@ -167,7 +167,7 @@
 			let d = new Date(historylist[i].date); let t="";
 			if(this.langid==1) t=(d.getMonth()+1)+"月"+d.getDate()+"日";
 			else t=d.getDate()+" "+EnMonth[d.getMonth()]+" ";
-			let panglink=""; if(historylist[i].page) panglink= '<span class="pagelink" onclick="cpage='+historylist[i].page+';Load();"> >></span>';
+			let panglink=""; if(historylist[i].page) panglink= '<span class="pagelink" onclick="cpage=\''+historylist[i].page+'\';Load();"> >></span>';
 			$("#history").html($("#history").html()+ '<div class="history_trail" style="top: '+totop+'px;"></div>'+
 			'<div class="timebox" style="top: '+totop+'px;">'+t+' '+historylist[i].info[langid]+panglink+'</div>');
 		}
