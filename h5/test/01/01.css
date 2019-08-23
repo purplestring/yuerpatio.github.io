@@ -6,6 +6,11 @@
 body {
 	background: #333;
 }
+video {
+    width: 100%;
+    height: auto;
+}
+
 [v-cloak] {
   display: none;
 }

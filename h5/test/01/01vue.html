@@ -68,6 +68,7 @@
 							<div class="newsdate">{{item.date[langid]}}</div>
 							<div class="newstitle">{{item.title[langid]}}</div>
 							<div class="newsinfo" v-html="item.info[langid]"></div>
+							<span class="pagelink" v-if="item.page" @click="cpage=item.page;LoadPages();">>></span>
 					</div>
 					<div style="clear:both;"></div>
 				</div>	
