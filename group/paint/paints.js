@@ -3632,18 +3632,18 @@ var myjson={
 },
 {
 "P_ID": "692",
-"P_NAME": "渔父图西风潇潇",
+"P_NAME": "芦滩钓艇图",
 "A_EN": "",
 "P_AUTHOR": "吴镇",
 "P_DYNASTY": "元",
 "P_YEAR": "",
 "P_TYPE": "卷轴 绢本 水墨 山水 元四家 中国",
 "P_INFO": "imgl",
-"P_PICS": "yftxfxx.jpg",
+"P_PICS": "Wltdtt.jpg",
 "P_POSTIL": "",
 "P_WIDTH": "0",
 "P_HEIGHT": "0",
-"P_STAR": "4"
+"P_STAR": "5"
 },
 {
 "P_ID": "693",

@@ -16,9 +16,12 @@
 			<div class="timebox" v-for="(item, i) in list">
 				<div class="history_trail"></div>
 				<span class="date">{{item.year}}.{{item.month}}.{{item.date}}</span>
-				<span class="site">　{{item.site}} </span>
+				<span class="site" >　{{item.site}} </span>
 				<div class="num" v-if="item.n != ''">{{item.n}}</div><br>
-				<div class="info"><span v-html="item.info"></span> <a :href="item.url">>></a></div>
+				<div class="info">
+					<span v-html="item.info" ></span> 
+					<a v-if="item.url != ''" :href="item.url">>></a>
+				</div>
 			</div>
 			<div id="timeline"></div>
 		</div>
@@ -27,45 +30,49 @@
 	if (window.screen.width > 1024) $("#css").attr("href", "04.css");
 	
 	var list= [
-	//{"year":2012,"month":7,"date":7,"site":"北京 南锣鼓巷69cafe","n":"","class":"","info":"日式乡村民谣弹唱会","url":"http://weibo.com/2158787251/yrm7ffGg5"},
+	{"year":2012,"month":7,"date":7,"site":"北京 南锣鼓巷69cafe","n":"","class":"","info":"日式乡村民谣弹唱会","url":"http://weibo.com/2158787251/yrm7ffGg5"},
 	{"year":2012,"month":9,"date":16,"site":"北京 南锣鼓巷69cafe","n":"","class":"","info":"程璧首张原创音乐专辑Anna's Patio《晴日共剪窗》首发演出本周日16号晚九点69CAFE ","url":"http://weibo.com/2158787251/yBrEhdrKd"},
+	{"year":2013,"month":12,"date":17,"site":"北京 北大图书馆","n":"","class":"","info":"给阿兰，一位远行的音乐朋友，所做的纪念专辑发布会海报。我们在北大吉他协会结识，他那时一头长发，带古典吉他班，还弹尤可里里，后来为我那首《晴日共剪窗》做现场鼓手，上台前还给我拥抱加油鼓气。我们都爱他的自由不羁，爱他的童真浪漫。等着世界末日，他会实现承诺，带着一艘大方舟回来解救我们。","url":""},
 	{"year":2014,"month":10,"date":11,"site":"杭州","n":"","class":"","info":"这次杭州演出收到很贴心的礼物：一套好看的茶具，造型是一朵莲花一片荷叶。回家仔细一看里面还提了字，看到以后有些感动。拿来泡了一壶桂花龙井茶，真的是很爱，造型小巧加上外面这柔软的包裹，以后可以随时带着它出门了。谢谢美丽的@舒羽shuyu 和她的@舒羽咖啡","url":"http://weibo.com/1759006061/Br2k4zptr"},
 	{"year":2014,"month":11,"date":28,"site":"长沙","n":"","class":"","info":"全集视频在这。记得当时节目组微博私信我的时候，小伙伴提醒小心是骗子啊，笑。确实，因为我的路才刚刚开始。后来好奇问导演组，到底是怎样知道我的啊，导演说因为组里大家都很喜欢你的歌啊。世界上很多事真的就是这么简单。唯有继续努力。这次也认识了很棒的民谣人，不虚此行。谢谢电视机前的你！晚安","url":"http://weibo.com/1759006061/BypSir8Dd"},
 	{"year":2014,"month":11,"date":9,"site":"北京 西区剧场","n":"","class":"","info":"好多朋友问下一站演出来不来我们这。我当然会去，可又一点也不着急。我知道那些美丽的地方在，不想走马观花地看。我想每去一个地方就好好感受，一一看遍。所以远方的人啊，请你也不要急，等我慢慢地走过这大好河山，与你相见。 ​​​​","url":"http://weibo.com/1759006061/BAb97qGjw"},
-	{"year":2015,"month":5,"date":20,"site":"广州 中央车站","n":"","class":"","info":"？？？","url":"http://weibo.com/1759006061/CixB16yWk"},
+	{"year":2015,"month":2,"date":7,"site":"广州 289艺术空间","n":"","class":"","info":"今晚在广州289艺术空间，与诗歌岛、荔枝FM一起做一场诗歌与民谣的专场演出。因为活动在主办方一发出票马上就订光了，所以我这里没有在微博或者我的微信公号推送。原本只有可以容纳200人的场地因为大家的热情增加到350。下午南方报系等媒体群访也聊的很开心。谢谢广州小伙伴们，我们一会儿见。","url":"https://weibo.com/1759006061/C3dE4oQ88"},
+	{"year":2015,"month":2,"date":14,"site":"苏州 凯宾斯基大酒店","n":"","class":"","info":"你可知道我小时候因为这被老师叫出去训话，“程璧同学你上课可不可以不要老瞪着我”，然后以后上课都只能眯着眼睛了","url":"https://weibo.com/1759006061/C4oA9criI"},
+	{"year":2015,"month":5,"date":20,"site":"广州 中央车站","n":"1","class":"","info":"？？？","url":"http://weibo.com/1759006061/CixB16yWk"},
 	{"year":2015,"month":5,"date":23,"site":"济南 山东大学","n":"","class":"","info":"列车南下，到月末会一直在路上，济南，重庆，广州，成都，北京。今天下午2:00山东大学洪家楼校区108教室见","url":"http://weibo.com/1759006061/Cj85rarLK"},
-	{"year":2015,"month":5,"date":19,"site":"广州 中山大学","n":"","class":"","info":"明晚在广州中央车站音乐厅的演出，乐童上官方预售票包括所有现场票，都已全部卖光。提醒大家，不要来现场买票。如果买了套票同伴有事不能来，转发这条呼唤愿意一起来的伙伴分享。另外，本次演出乐视音乐会全程直播，在家里也可以看直播。听说有位小伙会在现场向心爱的姑娘求婚，先表达祝福呢！","url":"http://weibo.com/sumersmile"},
-	{"year":2015,"month":7,"date":11,"site":"北京 中山音乐堂","n":"","class":"","info":"？？？","url":"http://weibo.com/sumersmile"},
-	{"year":2015,"month":5,"date":27,"site":"重庆 少数花园","n":"","class":"","info":"？？？","url":"http://weibo.com/sumersmile"},
+	{"year":2015,"month":5,"date":19,"site":"广州 中山大学","n":"","class":"","info":"明晚在广州中央车站音乐厅的演出，乐童上官方预售票包括所有现场票，都已全部卖光。提醒大家，不要来现场买票。如果买了套票同伴有事不能来，转发这条呼唤愿意一起来的伙伴分享。另外，本次演出乐视音乐会全程直播，在家里也可以看直播。听说有位小伙会在现场向心爱的姑娘求婚，先表达祝福呢！","url":""},
+	{"year":2015,"month":7,"date":11,"site":"北京 中山音乐堂","n":"5","class":"","info":"走了那么远的路，过了一整个春末夏初，终于是今晚最后一场音乐会了。回想起路上遇见的每一个可亲可爱的面孔，心里满是不舍和感激。今晚，还是我来唱歌，你来读诗，好吗？共赴一场春末夏初的最后约定。我把等待喜欢过了，我准备好了。","url":"https://weibo.com/1759006061/CqCu3oAJC"},
+	{"year":2015,"month":5,"date":2,"site":"镇江 世业洲长江国际音乐岛","n":"","class":"","info":"出发去镇江，参加长江国际音乐节。我会在5月2号的下午的长江舞台出现，也会在同一天的晚上参加星空露营舞台。白天的演出曲目选择的是轻快爽朗的，歌唱部分多一些，夜晚的选择的是舒服安静的，还可以看星星聊天，比较轻松随意。两场演出完还会有专辑签售。这是第一次的露天音乐节体验，请多关照！","url":"https://weibo.com/1759006061/CfOsf5W6D"},
+	{"year":2015,"month":5,"date":27,"site":"重庆 少数花园","n":"","class":"","info":"？？？","url":""},
+	{"year":2015,"month":5,"date":30,"site":"成都 MINI LIVE 音乐现场","n":"2","class":"","info":"？？？","url":""},
 	{"year":2015,"month":5,"date":29,"site":"成都 方所文化","n":"","class":"","info":"成都的庭院分享会，谢谢城市之音张舒来陪我一起和大家聊天。有一位朋友问，你的歌风格好像一成不变。我回答，为什么要急着变呢，能够保持着最初的模样，是一件多么不容易的事情。我的变，是诗歌的变，时间的变，情感的变。至于丰富的音乐元素，我才刚刚开始，不着急拿来堆砌。 ","url":"http://weibo.com/1759006061/CkIwD6uRO"},
 	{"year":2015,"month":6,"date":27,"site":"济南 山东剧院","n":"","class":"","info":"不知不觉，已离家千万里。","url":"http://weibo.com/1759006061/CoFOtiIji"},
 	{"year":2015,"month":6,"date":9,"site":"北京 北京大学","n":"","class":"","info":"在北大的分享会，我开场问大家一个问题：你觉得文艺是什么。一位男孩站起来说，文艺就是文化和艺术，是感性的抒发。一下就说中了关键的地方。文艺是非常宽泛的，是人类区别于动物的标志，是丰富多样的精神世界。我从不以文艺青年而自嘲，欣然接近各个艺术门类。再说，从小在班里就是文艺委员呢[害羞] ​​​​","url":"https://weibo.com/1759006061/Cm4spBJGr"},
-	{"year":2015,"month":6,"date":13,"site":"长沙 红色剧院","n":"","class":"","info":"花菇凉扮起来[哈哈]我和小伙伴们都准备好了","url":"http://weibo.com/1759006061/Cmntb52cr"},
+	{"year":2015,"month":6,"date":13,"site":"长沙 红色剧院","n":"3","class":"","info":"花菇凉扮起来[哈哈]我和小伙伴们都准备好了","url":"http://weibo.com/1759006061/Cmntb52cr"},
 	{"year":2015,"month":6,"date":17,"site":"上海 复旦大学","n":"","class":"","info":"转眼今晚将会是庭院分享会最后一站复旦大学","url":"http://weibo.com/1759006061/CmWYGrzN4"},
+	{"year":2015,"month":6,"date":21,"site":"上海 浅水湾艺术中心","n":"4","class":"","info":"？？？","url":""},
 	{"year":2015,"month":6,"date":12,"site":"长沙 湖南大学","n":"","class":"","info":"在湖大遇到一位女孩，让我想到了村上春树笔下的初美。","url":"http://weibo.com/1759006061/CmXAElOSM"},
 	{"year":2016,"month":4,"date":28,"site":"澳门 黑沙海滩","n":"","class":"","info":"HUSH MUSIC CONCERT","url":"http://weibo.com/1759006061/DsTfeBMpl"},
 	{"year":2016,"month":12,"date":21,"site":"宁波 宁波大剧院","n":"18","class":"","info":"十八城巡演最后的收官站宁波，因为北大师兄师妹...","url":"http://weibo.com/1759006061/Enj9pnG0N"},
 	{"year":2016,"month":9,"date":2,"site":"深圳 南山文体中心","n":"1","class":"","info":"我说再见某年某月，你说今夜不眠。","url":"http://weibo.com/1759006061/E6sUk8Gy9"},
-	{"year":2016,"month":9,"date":11,"site":"上海 上海交响音乐团","n":"2","class":"","info":"？？？","url":"http://weibo.com/sumersmile"},
-	{"year":2016,"month":9,"date":24,"site":"广州 中央车站","n":"3","class":"","info":"？？？","url":"http://weibo.com/sumersmile"},
+	{"year":2016,"month":9,"date":11,"site":"上海 上海交响音乐团","n":"2","class":"","info":"？？？","url":""},
+	{"year":2016,"month":9,"date":24,"site":"广州 中央车站","n":"3","class":"","info":"？？？","url":""},
 	{"year":2016,"month":10,"date":14,"site":"武汉 武汉剧院","n":"4","class":"","info":"昨晚忘了关窗，早晨被江边航船汽笛声叫醒了。","url":"http://weibo.com/1759006061/EcXgSccwI"},
 	{"year":2016,"month":12,"date":14,"site":"台北","n":"","class":"","info":"在台北风潮音乐旗舰店，做了非常用心的corner","url":"http://weibo.com/1759006061/Em7Tdke3y"},
 	{"year":2016,"month":10,"date":16,"site":"南京 文化馆大剧院","n":"5","class":"","info":"一城又一城 到达然后告别 南京站看到了那些默默举起的横幅","url":"http://weibo.com/1759006061/Edz44yNbg"},
 	{"year":2016,"month":10,"date":20,"site":"杭州 杭州大剧院","n":"6","class":"","info":"“我们不一样 我们都很棒”","url":"http://weibo.com/1759006061/Ee0jS849i"},
-	{"year":2016,"month":10,"date":22,"site":"重庆 人民大厦","n":"7","class":"","info":"？？？","url":"http://weibo.com/sumersmile"},
+	{"year":2016,"month":10,"date":22,"site":"重庆 人民大厦","n":"7","class":"","info":"？？？","url":""},
 	{"year":2016,"month":10,"date":23,"site":"成都 锦城艺术宫","n":"8","class":"","info":"在成都与橙色有关的日常","url":"http://weibo.com/1759006061/EewevqUa0"},
 	{"year":2016,"month":10,"date":28,"site":"厦门 钢琴音乐厅","n":"10","class":"","info":"聊聊古生物鲎、磕海瓜子、踏浪吹海风！","url":"http://weibo.com/1759006061/Ef385dl14"},
 	{"year":2016,"month":11,"date":5,"site":"长沙 湖南大剧院","n":"12","class":"","info":"花，旧友，笑顔，手写信。","url":"http://weibo.com/1759006061/Egf1W4EnA"},
 	{"year":2016,"month":11,"date":6,"site":"昆明 胜利堂剧院","n":"13","class":"","info":"收到一份特别礼物","url":"http://weibo.com/1759006061/Egrk763aN"},
 	{"year":2016,"month":11,"date":12,"site":"北京 世纪剧院","n":"14","class":"","info":"其实很多话在心里","url":"http://weibo.com/1759006061/EhyErqnV5"},
-	{"year":2016,"month":11,"date":18,"site":"西安 西安音乐厅","n":"15","class":"","info":"？？？？","url":"http://weibo.com/sumersmile"},
+	{"year":2016,"month":11,"date":18,"site":"西安 西安音乐厅","n":"15","class":"","info":"？？？？","url":""},
 	{"year":2016,"month":10,"date":26,"site":"无锡 演艺剧院","n":"9","class":"","info":"本月巡演倒数第二站！","url":"http://weibo.com/1759006061/EePgbkXGS"},
 	{"year":2016,"month":11,"date":20,"site":"苏州 独墅湖影剧院","n":"16","class":"","info":"有的人心里，藏着一片幽暗森林；有的人心里，留着一个光亮出口。","url":"http://weibo.com/1759006061/EizAa2VTz"},
 	{"year":2016,"month":9,"date":3,"site":"兰州 黄河剧院","n":"","class":"","info":"接着飞兰州，也是第一次去到西北演出，期待","url":"http://weibo.com/1759006061/E68l6uHxs"},
-	//{"year":2016,"month":11,"date":24,"site":"北京","n":"","class":"","info":"卖萌谁不会","url":"http://weibo.com/1759006061/Ej54xblbw"},
 	{"year":2016,"month":7,"date":30,"site":"张北","n":"","class":"","info":"去往张北草原音乐节的路上了！","url":"http://weibo.com/1759006061/E1g0Otvpf"},
 	{"year":2016,"month":12,"date":9,"site":"天津 津湾大剧院","n":"17","class":"","info":"趁夜色发个自拍大头照","url":"http://weibo.com/1759006061/Elmwp7x1P"},
-	//{"year":2016,"month":2,"date":8,"site":"滨州","n":"","class":"","info":"大年初一梳妆起来拜个年","url":"http://weibo.com/1759006061/DgR0D3RIt"},
 	{"year":2016,"month":1,"date":4,"site":"杭州","n":"","class":"","info":"请用一个词来形容这只正在尝试新发型的少女","url":"http://weibo.com/1759006061/DbzFsbdSy"},
 	{"year":2016,"month":6,"date":19,"site":"深圳","n":"","class":"","info":"晚上和风专场，发表一下「拙见」","url":"http://weibo.com/1759006061/DAX7vE767"},
 	{"year":2016,"month":6,"date":10,"site":"上海","n":"","class":"","info":"第一次看到新书《可以不可以》","url":"http://weibo.com/1759006061/DzC8xeBBe"},

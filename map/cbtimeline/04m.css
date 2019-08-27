@@ -63,6 +63,8 @@ a:hover,a:active {color: #000}
 	text-align:center;
 	background:black;
 	display:inline-block; 
+	font-size:14px;
+	vertical-align: text-bottom;
 }
 .info{
 	margin-top: 5px;
