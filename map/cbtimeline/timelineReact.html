@@ -116,8 +116,8 @@
 							{item.n ? <div className="num" >{item.n}</div> : ''}
 						<br></br>
 						<div className="info">
-							<span dangerouslySetInnerHTML={{__html: item.info}}></span> 
-							{item.url ? <a href="{item.url}">>></a>: ''}
+							<span dangerouslySetInnerHTML={{__html: item.info}}></span>&nbsp;
+							{item.url ? <a href={item.url}>>></a>: ''}
 						</div>
 					</div>
 					)
