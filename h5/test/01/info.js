@@ -13,10 +13,11 @@ var slidepics=[
 ];
 
 var hometext=[
-{"title":["Coffee","咖啡"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","01 探索火星七年，行驶21公里（13英里），攀登了368米（1207英尺），在火星表面钻洞22次，发现远古火星的环境条件有利于生命的存在"]},
-{"title":["Tea","茶"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","02 朱诺号最近飞掠木星时，拍摄到了这张引人注目的美景，除了反气旋风暴木星大红斑外，我们还能看到色彩斑斓的南赤道带，以及白色为主的南部热带区域。"]},
-{"title":["Milk","牛奶"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","03 卡西尼号的旅程已接近尾声，2017年9月15日，卡西尼号将比历史上任何一次都接近土星，他将坠向土星大气层。未来NASA将发射专门的探测生命的航天器去往土卫二，使命只有一个，寻找生命。"]},
+{"title":["Coffee","咖啡"],"page":["zjl01.html","zjl04.html"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","01 探索火星七年，行驶21公里（13英里），攀登了368米（1207英尺），在火星表面钻洞22次，发现远古火星的环境条件有利于生命的存在"]},
+{"title":["Tea","茶"],"page":["zjl05.html","zjl06.html"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","02 朱诺号最近飞掠木星时，拍摄到了这张引人注目的美景，除了反气旋风暴木星大红斑外，我们还能看到色彩斑斓的南赤道带，以及白色为主的南部热带区域。"]},
+{"title":["Milk","牛奶"],"page":["zjl05.html","zjl06.html"],"info":["Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet utet voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic.","03 卡西尼号的旅程已接近尾声，2017年9月15日，卡西尼号将比历史上任何一次都接近土星，他将坠向土星大气层。未来NASA将发射专门的探测生命的航天器去往土卫二，使命只有一个，寻找生命。"]},
 ];
+var home= { "slidepics":slidepics,"hometext":hometext,};
 	
 //Waterfall
 var waterpics=[
@@ -33,6 +34,7 @@ var waterpics=[
 { "img":"images/shoes.svg","info":["A shoe is an item of footwear intended to protect and comfort the human foot, while the wearer is doing various activities.","以皮、布、木、草、塑料丝等为材料制作的穿在脚上、走路时着地的物品，是人类必不可少的生活用品。"]},
 { "img":"images/bag.svg","info":["A bag (also known regionally as a sack) is a common tool in the form of a non-rigid container. ","布艺包的面料一般为帆布、牛仔、棉的内衬一般为尼龙和棉质，一般来说，布艺包都可干洗或者水洗，条纹较多、颜色较亮丽的布艺包一定要干洗，否则会褪色。"]},
 ];	
+var photos=waterpics;
 
 //News
 var news=[
@@ -62,7 +64,12 @@ for(let i in news) {
 };
 
 
-var lang=["EN","中"];
+//var lang=["EN","中"];
+//var Back=["Back","返回"];
+var lang= {
+"lang":["EN","中"],
+"back":["Back","返回"],
+};
 
 var navinames= [
 { "Home":"Home","About":"About","History":"History","Photos":"Photos","News":"News","Contacts":"Contacts"},
@@ -83,6 +90,8 @@ var misinfo= [
 ["Miscellaneous Info:","Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudi andae sint et molestiae non recusandae itaque earum rerum hic. Namlibero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo."],
 ["更多信息：","秦时明月汉时关，万里长征人未还。但使龙城飞将在，不教胡马度阴山。青海长云暗雪山，孤城遥望玉门关。黄沙百战穿金甲，不破楼兰终不还。"],
 ];
+
+var contacts= { "address":address,"contactform":contactform,"misinfo":misinfo,};
 
 var historylist= [
 {"date":"11/7/2000","info":["Jay","Jay"],"page":"zjl01.html"},
@@ -106,6 +115,7 @@ for(let i in historylist) {
 	historylist[i].year=d.getFullYear();
 	historylist[i].month=d.getMonth()+1;
 };
+var about= { "historylist":historylist,"EnMonth":EnMonth,};
 
 var historylist2= [
 //{"year":2012,"month":7,"date":7,"site":"北京 南锣鼓巷69cafe","n":"","class":"","info":"日式乡村民谣弹唱会","url":"http://weibo.com/2158787251/yrm7ffGg5"},

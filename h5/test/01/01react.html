@@ -1,0 +1,467 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>综合</title>
+		<style id="style"></style>
+		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="react.js"></script>
+		<script src="react-dom.js"></script>
+		<script src="babel.min.js"></script>
+		<script src="info.js"></script>
+		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
+    </head>
+	<body>
+		<div id="all"></div>
+	</body>
+	<script type="text/babel">
+
+	let cpage="zjl01.html";cpage="";
+	let langid=1;
+	let current=0;
+	let page=["Home","About","News","Photos","Contacts"];
+	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");	
+	
+	class Mainnavi extends React.Component {
+		
+		constructor(props){
+        super(props)
+			this.state={
+				//current:0,
+				//langid:this.props.langid,
+			}	 
+		}		
+		changeLang() {			
+			//this.setState({langid:(parseInt(this.state.langid)+1)%2});
+            this.props.setlangid((parseInt(this.props.langid)+1)%2);
+		}
+		clickTab(index){      
+			//this.setState({current:index});
+			//console.log(index)
+            this.props.setcurrent(index);
+            this.props.setcpage("");
+		}
+		render(){
+			//console.log(this.props.langid);
+			//参考 https://www.cnblogs.com/GainLoss/p/7743128.html
+			return (
+			<div className="mainnaviback">
+				<div className="mainnavi">
+						<div id="logo"></div>
+						<ul id="navi">
+						{
+							this.props.page.map((item, i) => {
+								return (
+									<li key={i}>
+										<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
+											className={this.state.current===i ? 'currentmainnavi':'mainnavilia'}
+										>{this.props.navinames[this.props.langid][this.props.page[i]]}</a>
+									</li>
+								)
+							})
+						}
+						</ul>
+						<div id="lang"><a href="javascript:;" onClick={this.changeLang.bind(this)}>
+							{this.props.lang.lang[(parseInt(this.props.langid)+1)%2]}</a></div>
+				</div>
+			</div>
+			)
+		}
+	}
+
+    class Home extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+                currentslide:0,
+				stop:2,
+            }
+        }
+        setcpage(value){
+            this.props.setcpage(value);
+        }
+
+        handlerChange(currentslide){
+            this.setState({currentslide});
+		}
+
+
+
+        componentWillMount() {
+            let slidepics=this.props.home.slidepics;
+            $("#style").html("");
+            for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
+            $("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
+            $("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
+        }
+
+        componentDidMount() {
+            let stop=this.state.stop;
+            let slidepics=this.props.home.slidepics;
+            let currentslide=this.state.currentslide;
+            $(".slidershow").mousemove(function(){stop=2;});
+            setInterval(function(){
+                if(stop>0) stop--;
+                if(stop!=0) return;
+                currentslide=(currentslide+1)%slidepics.length;
+                $("#r"+currentslide).click();
+                //console.log("#r"+currentslide);
+            },3000);
+        }
+
+        render(){
+            let slidepics=this.props.home.slidepics;
+            let langid=this.props.langid;
+            return (
+					<div id="Home">
+						<div className="slidershow">
+							<div className="slides" id="slides">
+                                {
+                                    slidepics.map((item, i) => {
+                                        return (
+												<input key={i} type="radio" name="slide_r" id={'r'+i} onChange={this.handlerChange.bind(this,i)} />
+                                        )
+                                    })
+                                }
+                                {
+                                    slidepics.map((item, i) => {
+                                        return (
+												<div key={i} className={'slide'+(i==0?' s1':'')}>
+													<img src={item.img} alt=""/>
+												</div>
+                                        )
+                                    })
+                                }
+							</div>
+							<div className="slidenavi" id="slidenavi">
+                                {
+                                    slidepics.map((item, i) => {
+                                        return (
+												<label key={i} htmlFor={'r'+i} className={(i==this.state.currentslide?'currentslidebar':'slidebar')}>
+												</label>
+                                        )
+                                    })
+                                }
+							</div>
+							<div id="slidesinfo">{slidepics[this.state.currentslide].info[langid]}</div>
+						</div>
+						<div id="homelist" className="homelist">
+
+                            {
+                                this.props.home.hometext.map((item, i) => {
+                                    return (
+										<div key={i}>
+											<h2>{item.title[langid]}</h2><br></br>
+											<p>{item.info[langid]}
+                                                {item.page?<span className="pagelink" onClick={this.setcpage.bind(this,item.page[langid])}>>></span>:''}
+											</p>
+										</div>
+                                    )
+                                })
+                            }
+						</div>
+					</div>
+            )
+        }
+    }
+	
+	class Page extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+        }
+        setcpage(value){
+            this.props.setcpage(value);
+		}
+
+        componentDidMount() {
+            //console.log(this.props.cpage)
+			if(this.props.cpage=="") return;
+            $("#pagetext").html($.ajax({url:"pages/"+this.props.cpage,async:false}).responseText);
+        }
+
+		render(){
+            return (
+			    <div id="page">
+					<div id="pagetext"></div>
+					<div id="pagereturn" onClick={this.setcpage.bind(this,"")}>{lang.back[this.props.langid]}</div><br></br>
+				</div>
+			)
+		}
+	}
+
+    class About extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+        }
+        setcpage(value){
+            this.props.setcpage(value);
+        }
+
+        toDate(date) {
+            var d = new Date(date);
+            if(this.props.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
+            else return d.getDate()+" "+this.props.about.EnMonth[d.getMonth()]+" ";
+        }
+        componentDidMount() {
+
+        }
+
+        render(){
+            let langid=this.props.langid;
+            let startyear=2010;let endyear=2016;
+            let historylist=this.props.about.historylist;
+            for(let i in historylist) {
+                if(historylist[i].year<startyear) startyear=historylist[i].year;
+                if(historylist[i].year>endyear) endyear=historylist[i].year
+            };
+            endyear++;
+
+
+			let yearboxn = [];
+			for(let i = 0; i < endyear-startyear+1; i++) {
+                yearboxn[i]=i;
+			}
+
+            return (
+					<div id="About">
+							<div id="sizebox" style={{height:60*(endyear-startyear+1)+'px'}}></div>
+							<div>
+                                {
+                                    historylist.map((item, i) => {
+                                        return (
+												<div key={i} className="history_trail" style={{top:(60*(item.year-startyear)+5*(item.month-1)+23)+'px'}}>
+												</div>
+                                        )
+                                    })
+                                }
+                                {
+                                    historylist.map((item, i) => {
+                                        return (
+												<div key={i} className="timebox" style={{top:(60*(item.year-startyear)+5*(item.month-1)+23)+'px'}}>
+                                                    {this.toDate(item.date)}  {item.info[langid]}&nbsp;
+                                                    {item.page? <span className="pagelink" onClick={this.setcpage.bind(this,item.page)}>>></span>:''}
+												</div>
+                                        )
+                                    })
+                                }
+                                {
+                                    yearboxn.map((item, i) => {
+                                        return (
+												<div key={i} className="yearbox" style={{top:(i*60+22)+'px'}}>{i+startyear}</div>
+                                        )
+                                    })
+                                }
+
+							</div>
+							<div id="timeline" style={{height:60*(endyear-startyear)+'px'}}></div>
+					</div>
+            )
+        }
+    }
+
+    class News extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+            //console.log(this.props.langid)
+        }
+        setcpage(value){
+            //console.log(value)
+            this.props.setcpage(value);
+        }
+        render(){
+			//let {langid}=this.props.landid;
+			let langid=this.props.langid
+            return (
+				<div id="News">
+					{
+						this.props.news.map((item, i) => {
+							return (
+							<div id="newsbox" key={i} className={'newsone '+(i%2?'':'singular')}>
+								<div className="newsdate">{item.date[langid]}</div>
+								<div className="newstitle">{item.title[langid]}</div>
+								<div className="newsinfo" dangerouslySetInnerHTML={{__html: item.info[langid]}}></div>
+								{item.page?<span className="pagelink" onClick={this.setcpage.bind(this,item.page)}>>></span>:''}
+							</div>
+							)
+						})
+					}
+					<div style={{clear:'both'}}></div>
+				</div>
+        	)
+        }
+    }
+
+    class Photos extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+        }
+
+        render(){
+            let langid=this.props.langid
+            return (
+					<div id="Photos">
+						<div id="waterfall" className="waterfall" >
+                        {
+                            this.props.photos.map((item, i) => {
+                                return (
+										<div key={i} className="water">
+											<img src={item.img} alt="" />
+											<p>{item.info[langid]}</p>
+										</div>
+                                )
+                            })
+                        }
+						</div>
+					</div>
+            )
+        }
+    }
+
+    class Contacts extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+            //console.log(this.props.langid)
+        }
+        setcpage(value){
+            //console.log(value)
+            this.props.setcpage(value);
+        }
+        clear(){
+            document.getElementById('ContactForm').reset();
+		}
+        render(){
+            //let {langid}=this.props.landid;
+            let langid=this.props.langid
+			let misinfo=this.props.contacts.misinfo
+            let address=this.props.contacts.address
+            let contactform=this.props.contacts.contactform
+            return (
+					<div id="Contacts">
+
+						<div id="misinfo">
+							<h2>{misinfo[langid][0]}</h2><br></br>
+							<p>{misinfo[langid][1]}</p>
+						</div>
+
+						<div id="contactinfo">
+							<h2>{address[langid][0]}</h2><br></br>
+							<strong>{address[langid][1]}</strong> {address[langid][2]}<br></br>
+							<strong>{address[langid][3]}</strong> {address[langid][4]}<br></br>
+							<strong>{address[langid][5]}</strong> {address[langid][6]}<br></br>
+							<strong>{address[langid][7]}</strong> {address[langid][8]}<br></br>
+							<strong>{address[langid][9]}</strong> {address[langid][10]}<br></br>
+						</div>
+
+						<div id="map"></div>
+
+						<div id="contactarea">
+							<h2>{contactform[langid][0]}</h2><br></br>
+							<form id="ContactForm" action="">
+								<div className="wrapper">
+									<div><p>{contactform[langid][1]}</p><input type="text" className="input" /></div>
+									<div><p>{contactform[langid][2]}</p><input type="text" className="input" /></div>
+									<div><p>{contactform[langid][3]}</p>
+										<textarea cols="1" rows="1" className="text"></textarea>
+									</div>
+									<a href="#" className="send" onClick="">{contactform[langid][4]}</a>
+								<a href="#" className="send" onClick={this.clear.bind(this)}>{contactform[langid][5]}</a>
+								</div>
+							</form>
+						</div>
+
+					</div>
+            )
+        }
+    }
+
+    class All extends React.Component {
+
+        constructor(props){
+            super(props)
+            this.state={
+                cpage: this.props.cpage,
+				langid: this.props.langid,
+                current: this.props.current,
+            }
+            this.setcpage = this.setcpage.bind(this);
+            this.setlangid = this.setlangid.bind(this);
+            this.setcurrent = this.setcurrent.bind(this);
+        }
+
+        setcpage(cpage){
+            this.setState({cpage});
+            //console.log("ff");
+        }
+
+        setlangid(langid){
+            //console.log(langid);
+            this.setState({langid});
+        }
+
+        setcurrent(current){
+            //console.log(current)
+            this.setState({current});
+        }
+
+        componentDidMount() {
+
+        }
+
+        render(){
+            //console.log(this.state.langid);
+			let page=this.props.page;
+			let current=this.state.current;
+            let divPage=""; let divMain="";
+
+            if(this.state.cpage!="")
+				divPage=<Page lang={lang} langid={this.state.langid} cpage={this.state.cpage} setcpage={this.setcpage}/>
+			else
+                divMain=
+				<div id="main">
+                    {page[current]=="Home"?<Home langid={this.state.langid} home={home} setcpage={this.setcpage}/>:""}
+                    {page[current]=="About"?<About langid={this.state.langid} about={about} setcpage={this.setcpage}/>:""}
+					{page[current]=="News"?<News langid={this.state.langid} news={news} setcpage={this.setcpage}/>:""}
+                    {page[current]=="Photos"?<Photos langid={this.state.langid} photos={photos}/>:""}
+                    {page[current]=="Contacts"?<Contacts langid={this.state.langid} contacts={contacts}/>:""}
+				</div>
+
+            return (
+                <div>
+					<div className="mainnaviback" id="Mainnavi">
+						<Mainnavi lang={lang} langid={this.state.langid} page={page} cpage={cpage} navinames={navinames}
+								  setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>
+					</div>
+                    {divMain}{divPage}
+
+					<div className="footerbox"></div>
+					<div className="footer" id="footer">
+						Copyright 2015~2019 ABC
+					</div>
+				</div>
+            )
+        }
+    }
+
+    ReactDOM.render(<All lang={lang} langid={langid} page={page} cpage={cpage}
+						 current={current} navinames={navinames}
+						 about={about} news={news} photos={photos} contacts={contacts}/>,document.getElementById('all'));
+	
+	</script>
+</html>
