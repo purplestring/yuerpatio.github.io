@@ -16,12 +16,6 @@
 		<div id="all"></div>
 	</body>
 	<script type="text/babel">
-
-	let cpage="zjl01.html";cpage="";
-	let langid=1;
-	let current=0;
-	let page=["Home","About","News","Photos","Contacts"];
-	if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");	
 	
 	class Mainnavi extends React.Component {
 		
@@ -153,7 +147,7 @@
                                 this.props.home.hometext.map((item, i) => {
                                     return (
 										<div key={i}>
-											<h2>{item.title[langid]}</h2><br></br>
+											<h2>{item.title[langid]}</h2><br/>
 											<p>{item.info[langid]}
                                                 {item.page?<span className="pagelink" onClick={this.setcpage.bind(this,item.page[langid])}>>></span>:''}
 											</p>
@@ -188,7 +182,7 @@
             return (
 			    <div id="page">
 					<div id="pagetext"></div>
-					<div id="pagereturn" onClick={this.setcpage.bind(this,"")}>{lang.back[this.props.langid]}</div><br></br>
+					<div id="pagereturn" onClick={this.setcpage.bind(this,"")}>{lang.back[this.props.langid]}</div><br/>
 				</div>
 			)
 		}
@@ -339,6 +333,20 @@
             }
             //console.log(this.props.langid)
         }
+
+        componentDidMount() {
+            // Map
+            /*$("#map").css({"background-image":""});
+            var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
+            map.addControl(new BMap.MapTypeControl());
+            map.setDefaultCursor("crosshair");
+            var point = new BMap.Point(116.404, 39.915);
+            var zoom=7; map.centerAndZoom(point, zoom);
+            map.enableScrollWheelZoom(true);
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);*/
+        }
+
         setcpage(value){
             //console.log(value)
             this.props.setcpage(value);
@@ -346,6 +354,14 @@
         clear(){
             document.getElementById('ContactForm').reset();
 		}
+        send(){
+            let name = this.refs.name.value;
+            let email = this.refs.email.value;
+            let msg = this.refs.msg.value;
+            let info={"name":name,"email":email,"msg":msg}
+            console.log(info)
+            document.getElementById('ContactForm').reset();
+        }
         render(){
             //let {langid}=this.props.landid;
             let langid=this.props.langid
@@ -353,40 +369,40 @@
             let address=this.props.contacts.address
             let contactform=this.props.contacts.contactform
             return (
-					<div id="Contacts">
+				<div id="Contacts">
 
-						<div id="misinfo">
-							<h2>{misinfo[langid][0]}</h2><br></br>
-							<p>{misinfo[langid][1]}</p>
-						</div>
-
-						<div id="contactinfo">
-							<h2>{address[langid][0]}</h2><br></br>
-							<strong>{address[langid][1]}</strong> {address[langid][2]}<br></br>
-							<strong>{address[langid][3]}</strong> {address[langid][4]}<br></br>
-							<strong>{address[langid][5]}</strong> {address[langid][6]}<br></br>
-							<strong>{address[langid][7]}</strong> {address[langid][8]}<br></br>
-							<strong>{address[langid][9]}</strong> {address[langid][10]}<br></br>
-						</div>
-
-						<div id="map"></div>
-
-						<div id="contactarea">
-							<h2>{contactform[langid][0]}</h2><br></br>
-							<form id="ContactForm" action="">
-								<div className="wrapper">
-									<div><p>{contactform[langid][1]}</p><input type="text" className="input" /></div>
-									<div><p>{contactform[langid][2]}</p><input type="text" className="input" /></div>
-									<div><p>{contactform[langid][3]}</p>
-										<textarea cols="1" rows="1" className="text"></textarea>
-									</div>
-									<a href="#" className="send" onClick="">{contactform[langid][4]}</a>
-								<a href="#" className="send" onClick={this.clear.bind(this)}>{contactform[langid][5]}</a>
-								</div>
-							</form>
-						</div>
-
+					<div id="misinfo">
+						<h2>{misinfo[langid][0]}</h2><br/>
+						<p>{misinfo[langid][1]}</p>
 					</div>
+
+					<div id="contactinfo">
+						<h2>{address[langid][0]}</h2><br/>
+						<strong>{address[langid][1]}</strong> {address[langid][2]}<br/>
+						<strong>{address[langid][3]}</strong> {address[langid][4]}<br/>
+						<strong>{address[langid][5]}</strong> {address[langid][6]}<br/>
+						<strong>{address[langid][7]}</strong> {address[langid][8]}<br/>
+						<strong>{address[langid][9]}</strong> {address[langid][10]}<br/>
+					</div>
+
+					<div id="map"></div>
+
+					<div id="contactarea">
+						<h2>{contactform[langid][0]}</h2><br/>
+						<form id="ContactForm" action="">
+							<div className="wrapper">
+								<div><p>{contactform[langid][1]}</p><input type="text" ref="name" className="input" /></div>
+								<div><p>{contactform[langid][2]}</p><input type="text" ref="email" className="input" /></div>
+								<div><p>{contactform[langid][3]}</p>
+									<textarea cols="1" rows="1" className="text" ref="msg"></textarea>
+								</div>
+								<a href="#" className="send" onClick={this.send.bind(this)}>{contactform[langid][4]}</a>
+							<a href="#" className="send" onClick={this.clear.bind(this)}>{contactform[langid][5]}</a>
+							</div>
+						</form>
+					</div>
+
+				</div>
             )
         }
     }
@@ -396,9 +412,13 @@
         constructor(props){
             super(props)
             this.state={
-                cpage: this.props.cpage,
-				langid: this.props.langid,
-                current: this.props.current,
+
+				langid: 1,
+                current: 0,
+               	page:["Home","About","News","Photos","Contacts"],
+                cpage: "",
+
+
             }
             this.setcpage = this.setcpage.bind(this);
             this.setlangid = this.setlangid.bind(this);
@@ -420,13 +440,13 @@
             this.setState({current});
         }
 
-        componentDidMount() {
-
+        componentWillMount() {
+            if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
         }
 
         render(){
             //console.log(this.state.langid);
-			let page=this.props.page;
+			let page=this.state.page;
 			let current=this.state.current;
             let divPage=""; let divMain="";
 
@@ -445,7 +465,7 @@
             return (
                 <div>
 					<div className="mainnaviback" id="Mainnavi">
-						<Mainnavi lang={lang} langid={this.state.langid} page={page} cpage={cpage} navinames={navinames}
+						<Mainnavi lang={lang} langid={this.state.langid} page={page} navinames={navinames}
 								  setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>
 					</div>
                     {divMain}{divPage}
@@ -459,9 +479,7 @@
         }
     }
 
-    ReactDOM.render(<All lang={lang} langid={langid} page={page} cpage={cpage}
-						 current={current} navinames={navinames}
-						 about={about} news={news} photos={photos} contacts={contacts}/>,document.getElementById('all'));
+    ReactDOM.render(<All />,document.getElementById('all'));
 	
 	</script>
 </html>
