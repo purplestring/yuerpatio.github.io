@@ -79,7 +79,7 @@
 		</div>
 		<div id="page">
 			<div id="pagetext"></div>
-			<div id="pagereturn" onclick="cpage=0;Load();" >返回</div><br>
+			<div id="pagereturn" onclick="cpage=0;Load();" ></div><br>
 		</div>
 		<div class="footerbox"></div>
 		<div class="footer" id="footer">
@@ -96,7 +96,7 @@
 		$("#navi").html("");
 		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
 		+'" onclick="current='+i+';cpage=0;Load();">'+navinames[langid][page[i]]+'</a></li>');
-		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang[(parseInt(langid)+1)%2]+'</a>');		
+		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang.lang[(parseInt(langid)+1)%2]+'</a>');		
 		document.documentElement.scrollTop=0;
 		for(let i in page) {
 			if(i==current){
@@ -114,6 +114,7 @@
 			$("#main").css('display','none'); 
 			//$("#pagetext").html(pageinfo[cpage]);
             $("#pagetext").html($.ajax({url:"pages/"+cpage,async:false}).responseText);
+			$("#pagereturn").html(lang.back[langid]);
 			$("#page").css('display','block'); 
 		}
 	}
@@ -121,7 +122,8 @@
 	function loadHome(){
 		for(let i in hometext) { 
 			$("#homelist>div:eq("+i+")>h2").html(hometext[i].title[langid]);
-			$("#homelist>div:eq("+i+")>p").html(hometext[i].info[langid]);
+			let panglink=""; if(hometext[i].page) panglink= '<span class="pagelink" onclick="cpage=\''+hometext[i].page[langid]+'\';Load();"> >></span>';
+			$("#homelist>div:eq("+i+")>p").html(hometext[i].info[langid]+panglink);
 		}
 		
 		//Slidershow		
@@ -177,9 +179,12 @@
 	}
 	
 	function loadNews(){
-		$("#newsbox").html("");
-		for(let i in news) $("#newsbox").html($("#newsbox").html()+'<div class="newsone '+(i%2?"":"singular")+'"><div class="newsdate">'+news[i].date[langid]+'</div><div class="newstitle">'+
-		news[i].title[langid]+'</div><div class="newsinfo">'+news[i].info[langid]+'</div></div>');
+		$("#newsbox").html("");		
+		for(let i in news) {
+			let panglink=""; if(news[i].page) panglink= '<span class="pagelink" onclick="cpage=\''+news[i].page+'\';Load();"> >></span>';
+			$("#newsbox").html($("#newsbox").html()+'<div class="newsone '+(i%2?"":"singular")+'"><div class="newsdate">'+news[i].date[langid]+'</div><div class="newstitle">'+
+			news[i].title[langid]+'</div><div class="newsinfo">'+news[i].info[langid]+'</div>'+panglink+'</div>');
+		}
 	}	
 	
 	function loadContacts(){

@@ -19,7 +19,7 @@
 					<ul id="navi"><li v-for="(item, i) in page">
 						<a href="javascript:;" @click="current=i;cpage=0;" :class="(i==current?'currentmainnavi':'mainnavilia')">{{navinames[langid][page[i]]}}</a>
 					</li></ul>
-					<div id="lang"><a href="javascript:;" @click="langid=(parseInt(langid)+1)%2;">{{lang[(parseInt(langid)+1)%2]}}</a></div>
+					<div id="lang"><a href="javascript:;" @click="langid=(parseInt(langid)+1)%2;">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
 				</div>
 			</div>
 			<div id="main" v-show="cpage==0">
@@ -36,7 +36,12 @@
 						<div id="slidesinfo">{{slidepics[currentslide].info[langid]}}</div>	
 					</div>
 					<div id="homelist" class="homelist">
-						<div v-for="(item, i) in hometext"><h2>{{item.title[langid]}}</h2><br><p>{{item.info[langid]}}</p></div>
+						<div v-for="(item, i) in hometext">
+							<h2>{{item.title[langid]}}</h2><br>
+							<p>{{item.info[langid]}}
+								<span class="pagelink" v-if="item.page" @click="cpage=item.page[langid];LoadPages();">>></span>
+							</p>							
+						</div>
 					</div>
 				</div>
 				
@@ -119,7 +124,7 @@
 			</div>
 			<div id="page" v-show="cpage!=0">
 				<div id="pagetext"></div>
-				<div id="pagereturn" @click="cpage=0;" >返回</div><br>
+				<div id="pagereturn" @click="cpage=0;" >{{lang.back[langid]}}</div><br>
 			</div>
 			<div class="footerbox"></div>
 			<div class="footer" id="footer">
