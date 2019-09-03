@@ -49,7 +49,7 @@
 								return (
 									<li key={i}>
 										<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
-											className={this.state.current===i ? 'currentmainnavi':'mainnavilia'}
+											className={this.props.current==i ? 'currentmainnavi':'mainnavilia'}
 										>{this.props.navinames[this.props.langid][this.props.page[i]]}</a>
 									</li>
 								)
@@ -60,6 +60,56 @@
 							{this.props.lang.lang[(parseInt(this.props.langid)+1)%2]}</a></div>
 				</div>
 			</div>
+			)
+		}
+	}
+	
+	class Mainnavi2 extends React.Component {
+			
+		constructor(props){
+        super(props)
+			this.state={
+				//current:0,
+				//langid:this.props.langid,
+			}	 
+		}	
+		
+		changeLang() {			
+            this.props.setlangid((parseInt(this.props.langid)+1)%2);
+		}
+		clickTab(index){      
+            this.props.setcurrent(index);
+            this.props.setcpage("");
+            $("#check02").prop("checked", false);
+		}
+		render(){
+			//console.log(this.props.langid);
+			return (
+				<div className="mainnavi" id="Mainnavi2">
+					<div id="logo"></div>
+					<div id="currentpagename">{this.props.navinames[this.props.langid][this.props.page[this.props.current]]}</div>
+					<div id="lang"><a href="javascript:;" onClick={this.changeLang.bind(this)}>
+						{this.props.lang.lang[(parseInt(this.props.langid)+1)%2]}</a></div>
+					<ul id="menu">
+						<li>
+							<input id="check02" type="checkbox" name="menu" />
+							<label htmlFor="check02"><span>≡</span></label>
+							<ul className="submenu">
+								{
+									this.props.page.map((item, i) => {
+										return (
+											<li key={i}>
+												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
+												   className={this.props.current==i ? 'active':''}>
+												{this.props.navinames[this.props.langid][this.props.page[i]]}</a>
+											</li>
+										)
+									})
+								}
+							</ul>
+						</li>
+					</ul>
+				</div>
 			)
 		}
 	}
@@ -78,10 +128,9 @@
         }
 
         handlerChange(currentslide){
+			//console.log(currentslide)
             this.setState({currentslide});
 		}
-
-
 
         componentWillMount() {
             let slidepics=this.props.home.slidepics;
@@ -93,14 +142,16 @@
 
         componentDidMount() {
             let stop=this.state.stop;
-            let slidepics=this.props.home.slidepics;
-            let currentslide=this.state.currentslide;
+            let slidepics=this.props.home.slidepics;         
             $(".slidershow").mousemove(function(){stop=2;});
+			let me=this;
             setInterval(function(){
+				let currentslide=me.state.currentslide;
                 if(stop>0) stop--;
                 if(stop!=0) return;
                 currentslide=(currentslide+1)%slidepics.length;
                 $("#r"+currentslide).click();
+				//me.setState({currentslide});
                 //console.log("#r"+currentslide);
             },3000);
         }
@@ -115,7 +166,7 @@
                                 {
                                     slidepics.map((item, i) => {
                                         return (
-												<input key={i} type="radio" name="slide_r" id={'r'+i} onChange={this.handlerChange.bind(this,i)} />
+												<input key={i} type="radio" name="slide_r" id={'r'+i} onClick={this.handlerChange.bind(this,i)} />
                                         )
                                     })
                                 }
@@ -190,11 +241,6 @@
 
     class About extends React.Component {
 
-        constructor(props){
-            super(props)
-            this.state={
-            }
-        }
         setcpage(value){
             this.props.setcpage(value);
         }
@@ -203,9 +249,6 @@
             var d = new Date(date);
             if(this.props.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
             else return d.getDate()+" "+this.props.about.EnMonth[d.getMonth()]+" ";
-        }
-        componentDidMount() {
-
         }
 
         render(){
@@ -261,14 +304,35 @@
         }
     }
 
+    class History extends React.Component {
+
+        render(){
+
+            return (
+				<div id="History">
+                    {
+                        this.props.history.map((item, i) => {
+                            return (
+								<div className="Htimebox" key={i}>
+									<div className="Hhistory_trail"></div>
+									<span className="Hdate">{item.year}.{item.month}.{item.date}</span>
+									<span className="Hsite">　{item.site} </span>
+                                    {item.n ? <div className="Hnum" >{item.n}</div> : ''}<br/>
+									<div className="Hinfo"><span dangerouslySetInnerHTML={{__html: item.info}}></span>&nbsp;
+										<a target="_blank" href={item.url}>>></a></div>
+								</div>
+                            )
+                        })
+
+                    }
+					<div id="Htimeline"></div>
+				</div>
+            )
+        }
+    }
+
     class News extends React.Component {
 
-        constructor(props){
-            super(props)
-            this.state={
-            }
-            //console.log(this.props.langid)
-        }
         setcpage(value){
             //console.log(value)
             this.props.setcpage(value);
@@ -457,6 +521,7 @@
 				<div id="main">
                     {page[current]=="Home"?<Home langid={this.state.langid} home={home} setcpage={this.setcpage}/>:""}
                     {page[current]=="About"?<About langid={this.state.langid} about={about} setcpage={this.setcpage}/>:""}
+                    {page[current]=="History"?<History history={historylist2} />:""}
 					{page[current]=="News"?<News langid={this.state.langid} news={news} setcpage={this.setcpage}/>:""}
                     {page[current]=="Photos"?<Photos langid={this.state.langid} photos={photos}/>:""}
                     {page[current]=="Contacts"?<Contacts langid={this.state.langid} contacts={contacts}/>:""}
@@ -465,7 +530,7 @@
             return (
                 <div>
 					<div className="mainnaviback" id="Mainnavi">
-						<Mainnavi lang={lang} langid={this.state.langid} page={page} navinames={navinames}
+						<Mainnavi2 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 								  setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>
 					</div>
                     {divMain}{divPage}

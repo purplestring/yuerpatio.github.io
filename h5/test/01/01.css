@@ -100,6 +100,95 @@ video {
 }
 
 
+#Mainnavi2 #lang{
+	top:-70px;
+	left:860px;
+}
+#Mainnavi2 #currentpagename{
+	position: relative;
+	color:white;
+	top:-36px;
+	text-align: center;
+	font-size: 28px;
+	height:32px;
+}
+#Mainnavi2 ul#menu {
+	position: relative;
+	top:-106px;
+	left:936px;
+	width: 64px;
+	height: 32px;
+	margin: 0;
+	background: rgba(21, 30, 37, 0.32);
+	color: #fff;
+	z-index: 99;
+}
+#Mainnavi2 ul#menu>li {
+	float: left;
+	list-style-type: none;
+	position: relative;
+	width: 64px;
+}
+#Mainnavi2 ul#menu>li a{
+	text-decoration:none;
+}
+#Mainnavi2 ul#menu label {
+	position: relative;
+	display: block;
+	transition: background 0.3s;
+	cursor: pointer;
+	text-align: center;
+	margin: 0;
+}
+#Mainnavi2 ul#menu label span {
+	line-height: 32px;
+	font-size: 36px;
+}
+#Mainnavi2 ul#menu input {
+	display: none
+}
+/*show the second levele menu of the selected voice*/
+#Mainnavi2 ul#menu input:checked~ul.submenu {
+	max-height: 360px;
+	transition: max-height 0.5s ease-in;
+}
+/*style for the second level menu*/
+#Mainnavi2 ul.submenu {
+	max-height: 0;
+	padding: 0;
+	width:90px;
+	overflow: hidden;
+	list-style-type: none;
+	background: #f7f7f7;
+	transition: max-height 0.5s ease-out;
+	position: absolute;
+	min-width: 1em;
+	right: 2px;
+	top:42px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-moz-border-radius: 4px;
+	box-shadow: 0 1px 8px rgba(20, 21, 21, 0.37);
+	-webkit-box-shadow: 0 1px 8px rgba(20, 21, 21, 0.37);
+	-moz-box-shadow: 0 1px 8px rgba(20, 21, 21, 0.37);
+}
+#Mainnavi2 ul.submenu li a {
+	display: block;
+	padding: 9px;
+	color: #000;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 400;
+	width:72px;
+}
+#Mainnavi2 ul.submenu li a:hover,
+#Mainnavi2 ul.submenu li a.active {
+	background: #222;
+	color: #fff;
+}
+
 .slidershow{
 	width:1000px;
 	height:600px;

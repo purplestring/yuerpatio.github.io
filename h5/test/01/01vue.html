@@ -13,13 +13,32 @@
     </head>
 	<body>
 		<div id="all" v-cloak>
-			<div class="mainnaviback">
+			<!--div class="mainnaviback">
 				<div class="mainnavi">
 					<div id="logo"></div>
 					<ul id="navi"><li v-for="(item, i) in page">
 						<a href="javascript:;" @click="current=i;cpage=0;" :class="(i==current?'currentmainnavi':'mainnavilia')">{{navinames[langid][page[i]]}}</a>
 					</li></ul>
 					<div id="lang"><a href="javascript:;" @click="langid=(parseInt(langid)+1)%2;">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
+				</div>
+			</div-->
+			<div class="mainnaviback">
+				<div className="mainnavi" id="Mainnavi2">
+					<div id="logo"></div>
+					<div id="currentpagename">{{navinames[langid][page[current]]}}</div>
+					<div id="lang"><a href="javascript:;" @click="langid=(parseInt(langid)+1)%2;">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
+					<ul id="menu">
+						<li>
+							<input id="check02" type="checkbox" name="menu" />
+							<label for="check02"><span>≡</span></label>
+							<ul class="submenu">
+								<li v-for="(item, i) in page">
+									<a href="javascript:;" @click="current=i;cpage=0;" :class="(i==current?'active':'')">
+										{{navinames[langid][page[i]]}}</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div id="main" v-show="cpage==0">
