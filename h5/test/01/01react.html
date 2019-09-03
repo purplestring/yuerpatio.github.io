@@ -40,7 +40,6 @@
 			//console.log(this.props.langid);
 			//参考 https://www.cnblogs.com/GainLoss/p/7743128.html
 			return (
-			<div className="mainnaviback">
 				<div className="mainnavi">
 						<div id="logo"></div>
 						<ul id="navi">
@@ -59,7 +58,6 @@
 						<div id="lang"><a href="javascript:;" onClick={this.changeLang.bind(this)}>
 							{this.props.lang.lang[(parseInt(this.props.langid)+1)%2]}</a></div>
 				</div>
-			</div>
 			)
 		}
 	}
@@ -512,7 +510,7 @@
             //console.log(this.state.langid);
 			let page=this.state.page;
 			let current=this.state.current;
-            let divPage=""; let divMain="";
+            let divPage=""; let divMain=""; let divNavi="";
 
             if(this.state.cpage!="")
 				divPage=<Page lang={lang} langid={this.state.langid} cpage={this.state.cpage} setcpage={this.setcpage}/>
@@ -527,11 +525,17 @@
                     {page[current]=="Contacts"?<Contacts langid={this.state.langid} contacts={contacts}/>:""}
 				</div>
 
+            if (window.screen.width <= 1024)
+                divNavi=<Mainnavi2 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+								   setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
+			else divNavi=<Mainnavi lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+									setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
+
+
             return (
                 <div>
 					<div className="mainnaviback" id="Mainnavi">
-						<Mainnavi2 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
-								  setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>
+                        {divNavi}
 					</div>
                     {divMain}{divPage}
 

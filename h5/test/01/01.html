@@ -10,11 +10,26 @@
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
 	<body>
-		<div class="mainnaviback">
+		<!--div class="mainnaviback">
 			<div class="mainnavi">
 				<div id="logo"></div>
 				<ul id="navi"></ul>
 				<div id="lang"></div>
+			</div>
+		</div-->
+
+		<div class="mainnaviback">
+			<div class="mainnavi" id="Mainnavi2">
+				<div id="logo"></div>
+				<div id="currentpagename"></div>
+				<div id="lang"></div>
+				<ul id="menu">
+					<li>
+						<input id="check02" type="checkbox" name="menu" />
+						<label for="check02"><span>≡</span></label>
+						<ul class="submenu"></ul>
+					</li>
+				</ul>
 			</div>
 		</div>
 
@@ -93,9 +108,20 @@
 	var page=new Array();for(let i=0;i<5;i++) page[i]=$("#main>div")[i].id; 
 
 	function Load(){
-		$("#navi").html("");
-		for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
+
+
+		//版本一
+        $("#navi").html("");
+        for(let i in page) $("#navi").html($("#navi").html()+'<li><a href="javascript:;" class="'+ (i==current?'currentmainnavi':'mainnavilia')
 		+'" onclick="current='+i+';cpage=0;Load();">'+navinames[langid][page[i]]+'</a></li>');
+
+		//版本二
+        $("#Mainnavi2 .submenu").html("");
+        for(let i in page)$("#Mainnavi2 .submenu").html($("#Mainnavi2 .submenu").html()+'<li><a href="javascript:;" class="'+ (i==current?'active':'')
+            +'" onclick="current='+i+';cpage=0;Load();">'+navinames[langid][page[i]]+'</a></li>');
+        $('#currentpagename').html(navinames[langid][page[current]]);
+
+
 		$('#lang').html('<a href="javascript:;" onclick="langid=(parseInt(langid)+1)%2;Load();">'+lang.lang[(parseInt(langid)+1)%2]+'</a>');		
 		document.documentElement.scrollTop=0;
 		for(let i in page) {
