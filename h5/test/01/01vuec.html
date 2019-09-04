@@ -198,6 +198,7 @@
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
 				//$("#check02").prop("checked", false);
+				document.documentElement.scrollTop=0;
 			},
 		}
 	});
@@ -216,6 +217,7 @@
                 this.$emit('setcpage',0);
                 this.$emit('setcurrent',current);
                 $("#check02").prop("checked", false);
+				document.documentElement.scrollTop=0;
             },
 		}
 	});
@@ -323,22 +325,22 @@
                 contactMsg:"",
             };
         },
+		mounted(){
+            //console.log("loadmap");
+			/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
+			map.addControl(new BMap.MapTypeControl());
+			map.setDefaultCursor("crosshair");
+			var point = new BMap.Point(116.404, 39.915);
+			var zoom=7; map.centerAndZoom(point, zoom);
+			map.enableScrollWheelZoom(true);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);*/
+		},
 		methods:{
             contactSubmit() {
                 var contactInfo = { name: this.contactName, email: this.contactEmail, msg: this.contactMsg };
                 console.log(contactInfo);
                 this.contactName=this.contactEmail=this.contactMsg="";
-            },
-            LoadMap() {
-                //console.log("loadmap");
-                var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
-                map.addControl(new BMap.MapTypeControl());
-                map.setDefaultCursor("crosshair");
-                var point = new BMap.Point(116.404, 39.915);
-                var zoom=7; map.centerAndZoom(point, zoom);
-                map.enableScrollWheelZoom(true);
-                var marker = new BMap.Marker(point);
-                map.addOverlay(marker);
             },
 		}
 	});
@@ -357,9 +359,12 @@
 			cpage:0,pages:"",
 		},
 		created() {
-            this.screen=window.screen.width;
-			if (this.screen <= 1024) $("#css").attr("href", "01m.css");
-			this.page=["Home","History","News","Photos","Contacts"];
+            this.page=["Home","About","News","Photos","Contacts"];
+			this.screen=window.screen.width;
+			if (this.screen <= 1024) {
+				$("#css").attr("href", "01m.css");	
+				this.page.push("History");
+			}
 		},
 		methods: {
             setcpage(cpage){
