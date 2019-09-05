@@ -4,18 +4,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="../style.css" type="text/css" />
-	<style>
-        .v-enter,
-        .v-leave-to{
-            /*transform: translateX(960px);*/
-            opacity: 0;
-        }
-        .v-enter-active,
-        .v-leave-active{
-            animation-delay:0.2s;
-            transition: all 0.8s ease;
-        }
-	</style>
 	<title>画之册</title>
 	<script src="paints.js"></script>
 	<script src="../vue.min.js"></script>
@@ -28,8 +16,9 @@
         <div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>
         <div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
         <div id='app'>
-            <transition mode='out-in'>
-                <component :is="comName" @changepage="changepage" @paintpage="paintpage" :parentmsg="picinfo" :parenttype="type"></component>
+            <transition>
+                <component :is="comName" :picinfo="picinfo" :type="type" :scrolltop="scrolltop"
+					@changepage="changepage" @setpicinfo="setpicinfo" @settype="settype" @savescroll="savescroll"></component>
             </transition>
         </div>
         <div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -65,35 +54,35 @@
 
     <template id="pic">
         <div>
-            <div id='ptitle' align='center'>{{parentmsg.P_NAME}}</div>
+            <div id='ptitle' align='center'>{{picinfo.P_NAME}}</div>
             <div id='desc2'>
-                <br>{{parentmsg.P_DYNASTY}} <span v-if="parentmsg.P_YEAR!=''">{{parentmsg.P_YEAR}}年 </span>
-				{{parentmsg.P_AUTHOR}} 《{{parentmsg.P_NAME}}》<br>
-                {{parentmsg.P_TYPE}}<br>
-                <span v-if="parentmsg.P_WIDTH!=0">横：{{parentmsg.P_WIDTH}}厘米；</span>
-                <span v-if="parentmsg.P_HEIGHT!=0">纵：{{parentmsg.P_HEIGHT}}厘米</span>
-				<a :href='"https://baike.baidu.com/item/"+parentmsg.P_NAME' target="_blank">百科</a><br>
+                <br>{{picinfo.P_DYNASTY}} <span v-if="picinfo.P_YEAR!=''">{{picinfo.P_YEAR}}年 </span>
+				{{picinfo.P_AUTHOR}} 《{{picinfo.P_NAME}}》<br>
+                {{picinfo.P_TYPE}}<br>
+                <span v-if="picinfo.P_WIDTH!=0">横：{{picinfo.P_WIDTH}}厘米；</span>
+                <span v-if="picinfo.P_HEIGHT!=0">纵：{{picinfo.P_HEIGHT}}厘米</span>
+				<a :href='"https://baike.baidu.com/item/"+picinfo.P_NAME' target="_blank">百科</a><br>
             </div>
-            <span v-if="parentmsg.P_INFO=='img'"><img id='myimg' :src='"img/"+parentmsg.P_PICS'></span>
-			<a :href='"imgl/"+parentmsg.P_PICS' target="_blank">
-				<span v-if="parentmsg.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+parentmsg.P_PICS'></span>
+            <span v-if="picinfo.P_INFO=='img'"><img id='myimg' :src='"img/"+picinfo.P_PICS'></span>
+			<a :href='"imgl/"+picinfo.P_PICS' target="_blank">
+				<span v-if="picinfo.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+picinfo.P_PICS'></span>
 			</a>
-			<!--img id='myimg' :src='"../../../../../images/largeimg/"+parentmsg.P_PICS'-->
-            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+			<!--img id='myimg' :src='"../../../../../images/largeimg/"+picinfo.P_PICS'-->
+            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 
     <template id="baidupic">
         <div>
-            <iframe id="iframes" :src='"https://baike.baidu.com/item/"+parentmsg.P_NAME'></iframe>
-            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+            <iframe id="iframes" :src='"https://baike.baidu.com/item/"+picinfo.P_NAME'></iframe>
+            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 	
 	<template id="wikiinfo">
         <div>
-            <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+parentmsg.A_EN.replace(/ /g,"_")'></iframe>
-            <br><br><div id="ret3"><a @click.prevent="paintpage()"> ▶返回画之册◀</a></div>
+            <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+picinfo.A_EN.replace(/ /g,"_")'></iframe>
+            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 
@@ -102,9 +91,7 @@
 
     var paint= {
         template: '#paint',
-        props:{
-            "parenttype": Object,
-        },
+        props:["type","scrolltop"],
         data: function(){
             return {
                 list: [],
@@ -226,106 +213,67 @@
             },
 
             picpage(id){
-                this.$emit('changepage',this.list[id],this.type,'pic');
+				this.$emit('settype',this.type);
+				this.$emit('setpicinfo',this.list[id]);
+				this.$emit('savescroll');
+                this.$emit('changepage','pic');
             },
 
             baidupicpage(id){
-                this.$emit('changepage',this.list[id],this.type,'baidupic');
+                this.$emit('settype',this.type);
+				this.$emit('setpicinfo',this.list[id]);
+				this.$emit('savescroll');
+				this.$emit('changepage','baidupic');
             },
 			
 			wikiinfo(id){
-                this.$emit('changepage',this.list[id],this.type,'wikiinfo');
+                this.$emit('settype',this.type);
+				this.$emit('setpicinfo',this.list[id]);
+				this.$emit('savescroll');
+				this.$emit('changepage','wikiinfo');
             },
 
         },
 
         created() {
-            //console.log(this.parenttype.star);
-            if(typeof(this.parenttype.star) != "undefined")
-            {
-                //console.log(this.parenttype.star);
-                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=this.parenttype[this.typename[i]];
-            }
-            else
-            {
-                //console.log("0");
-                for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
-            }
-           // for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
+            if(typeof(this.type.star) == "undefined") for ( let i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
             this.setList();
-
         },
-
-        mounted() {
-        },
-
-
+		
+		mounted() {
+			//console.log(this.scrolltop);
+			document.body.scrollTop=this.scrolltop;
+		},
     }
 
     var pic= {
         template: '#pic',
-        data: function(){
-            return {
-                id:0,
-            }
-        },
         methods: {
-
-            paintpage(){
-                this.$emit('paintpage');
+            changepage(topage){
+                this.$emit('changepage',topage);
             },
         },
-
-        created() {
-
-        },
-
-        props: ['parentmsg'] ,
-
+        props: ['picinfo'] ,
     }
 
     var baidupic= {
         template: '#baidupic',
-        data: function(){
-            return {
-                id:0,
-            }
-        },
         methods: {
-
-            paintpage(){
-                this.$emit('paintpage');
+            changepage(){
+                this.$emit('changepage',topage);
             },
         },
-
-        created() {
-
-        },
-
-        props: ['parentmsg'] ,
-
+       props: ['picinfo'] ,
     }
 	
 	var wikiinfo= {
         template: '#wikiinfo',
-        data: function(){
-            return {
-                id:0,
-            }
-        },
         methods: {
-
-            paintpage(){
-                this.$emit('paintpage');
+            changepage(){
+                this.$emit('changepage',topage);
             },
         },
-
-        created() {
-
-        },
-
-        props: ['parentmsg'] ,
-
+        props: ['picinfo'] ,
     }
 
     var vm = new Vue({
@@ -333,28 +281,22 @@
         data:{
             comName: 'paint',
             picinfo:'',
-            //scrollTop: 0,
             type:{},
-
+			scrolltop:0,
          },
         methods: {
-            changepage(id,type,topage){
-                this.type=type;
-                //this.scrollTop = document.body.scrollTop|| document.documentElement.scrollTop;
-                this.picinfo = id;
+            changepage(topage){
                 this.comName = topage;
-                //console.log(this.picinfo);
             },
-
-            paintpage(){
-                this.comName= 'paint';
-            },
-
-            created() {
-
-            },
-
-
+			setpicinfo(picinfo){
+				this.picinfo=picinfo;
+			},
+			settype(type){
+				this.type=type;
+			},
+			savescroll(){
+				this.scrolltop = document.body.scrollTop|| document.documentElement.scrollTop;
+			}
         },
         components: {
             paint,pic,baidupic,wikiinfo
