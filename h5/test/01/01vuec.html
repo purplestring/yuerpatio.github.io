@@ -198,7 +198,7 @@
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
 				//$("#check02").prop("checked", false);
-				document.documentElement.scrollTop=0;
+				document.body.scrollTop=document.documentElement.scrollTop=0;
 			},
 		}
 	});
@@ -217,7 +217,7 @@
                 this.$emit('setcpage',0);
                 this.$emit('setcurrent',current);
                 $("#check02").prop("checked", false);
-				document.documentElement.scrollTop=0;
+				document.body.scrollTop=document.documentElement.scrollTop=0;
             },
 		}
 	});

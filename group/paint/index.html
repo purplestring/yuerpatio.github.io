@@ -4,6 +4,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+	.v-enter,
+	.v-leave-to{
+		/*transform: translateX(960px);*/
+		opacity: 0;
+	}
+	.v-enter-active,
+	.v-leave-active{
+		animation-delay:0.2s;
+		transition: all 0.8s ease;
+	}
+	</style>
 	<title>画之册</title>
 	<script src="paints.js"></script>
 	<script src="../vue.min.js"></script>
@@ -16,7 +28,7 @@
         <div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>
         <div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
         <div id='app'>
-            <transition>
+            <transition mode='out-in'>
                 <component :is="comName" :picinfo="picinfo" :type="type" :scrolltop="scrolltop"
 					@changepage="changepage" @setpicinfo="setpicinfo" @settype="settype" @savescroll="savescroll"></component>
             </transition>
@@ -241,8 +253,7 @@
         },
 		
 		mounted() {
-			//console.log(this.scrolltop);
-			document.body.scrollTop=this.scrolltop;
+			document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		},
     }
 

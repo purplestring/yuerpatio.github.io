@@ -35,6 +35,7 @@
 			//console.log(index)
             this.props.setcurrent(index);
             this.props.setcpage("");
+			document.body.scrollTop=document.documentElement.scrollTop=0;
 		}
 		render(){
 			//console.log(this.props.langid);
@@ -79,6 +80,7 @@
             this.props.setcurrent(index);
             this.props.setcpage("");
             $("#check02").prop("checked", false);
+			document.body.scrollTop=document.documentElement.scrollTop=0;
 		}
 		render(){
 			//console.log(this.props.langid);
