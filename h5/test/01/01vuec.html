@@ -16,8 +16,8 @@
 			<div class="mainnaviback">
 				<tmainnavi1 v-if="screen>1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
 							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
-				<tmainnavi2 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi2>
+				<tmainnavi3 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
+							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi3>
 			</div>
 			<div id="main" v-show="cpage==0">
 				<thome v-show="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
@@ -61,6 +61,24 @@
 						</ul>
 					</li>
 				</ul>
+			</div>
+		</template>
+
+		<template id="tmainnavi3">
+			<div id="Mainnavi3">
+				<div class="sp_header">
+					<div class="sp_logo"><a href="#"><img src="images/logo.png" alt=""/></a></div>
+					<div class="sp_nav"> <span></span> <span></span> <span></span> </div>
+					<div class="language"><a href="javascript:;" @click="changeLang">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
+				</div>
+				<div class="sjj_nav">
+					<ul>
+						<li v-for="(item, i) in page">
+							<a href="javascript:;" @click="clickTab(i)" :class="(i==current?'active':'')">
+								{{navinames[langid][page[i]]}}</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</template>
 
@@ -219,6 +237,41 @@
                 $("#check02").prop("checked", false);
 				document.body.scrollTop=document.documentElement.scrollTop=0;
             },
+		}
+	});
+
+	Vue.component('tmainnavi3',{
+		template: '#tmainnavi3',
+		props:['lang','langid','page','navinames','current'],
+		mounted(){
+			$('.sp_nav').click(function () {
+				$('.sp_nav').toggleClass('sp_nav_se');
+				$('.sjj_nav').toggleClass('nav_show');
+			});
+
+			$('.sjj_nav ul li i').click(function () {
+				$(this).parent().children('ul').slideToggle().parent().siblings().children('ul').slideUp();
+				$(this).toggleClass('sjj_nav_i_se');
+				$(this).parent().siblings().find('i').removeClass('sjj_nav_i_se');
+			});
+
+			$('.sp_nav_xjb').html('<svg viewBox="0 0 1024 1024" width="200" height="200">' +
+				'<path d="M768.468 428.876l-84.723-84.723-170.711 170.711-170.711-170.711-84.723 84.723 170.711 170.711-0.092 0.091 84.723 84.724 0.092-0.092 0.092 0.092 84.723-84.724-0.092-0.091z"></path></svg>');
+		},
+		methods:{
+			setcpage(cpage){
+				this.$emit('setcpage',cpage);
+			},
+			changeLang(){
+				this.$emit('setlangid',(parseInt(this.langid)+1)%2);
+			},
+			clickTab(current){
+				this.$emit('setcpage',0);
+				this.$emit('setcurrent',current);
+                $('.sp_nav').toggleClass('sp_nav_se');
+                $('.sjj_nav').toggleClass('nav_show');
+				document.body.scrollTop=document.documentElement.scrollTop=0;
+			},
 		}
 	});
 

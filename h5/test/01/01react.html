@@ -114,6 +114,65 @@
 		}
 	}
 
+    class Mainnavi3 extends React.Component {
+
+        changeLang() {
+            this.props.setlangid((parseInt(this.props.langid)+1)%2);
+        }
+        clickTab(index){
+            this.props.setcurrent(index);
+            this.props.setcpage("");
+            $('.sp_nav').toggleClass('sp_nav_se');
+            $('.sjj_nav').toggleClass('nav_show');
+            document.body.scrollTop=document.documentElement.scrollTop=0;
+        }
+        componentDidMount() {
+            $('.sp_nav').click(function () {
+                $('.sp_nav').toggleClass('sp_nav_se');
+                $('.sjj_nav').toggleClass('nav_show');
+            });
+
+            $('.sjj_nav ul li i').click(function () {
+                $(this).parent().children('ul').slideToggle().parent().siblings().children('ul').slideUp();
+                $(this).toggleClass('sjj_nav_i_se');
+                $(this).parent().siblings().find('i').removeClass('sjj_nav_i_se');
+            });
+
+            $('.sp_nav_xjb').html('<svg viewBox="0 0 1024 1024" width="200" height="200">' +
+				'<path d="M768.468 428.876l-84.723-84.723-170.711 170.711-170.711-170.711-84.723 84.723 170.711 170.711-0.092 0.091 84.723 84.724 0.092-0.092 0.092 0.092 84.723-84.724-0.092-0.091z"></path></svg>');
+
+        }
+        render(){
+            //console.log(this.props.langid);
+			let langid=this.props.langid;
+            return (
+				<div id="Mainnavi3">
+					<div className="sp_header">
+						<div className="sp_logo"><a href="#"><img src="images/logo.png" alt=""/></a></div>
+						<div className="sp_nav"> <span></span> <span></span> <span></span> </div>
+						<div className="language"> <a href="javascript:;" onClick={this.changeLang.bind(this)}>
+                        {this.props.lang.lang[(parseInt(langid)+1)%2]}</a></div>
+					</div>
+					<div className="sjj_nav">
+						<ul>
+                            {
+                                this.props.page.map((item, i) => {
+                                    return (
+											<li key={i}>
+												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
+												   	className={this.props.current==i ? 'active':''}>
+                                                    {this.props.navinames[langid][this.props.page[i]]}</a>
+											</li>
+                                    )
+                                })
+                            }
+						</ul>
+					</div>
+				</div>
+            )
+        }
+    }
+
     class Home extends React.Component {
 
         constructor(props){
@@ -505,7 +564,10 @@
         }
 
         componentWillMount() {
-            if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");
+            if (window.screen.width <= 1024) {
+                $("#css").attr("href", "01m.css");
+                this.state.page.push("History");
+            }
         }
 
         render(){
@@ -528,7 +590,7 @@
 				</div>
 
             if (window.screen.width <= 1024)
-                divNavi=<Mainnavi2 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+                divNavi=<Mainnavi3 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 								   setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
 			else divNavi=<Mainnavi lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 									setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
