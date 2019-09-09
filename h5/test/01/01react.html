@@ -3,6 +3,7 @@
     <head>
         <title>综合</title>
 		<style id="style"></style>
+		<style id="mainnavistyle"></style>
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
@@ -17,7 +18,7 @@
 	</body>
 	<script type="text/babel">
 	
-	class Mainnavi extends React.Component {
+	class Mainnavi1 extends React.Component {
 		
 		constructor(props){
         super(props)
@@ -35,13 +36,29 @@
 			//console.log(index)
             this.props.setcurrent(index);
             this.props.setcpage("");
-			document.body.scrollTop=document.documentElement.scrollTop=0;
+            this.setThisStyle(index);
+
+            document.body.scrollTop=document.documentElement.scrollTop=0;
+		}
+        componentDidMount() {
+            setTimeout(function(){this.setThisStyle(0); }.bind(this),0);
+            //console.log($('#Mainnavi1 ul li:nth-child(1)').outerWidth());
+        }
+        setThisStyle(index){
+            let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
+            let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').position().left;
+            let stylehtml=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
+            for(let i in this.props.page)  {
+                let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+                stylehtml+="#Mainnavi1 ul li:nth-child("+(parseInt(i)+1)+"):hover~ .Mainnavi1move{ left: "+currentTabLeft+"px;}\n";
+            }
+            $("#mainnavistyle").html(stylehtml);
 		}
 		render(){
 			//console.log(this.props.langid);
 			//参考 https://www.cnblogs.com/GainLoss/p/7743128.html
 			return (
-				<div className="mainnavi">
+				<div id="Mainnavi1">
 						<div id="logo"></div>
 						<ul id="navi">
 						{
@@ -55,6 +72,7 @@
 								)
 							})
 						}
+						<li className="Mainnavi1move"> </li>
 						</ul>
 						<div id="lang"><a href="javascript:;" onClick={this.changeLang.bind(this)}>
 							{this.props.lang.lang[(parseInt(this.props.langid)+1)%2]}</a></div>
@@ -85,7 +103,7 @@
 		render(){
 			//console.log(this.props.langid);
 			return (
-				<div className="mainnavi" id="Mainnavi2">
+				<div id="Mainnavi2">
 					<div id="logo"></div>
 					<div id="currentpagename">{this.props.navinames[this.props.langid][this.props.page[this.props.current]]}</div>
 					<div id="lang"><a href="javascript:;" onClick={this.changeLang.bind(this)}>
@@ -566,7 +584,7 @@
         componentWillMount() {
             if (window.screen.width <= 1024) {
                 $("#css").attr("href", "01m.css");
-                this.state.page.push("History");
+                //this.state.page.push("History");
             }
         }
 
@@ -590,15 +608,15 @@
 				</div>
 
             if (window.screen.width <= 1024)
-                divNavi=<Mainnavi3 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+                divNavi=<Mainnavi1 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 								   setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
-			else divNavi=<Mainnavi lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+			else divNavi=<Mainnavi1 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 									setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
 
 
             return (
                 <div>
-					<div className="mainnaviback" id="Mainnavi">
+					<div className="mainnaviback">
                         {divNavi}
 					</div>
                     {divMain}{divPage}

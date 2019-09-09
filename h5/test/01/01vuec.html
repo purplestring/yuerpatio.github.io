@@ -3,6 +3,7 @@
     <head>
         <title>综合</title>
 		<style id="style"></style>
+		<style id="mainnavistyle"></style>
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
@@ -16,8 +17,8 @@
 			<div class="mainnaviback">
 				<tmainnavi1 v-if="screen>1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
 							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
-				<tmainnavi3 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi3>
+				<tmainnavi1 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
+							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 			</div>
 			<div id="main" v-show="cpage==0">
 				<thome v-show="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
@@ -35,17 +36,17 @@
 		</div>
 
 		<template id="tmainnavi1">
-			<div class="mainnavi">
+			<div id="Mainnavi1">
 				<div id="logo"></div>
 				<ul id="navi"><li v-for="(item, i) in page">
 					<a href="javascript:;" @click="clickTab(i)" :class="(i==current?'currentmainnavi':'mainnavilia')">{{navinames[langid][page[i]]}}</a>
-				</li></ul>
+				</li><li class="Mainnavi1move"> </li></ul>
 				<div id="lang"><a href="javascript:;" @click="changeLang">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
 			</div>
 		</template>
 
 		<template id="tmainnavi2">
-			<div class="mainnavi" id="Mainnavi2">
+			<div id="Mainnavi2">
 				<div id="logo"></div>
 				<div id="currentpagename">{{navinames[langid][page[current]]}}</div>
 				<div id="lang"><a href="javascript:;" @click="changeLang">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
@@ -205,6 +206,10 @@
 	Vue.component('tmainnavi1',{
 		template: '#tmainnavi1',
 		props:['lang','langid','page','navinames','current'],
+        mounted(){
+            //this.clickTab(0);
+            setTimeout(function(){this.setThisStyle(0); }.bind(this),0);
+		},
 		methods:{
 			setcpage(cpage){
 				this.$emit('setcpage',cpage);
@@ -215,9 +220,22 @@
 			clickTab(current){
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
+                this.setThisStyle(current);
+
+                //$("#Mainnavi1move").css("left",142*current+"px");
 				//$("#check02").prop("checked", false);
 				document.body.scrollTop=document.documentElement.scrollTop=0;
 			},
+            setThisStyle(index){
+                let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
+                let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').position().left;
+                let stylehtml=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
+                for(let i in this.page)  {
+                    let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+                    stylehtml+="#Mainnavi1 ul li:nth-child("+(parseInt(i)+1)+"):hover~ .Mainnavi1move{ left: "+currentTabLeft+"px;}\n";
+                }
+                $("#mainnavistyle").html(stylehtml);
+            },
 		}
 	});
 
@@ -416,7 +434,7 @@
 			this.screen=window.screen.width;
 			if (this.screen <= 1024) {
 				$("#css").attr("href", "01m.css");	
-				this.page.push("History");
+				//this.page.push("History");
 			}
 		},
 		methods: {
