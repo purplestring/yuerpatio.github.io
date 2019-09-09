@@ -17,7 +17,7 @@
 			<div class="mainnaviback">
 				<tmainnavi1 v-if="screen>1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
 							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
-				<tmainnavi1 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
+				<tmainnavi3 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
 							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 			</div>
 			<div id="main" v-show="cpage==0">
@@ -68,6 +68,7 @@
 		<template id="tmainnavi3">
 			<div id="Mainnavi3">
 				<div class="sp_header">
+					<div id="currentpagename">{{navinames[langid][page[current]]}}</div>
 					<div class="sp_logo"><a href="#"><img src="images/logo.png" alt=""/></a></div>
 					<div class="sp_nav"> <span></span> <span></span> <span></span> </div>
 					<div class="language"><a href="javascript:;" @click="changeLang">{{lang.lang[(parseInt(langid)+1)%2]}}</a></div>
@@ -434,7 +435,7 @@
 			this.screen=window.screen.width;
 			if (this.screen <= 1024) {
 				$("#css").attr("href", "01m.css");	
-				//this.page.push("History");
+				this.page.push("History");
 			}
 		},
 		methods: {
