@@ -268,6 +268,14 @@ video {
 .sjj_nav ul li i svg{width:20px;height:20px;fill:#bbb;}
 .sjj_nav ul li .sjj_nav_i_se svg{fill:#fff}
 .sjj_nav ul li ul li>ul{margin-left:10px}
+#Mainnavi3 #currentpagename{
+	position: relative;
+	color:white;
+	top:8px;
+	text-align: center;
+	font-size: 20px;
+	height:0px;
+}
 /*---------------------------------------------------------------------------------------------------------------手机站导航结束----------*/
 
 .slidershow{
