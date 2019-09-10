@@ -21,12 +21,12 @@
 							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 			</div>
 			<div id="main" v-show="cpage==0">
-				<thome v-show="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
-				<tabout v-show="page[current]=='About'" :langid="langid" :historylist="historylist" @setcpage="setcpage"></tabout>
-				<thistory  v-show="page[current]=='History'" :historylist="historylist2"></thistory>
-				<tnews v-show="page[current]=='News'" :langid="langid" :news="news" @setcpage="setcpage"></tnews>
-				<tphotos v-show="page[current]=='Photos'" :langid="langid" :waterpics="waterpics"></tphotos>
-				<tcontacts v-show="page[current]=='Contacts'" :langid="langid" :misinfo="misinfo" :address="address" :contactform="contactform"></tcontacts>
+				<thome v-if="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
+				<tabout v-if="page[current]=='About'" :langid="langid" :historylist="historylist" @setcpage="setcpage"></tabout>
+				<thistory  v-if="page[current]=='History'" :historylist="historylist2"></thistory>
+				<tnews v-if="page[current]=='News'" :langid="langid" :news="news" @setcpage="setcpage"></tnews>
+				<tphotos v-if="page[current]=='Photos'" :langid="langid" :waterpics="waterpics"></tphotos>
+				<tcontacts v-if="page[current]=='Contacts'" :langid="langid" :misinfo="misinfo" :address="address" :contactform="contactform"></tcontacts>
 			</div>
 			<tpage :lang="lang" :langid="langid" v-show="cpage!=0" @setcpage="setcpage"></tpage>
 			<div class="footerbox"></div>
@@ -228,11 +228,12 @@
 				document.body.scrollTop=document.documentElement.scrollTop=0;
 			},
             setThisStyle(index){
-                let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
-                let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').position().left;
-                let stylehtml=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
+				let size=0.5;let stylehtml="";
                 for(let i in this.page)  {
-                    let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+                    let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
+					let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+					currentTabLeft+=currentTabWidth*(1-size)*0.5; currentTabWidth*=size;
+					if(i==index) stylehtml+=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
                     stylehtml+="#Mainnavi1 ul li:nth-child("+(parseInt(i)+1)+"):hover~ .Mainnavi1move{ left: "+currentTabLeft+"px;}\n";
                 }
                 $("#mainnavistyle").html(stylehtml);
@@ -373,9 +374,30 @@
 	Vue.component('tnews',{
 		template: '#tnews',
 		props:['langid','news'],
+        mounted(){
+		    //console.log("ss")
+            $(".newsone").addClass("newsonemove");
+            this.scrollFunction();
+            window.onscroll = () => {
+                if (window.onscroll) {
+                    this.scrollFunction();
+                }
+            }
+        },
 		methods:{
             setcpage(cpage){
                 this.$emit('setcpage',cpage);
+            },
+            scrollFunction(){
+                var windowPageYOffset = window.pageYOffset,
+                    windowPageYOffsetAddHeight = windowPageYOffset + window.innerHeight;
+
+                $(".newsone").each(function (index, item) {
+                    var imgOffsetTop = $(item).offset().top;
+                    if (imgOffsetTop >= windowPageYOffset && imgOffsetTop < windowPageYOffsetAddHeight) {
+                        $(item).addClass("newsonemoveend");
+                    }
+                });
             },
 		}
 	});

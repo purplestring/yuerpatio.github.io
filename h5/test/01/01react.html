@@ -45,11 +45,12 @@
             //console.log($('#Mainnavi1 ul li:nth-child(1)').outerWidth());
         }
         setThisStyle(index){
-            let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
-            let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').position().left;
-            let stylehtml=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
+			let size=0.5;let stylehtml="";
             for(let i in this.props.page)  {
-                let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+                let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
+				let currentTabLeft=$('#Mainnavi1 ul li:nth-child('+(parseInt(i)+1)+')').position().left;
+				currentTabLeft+=currentTabWidth*(1-size)*0.5; currentTabWidth*=size;
+				if(i==index) stylehtml+=".Mainnavi1move{left:"+currentTabLeft+"px;width:"+currentTabWidth+"px;}\n";
                 stylehtml+="#Mainnavi1 ul li:nth-child("+(parseInt(i)+1)+"):hover~ .Mainnavi1move{ left: "+currentTabLeft+"px;}\n";
             }
             $("#mainnavistyle").html(stylehtml);
@@ -166,7 +167,8 @@
             return (
 				<div id="Mainnavi3">
 					<div className="sp_header">
-						<div className="sp_logo"><a href="#"><img src="images/logo.png" alt=""/></a></div>
+						<div id="currentpagename">{this.props.navinames[this.props.langid][this.props.page[this.props.current]]}</div>
+						<div className="sp_logo"><a href="#"><img src="images/logo.png" alt=""/></a></div>						
 						<div className="sp_nav"> <span></span> <span></span> <span></span> </div>
 						<div className="language"> <a href="javascript:;" onClick={this.changeLang.bind(this)}>
                         {this.props.lang.lang[(parseInt(langid)+1)%2]}</a></div>
@@ -414,6 +416,26 @@
             //console.log(value)
             this.props.setcpage(value);
         }
+		scrollFunction(){
+            var windowPageYOffset = window.pageYOffset,
+                windowPageYOffsetAddHeight = windowPageYOffset + window.innerHeight;
+
+            $(".newsone").each(function (index, item) {
+                var imgOffsetTop = $(item).offset().top;
+                if (imgOffsetTop >= windowPageYOffset && imgOffsetTop < windowPageYOffsetAddHeight) {
+                    $(item).addClass("newsonemoveend");
+                }
+            });
+		}
+		componentDidMount() {
+            $(".newsone").addClass("newsonemove");
+            this.scrollFunction();
+			window.onscroll = () => {
+				if (window.onscroll) {
+					this.scrollFunction();
+				}
+			}
+        }
         render(){
 			//let {langid}=this.props.landid;
 			let langid=this.props.langid
@@ -584,7 +606,7 @@
         componentWillMount() {
             if (window.screen.width <= 1024) {
                 $("#css").attr("href", "01m.css");
-                //this.state.page.push("History");
+                this.state.page.push("History");
             }
         }
 
@@ -608,7 +630,7 @@
 				</div>
 
             if (window.screen.width <= 1024)
-                divNavi=<Mainnavi1 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+                divNavi=<Mainnavi3 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 								   setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
 			else divNavi=<Mainnavi1 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 									setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;

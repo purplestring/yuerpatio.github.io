@@ -106,7 +106,7 @@ video {
     height: 2px;
     border-top: 2px solid #fff;
     position: absolute;
-    top: 39px;
+    top: 37px;
     transition: left .2s ease-in-out 0s;
     -webkit-transition: left .2s ease-in-out 0s;
     -moz-transition: left .2s ease-in-out 0s;
@@ -299,9 +299,15 @@ input[name="slide_r"]{
 	break-inside: avoid;
 	border: 1px solid #000;
 	background:#fff;
+	overflow: hidden;
 }
 .water img {
 	width: 100%;
+	cursor: pointer;
+	transition: all 0.6s;
+}
+.water img:hover{
+	transform: scale(1.1);
 }
 .water p {
 	line-height: 30px;
@@ -312,14 +318,39 @@ input[name="slide_r"]{
 	border: medium none;
 }
 
-.newsone{
-	padding:10px;
-	float:left;
-	width:96%;
-	background:#eee;
+#News{
+	overflow: hidden;
+}
+.newsone {
+	padding: 10px;
+	float: left;
+	width: 96%;
+	background: #eee;
 	border: 1px solid #000;
-	margin:10px;
-	margin-bottom:5px;
+	margin: 10px;
+	margin-bottom: 5px;
+}
+.newsonemove{
+	position: relative;
+    transform: translate3d(0, 0, 150px);
+    -ms-transform: translate3d(0, 150px, 0);
+    -webkit-transform: translate3d(0, 150px, 0);
+    -o-transform: translate3d(0, 150px, 0);
+    -moz-transform: translate3d(0, 150px, 0);
+    opacity: 0;
+    transition: transform 1s ease 0s, opacity 1s ease 0s;
+    -moz-transition: -moz-transform 1s ease 0s, opacity 1s ease 0s;
+    -webkit-transition: -webkit-transform 1s ease 0s, opacity 1s ease 0s;
+    -o-transition: -o-transform 1s ease 0s, opacity 1s ease 0s;
+    -ms-transition: -ms-transform 1s ease 0s, opacity 1s ease 0s;
+}
+.newsonemoveend{
+	transform: translate3d(0, 0, 0px);
+	-ms-transform: translate3d(0, 0px, 0);
+	-webkit-transform: translate3d(0, 0px, 0);
+	-o-transform: translate3d(0, 0px, 0);
+	-moz-transform: translate3d(0, 0px, 0);
+	opacity: 1;
 }
 .singular{
 	background:#fff;
