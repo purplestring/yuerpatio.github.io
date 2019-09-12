@@ -376,7 +376,7 @@
 		props:['langid','news'],
         mounted(){
 		    //console.log("ss")
-            $(".newsone").addClass("newsonemove");
+            $(".newsone").addClass("movefromdown");
             this.scrollFunction();
             window.onscroll = () => {
                 if (window.onscroll) {
@@ -395,7 +395,7 @@
                 $(".newsone").each(function (index, item) {
                     var imgOffsetTop = $(item).offset().top;
                     if (imgOffsetTop >= windowPageYOffset && imgOffsetTop < windowPageYOffsetAddHeight) {
-                        $(item).addClass("newsonemoveend");
+                        $(item).addClass("moveend");
                     }
                 });
             },

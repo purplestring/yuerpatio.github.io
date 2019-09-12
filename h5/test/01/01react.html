@@ -423,12 +423,12 @@
             $(".newsone").each(function (index, item) {
                 var imgOffsetTop = $(item).offset().top;
                 if (imgOffsetTop >= windowPageYOffset && imgOffsetTop < windowPageYOffsetAddHeight) {
-                    $(item).addClass("newsonemoveend");
+                    $(item).addClass("moveend");
                 }
             });
 		}
 		componentDidMount() {
-            $(".newsone").addClass("newsonemove");
+            $(".newsone").addClass("movefromdown");
             this.scrollFunction();
 			window.onscroll = () => {
 				if (window.onscroll) {
@@ -570,6 +570,48 @@
         }
     }
 
+    class Footer1 extends React.Component {
+        render(){
+            return (
+				<div className="footerbox">
+					<div className="footer" id="footer">
+					Copyright 2015~2019 ABC
+					</div>
+				</div>
+            )
+        }
+    }
+
+    class Footer2 extends React.Component {
+        clickTab(index){
+            this.props.setcurrent(index);
+            this.props.setcpage("");
+            //$("#check02").prop("checked", false);
+            document.body.scrollTop=document.documentElement.scrollTop=0;
+        }
+        render(){
+            let classicon=["home","exhibition","car","service","my",];
+            return (
+
+					<div className="footerbox2">
+						<div className="tab-bar tab-bottom">
+                            {
+                                this.props.page.map((item, i) => {
+                                    if(i<5) return (
+										<a key={i} className={this.props.current==i ? 'tab-button active':'tab-button'}
+										   href="javascript:;" onClick={this.clickTab.bind(this,i)}>
+											<i className={"tab-button-icon icon icon-"+classicon[i]}></i>
+											<span className="tab-button-txt">{this.props.navinames[this.props.langid][this.props.page[i]]}</span></a>
+
+                                    )
+                                })
+                            }
+						</div>
+					</div>
+            )
+        }
+    }
+
     class All extends React.Component {
 
         constructor(props){
@@ -614,7 +656,7 @@
             //console.log(this.state.langid);
 			let page=this.state.page;
 			let current=this.state.current;
-            let divPage=""; let divMain=""; let divNavi="";
+            let divPage=""; let divMain=""; let divNavi=""; let divFoot="";
 
             if(this.state.cpage!="")
 				divPage=<Page lang={lang} langid={this.state.langid} cpage={this.state.cpage} setcpage={this.setcpage}/>
@@ -635,18 +677,15 @@
 			else divNavi=<Mainnavi1 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
 									setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
 
+            if (window.screen.width <= 1024)
+                divFoot=<Footer2 lang={lang} langid={this.state.langid} page={page} navinames={navinames} current={this.state.current}
+								 setlangid={this.setlangid} setcurrent={this.setcurrent} setcpage={this.setcpage}/>;
+            else divFoot=<Footer1 />;
 
             return (
                 <div>
-					<div className="mainnaviback">
-                        {divNavi}
-					</div>
-                    {divMain}{divPage}
-
-					<div className="footerbox"></div>
-					<div className="footer" id="footer">
-						Copyright 2015~2019 ABC
-					</div>
+					<div className="mainnaviback"> {divNavi} </div>
+                    {divMain}{divPage}{divFoot}
 				</div>
             )
         }
