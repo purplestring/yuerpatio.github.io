@@ -69,6 +69,7 @@ for(let i in news) {
 var lang= {
 "lang":["EN","中"],
 "back":["Back","返回"],
+"menu":["Menu","菜单"],
 };
 
 var navinames= [

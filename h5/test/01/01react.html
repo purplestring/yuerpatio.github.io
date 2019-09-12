@@ -11,6 +11,7 @@
 		<script src="react-dom.js"></script>
 		<script src="babel.min.js"></script>
 		<script src="info.js"></script>
+		<script src="svg.js"></script>
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
 	<body>
@@ -590,7 +591,7 @@
             document.body.scrollTop=document.documentElement.scrollTop=0;
         }
         render(){
-            let classicon=["home","exhibition","car","service","my",];
+            //let classicon=["home","exhibition","car","service","my",];
             return (
 
 					<div className="footerbox2">
@@ -600,9 +601,8 @@
                                     if(i<5) return (
 										<a key={i} className={this.props.current==i ? 'tab-button active':'tab-button'}
 										   href="javascript:;" onClick={this.clickTab.bind(this,i)}>
-											<i className={"tab-button-icon icon icon-"+classicon[i]}></i>
+											<i className="tab-button-icon icon" dangerouslySetInnerHTML={{__html: eval("svg_"+this.props.page[i])}}></i>
 											<span className="tab-button-txt">{this.props.navinames[this.props.langid][this.props.page[i]]}</span></a>
-
                                     )
                                 })
                             }
