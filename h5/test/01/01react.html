@@ -118,9 +118,9 @@
 								{
 									this.props.page.map((item, i) => {
 										return (
-											<li key={i}>
-												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
-												   className={this.props.current==i ? 'active':''}>
+											<li key={i} className={this.props.current==i ? 'active':''}>
+												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}>
+													<span className="Mainnavi2Icon" dangerouslySetInnerHTML={{__html: eval("svg_"+this.props.page[i])}}></span>
 												{this.props.navinames[this.props.langid][this.props.page[i]]}</a>
 											</li>
 										)
@@ -179,10 +179,10 @@
                             {
                                 this.props.page.map((item, i) => {
                                     return (
-											<li key={i}>
-												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}
-												   	className={this.props.current==i ? 'active':''}>
-                                                    {this.props.navinames[langid][this.props.page[i]]}</a>
+											<li key={i} className={this.props.current==i ? 'active':''}>
+												<a href="javascript:;" onClick={this.clickTab.bind(this,i)}>
+													<span className="Mainnavi3Icon" dangerouslySetInnerHTML={{__html: eval("svg_"+this.props.page[i])}}></span>&nbsp;&nbsp;
+												{this.props.navinames[this.props.langid][this.props.page[i]]}</a>
 											</li>
                                     )
                                 })
