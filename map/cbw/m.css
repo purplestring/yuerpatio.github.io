@@ -21,9 +21,12 @@ video {
 	width: 96%;
 	top:40px;
 	margin: 0 auto;
-	background: #ddd;
+	background: #000;
 	margin: 0px auto;	
-}			
+}
+#page,#News,#Photos{
+	background: #f1f1f1;
+}
 #footer {
 	text-align:center;
 	padding: 5px 0;
@@ -187,66 +190,7 @@ video {
 	fill: #fff;
 }
 
-#Mainnavi1 {
-	height: 32px;
-	margin: 3px auto;
-	margin-top: 0;
-	box-sizing:border-box;
-}
-#Mainnavi1 #navi{
-	position:absolute;
-	top:3px;
-	left:18%;
-	width:72%;
-	height: 30px;
-}
-#Mainnavi1 li:not(.Mainnavi1move),#Mainnavi1 #lang {
-	float: left;
-	list-style: none;	
-	width:19%;
-	padding-right:2px;
-	box-sizing:border-box;
-	font-weight:900;
-	text-align: center;
-	/*border-right:1px solid #fff;*/
-}
-#Mainnavi1 ul li a,#Mainnavi1 #lang,#Mainnavi1 .currentmainnavi {
-	text-decoration: none;
-	color: white;
-	height: 30px;
-	line-height: 30px;
-	font-family: "Times New Roman","黑体";
-}
-#Mainnavi1 .mainnavilia{
-	text-decoration:none;
-}
-/*#Mainnavi1 ul li a:hover,#Mainnavi1 #lang :hover,#Mainnavi1 .currentmainnavi{
-	text-decoration:underline;
-}*/
-#Mainnavi1 #lang{	
-	position:absolute;
-	height: 30px;
-	line-height:30px;
-	top:3px;
-	left:88%;
-	width:12%;
-	text-align:center;
-}
-#Mainnavi1 #lang a{
-	text-decoration: none;
-	color: white;
-}
-#Mainnavi1 .Mainnavi1move{
-	height: 1px;
-	border-top: 1px solid #fff;
-	position: absolute;
-	top: 23px;
-	list-style: none;
-	transition: left .2s ease-in-out 0s;
-	-webkit-transition: left .2s ease-in-out 0s;
-	-moz-transition: left .2s ease-in-out 0s;
-	-o-transition: left .2s ease-in-out 0s;
-}
+
 
 #Mainnavi3 ul, #Mainnavi3 li{list-style:none}
 #Mainnavi3 a{text-decoration:none;display:block;box-sizing:border-box;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);-webkit-user-select:none;-moz-user-focus:none;-moz-user-select:none;}
@@ -282,6 +226,8 @@ video {
 	position: relative;
 	color:white;
 	top:8px;
+	left:145px;
+	width:calc(100% - 225px);
 	text-align: center;
 	font-size: 22px;
 	height:0px;
@@ -308,7 +254,6 @@ video {
 .sjj_nav ul .active .Mainnavi3Icon svg path{
 	fill: #f0f;
 }
-
 
 
 .slidershow{
@@ -366,10 +311,10 @@ input[name="slide_r"]{
 	list-style: none;
 	box-sizing:border-box;
 	width:100%;
-	border:1px solid #fff;
+	border:1px solid #000;
 	padding:10px;
-	background:#444;
-	color:white;
+	background:#ddd;
+	color:black;
 }
 
 
@@ -450,7 +395,7 @@ input[name="slide_r"]{
 .timebox {
 	position:absolute;
 	left:35%;
-	background:#eee;
+	background: #f1f1f1;
 	max-width:60%;
 	border: 1px solid #000;
 	/*border-radius: 5px;*/
@@ -523,56 +468,6 @@ input[name="slide_r"]{
 	text-indent:2em;
 }
 
-
-#misinfo{
-	padding:10px;
-	padding-bottom:30px;
-	padding-top:30px;
-	border-bottom:1px dotted #000;
-}				
-#contactinfo{
-	padding:10px;
-	padding-bottom:30px;
-	border-bottom:1px dotted #000;
-	margin-bottom:6px;
-	margin-top:6px;
-}
-#map{
-	position:relative;
-	width: 96%;
-	left:2%;
-	height:180px;
-	background:url("images/map.jpg") no-repeat;
-	background-size:cover;
-	padding-top:3px;
-}
-#map .anchorBL{
-   display:none;
-} 
-#contactarea{
-	width:100%;
-	padding:10px;
-	margin-top:6px;
-	padding-top:30px;
-	padding-bottom:30px;
-	box-sizing:border-box;
-	border-top:1px dotted #000;
-}
-.input{
-	width:100%;
-	height:30px;
-}
-.text{
-	width:100%;
-	height:140px;
-}
-.send{
-	position:relative;
-	float:right;
-	right:0px;
-	padding:5px;
-	height:30px;
-} 
 
 #page{
 	padding:5px;

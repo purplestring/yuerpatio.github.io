@@ -126,7 +126,7 @@ video {
 	line-height: 37px;
 	display: block;
 	font-size: 28px;
-	font-family: "Times New Roman","宋体","黑体";
+	font-family: "Times New Roman","黑体","宋体";
 	text-align:center;
 	font-weight:900;
 }
@@ -142,8 +142,8 @@ video {
 	color: black;
 }
 #Mainnavi1 .Mainnavi1move{
-    height: 2px;
-    border-top: 2px solid #000;
+    height: 1px;
+    border-top: 1px solid #000;
     position: absolute;
     top: 37px;
     transition: left .2s ease-in-out 0s;
