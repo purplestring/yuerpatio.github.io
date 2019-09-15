@@ -26,6 +26,7 @@
 				<tabout v-if="page[current]=='About'" :langid="langid" :historylist="historylist" @setcpage="setcpage"></tabout>
 				<thistory  v-if="page[current]=='History'" :historylist="historylist2"></thistory>
 				<tnews v-if="page[current]=='News'" :langid="langid" :news="news" @setcpage="setcpage"></tnews>
+				<tessays v-if="page[current]=='Essays'" :essays="essays" @setcpage="setcpage"></tessays>
 				<tphotos v-if="page[current]=='Photos'" :langid="langid" :waterpics="waterpics"></tphotos>
 			</div>
 			<tpage :lang="lang" :langid="langid" v-show="cpage!=0" @setcpage="setcpage"></tpage>
@@ -140,6 +141,15 @@
 						<img :src="item.img" alt="" />
 						<p>{{item.info[langid]}}</p>
 					</div>
+				</div>
+			</div>
+		</template>
+		
+		<template id="tessays">
+			<div id="Essays">
+				<div class="essaymulu">目录</div><br/>
+				<div class="essayeach" v-for="(item, i) in essays">
+					<div >{{item.id}}&nbsp;&nbsp;<span @click="setcpage('essays',item.title,item.content)">{{item.title}}</span></div>
 				</div>
 			</div>
 		</template>
@@ -349,6 +359,17 @@
 		}
 	});
 	
+	Vue.component('tessays',{
+		template: '#tessays',
+		props:['essays'],
+		methods:{
+            setcpage(cpage,title,content){
+                let words="<div class='essaytitle'>"+title+"</div><br/>"+content;
+                this.$emit('setcpage',cpage,words);
+            },
+		}
+	});
+	
 	Vue.component('tfooter1',{
 		template: '#tfooter1',
 	});
@@ -388,20 +409,26 @@
 			historylist:historylist,
 			historylist2:historylist2,
 			news:news,			
-			waterpics:waterpics,					
+			waterpics:waterpics,	
+			essays:essays,
 			cpage:0,pages:"",
 		},
 		created() {
-            this.page=["Home","About","History","News","Photos"];
+            this.page=["Home","About","History","Essays","Photos"];
 			this.screen=window.screen.width;
 			if (this.screen <= 1024) {
 				$("#css").attr("href", "m.css");	
 			}
 		},
 		methods: {
-            setcpage(cpage){
+            setcpage(cpage,words){
+				//console.log(typeof(words)=="undefined");
+                //console.log(words);
                 this.cpage=cpage;
-                if(cpage!=0) $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
+                if(cpage!=0) {
+                    if(cpage=="essays") $("#pagetext").html(words);
+                    else $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
+                }
             },
             setlangid(langid){
                 this.langid=langid;

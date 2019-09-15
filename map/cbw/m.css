@@ -24,7 +24,7 @@ video {
 	background: #000;
 	margin: 0px auto;	
 }
-#page,#News,#Photos{
+#page,#News,#Photos,#Essays{
 	background: #f1f1f1;
 }
 #footer {
@@ -313,7 +313,7 @@ input[name="slide_r"]{
 	width:100%;
 	border:1px solid #000;
 	padding:10px;
-	background:#ddd;
+	background:#f1f1f1;
 	color:black;
 }
 
@@ -395,9 +395,10 @@ input[name="slide_r"]{
 .timebox {
 	position:absolute;
 	left:35%;
-	background: #f1f1f1;
+	background: #fff;
 	max-width:60%;
 	border: 1px solid #000;
+	box-shadow: 4px 3px 7px #333;
 	/*border-radius: 5px;*/
 }
 .yearbox {
@@ -407,8 +408,7 @@ input[name="slide_r"]{
 #sizebox{
 	position:relative;
 	width:100%;
-	background:#ddd;
-	/*background-image:url(images/flowers.png);*/
+	background:#f1f1f1;
 }
 
 #History {	
@@ -466,6 +466,18 @@ input[name="slide_r"]{
 	font-size:14px;
 	width:95%;
 	text-indent:2em;
+}
+
+#Essays{
+	padding: 20px;
+}
+.essayeach{
+
+}
+.essaymulu,.essaytitle{
+	text-align: center;
+	font-size: 24px;
+	font-weight:bold;
 }
 
 

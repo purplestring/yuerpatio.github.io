@@ -395,6 +395,18 @@ input[name="slide_r"]{
 	text-indent:2em;
 }
 
+#Essays{
+	padding: 20px 160px;
+}
+.essayeach{
+
+}
+.essaymulu,.essaytitle{
+	text-align: center;
+	font-size: 24px;
+	font-weight:bold;
+}
+
 #page{
 	padding:5px;
 	min-height:720px;
