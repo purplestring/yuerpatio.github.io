@@ -428,6 +428,7 @@
                 if(cpage!=0) {
                     if(cpage=="essays") $("#pagetext").html(words);
                     else $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
+					document.body.scrollTop=document.documentElement.scrollTop=0;
                 }
             },
             setlangid(langid){
