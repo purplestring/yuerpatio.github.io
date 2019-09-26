@@ -30,9 +30,9 @@
 		if(sb>4) sb-=0.03; 
 		if(sc>3) sc-=0.03; 
 		//console.log("translate(0,0) rotate("+a+",0,0)");
-		document.getElementById('fan').setAttribute("transform","translate(0) rotate("+a+",738,378)");
-		document.getElementById('fengche1').setAttribute("transform","translate(0) rotate("+b+",353,285)");
-		document.getElementById('fengche2').setAttribute("transform","translate(0) rotate("+c+",202,276)");
+		document.getElementById('fan').setAttribute("transform","rotate("+a+",738,378)");
+		document.getElementById('fengche1').setAttribute("transform","rotate("+b+",353,285)");
+		document.getElementById('fengche2').setAttribute("transform","rotate("+c+",202,276)");
 		
 		let sunscale=1+0.2*Math.sin(0.03*ct);
 		let suntx=-495*(sunscale-1);let sunty=-520*(sunscale-1);
