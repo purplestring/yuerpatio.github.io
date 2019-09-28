@@ -29,7 +29,7 @@
 <text class="cls-2" v-for="(item, i) in value" :transform="'translate(0 '+(40+20*item.t+12)+')'" :style="'fill:'+value[i].c">{{item.n}}</text>
 <text class="cls-2" v-for="(item, i) in value" :transform="'translate('+(item.w+50)+' '+(40+20*item.t+12)+')'" :style="'fill:'+item.c">{{parseInt(item.w*maxw)/1000000}}</text>
 <text class="cls-3" transform="translate(50 24)">世界各国GDP排名变化</text>
-<text class="cls-4" v-for="i in 6" :style="(i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6)==0?'fill:#00ffff;':'fill:#fff;'" :transform="'translate(200 212) rotate('+(210-ct*5+i*60)+',20,60)'">
+<text class="cls-4" v-for="i in 6" :style="(i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6)==0?'fill:#00ffff;':'fill:#0d6175;'" :transform="'translate(200 212) rotate('+(210-ct*5+i*60)+',20,60)'">
 {{year+i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6}}</text>
 <path style="fill:#0d6175;" 
 d="M285.7,307c-0.2-1.1-0.6-1.8-1.1-2.3c-0.5-0.5-1.2-0.8-1.8-1.1c-1.4-0.5-3.1-0.4-4.6-0.6
