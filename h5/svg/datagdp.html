@@ -4,7 +4,7 @@
         <title>世界各国GDP排名变化</title>
 		<style id="style">
 			body{
-				background:#fff;
+				background:#e1fffe;
 				font-family:宋体;
 			}
 			#all{
@@ -19,9 +19,7 @@
 			.cls-4{font-size:18px;}
 	</style>
 		<meta name="viewport" content="width=device-width,initial-scale=0.5,user-scalable=0">
-		<script src="../jquery-3.3.1.min.js"></script>
-		<!--script src="vue.js"></script-->
-		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
     </head>
 	<body>
 		<div id="all" v-cloak>
@@ -31,9 +29,9 @@
 <text class="cls-2" v-for="(item, i) in value" :transform="'translate(0 '+(40+20*item.t+12)+')'" :style="'fill:'+value[i].c">{{item.n}}</text>
 <text class="cls-2" v-for="(item, i) in value" :transform="'translate('+(item.w+50)+' '+(40+20*item.t+12)+')'" :style="'fill:'+item.c">{{parseInt(item.w*maxw)/1000000}}</text>
 <text class="cls-3" transform="translate(50 24)">世界各国GDP排名变化</text>
-<text class="cls-4" v-for="i in 6" :style="(i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6)==0?'':'fill:#f7931e;'" :transform="'translate(200 212) rotate('+(210-ct*5+i*60)+',20,60)'">
+<text class="cls-4" v-for="i in 6" :style="(i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6)==0?'fill:#00ffff;':'fill:#fff;'" :transform="'translate(200 212) rotate('+(210-ct*5+i*60)+',20,60)'">
 {{year+i-3-parseInt((ct-1)/12)+parseInt((300+ct*5-i*60)/360)*6}}</text>
-<path style="fill:#ea5911;" 
+<path style="fill:#0d6175;" 
 d="M285.7,307c-0.2-1.1-0.6-1.8-1.1-2.3c-0.5-0.5-1.2-0.8-1.8-1.1c-1.4-0.5-3.1-0.4-4.6-0.6
 	c-1.5-0.2-2.8-0.9-3.7-2.1c-1-1.2-1.8-2.7-3-3.4c-1.1-0.8-2.2-1.5-3.4-2.1c3.5-7.1,5.5-15.2,5.5-23.7s-2-16.5-5.5-23.7
 	c1.2-0.6,2.3-1.3,3.4-2.1c1.2-0.8,2-2.2,3-3.4c1-1.2,2.2-1.8,3.7-2.1c1.5-0.2,3.2-0.1,4.6-0.6c0.7-0.2,1.3-0.5,1.8-1.1
@@ -93,11 +91,11 @@ d="M285.7,307c-0.2-1.1-0.6-1.8-1.1-2.3c-0.5-0.5-1.2-0.8-1.8-1.1c-1.4-0.5-3.1-0.4
 :transform="'rotate('+(180-ct*5)+',219.7,271.7)'"/>
 <rect @click="stop=!stop" style="fill:url(#aaa);" x="138" y="228.6" class="st16" width="166" height="124.8"/>
 <linearGradient id="aaa" gradientUnits="userSpaceOnUse" x1="221" y1="138.3299" x2="221" y2="206.1276" gradientTransform="matrix(1 0 0 1 0 100)">
-	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
-	<stop  offset="5.567361e-02" style="stop-color:#FFFFFF;stop-opacity:8.081555e-02"/>
-	<stop  offset="0.6889" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#e1fffe;stop-opacity:0"/>
+	<stop  offset="5.567361e-02" style="stop-color:#e1fffe;stop-opacity:8.081555e-02"/>
+	<stop  offset="0.6889" style="stop-color:#e1fffe"/>
 </linearGradient>
-<rect y="280" style="fill:#fff;" width="134.1" height="119.6"/>
+<rect y="280" style="fill:#e1fffe;" width="134.1" height="119.6"/>
 </svg>
 </div>
 	</body>
