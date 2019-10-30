@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
-    <title></title>
+    <title>围住璧</title>
 	 <style type="text/css">
 	   body{
 		margin:0 auto;	
@@ -145,9 +145,15 @@
 
 
 		var dir = getMoveDir();
-
+		var choujiang=[
+		//"https://item.taobao.com/item.htm?spm=a1z10.3-c-s.w4023-17092604569.16.91724e55SNl1P6&id=573793217266",
+		"https://weibo.com/5943570979/IdUnubdWz",
+		"https://weibo.com/6016400886/Ida7ugZaB",
+		"https://weibo.com/1865963470/IdAOLCcSW",
+		];
 		if(dir == MOVE_NONE) getMiao=true;
-		if(getMiao) oDialog.innerHTML="<img id='topimg' src='imgs/weizhu.jpg' /><br/><a href='javascript:void(0)' onclick='location.reload()'>再捉一次~ </a><a href='https://item.taobao.com/item.htm?spm=a1z10.3-c-s.w4023-17092604569.16.91724e55SNl1P6&id=573793217266'>神秘链接</a>";
+		if(getMiao) oDialog.innerHTML="<img id='topimg' src='imgs/weizhu.jpg' /><br/><a href='javascript:void(0)' onclick='location.reload()'>再捉一次~</a>&nbsp;&nbsp;<a href='"+
+		choujiang[Math.floor(Math.random()*choujiang.length)]+"'>神秘链接</a>";
 		
 		else
 		{
