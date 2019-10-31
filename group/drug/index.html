@@ -33,7 +33,7 @@
 				<a v-if="getItem(i)" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br>
 				<!--a v-if="getItem(i)" v-for="(item, i) in list" :href="'https://baike.baidu.com/item/'+list[i].D_NAME" 
 				target="_blank" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br-->
-			<div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>
+			<div id="ret"><a href="../../index.html"> ▶返回主页◀</a><span style="display:none;">{{newdata}}{{id}}</span></div>
 		</div>
 		<div v-if="id!=-1">
 			<br><br><div id='title' align='center'>{{list[id].D_NAME}}<br><br></div>
