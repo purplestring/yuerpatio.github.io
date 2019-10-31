@@ -18,10 +18,11 @@
 		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
+		<span style="display:none;">{{newdata}}{{id}}</span>
 		<div v-if="id==-1">
 			<div id="title" align="center">中草药</div><br><br>
 			<div id="desc2">中药信息参考《中国药典》等，仅供交流学习之用<br><br>
-				【筛选🔍】灰：无 | 黑：是 | 白：非 | <a @click.prevent="reSet()" style="cursor:pointer;">重置</a><br><br>			
+				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br>			
 				<span v-for="(item, i) in words">
 					<span v-if="i==0 || i==5 || i==14 || i==26"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
 					<span v-if="i==19 || i==30"><br></span>
@@ -34,12 +35,11 @@
 			
 		</div>
 		<div v-if="id!=-1">
-			<br><br><div id='ptitle' align='center'>{{list[id].D_NAME}}<br><br></div>
+			<br><br><div id='title' align='center'>{{list[id].D_NAME}}<br><br></div>
 			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}</div>	
 			<br><br><div v-html="list[id].D_INFO"></div>		
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
-		</div>
-		<span style="display:none;">{{newdata}}{{id}}</span>
+		</div>		
 		<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
 </body>
@@ -97,9 +97,9 @@ var vm = new Vue({
         this.reSet();
     },
 	updated(){
-		if(this.id!=-1)document.title=this.list[this.id].D_NAME;
-		else document.title="中草药";
 		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.id!=-1)document.title=this.list[this.id].D_NAME;
+		else document.title="中草药";		
 	},
 })
 </script>
