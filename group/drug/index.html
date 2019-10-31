@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<style>
+		[v-cloak] {display:none;}
+	</style>
+	<title>中草药</title>
+	<script src="drugs.js"></script>
+	<script src="../vue.min.js"></script>
+</head>
+
+<body>	
+	<div id="main" v-cloak>
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
+		<div v-if="id==-1">
+			<div id="title" align="center">中草药</div><br><br>
+			<div id="desc2">中药信息参考《中国药典》等，仅供交流学习之用<br><br>
+				【筛选🔍】灰：无 | 黑：是 | 白：非 | <a @click.prevent="reSet()" style="cursor:pointer;">重置</a><br><br>			
+				<span v-for="(item, i) in words">
+					<span v-if="i==0 || i==5 || i==14 || i==26"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
+					<span v-if="i==19 || i==30"><br></span>
+					<a :style="'color:'+typecolor[wselect[i]]" @click="setType(i)" style="cursor:pointer;">
+					{{words[i].indexOf("|")==-1?words[i]:words[i].split("|")[1]}} </a>
+				</span>
+			</div><br><br>
+				<a v-if="getItem(i)" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br>
+			<div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>
+			
+		</div>
+		<div v-if="id!=-1">
+			<br><br><div id='ptitle' align='center'>{{list[id].D_NAME}}<br><br></div>
+			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}</div>	
+			<br><br><div v-html="list[id].D_INFO"></div>		
+			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
+		</div>
+		<span style="display:none;">{{newdata}}{{id}}</span>
+		<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
+	</div>
+</body>
+<script>
+var vm = new Vue({
+	el: '#main',
+	data:{
+		list:myjson.RECORDS,
+		words:["简介|动物","简介|植物","简介|矿物","简介|茎","简介|果实",
+		"性味与归经|寒","性味与归经|热","性味与归经|温","性味与归经|凉","性味与归经|辛","性味与归经|甘","性味与归经|酸","性味与归经|苦","性味与归经|咸",
+		"性味与归经|心","性味与归经|肝","性味与归经|脾","性味与归经|肺","性味与归经|肾","性味与归经|胃",
+		"性味与归经|大肠","性味与归经|小肠","性味与归经|膀胱","性味与归经|胆","性味与归经|心包","性味与归经|三焦",
+		"功能与主治|食积不消","功能与主治|多梦","功能与主治|解毒消肿","功能与主治|呕吐","功能与主治|头晕","功能与主治|咽喉肿痛",
+		],
+		typecolor:["#888","#000","#fff"],
+		wselect:[],
+		newdata:0,
+		id:-1,
+	},
+	methods: {
+		setType(i){
+			this.wselect[i]=(this.wselect[i]+1)%3;
+			this.newdata++;
+		},
+		getItem(i){
+			for(let j=0;j<this.words.length;j++) {
+				if(this.wselect[j]==0) continue;
+				
+				let get=0;
+				if(this.words[j].indexOf("|")==-1)
+					get=this.list[i].D_INFO.indexOf(this.words[j]);
+				else {
+					let fenlei=this.words[j].split("|")[0];
+					let word=this.words[j].split("|")[1];
+					if(this.list[i].D_INFO.indexOf("【"+fenlei+"】")==-1) get=-1;
+					else{
+						let fenleiinfo=this.list[i].D_INFO.split("【"+fenlei+"】")[1].split("【")[0];
+						//if(i<30)console.log(this.list[i].D_NAME+" "+fenleiinfo);
+						get=fenleiinfo.indexOf(word);
+					}
+				}
+				
+				if(get!=-1 && this.wselect[j]==1) continue;
+				if(get==-1 && this.wselect[j]==2) continue;
+				return false;
+			}
+			return true;
+		},
+		reSet(){
+			for(let j=0;j<this.words.length;j++) this.wselect[j]=0;
+			this.newdata++;
+		},
+	},
+	created() {
+        this.reSet();
+    },
+	updated(){
+		if(this.id!=-1)document.title=this.list[this.id].D_NAME;
+		else document.title="中草药";
+	},
+})
+</script>
+</html>
