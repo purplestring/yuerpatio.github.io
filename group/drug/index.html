@@ -99,6 +99,7 @@ var vm = new Vue({
 	updated(){
 		if(this.id!=-1)document.title=this.list[this.id].D_NAME;
 		else document.title="中草药";
+		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 	},
 })
 </script>
