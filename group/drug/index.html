@@ -19,7 +19,7 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<span style="display:none;">{{newdata}}{{id}}</span>
-		<div v-if="id==-1">
+		<div v-show="id==-1">
 			<div id="title" align="center">中药集</div><br><br>
 			<div id="desc2">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br>			
