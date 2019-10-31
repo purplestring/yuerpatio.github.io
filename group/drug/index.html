@@ -7,8 +7,8 @@
 	<style>
 		[v-cloak] {display:none;}
 	</style>
-	<title>中草药</title>
-	<script src="drugs.js"></script>
+	<title>中药集</title>
+	<script src="drugs2.js"></script>
 	<script src="../vue.min.js"></script>
 </head>
 
@@ -20,23 +20,26 @@
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<span style="display:none;">{{newdata}}{{id}}</span>
 		<div v-if="id==-1">
-			<div id="title" align="center">中草药</div><br><br>
-			<div id="desc2">中药信息参考《中国药典》等，仅供交流学习之用<br><br>
+			<div id="title" align="center">中药集</div><br><br>
+			<div id="desc2">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br>			
 				<span v-for="(item, i) in words">
-					<span v-if="i==0 || i==5 || i==14 || i==26"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
-					<span v-if="i==19 || i==30"><br></span>
+					<span v-if="i==0 || i==7 || i==16 || i==28"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
+					<span v-if="i==21 || i==34 || i==42"><br></span>
 					<a :style="'color:'+typecolor[wselect[i]]" @click="setType(i)" style="cursor:pointer;">
 					{{words[i].indexOf("|")==-1?words[i]:words[i].split("|")[1]}} </a>
 				</span>
 			</div><br><br>
 				<a v-if="getItem(i)" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br>
+				<!--a v-if="getItem(i)" v-for="(item, i) in list" :href="'https://baike.baidu.com/item/'+list[i].D_NAME" 
+				target="_blank" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br-->
 			<div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>
-			
 		</div>
 		<div v-if="id!=-1">
 			<br><br><div id='title' align='center'>{{list[id].D_NAME}}<br><br></div>
-			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}</div>	
+			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}
+			<a :href="'https://baike.baidu.com/item/'+list[id].D_NAME" target="_blank" style="cursor:pointer;">百度百科</a>
+			</div>	
 			<br><br><div v-html="list[id].D_INFO"></div>		
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>		
@@ -48,11 +51,13 @@ var vm = new Vue({
 	el: '#main',
 	data:{
 		list:myjson.RECORDS,
-		words:["简介|动物","简介|植物","简介|矿物","简介|茎","简介|果实",
+		words:["简介|动物","简介|植物","简介|矿物","简介|茎","简介|果实","简介|昆虫","处方",
 		"性味与归经|寒","性味与归经|热","性味与归经|温","性味与归经|凉","性味与归经|辛","性味与归经|甘","性味与归经|酸","性味与归经|苦","性味与归经|咸",
 		"性味与归经|心","性味与归经|肝","性味与归经|脾","性味与归经|肺","性味与归经|肾","性味与归经|胃",
 		"性味与归经|大肠","性味与归经|小肠","性味与归经|膀胱","性味与归经|胆","性味与归经|心包","性味与归经|三焦",
-		"功能与主治|食积不消","功能与主治|多梦","功能与主治|解毒消肿","功能与主治|呕吐","功能与主治|头晕","功能与主治|咽喉肿痛",
+		"功能与主治|食积不消","功能与主治|消化","功能与主治|多梦","功能与主治|麻木","功能与主治|呕吐","功能与主治|头晕","功能与主治|肿痛","功能与主治|胀痛",
+		"功能与主治|咳嗽","功能与主治|痰黄","功能与主治|痰热","功能与主治|感冒","功能与主治|呕吐","功能与主治|小便不利","功能与主治|口干","功能与主治|胸闷",
+		"功能与主治|热毒","功能与主治|畏寒","功能与主治|小儿","功能与主治|活血","功能与主治|月经不调",
 		],
 		typecolor:["#888","#000","#fff"],
 		wselect:[],
@@ -99,7 +104,7 @@ var vm = new Vue({
 	updated(){
 		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		if(this.id!=-1)document.title=this.list[this.id].D_NAME;
-		else document.title="中草药";		
+		else document.title="中药集";		
 	},
 })
 </script>
