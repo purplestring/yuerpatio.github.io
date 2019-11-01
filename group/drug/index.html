@@ -31,8 +31,6 @@
 				</span>
 			</div><br><br>
 				<a v-if="getItem(i)" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br>
-				<!--a v-if="getItem(i)" v-for="(item, i) in list" :href="'https://baike.baidu.com/item/'+list[i].D_NAME" 
-				target="_blank" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br-->
 			<div id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>
 		</div>
 		<div v-if="id>=0">
@@ -106,7 +104,7 @@ var vm = new Vue({
 		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		if(this.id>=0)document.title=this.list[this.id].D_NAME;
 		else document.title="中药集";
-		if(this.newdata!=0) setTimeout(function(){ vm.newdata=0; }, 300);		
+		//if(this.newdata!=0) setTimeout(function(){ vm.newdata=0; }, 300);		
 	},
 })
 </script>
