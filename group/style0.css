@@ -126,4 +126,7 @@ a:hover {
 	#iframes{
 		height:1200px;
 	}
+	input{
+		font-size:36px;
+	}
 }
