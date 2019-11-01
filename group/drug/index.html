@@ -32,9 +32,12 @@
 				</span>	
 				<div style="text-align:center;">
 					<input type="text" v-model="msg" placeholder="自定义(五字内)">
-					<span @click.prevent="if(msg.length<6){words.push(msg);wselect.push(0);}msg='';" style="color:green;">添加</span>
-					<span @click.prevent="words.splice(wlen,words.length-wlen);wselect.splice(wlen,wselect.length-wlen);" style="color:green;">清空</span>
-					<span @click.prevent="mohu++;mohu%=9;" style="color:green;">模糊搜{{mohu}}</span>
+					<span @click.prevent="if(msg.length<6){words.push(msg);wselect.push(0);}msg='';" 
+						style="color:green;cursor:pointer;">添加</span>
+					<span @click.prevent="words.splice(wlen,words.length-wlen);wselect.splice(wlen,wselect.length-wlen);" 
+						style="color:green;cursor:pointer;">清空</span>
+					<span @click.prevent="mohu++;mohu%=9;" 
+						style="color:green;cursor:pointer;">模糊搜{{mohu}}</span>
 				</div>				
 			</div><br><br>
 			<a v-if="getItem(i)" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br>
