@@ -24,8 +24,10 @@
 			<div id="desc2">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br>			
 				<span v-for="(item, i) in words">
-					<span v-if="i==0 || i==7 || i==16 || i==28"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
-					<span v-if="i==21 || i==34 || i==42 || (i>42 && i%7==0)"><br></span>
+					<span v-if="i==0 || i==28"><br>{{"【"+words[i].split("|")[0]+"】"}}</span>
+					<span v-if="i==7"><br>{{"【性味】"}}</span>
+					<span v-if="i==16"><br>{{"【归经】"}}</span>
+					<span v-if="i==22 || i==34 || i==42 || (i>42 && i%7==0)"><br></span>
 					<span v-if="i==49">【自定义】</span>
 					<a :style="'color:'+typecolor[wselect[i]]" @click="setType(i)" style="cursor:pointer;">
 					{{words[i].indexOf("|")==-1?words[i]:words[i].split("|")[1]}} </a>
