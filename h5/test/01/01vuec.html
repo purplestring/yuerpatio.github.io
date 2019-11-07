@@ -7,9 +7,10 @@
 		<link href="01.css" id="css" rel="stylesheet" type="text/css" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="jquery-3.3.1.min.js"></script>
-		<!--script src="vue.js"></script-->
-		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+		<script src="vue.js"></script>
+		<!--script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script-->
 		<script src="info.js"></script>
+		<script src="svg.js"></script>
 		<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script-->
     </head>
 	<body>
@@ -29,12 +30,12 @@
 				<tcontacts v-if="page[current]=='Contacts'" :langid="langid" :misinfo="misinfo" :address="address" :contactform="contactform"></tcontacts>
 			</div>
 			<tpage :lang="lang" :langid="langid" v-show="cpage!=0" @setcpage="setcpage"></tpage>
-			<div class="footerbox"></div>
-			<div class="footer" id="footer">
-				Copyright 2015~2019 ABC
-			</div>
+			<tfooter1 v-if="screen>1024"></tfooter1>
+			<tfooter2 v-if="screen<1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
+							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tfooter2>
 		</div>
 
+		<div style="display:none;">
 		<template id="tmainnavi1">
 			<div id="Mainnavi1">
 				<div id="logo"></div>
@@ -75,8 +76,9 @@
 				</div>
 				<div class="sjj_nav">
 					<ul>
-						<li v-for="(item, i) in page">
-							<a href="javascript:;" @click="clickTab(i)" :class="(i==current?'active':'')">
+						<li v-for="(item, i) in page" :class="(i==current?'active':'')">
+							<a href="javascript:;" @click="clickTab(i)">
+								<span class="Mainnavi3Icon" v-html="svginfo[i]"></span>&nbsp;&nbsp;
 								{{navinames[langid][page[i]]}}</a>
 						</li>
 					</ul>
@@ -199,26 +201,44 @@
 
 			</div>
 		</template>
-
+		
+		<template id="tfooter1">
+			<div class="footerbox">
+				<div class="footer" id="footer">Copyright 2015~2019 ABC</div>
+			</div>
+		</template>
+		
+		<template id="tfooter2">
+			<div class="footerbox2">
+				<div class="tab-bar tab-bottom">
+					<a v-for="(item, i) in page" v-if="i<5" :class="(i==current?'tab-button active':'tab-button')" href="javascript:;" @click="clickTab(i)">
+						<i class="tab-button-icon icon" v-html="svginfo[i]"></i>
+						<span className="tab-button-txt">{{navinames[langid][page[i]]}}</span>	
+					</a>
+				</div>
+			</div>
+		</template>
+		</div>
 	</body>
 	<script>
 
 //https://www.bilibili.com/video/av50680998/?p=68
+"use strict";
 	Vue.component('tmainnavi1',{
 		template: '#tmainnavi1',
 		props:['lang','langid','page','navinames','current'],
-        mounted(){
+        mounted: function mounted(){
             //this.clickTab(0);
             setTimeout(function(){this.setThisStyle(0); }.bind(this),0);
 		},
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-			changeLang(){
+			changeLang: function changeLang(){
 				this.$emit('setlangid',(parseInt(this.langid)+1)%2);
 			},
-			clickTab(current){
+			clickTab: function clickTab(current){
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
                 this.setThisStyle(current);
@@ -227,7 +247,7 @@
 				//$("#check02").prop("checked", false);
 				document.body.scrollTop=document.documentElement.scrollTop=0;
 			},
-            setThisStyle(index){
+            setThisStyle: function setThisStyle(index){
 				let size=0.5;let stylehtml="";
                 for(let i in this.page)  {
                     let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
@@ -245,13 +265,13 @@
 		template: '#tmainnavi2',
 		props:['lang','langid','page','navinames','current'],
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-            changeLang(){
+            changeLang: function changeLang(){
                 this.$emit('setlangid',(parseInt(this.langid)+1)%2);
             },
-            clickTab(current){
+            clickTab: function clickTab(current){
                 this.$emit('setcpage',0);
                 this.$emit('setcurrent',current);
                 $("#check02").prop("checked", false);
@@ -262,8 +282,17 @@
 
 	Vue.component('tmainnavi3',{
 		template: '#tmainnavi3',
+		data: function() {
+			let svginfo=new Array();
+			for(let i in this.page) {   
+				svginfo.push(eval("svg_"+this.page[i]));
+			}  
+            return {
+                svginfo:svginfo,
+            };
+        },
 		props:['lang','langid','page','navinames','current'],
-		mounted(){
+		mounted: function mounted(){
 			$('.sp_nav').click(function () {
 				$('.sp_nav').toggleClass('sp_nav_se');
 				$('.sjj_nav').toggleClass('nav_show');
@@ -279,13 +308,13 @@
 				'<path d="M768.468 428.876l-84.723-84.723-170.711 170.711-170.711-170.711-84.723 84.723 170.711 170.711-0.092 0.091 84.723 84.724 0.092-0.092 0.092 0.092 84.723-84.724-0.092-0.091z"></path></svg>');
 		},
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-			changeLang(){
+			changeLang: function changeLang(){
 				this.$emit('setlangid',(parseInt(this.langid)+1)%2);
 			},
-			clickTab(current){
+			clickTab: function clickTab(current){
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
                 $('.sp_nav').toggleClass('sp_nav_se');
@@ -299,7 +328,7 @@
 		template: '#tpage',
 		props:['lang','langid'],
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
 		}
@@ -323,10 +352,10 @@
         },
 
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-            toDate(date) {
+            toDate: function toDate(date) {
                 var d = new Date(date);
                 if(this.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
                 else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
@@ -345,18 +374,22 @@
         data: function() {
             return {
                 currentslide:0,
-                stop:2,
+                stop:2
             };
         },
-		created(){
+		created: function created(){
             $("#style").html("");
             for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
             $("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
             $("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
 		},
-        mounted() {
-            $(".slidershow").mousemove(function(){stop=2;});
-            let me=this;
+        mounted: function mounted() {
+		    if(window.screen.width<=1024){
+                $(".slidershow").css("height",$(".slidershow").outerWidth()*0.6);
+                $(".slidenavi").css("top",$(".slidershow").outerWidth()*0.6-40);
+            }
+			let me = this;
+            $(".slidershow").mousemove(function(){me.stop=2;});
             setInterval(function(){
                 if(me.stop>0) me.stop--;
                 if(me.stop!=0) return;
@@ -365,7 +398,7 @@
             },3000);
         },
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
 		}
@@ -374,21 +407,27 @@
 	Vue.component('tnews',{
 		template: '#tnews',
 		props:['langid','news'],
-        mounted(){
+        mounted: function mounted(){
 		    //console.log("ss")
             $(".newsone").addClass("movefromdown");
             this.scrollFunction();
+			window.onscroll = function () {
+			  if (window.onscroll) {
+				_this.scrollFunction();
+			  }
+			};
+			/*
             window.onscroll = () => {
                 if (window.onscroll) {
                     this.scrollFunction();
                 }
-            }
+            }*/
         },
 		methods:{
-            setcpage(cpage){
+            setcpage: function setcpage(cpage){
                 this.$emit('setcpage',cpage);
             },
-            scrollFunction(){
+            scrollFunction: function scrollFunction(){
                 var windowPageYOffset = window.pageYOffset,
                     windowPageYOffsetAddHeight = windowPageYOffset + window.innerHeight;
 
@@ -419,7 +458,7 @@
                 contactMsg:"",
             };
         },
-		mounted(){
+		mounted: function mounted(){
             //console.log("loadmap");
 			/*var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
 			map.addControl(new BMap.MapTypeControl());
@@ -431,10 +470,41 @@
 			map.addOverlay(marker);*/
 		},
 		methods:{
-            contactSubmit() {
+            contactSubmit: function contactSubmit() {
                 var contactInfo = { name: this.contactName, email: this.contactEmail, msg: this.contactMsg };
                 console.log(contactInfo);
                 this.contactName=this.contactEmail=this.contactMsg="";
+            },
+		}
+	});
+	
+	Vue.component('tfooter1',{
+		template: '#tfooter1',
+	});
+	
+	Vue.component('tfooter2',{
+		template: '#tfooter2',
+		data: function() {
+			let svginfo=new Array();
+			for(let i in this.page) {   
+				svginfo.push(eval("svg_"+this.page[i]));
+			}  
+            return {
+                svginfo:svginfo,
+            };
+        },
+		props:['lang','langid','page','navinames','current'],
+		methods:{
+			setcpage: function setcpage(cpage){
+				this.$emit('setcpage',cpage);
+			},
+            changeLang: function changeLang(){
+                this.$emit('setlangid',(parseInt(this.langid)+1)%2);
+            },
+            clickTab: function clickTab(current){
+                this.$emit('setcpage',0);
+                this.$emit('setcurrent',current);
+				document.body.scrollTop=document.documentElement.scrollTop=0;
             },
 		}
 	});
@@ -452,7 +522,7 @@
 			misinfo:misinfo, address:address, contactform:contactform,
 			cpage:0,pages:"",
 		},
-		created() {
+		created: function created() {
             this.page=["Home","About","News","Photos","Contacts"];
 			this.screen=window.screen.width;
 			if (this.screen <= 1024) {
@@ -461,14 +531,14 @@
 			}
 		},
 		methods: {
-            setcpage(cpage){
+            setcpage: function setcpage(cpage){
                 this.cpage=cpage;
                 if(cpage!=0) $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
             },
-            setlangid(langid){
+            setlangid: function setlangid(langid){
                 this.langid=langid;
             },
-            setcurrent(current){
+            setcurrent: function setcurrent(current){
                 this.current=current;
             },
 		},

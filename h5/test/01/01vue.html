@@ -166,9 +166,7 @@
 			misinfo:misinfo, address:address, contactform:contactform, contactName:"", contactEmail:"", contactMsg:"",
 			cpage:0,pages:"",
 		},
-		beforeCreate() {			
-		},
-		created() {		
+		created: function created() {		
 			
 			if (window.screen.width <= 1024) $("#css").attr("href", "01m.css");		
 			for(let i=0;i<$("#main>div").length;i++) this.page[i]=$("#main>div")[i].id; 
@@ -186,12 +184,12 @@
 			this.endyear++;
 		
 		},
-		updated() {
+		updated: function updated() {
 			//if(this.current==4) this.LoadMap();
 			document.documentElement.scrollTop=0;
             $('#check02').prop('checked', false);
 		},
-		mounted() {
+		mounted: function mounted() {
 		//Home
 			$(".slidershow").mousemove(function(){all.stop=2;});
 			setInterval(function(){ 
@@ -203,7 +201,7 @@
 			},3000);
 		},
 		methods: {
-			LoadMap() {
+			LoadMap: function LoadMap() {
 				//console.log("loadmap");			
 				var map = new BMap.Map("map",{mapType:BMAP_NORMAL_MAP,minZoom:17});
 				map.addControl(new BMap.MapTypeControl());  
@@ -214,17 +212,17 @@
 				var marker = new BMap.Marker(point);   
 				map.addOverlay(marker);
 			},
-			contactSubmit() {
+			contactSubmit: function contactSubmit() {
 				var contactInfo = { name: this.contactName, email: this.contactEmail, msg: this.contactMsg };
 				console.log(contactInfo);
 				this.contactName=this.contactEmail=this.contactMsg="";
 			},
-			toDate(date) {
+			toDate: function toDate(date) {
 				var d = new Date(date);
 				if(this.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
 				else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
 			},
-			LoadPages() {
+			LoadPages: function LoadPages() {
 				//this.pages=$.ajax({url:"pages/"+this.cpage,async:false}).responseText;
                 $("#pagetext").html($.ajax({url:"pages/"+this.cpage,async:false}).responseText);
 			}
