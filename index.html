@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=0.6667,maximum-scale=1, user-scalable=no">	
@@ -30,14 +30,24 @@ label {
 	color:#e9d927;
     cursor: pointer; 
     display: block; 
-    text-align: top; 
     float: left;
     width: 54px;
     height: 390px;
-    line-height: 54px;
-	writing-mode:vertical-lr;
+    text-align: center;
+	background:rgba(0,0,0,0.6);
 }
-label:last-child { margin-right: 0; }
+label:last-child {
+	margin-right: 0; 
+}
+label>div{
+	position:relative;
+	width:24px;
+	top:50px;
+	left:15px;
+}
+input:checked + label>div,label:hover{
+	background:rgba(0,0,0,0);
+}
 
 article { 
     width: 0;
@@ -54,7 +64,9 @@ article {
     float: left;
 	background: #fdfbf8 url(main/img/bg02.png) no-repeat center;
 }
-div:last-child article { margin-right: 0; }
+div:last-child article {
+	margin-right: 0; 
+}
 article p {
     color: #333;
     font-family: 宋体;
@@ -103,12 +115,7 @@ div > input:checked ~ article {
 	bottom:35px;
 }
 
-label>div{
-	background:rgba(0,0,0,0.6);
-}
-input:checked + label>div,label>div:hover{
-	background:rgba(0,0,0,0);
-}
+
 
 #img{
 	width:400px;
@@ -140,7 +147,6 @@ input:checked + label>div,label>div:hover{
 
 
 
-
 @media screen and (max-device-width:640px){
 #info{
 	display:none;
@@ -165,9 +171,8 @@ input:checked + label>div,label>div:hover{
 }
 
 #mfoot{
-font-size:18px;
+	font-size:18px;
 }
-
 
 article { 
 	display:none;
@@ -184,6 +189,9 @@ label {
     height: 280px;
 }
 
+label>div{
+	top:20px;
+}
 	 
 }
  
@@ -193,18 +201,9 @@ label {
 
 </head>
 <body>
-	<div id="mt"></div>	
-	<div id="lm"></div>
-	<div id="rm"></div>
-	<div id="mb"></div>
-	<div id="lt"></div>	
-	<div id="rt"></div>		
-	<div id="lb"></div>		
-	<div id="rb"></div>
-	<div id="ltx"></div>
-	<div id="rtx"></div>
-	<div id="lbx"></div>
-	<div id="rbx"></div>
+	<div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div>
+	<div id="lt"></div><div id="rt"></div><div id="lb"></div><div id="rb"></div>
+	<div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div>
 	<div id="data" style="display:none;">
 		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 		 viewBox="0 0 400 400" style="enable-background:new 0 0 400 400;" xml:space="preserve">
@@ -232,80 +231,80 @@ label {
 	 <form>
 		<div>
 		<input type="radio" name="size" id="p1" value="p1" @click="changeSVG('bolao')"/> 
-		<label for="p1" style="background: url(main/img/01.jpg) no-repeat center;"><div>&#8195;&#8195;鸟之卷</div></label>
+		<label for="p1" style="background: url(main/img/01.jpg) no-repeat center;"><div>鸟之卷</div></label>
 				<article>
 					<div>鸟之卷</div>
 					<p style="text-align:center;">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。</p>
-					<a href="group/bird/index.html" target="_blank">进入分卷</a>
+					<a href="group/bird/index.html">进入分卷</a>
 				</article>
 		</div>
 		<div>
 		<input type="radio" name="size" id="p2" value="p2" @click="changeSVG('bug')"/>     
-		<label for="p2" style="background: url(main/img/02.jpg) no-repeat center;"><div>&#8195;&#8195;虫之卷</div></label>
+		<label for="p2" style="background: url(main/img/02.jpg) no-repeat center;"><div>虫之卷</div></label>
 			<article>
 					<div>虫之卷</div>
 					<p style="text-align:center;">雨中山果落，灯下草虫鸣<br>
 						地上，水上，丛莽间，凡有见者，皆以志之<br>天上，水上，丛莽间，凡有见者，皆以志之。</p>
-					<a href="group/bug/index.html" target="_blank">进入分卷</a>
+					<a href="group/bug/index.html">进入分卷</a>
 			</article>   
 		</div>
 		<div>
 		<input type="radio" name="size" id="p3" value="p3" @click="changeSVG('miao')"/>     
-		<label for="p3" style="background: url(main/img/03.jpg) no-repeat center;"><div>&#8195;&#8195;喵之卷</div></label>
+		<label for="p3" style="background: url(main/img/03.jpg) no-repeat center;"><div>喵之卷</div></label>
 			<article>
 					<div>喵之卷</div>
 					<p style="text-align:center;">一道自由的光芒<br>
 						是风和花和星空 是鱼和沙和海洋</p>
-					<a href="group/miao/index.html" target="_blank">进入分卷</a>
+					<a href="group/miao/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div>    
 		<input type="radio" name="size" id="p4" value="p4" @click="changeSVG('tree')"/>     
-		<label for="p4" style="background: url(main/img/04.jpg) no-repeat center;"><div>&#8195;&#8195;木之卷</div></label>
+		<label for="p4" style="background: url(main/img/04.jpg) no-repeat center;"><div>木之卷</div></label>
 			<article>
 					<div>木之卷</div>
 					<p style="text-align:center;">长花短草，贴河而立<br>
 						草木花果之属，凡有见者，皆以志之</p>
-					<a href="group/wood/index.html" target="_blank">进入分卷</a>
+					<a href="group/wood/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div>    
 		<input type="radio" name="size" id="p5" value="p5" @click="changeSVG('ring')"/>     
-		<label for="p5" style="background: url(main/img/05.jpg) no-repeat center;"><div>&#8195;&#8195;风之卷</div></label>
+		<label for="p5" style="background: url(main/img/05.jpg) no-repeat center;"><div>风之卷</div></label>
 			<article>
 					<div>风之卷</div>
 					<p style="text-align:center;">雨中山果落，灯下草虫鸣<br>
 						地上，水上，丛莽间，凡有见者，皆以志之<br>天上，水上，丛莽间，凡有见者，皆以志之。</p>
-					<a href="group/scene/index.html" target="_blank">进入分卷</a>
+					<a href="group/scene/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div>
 		<input type="radio" name="size" id="p6" value="p6" @click="changeSVG('penzi')"/>     
-		<label for="p6" style="background: url(main/img/06.jpg) no-repeat center;" ><div>&#8195;&#8195;器之卷</div></label>
+		<label for="p6" style="background: url(main/img/06.jpg) no-repeat center;" ><div>器之卷</div></label>
 			<article>
 					<div>器之卷</div>
 					<p style="text-align:center;">形而上者谓之道，形而下者谓之器<br>
 						器物，建筑，雕塑，皆以志之</p>
-					<a href="group/utensil/index.html" target="_blank">进入分卷</a>
+					<a href="group/utensil/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div>
 		<input type="radio" name="size" id="p7" value="p7" @click="changeSVG('paint')"/>     
-		<label for="p7" style="background: url(main/img/07.jpg) no-repeat center;"><div>&#8195;&#8195;画之卷</div></label>
+		<label for="p7" style="background: url(main/img/07.jpg) no-repeat center;"><div>画之卷</div></label>
 			<article>
 					<div>画之卷</div>
 					<p style="text-align:center;">大师的画作有些多，记不住。整理了些，搁这了。<br>
 						可简单筛选，随便翻翻便好。</p>
-					<a href="group/paint/index.html" target="_blank">进入分卷</a>
+					<a href="group/paint/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div>
 		<input type="radio" name="size" id="p8" value="p8" @click="changeSVG('renshen')"/>     
-		<label for="p8" style="background: url(main/img/08.jpg) no-repeat center;" ><div>&#8195;&#8195;中药集</div></label>
+		<label for="p8" style="background: url(main/img/08.jpg) no-repeat center;" ><div>中药集</div></label>
 			<article>
 					<div>中药集</div>
 					<p style="text-align:center;">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！</p>
-					<a href="group/drug/index.html" target="_blank">进入分卷</a>
+					<a href="group/drug/index.html">进入分卷</a>
 			</article>  
 		</div>
 		<div v-if="c=='box'" id="info">
