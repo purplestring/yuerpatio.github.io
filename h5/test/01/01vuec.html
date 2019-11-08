@@ -17,9 +17,9 @@
 		<div id="all" v-cloak>
 			<div class="mainnaviback">
 				<tmainnavi1 v-if="screen>1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 				<tmainnavi3 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 			</div>
 			<div id="main" v-show="cpage==0">
 				<thome v-if="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
@@ -32,7 +32,7 @@
 			<tpage :lang="lang" :langid="langid" v-show="cpage!=0" @setcpage="setcpage"></tpage>
 			<tfooter1 v-if="screen>1024"></tfooter1>
 			<tfooter2 v-if="screen<1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tfooter2>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tfooter2>
 		</div>
 
 		<div style="display:none;">
@@ -408,13 +408,11 @@
 		template: '#tnews',
 		props:['langid','news'],
         mounted: function mounted(){
-		    //console.log("ss")
             $(".newsone").addClass("movefromdown");
             this.scrollFunction();
+			var _this = this;
 			window.onscroll = function () {
-			  if (window.onscroll) {
-				_this.scrollFunction();
-			  }
+				if (window.onscroll) _this.scrollFunction();
 			};
 			/*
             window.onscroll = () => {
