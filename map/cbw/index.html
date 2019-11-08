@@ -17,9 +17,9 @@
 		<div id="all" v-cloak>
 			<div class="mainnaviback">
 				<tmainnavi1 v-if="screen>1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 				<tmainnavi3 v-if="screen<=1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tmainnavi1>
 			</div>
 			<div id="main" v-show="cpage==0">
 				<thome v-if="page[current]=='Home'" :langid="langid" :slidepics="slidepics" :hometext="hometext" @setcpage="setcpage"></thome>
@@ -32,9 +32,9 @@
 			<tpage :lang="lang" :langid="langid" v-show="cpage!=0" @setcpage="setcpage"></tpage>
 			<tfooter1 v-if="screen>1024"></tfooter1>
 			<tfooter2 v-if="screen<1024" :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current"
-							@setlangid="this.setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tfooter2>
+							@setlangid="setlangid" @setcurrent="setcurrent" @setcpage="setcpage"></tfooter2>
 		</div>
-
+		<div style="display:none;">
 		<template id="tmainnavi1">
 			<div id="Mainnavi1">
 				<div id="logo"></div>
@@ -149,7 +149,7 @@
 			<div id="Essays">
 				<div class="essaymulu">目录</div><br/>
 				<div class="essayeach" v-for="(item, i) in essays">
-					<div >{{item.id}}&nbsp;&nbsp;<span @click="setcpage('essays',item.title,item.content)">{{item.title}}</span></div>
+					<div >{{item.id}}&nbsp;&nbsp;<span @click="setcpage('essays',item.title,item.content)" style="cursor:pointer">{{item.title}}</span></div>
 				</div>
 			</div>
 		</template>
@@ -170,30 +170,30 @@
 				</div>
 			</div>
 		</template>
-
+		</div>
 	</body>
 	<script>
 
 	Vue.component('tmainnavi1',{
 		template: '#tmainnavi1',
 		props:['lang','langid','page','navinames','current'],
-        mounted(){
+        mounted: function mounted(){
             setTimeout(function(){this.setThisStyle(0); }.bind(this),0);
 		},
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-			changeLang(){
+			changeLang: function changeLang(){
 				this.$emit('setlangid',(parseInt(this.langid)+1)%2);
 			},
-			clickTab(current){
+			clickTab: function clickTab(current){
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
                 this.setThisStyle(current);
 				document.body.scrollTop=document.documentElement.scrollTop=0;
 			},
-            setThisStyle(index){
+            setThisStyle: function setThisStyle(index){
 				let size=0.5;let stylehtml="";
                 for(let i in this.page)  {
                     let currentTabWidth=$('#Mainnavi1 ul li:nth-child('+(parseInt(index)+1)+')').outerWidth();
@@ -219,20 +219,20 @@
             };
         },
 		props:['lang','langid','page','navinames','current'],
-		mounted(){
+		mounted: function mounted(){
 			$('.sp_nav').click(function () {
 				$('.sp_nav').toggleClass('sp_nav_se');
 				$('.sjj_nav').toggleClass('nav_show');
 			});
 		},
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-			changeLang(){
+			changeLang: function changeLang(){
 				this.$emit('setlangid',(parseInt(this.langid)+1)%2);
 			},
-			clickTab(current){
+			clickTab: function clickTab(current){
 				this.$emit('setcpage',0);
 				this.$emit('setcurrent',current);
                 $('.sp_nav').toggleClass('sp_nav_se');
@@ -246,7 +246,7 @@
 		template: '#tpage',
 		props:['lang','langid'],
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
 		}
@@ -270,10 +270,10 @@
         },
 
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-            toDate(date) {
+            toDate: function toDate(date) {
                 var d = new Date(date);
                 if(this.langid==1) return (d.getMonth()+1)+"月"+d.getDate()+"日";
                 else return d.getDate()+" "+EnMonth[d.getMonth()]+" ";
@@ -295,13 +295,13 @@
                 stop:2,
             };
         },
-		created(){
+		created: function created(){
             $("#style").html("");
             for(let i in slidepics) $("#style").html($("#style").html()+'#r'+i+':checked ~ .s1{margin-left:-'+i*100/slidepics.length+'%;}');
             $("#style").html($("#style").html()+'.slides{width:'+slidepics.length*100+'%;}');
             $("#style").html($("#style").html()+'.slide{width:'+100/slidepics.length+'%;}');
 		},
-        mounted() {
+        mounted: function mounted() {
             if(window.screen.width<=1024){
                 $(".slidershow").css("height",$(".slidershow").outerWidth()*0.6);
                 $(".slidenavi").css("top",$(".slidershow").outerWidth()*0.6-40);
@@ -316,7 +316,7 @@
             },3000);
         },
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
 		}
@@ -325,20 +325,21 @@
 	Vue.component('tnews',{
 		template: '#tnews',
 		props:['langid','news'],
-        mounted(){
+        mounted: function mounted(){
             $(".newsone").addClass("movefromdown");
             this.scrollFunction();
-            window.onscroll = () => {
-                if (window.onscroll) {
-                    this.scrollFunction();
-                }
-            }
+			var _this = this;
+            window.onscroll = function () {
+				if (window.onscroll) {
+					_this.scrollFunction();
+				}
+			};
         },
 		methods:{
-            setcpage(cpage){
+            setcpage: function setcpage(cpage){
                 this.$emit('setcpage',cpage);
             },
-            scrollFunction(){
+            scrollFunction: function scrollFunction(){
                 var windowPageYOffset = window.pageYOffset,
                     windowPageYOffsetAddHeight = windowPageYOffset + window.innerHeight;
 
@@ -363,7 +364,7 @@
 		template: '#tessays',
 		props:['essays'],
 		methods:{
-            setcpage(cpage,title,content){
+            setcpage: function setcpage(cpage,title,content){
                 let words="<div class='essaytitle'>"+title+"</div><br/>"+content;
                 this.$emit('setcpage',cpage,words);
             },
@@ -387,13 +388,13 @@
         },
 		props:['lang','langid','page','navinames','current'],
 		methods:{
-			setcpage(cpage){
+			setcpage: function setcpage(cpage){
 				this.$emit('setcpage',cpage);
 			},
-            changeLang(){
+            changeLang: function changeLang(){
                 this.$emit('setlangid',(parseInt(this.langid)+1)%2);
             },
-            clickTab(current){
+            clickTab: function clickTab(current){
                 this.$emit('setcpage',0);
                 this.$emit('setcurrent',current);
 				document.body.scrollTop=document.documentElement.scrollTop=0;
@@ -413,7 +414,7 @@
 			essays:essays,
 			cpage:0,pages:"",
 		},
-		created() {
+		created: function created() {
             this.page=["Home","About","History","Essays","Photos"];
 			this.screen=window.screen.width;
 			if (this.screen <= 1024) {
@@ -421,7 +422,7 @@
 			}
 		},
 		methods: {
-            setcpage(cpage,words){
+            setcpage: function setcpage(cpage,words){
 				//console.log(typeof(words)=="undefined");
                 //console.log(words);
                 this.cpage=cpage;
@@ -431,10 +432,10 @@
 					document.body.scrollTop=document.documentElement.scrollTop=0;
                 }
             },
-            setlangid(langid){
+            setlangid: function setlangid(langid){
                 this.langid=langid;
             },
-            setcurrent(current){
+            setcurrent: function setcurrent(current){
                 this.current=current;
             },
 		},
