@@ -1,0 +1,62 @@
+<html>
+<script src="info.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<!--script src="http://t.weather.sojson.com/api/weather/city/101121107"></script-->
+<style></style>
+<script>
+var Url=escape("http://t.weather.sojson.com/api/weather/city/101030100.html"); 
+var COOKIE_info = "COOKIE_info"; 
+var date = new Date(); 
+var Hours=24-date.getHours()-1; 
+var Mins=60-date.getMinutes()-1; 
+var Secs=60-date.getSeconds(); 
+date.setTime(date.getTime() + (1 * Hours * 60 * 60 * 1000) + (1 * 1 * Mins * 60 * 1000) + (1 * 1 * 1 * Secs * 1000)); 
+var RD_cookie_info= $.cookie(COOKIE_info); 
+$(function(){ 
+if(RD_cookie_info==null) 
+{ 
+Getdata(Url); 
+} 
+else{ 
+$("#weather").html(RD_cookie_info); 
+} 
+})
+function Getdata(Url) 
+{ 
+$.ajax({ 
+type:"GET", 
+cache: "false", 
+url: "AjaxGet.asp", 
+data:"Url="+Url, 
+dataType: "html", 
+error: function(){$("#weather").html("读取失败...请刷新重试!");}, 
+success: function(json){ 
+console.log(json)
+/*
+var t = '('+json+')'; 
+var result = eval(t); 
+var Getinfo=""; 
+Getinfo+=result.weatherinfo.date_y+" ";//年月日 
+Getinfo+=result.weatherinfo.date+" ";//农历年月日 
+Getinfo+=result.weatherinfo.week+" ";//星期几 
+Getinfo+="<br />";//换行 
+Getinfo+=result.weatherinfo.city;//获取城市名称 
+Getinfo+=" <img src=\"http://m.weather.com.cn/img/c"+result.weatherinfo.img1+".gif\"/> "//天气图片1 
+Getinfo+="<img src=\"http://m.weather.com.cn/img/c"+result.weatherinfo.img2+".gif\"/> ";//天气图片2 
+Getinfo+=result.weatherinfo.weather1+" ";//天气情况 
+Getinfo+=result.weatherinfo.temp1;//温度 
+$.cookie(COOKIE_info,Getinfo, { path: '/', expires: date }); 
+$("#weather").html(Getinfo); */
+} 
+}); 
+}
+
+</script>
+</head>
+<body>
+<div id="weather" style="font-size:12px;"></div> 
+</body>
+<!--iframe id="proxy" src="http://www.cnblogs.com/data.html" style="display=none" onload="getData()" </iframe-->
+</body>
+</html>
