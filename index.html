@@ -44,7 +44,10 @@ label>div{
 	top:0px;
 	width:54px;
 	height: 390px;
-	background:rgba(128,128,128,0.6);
+	background:rgba(128,128,128,0.618);
+}
+.lightall{
+	background:rgba(128,128,128,0);
 }
 label>div>div{
 	position:relative;
@@ -245,7 +248,7 @@ div > input:checked ~ article {
 	 <form>
 		<div>
 		<input type="radio" name="size" id="p1" value="p1" @click="changeSVG('bolao')"/> 
-		<label for="p1" style="background: url(main/img/01.jpg) no-repeat center;"><div><div>鸟之卷</div></div></label>
+		<label for="p1" style="background: url(main/img/01.jpg) no-repeat center;"><div class="lightall"><div>鸟之卷</div></div></label>
 				<article>
 					<div>鸟之卷</div>
 					<p style="text-align:center;">水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之。</p>
@@ -254,7 +257,7 @@ div > input:checked ~ article {
 		</div>
 		<div>
 		<input type="radio" name="size" id="p2" value="p2" @click="changeSVG('bug')"/>     
-		<label for="p2" style="background: url(main/img/02.jpg) no-repeat center;"><div><div>虫之卷</div></div></label>
+		<label for="p2" style="background: url(main/img/02.jpg) no-repeat center;"><div class="lightall"><div>虫之卷</div></div></label>
 			<article>
 					<div>虫之卷</div>
 					<p style="text-align:center;">雨中山果落，灯下草虫鸣<br>
@@ -264,7 +267,7 @@ div > input:checked ~ article {
 		</div>
 		<div>
 		<input type="radio" name="size" id="p3" value="p3" @click="changeSVG('miao')"/>     
-		<label for="p3" style="background: url(main/img/03.jpg) no-repeat center;"><div><div>喵之卷</div></div></label>
+		<label for="p3" style="background: url(main/img/03.jpg) no-repeat center;"><div class="lightall"><div>喵之卷</div></div></label>
 			<article>
 					<div>喵之卷</div>
 					<p style="text-align:center;">一道自由的光芒<br>
@@ -274,7 +277,7 @@ div > input:checked ~ article {
 		</div>
 		<div>    
 		<input type="radio" name="size" id="p4" value="p4" @click="changeSVG('tree')"/>     
-		<label for="p4" style="background: url(main/img/04.jpg) no-repeat center;"><div><div>木之卷</div></div></label>
+		<label for="p4" style="background: url(main/img/04.jpg) no-repeat center;"><div class="lightall"><div>木之卷</div></div></label>
 			<article>
 					<div>木之卷</div>
 					<p style="text-align:center;">长花短草，贴河而立<br>
@@ -284,7 +287,7 @@ div > input:checked ~ article {
 		</div>
 		<div>    
 		<input type="radio" name="size" id="p5" value="p5" @click="changeSVG('ring')"/>     
-		<label for="p5" style="background: url(main/img/05.jpg) no-repeat center;"><div><div>风之卷</div></div></label>
+		<label for="p5" style="background: url(main/img/05.jpg) no-repeat center;"><div class="lightall"><div>风之卷</div></div></label>
 			<article>
 					<div>风之卷</div>
 					<p style="text-align:center;">雨中山果落，灯下草虫鸣<br>
@@ -294,7 +297,7 @@ div > input:checked ~ article {
 		</div>
 		<div>
 		<input type="radio" name="size" id="p6" value="p6" @click="changeSVG('penzi')"/>     
-		<label for="p6" style="background: url(main/img/06.jpg) no-repeat center;"><div><div>器之卷</div></div></label>
+		<label for="p6" style="background: url(main/img/06.jpg) no-repeat center;"><div class="lightall"><div>器之卷</div></div></label>
 			<article>
 					<div>器之卷</div>
 					<p style="text-align:center;">形而上者谓之道，形而下者谓之器<br>
@@ -304,7 +307,7 @@ div > input:checked ~ article {
 		</div>
 		<div>
 		<input type="radio" name="size" id="p7" value="p7" @click="changeSVG('paint')"/>     
-		<label for="p7" style="background: url(main/img/07.jpg) no-repeat center;"><div><div>画之卷</div></div></label>
+		<label for="p7" style="background: url(main/img/07.jpg) no-repeat center;"><div class="lightall"><div>画之卷</div></div></label>
 			<article>
 					<div>画之卷</div>
 					<p style="text-align:center;">大师的画作有些多，记不住。整理了些，搁这了。<br>
@@ -314,7 +317,7 @@ div > input:checked ~ article {
 		</div>
 		<div>
 		<input type="radio" name="size" id="p8" value="p8" @click="changeSVG('renshen')"/>     
-		<label for="p8" style="background: url(main/img/08.jpg) no-repeat center;"><div><div>本草集</div></div></label>
+		<label for="p8" style="background: url(main/img/08.jpg) no-repeat center;"><div class="lightall"><div>本草集</div></div></label>
 			<article>
 					<div>本草集</div>
 					<p style="text-align:center;">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！</p>
@@ -346,7 +349,7 @@ var link={
 "tree":"group/wood/index.html",
 };
 
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('$(\'#H\').S("g").O(h(j){7 5=$(4).q("5");1d[j]=5;a[5]=[];s[5]=[];$("#"+5).S("U").O(h(i){7 B=$(4).q("T").W(/,/g," ").Q(\' \');7 E=[];x(7 8=0;8<B.o;8++)E.11(B[8]);a[5][i]=[];a[5][i]=E;s[5][i]=[];b($(4).q("y"))s[5][i]=$(4).q("y").Q(\'#\')[1];v s[5][i]="12";b(s[5][i].o<6)s[5][i]=s[5][i][0]+"0"+s[5][i][1]+"0"+s[5][i][2]+"0"})});t I=X Y({Z:\'#I\',H:{k:0,c:"",n:"",r:"",K:K,P:10,},M:h M(){4.c=4.n="V"},1e:{J:h J(i){7 c=4.c;7 n=4.n;7 d=(4.k%G)/z;7 l="";x(7 8=0;8<a[n][i].o;8++){b(8>=a[c][i].o){b(8%2==0)l+=((1-d)*a[c][i][0]+d*a[n][i][8]);v l+=((1-d)*a[c][i][1]+d*a[n][i][8])}v l+=((1-d)*a[c][i][8]+d*a[n][i][8]);l+=" "}m l},L:h L(i){7 c=4.c;7 n=4.n;7 d=(4.k%G)/z;7 f=[];x(7 e=0;e<3;e++){f[e]=F((1-d)*F(s[c][i].N(e*2,2),16)+d*F(s[n][i].N(e*2,2),16)).A(16);b(f[e].o==1)f[e]="0"+f[e]}m"1c:#"+f[0]+f[1]+f[2]},D:h D(w){$("#1b").q("y","15:14;");b(w==4.n)m;b(4.k!=0){4.r=w;m}4.n=w;7 9=4;t C=13(h(){b(9.P)m;9.k++;b(9.k>z){9.k=0;9.c=9.n;17(C);C=1a;b(9.r!=""){9.D(9.r);9.r=""}}},19)}}});h 18(u){t p="";x(t i=0;i<u.o;i++){b(p=="")p=u.R(i).A(16);v p+=","+u.R(i).A(16)}m p}',62,77,'||||this|id||let|tmpi|_0||if||step|ci|color||function|||ct|pinfo|return||length|val|attr|nn||var|str|else|next|for|style|100|toString|tmp|interval|changeSVG|tmp1|parseInt|101|data|all|getPoints|link|getStyle|created|substr|each|stop|split|charCodeAt|find|points|polygon|box|replace|new|Vue|el|false|push|000000|setInterval|none|display||clearInterval|stringToHex|20|null|info|fill|idn|methods'.split('|'),0,{}))
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('$(\'#S\').I("g").P(h(j){7 5=$(4).p("5");1g[j]=5;a[5]=[];s[5]=[];$("#"+5).I("13").P(h(i){7 B=$(4).p("W").V(/,/g," ").Q(\' \');7 F=[];u(7 8=0;8<B.l;8++)F.U(B[8]);a[5][i]=[];a[5][i]=F;s[5][i]=[];9($(4).p("A"))s[5][i]=$(4).p("A").Q(\'#\')[1];x s[5][i]="T";9(s[5][i].l<6)s[5][i]=s[5][i][0]+"0"+s[5][i][1]+"0"+s[5][i][2]+"0"})});t O=12 X({Y:\'#O\',S:{k:0,c:"",n:"",r:"",H:H,R:Z,},J:h J(){4.c=4.n="10"},11:{N:h N(i){7 c=4.c;7 n=4.n;7 d=(4.k%L)/y;7 o="";u(7 8=0;8<a[n][i].l;8++){9(8>=a[c][i].l){9(8%2==0)o+=((1-d)*a[c][i][0]+d*a[n][i][8]);x o+=((1-d)*a[c][i][1]+d*a[n][i][8])}x o+=((1-d)*a[c][i][8]+d*a[n][i][8]);o+=" "}m o},K:h K(i){7 c=4.c;7 n=4.n;7 d=(4.k%L)/y;7 f=[];u(7 e=0;e<3;e++){f[e]=z((1-d)*z(s[c][i].M(e*2,2),16)+d*z(s[n][i].M(e*2,2),16)).D(16);9(f[e].l==1)f[e]="0"+f[e]}m"1f:#"+f[0]+f[1]+f[2]},E:h E(v){$("#1i").p("A","1h:1d;");$("1e>18").14("15");9(v==4.n)m;9(4.k!=0){4.r=v;m}4.n=v;7 b=4;t C=1b(h(){9(b.R)m;b.k++;9(b.k>y){b.k=0;b.c=b.n;1a(C);C=17;9(b.r!=""){b.E(b.r);b.r=""}}},19)}}});h 1c(w){t q="";u(t i=0;i<w.l;i++){9(q=="")q=w.G(i).D(16);x q+=","+w.G(i).D(16)}m q}',62,81,'||||this|id||let|tmpi|if||_0||step|ci|color||function|||ct|length|return||pinfo|attr|val|nn||var|for|next|str|else|100|parseInt|style|tmp|interval|toString|changeSVG|tmp1|charCodeAt|link|find|created|getStyle|101|substr|getPoints|all|each|split|stop|data|000000|push|replace|points|Vue|el|false|box|methods|new|polygon|removeClass|lightall||null|div|20|clearInterval|setInterval|stringToHex|none|label|fill|idn|display|info'.split('|'),0,{}))
 
 </script>
 </html>
