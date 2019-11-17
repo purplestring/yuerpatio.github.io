@@ -35,7 +35,7 @@
         </div>
         <div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
     </div>
-
+	<div style="display:none;">
     <template id="paint">
         <div>
             <div id="title" align="center">画之册</div><br><br>
@@ -97,14 +97,14 @@
             <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
-
+	</div>
 </body>
 <script>
 
-    var paint= {
+var paint= {
         template: '#paint',
         props:["type","scrolltop"],
-        data: function(){
+        data: function data(){
             return {
                 list: [],
                 type:{},
@@ -123,22 +123,22 @@
         },
         methods: {
 
-            authorFormat(author,link){
+            authorFormat: function authorFormat(author,link){
                 if(link=="" || link==null) return "<br>"+author;
                 else return "<br><a style='color:blue;' target='_blank' href='https://en.wikipedia.org/wiki/"+link+"'>"+author+"</a>";
             },
 
-            c(t) {
+            c: function c(t) {
                 if(this.type[t]==1) this.type[t]=2;
             },
 
-            cleararea(t) {
+            cleararea: function cleararea(t) {
                 this.c("flc");this.c("wwns");this.c("beifang");this.c("baluoke");this.c("luokeke");this.c("xingudian");this.c("langman");this.c("xieshi");
                 this.c("yinxiang");this.c("jgdj");this.c("sssj");this.c("ysj");this.c("wm");this.c("yzbg");this.c("sw");this.c("ss");
                 this.type[t]=1;
             },
 
-            setList(){
+            setList: function setList(){
                 var k=0;
                 this.list= [];
 
@@ -160,7 +160,7 @@
                 }
             },
 
-            anti(t){
+            anti: function anti(t){
 				if(t==-1)
                 {
                     for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
@@ -224,21 +224,21 @@
                 this.setList();
             },
 
-            picpage(id){
+            picpage: function picpage(id){
 				this.$emit('settype',this.type);
 				this.$emit('setpicinfo',this.list[id]);
 				this.$emit('savescroll');
                 this.$emit('changepage','pic');
             },
 
-            baidupicpage(id){
+            baidupicpage: function baidupicpage(id){
                 this.$emit('settype',this.type);
 				this.$emit('setpicinfo',this.list[id]);
 				this.$emit('savescroll');
 				this.$emit('changepage','baidupic');
             },
 			
-			wikiinfo(id){
+			wikiinfo: function wikiinfo(id){
                 this.$emit('settype',this.type);
 				this.$emit('setpicinfo',this.list[id]);
 				this.$emit('savescroll');
@@ -247,12 +247,12 @@
 
         },
 
-        created() {
+        created: function created() {
             if(typeof(this.type.star) == "undefined") for ( let i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
             this.setList();
         },
 		
-		mounted() {
+		mounted: function mounted() {
 			document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		},
     }
@@ -260,7 +260,7 @@
     var pic= {
         template: '#pic',
         methods: {
-            changepage(topage){
+            changepage: function changepage(topage){
                 this.$emit('changepage',topage);
             },
         },
@@ -270,7 +270,7 @@
     var baidupic= {
         template: '#baidupic',
         methods: {
-            changepage(){
+            changepage: function changepage(){
                 this.$emit('changepage',topage);
             },
         },
@@ -280,7 +280,7 @@
 	var wikiinfo= {
         template: '#wikiinfo',
         methods: {
-            changepage(){
+            changepage: function changepage(){
                 this.$emit('changepage',topage);
             },
         },
@@ -296,23 +296,26 @@
 			scrolltop:0,
          },
         methods: {
-            changepage(topage){
+            changepage: function changepage(topage){
                 this.comName = topage;
             },
-			setpicinfo(picinfo){
+			setpicinfo: function setpicinfo(picinfo){
 				this.picinfo=picinfo;
 			},
-			settype(type){
+			settype: function settype(type){
 				this.type=type;
 			},
-			savescroll(){
+			savescroll: function savescroll(){
 				this.scrolltop = document.body.scrollTop|| document.documentElement.scrollTop;
 			}
         },
         components: {
-            paint,pic,baidupic,wikiinfo
+            paint: paint,
+			pic: pic,
+			baidupic: baidupic,
+			wikiinfo: wikiinfo
         },
-    })
+    });
 
 </script>
 </html>

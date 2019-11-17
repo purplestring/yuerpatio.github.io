@@ -30,7 +30,7 @@ a:hover {
 	padding-bottom:50px;
 	background: url(../main/img/bg01.jpg);
 }
-#title,#ptitle{
+.title,#title,#ptitle{
 	font-size:54px;
 }
 #desc1{
@@ -195,7 +195,7 @@ a:hover {
 		margin-left:-370px;
 		font-size:28px;
 	}
-	#title{
+	.title,#title{
 		font-size:84px;
 	}
 	#ptitle{

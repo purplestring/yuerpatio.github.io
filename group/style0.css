@@ -26,7 +26,7 @@ a:hover {
 	padding-left:10px;
 	padding-right:10px;
 }
-#title,#ptitle{
+.title,#title,#ptitle{
 	color:#fff;
 	font-size:54px;
 }
@@ -97,7 +97,7 @@ a:hover {
 		margin-left:-330px;
 		font-size:28px;
 	}
-	#title{
+	.title,#title{
 		font-size:84px;
 	}
 	#ptitle{
