@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta charste="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
+	<script src="../../main/js/vue.min.js"></script>
+	<script src="file.js"></script>
+	<title>画集</title>
+<body>
+	<div id="main">
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+		<div id="all">		
+			<div class="title" align="center" @click.prevent="test=!test">画集</div>		
+			<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
+				<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" class="family"><br/><br/>{{groupname[item.F_GROUP]}}<br/><br/></div>
+				<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>			
+				<a name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+item.F_NAME">{{item.TITLE}}</a>
+				<span v-if="item.F_GROUP=='guhua' || item.F_GROUP=='shufa'"></br></span>				
+			</span>
+		</div>
+		<br/><br/>
+		<div align="center">
+			<a href="../../index.html" style="cursor:pointer">返回主页</a>
+		</div>
+		<div id="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
+	</div>
+</body>
+<script>
+var all=new Vue({
+	el: '#all',
+	data:{ 	
+		list:file,
+		groupname:{color:"彩色写实",guhua:"古画临摹",jieqi:"节气",suse:"素色写实",shufa:"书法临摹",other:"其它一些",},
+		test:false,
+	},
+	created: function created() {		
+		//file.sort(function (a, b) {return a.TITLE.localeCompare(b.TITLE);});
+		//file.sort(function (a, b) {return a.S_GROUP.localeCompare(b.S_GROUP);});
+		//file.sort(function (a, b) {return a.F_GROUP.localeCompare(b.F_GROUP);});
+    },
+});
+</script>
+</html>

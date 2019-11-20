@@ -3,13 +3,13 @@
 <head>
 		<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5, user-scalable=no">
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="../style.css" type="text/css" />
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
 	<style>
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title></title>
-	<script src="../group.js"></script>
+	<script src="group.js"></script>
 	<script src="bird.js"></script>
 	<script src="birdjson.js"></script>
 
@@ -93,9 +93,10 @@
 			//txt+='以上手绘图、分布图引自《中国鸟类野外手册》，更多参考<a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">这里</a><br>';
 			txt+='<br><a href="http://niaolei.org.cn/bird/b'+birdjson.RECORDS[cid].id+'.htm" target="_blank">更多参考</a><br><br>';
 			txt+='</div>';
-			txt+='<br><div id="showmore" align="center" onclick="showclose(this,\'all_comments_a\','+birdjson.RECORDS[cid].id+')">▼</div>';
+			
+			//txt+='<br><div id="showmore" align="center" onclick="showclose(this,\'all_comments_a\','+birdjson.RECORDS[cid].id+')">▼</div>';
 		}else txt+='<br><div></div>';
-		txt+='<br><br><div id="pfooter"><a href="index.html">▶返回册主页◀</a><br><br></div>';
+		txt+='<div id="pfooter"><a href="index.html"><br><br>▶返回册主页◀</a></div>';
 		oMain.innerHTML=txt;
 	}
 		

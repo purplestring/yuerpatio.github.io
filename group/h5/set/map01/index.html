@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uIGNq6dLthEQ5iM5G8mNfCl1BDDfWx9d"></script>
+    <title>南北西东</title>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<style type="text/css">
+   .anchorBL{
+       display:none;
+   }
+</style>
+<script type="text/javascript">
+
+    var map = new BMap.Map("allmap",{mapType:BMAP_SATELLITE_MAP,minZoom:6});
+	map.addControl(new BMap.MapTypeControl());  
+    var point = new BMap.Point(120,30);
+	var zoom=7; map.centerAndZoom(point, zoom);
+    map.enableScrollWheelZoom(true); 
+	var picct=0;
+	var urlall= new Array();
+	var latall= new Array();
+	var lngall= new Array();
+	
+	map.addEventListener("zoomend", function () {
+	if(map.getZoom()>12)
+	{
+		 clng=map.getCenter().lng;
+		 clat=map.getCenter().lat;
+		 for(var ii=0;ii<picct;ii++)
+		 {
+			var d=(clng-lngall[ii])*(clng-lngall[ii])+(clat-latall[ii])*(clat-latall[ii]);
+			if(d<0.1) 
+			{
+				window.location.href=urlall[ii];
+			}
+		 }
+	 
+	}
+
+});
+	
+	
+	function addpic(map,picname,lng,lat,url,w,h,zoommin,zoommax, opac)
+	{
+		var SW = new BMap.Point(lng-w*2,lat-h*2);
+		var NE = new BMap.Point(lng+w*2,lat+h*2);
+		urlall[picct]=url;
+		latall[picct]=lat;
+		lngall[picct]=lng;
+		picct++;
+
+		groundOverlayOptions = 
+		{
+			opacity:  opac,
+			displayOnMinLevel: zoommin,
+			displayOnMaxLevel: zoommax
+		}
+
+		var groundOverlay = new BMap.GroundOverlay(new BMap.Bounds(SW, NE), groundOverlayOptions);
+		groundOverlay.setImageURL(picname);
+		map.addOverlay(groundOverlay);
+		groundOverlay.addEventListener("click", function (event) {
+		window.location.href=url;
+		});
+	}
+
+	addpic(map,"icon.png",118.10,24.46,'../../../group/pano/map/xiamen/index.html',0.1,0.1,6,12,1); //xiamen
+	addpic(map,"icon.png",117.35,24.51,'../../../group/pano/map/zhangzhou/index.html',0.1,0.1,6,12,1); //zhangzhou
+	addpic(map,"icon.png",110.64,31.76,'../../../group/pano/map/shennongjia/index.html',0.1,0.1,6,12,1); //shenlongjia
+	addpic(map,"icon.png",90.90,30.72,'../../../group/pano/map/namucuo/index.html',0.1,0.1,6,12,1); 
+	addpic(map,"icon.png",116.3,39.97,'../../../group/pano/map/beijing01/index.html',0.1,0.1,6,12,1); 
+	addpic(map,"icon.png",116.3,39.9,'../../../group/pano/map/beijing02/index.html',0.1,0.1,6,12,1); 
+	addpic(map,"icon.png",121.48,31.22,'../../../group/pano/map/shanghai/index.html',0.1,0.1,6,12,1); 
+	addpic(map,"icon.png",108.95,34.27 ,'../../../group/pano/map/xian/index.html',0.1,0.1,6,12,1); 
+
+
+
+  
+</script>

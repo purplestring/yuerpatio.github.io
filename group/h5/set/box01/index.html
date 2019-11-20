@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiger Balm Box</title>
+    <style>
+	body{
+	background:#069;
+	/*background-image: url(img/0.jpg);*/
+	}
+
+.square-box{
+    width: 242px;
+    height: 184px;
+    box-sizing: border-box;
+    position: relative;
+    transform-style: preserve-3d;
+    /*transform: rotateX(-16deg) rotateZ(-90deg);*/
+    /*animation: rotateanimation 10s ease;*/
+    /*animation-iteration-count: infinite;*/
+    /*animation-timing-function: linear;*/
+	/*-webkit-transform-style: preserve-3d;*/
+    /*-webkit-animation: rotateanimation 10s ease;*/
+    /*-webkit-animation-iteration-count: infinite;*/
+    /*-webkit-animation-timing-function: linear;*/
+	/*-ms-transform-style: preserve-3d;*/
+    /*-ms-animation: rotateanimation 10s ease;*/
+    /*-ms-animation-iteration-count: infinite;*/
+    /*-ms-animation-timing-function: linear;*/
+    margin:242px auto;
+}
+.square-box>div{
+    position: absolute;
+}
+
+.square-box>.s1{
+    width: 242px;
+    height: 184px;
+    transform: translateZ(160px);
+	-webkit-transform:translateZ(160px);
+	-ms-transform:translateZ(160px);
+    background:url(img/s1.jpg);
+}
+.square-box>.s2{
+    width: 242px;
+    height: 184px;
+    transform: rotateX(-120deg) translateZ(160px);
+	-webkit-transform:rotateX(-60deg) translateZ(160px);
+	-ms-transform:rotateX(-60deg) translateZ(160px);
+    background:url(img/s2.jpg);
+}
+.square-box>.s3{
+    width: 242px;
+    height: 184px;
+	transform: rotateX(-60deg) translateZ(160px);
+	-webkit-transform:rotateX(-120deg) translateZ(160px);
+	-ms-transform:rotateX(-120deg) translateZ(160px);
+	background:url(img/s3.jpg);
+}
+.square-box>.s4{
+    width: 242px;
+    height: 184px;
+    transform: rotateX(180deg) translateZ(160px);
+	-webkit-transform:rotateX(180deg) translateZ(160px);
+	-ms-transform:rotateX(180deg) translateZ(160px);
+    background: url(img/s4.jpg);
+}
+.square-box>.s5{
+	width: 242px;
+    height: 184px;
+    transform: rotateX(120deg) translateZ(160px);
+	-webkit-transform:rotateX(120deg) translateZ(160px);
+	-ms-transform:rotateX(120deg) translateZ(160px);
+    background: url(img/s5.jpg);
+}
+.square-box>.s6{
+	width: 242px;
+    height: 184px;
+    transform: rotateX(60deg) translateZ(160px);
+	-webkit-transform:rotateX(60deg) translateZ(160px);
+	-ms-transform:rotateX(60deg) translateZ(160px);
+    background: url(img/s6.jpg);
+}
+.square-box>.bottom{
+	width: 368px;
+    height: 323px;
+    left:0px;
+	top:-68px;
+    transform: rotateY(270deg) rotateZ(90deg) translateZ(185px);
+	-webkit-transform:rotateY(270deg) rotateZ(90deg) translateZ(185px);
+	-ms-transform:rotateY(270deg) rotateZ(90deg) translateZ(185px);
+    background: url(img/bottom.png);
+}
+.square-box>.up{
+    width: 368px;
+    height: 323px;
+	left:0px;
+	top:-68px;
+	background-position:200px 200px;
+    transform: rotateY(90deg) rotateZ(90deg) translateZ(58px);
+	-webkit-transform:rotateY(90deg) rotateZ(90deg) translateZ(58px);
+	-ms-transform:rotateY(90deg) rotateZ(90deg) translateZ(58px);
+    background: url(img/up.png);
+}
+/*添加动画效果*/
+/*@keyframes rotateanimation{*/
+    /*0%{*/
+        /*transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);*/
+    /*}*/
+    /*100%{*/
+        /*transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);*/
+    /*}*/
+/*}*/
+
+/*@-webkit-keyframes rotateanimation{*/
+    /*0%{*/
+        /*-webkit-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);*/
+    /*}*/
+    /*100%{*/
+        /*-webkit-transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);*/
+    /*}*/
+/*}*/
+
+/*@-ms-keyframes rotateanimation{*/
+    /*0%{*/
+        /*-ms-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);*/
+    /*}*/
+    /*100%{*/
+        /*-ms-transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);*/
+    /*}*/
+/*}*/
+	</style>
+</head>
+<body>
+<div id="main" class="square-box">
+    <div class="up"></div>
+    <div class="bottom"></div>
+    <div class="s1"></div>
+    <div class="s2"></div>
+    <div class="s3"></div>
+    <div class="s4"></div>
+    <div class="s5"></div>
+    <div class="s6"></div>
+</div>
+</body>
+<script>
+    window.onload=function (){
+        var oMain=document.getElementById('main');
+//        oMain.style['-webkit-transform'] ="rotateX(-16deg) rotateY(0deg) rotateZ(-90deg)";
+        oMain.style['-webkit-transform'] ="rotateX(-20deg) rotateY(0deg) rotateZ(270deg)";
+        oMain.onmousedown = function(ev){
+            return move0(ev,move);
+        };
+
+        oMain.ontouchstart = function(ev){
+            return move1(ev,move);
+        };
+
+        function move(a,b)
+        {
+
+            var x=parseFloat (oMain.style['-webkit-transform'].split('rotateX(')[1].split('deg')[0])+(-b);
+            var y=0;//parseFloat (oMain.style['-webkit-transform'].split('rotateY(')[1].split('deg')[0])+(0);
+            var z=parseFloat (oMain.style['-webkit-transform'].split('rotateZ(')[1].split('deg')[0])+(a);
+            //console.log ("rotateY("+y+"deg) rotateX("+x+"deg)");
+            oMain.style['-webkit-transform'] ="rotateX("+x+"deg) rotateY("+y+"deg) rotateZ("+z+"deg)";
+
+        };
+    }
+
+    function move0(ev,mvfn)
+    {
+        var ev = ev || window.event;
+        var disX = ev.clientX;
+        var disY = ev.clientY;
+
+        document.onmousemove = function(ev){
+            var ev = ev || window.event;
+            mvfn(ev.clientX - disX,ev.clientY - disY);
+            disX = ev.clientX;disY = ev.clientY;
+
+        };
+        document.onmouseup = function(){
+            document.onmousemove = null;
+        };
+        return false;
+    }
+
+    function move1(ev,mvfn)
+    {
+        var disX = ev.changedTouches[0].clientX;
+        var disY = ev.changedTouches[0].clientY;
+        document.ontouchmove = function(ev){
+
+            mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+            disX = ev.changedTouches[0].clientX;
+            disY = ev.changedTouches[0].clientY;
+
+        };
+        document.ontouchend = function(){
+            document.ontouchstart = null;
+            document.ontouchmove = null;
+        };
+        return false;
+    }
+
+
+</script>
+</html>

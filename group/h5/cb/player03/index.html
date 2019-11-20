@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>念经璧</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: url("http://ww2.sinaimg.cn/woriginal/68d84d6dgw1eurpvggj66j21kw1esb29.jpg");
+			/*background: url("../weizhu01/imgs/cbbg.jpg");*/
+			font-family:"楷体";
+        }
+        ul{
+            width: 300px;
+            height: 300px;
+            /*background-color: red;*/
+            position: absolute;
+            top: 320px;
+            left: 50%;
+            margin-left:-150px;
+            transform-style: preserve-3d;
+			-webkit-transform-style: preserve-3d;
+			-ms-transform-style: preserve-3d;
+            /*transform: rotateX(-10deg);*/
+            animation: limove 12s linear 0s infinite normal;
+			-webkit-animation: limove 12s linear 0s infinite normal;
+			-ms-animation: limove 12s linear 0s infinite normal;
+        }
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            font-size: 20px;
+            position: absolute;
+			text-align: center;
+			color: #fff;
+            left: 50px;
+            top: 50px;
+            background-color: black;
+        }
+
+        ul li img{
+            width: 200px;
+            height: 200px;
+            border: 1px solid white;
+            box-sizing: border-box;
+        }
+        ul:hover li img{
+            opacity: 0.5;
+        }
+        ul li:hover img{
+            opacity: 1;
+        }
+        #miao{
+            width: 360px;
+            height: 520px;
+            /*background: url("miao.png") no-repeat;*/
+            /*background-size:cover;*/
+            bottom: 50px;
+            position: absolute;
+            left: 50%;
+            margin-left:-180px;
+            animation: nomove 12s linear 0s infinite normal;
+			-webkit-animation: nomove 12s linear 0s infinite normal;
+			-ms-animation: nomove 12s linear 0s infinite normal;
+        }
+        @keyframes limove {
+            from{
+                transform: rotateX(-10deg) rotateY(0deg);
+            }
+            to{
+                transform: rotateX(-10deg) rotateY(360deg);
+            }
+        }
+		
+		@-webkit-keyframes limove {
+            from{
+                -webkit-transform: rotateX(-10deg) rotateY(0deg);
+            }
+            to{
+                -webkit-transform: rotateX(-10deg) rotateY(360deg);
+            }
+        }
+		
+		@-ms-keyframes limove {
+            from{
+                -ms-transform: rotateX(-10deg) rotateY(0deg);
+            }
+            to{
+                -ms-transform: rotateX(-10deg) rotateY(360deg);
+            }
+        }
+
+        @keyframes nomove {
+            from{
+                transform: rotateX(0deg) rotateY(360deg);
+            }
+            to{
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+        }
+		
+		@-webkit-keyframes nomove {
+            from{
+                -webkit-transform: rotateX(0deg) rotateY(360deg);
+            }
+            to{
+                -webkit-transform: rotateX(0deg) rotateY(0deg);
+            }
+        }
+		
+		@-ms-keyframes nomove {
+            from{
+                -ms-transform: rotateX(0deg) rotateY(360deg);
+            }
+            to{
+                -ms-transform: rotateX(0deg) rotateY(0deg);
+            }
+        }
+		
+        #play {
+
+            width: 640px;
+            height: 230px;
+            position: absolute;
+            top: 670px;
+            left: 50%;
+            margin-left:-320px;
+
+            background:  no-repeat rgba(8, 7, 30, 0.5);
+            background-position:0px 30px;
+            /*display:none;*/
+            visibility:hidden;
+            text-align: center;
+            color: #fff;
+
+        }
+
+        #word{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            height: auto;
+            background-position: center center;
+            background:  fixed center center no-repeat;
+            background-size: cover;
+            width: 100%;
+        }
+
+
+        #div0{
+            height:40px;
+            /*background-image: url(div1.png);*/
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            color:white;
+            position:relative;
+            margin:0 auto;
+            font-size:16px;
+            width: 100%;
+        }
+		#div1{ 
+			width:640px; 
+			height:20px; 
+			border-top:1px solid #888;
+			border-bottom:1px dashed #ccc;
+			color:white;
+			top:20px;
+			position:absolute;
+			margin:0 auto;
+		}
+        #div2{
+            width:20px;
+            height:20px;
+			cursor: pointer;
+			color:#0ff;
+            /*background-color:rgba(255,255,255,0.8);*/
+            position:absolute;
+            left:0;
+        }
+
+        #footer{
+            width:300px;
+            position:absolute;
+            text-align: center;
+            left:50%;
+            margin-left: -150px;
+            top:920px;
+        }
+        #pauseplay{
+            cursor: pointer;
+            position: absolute;
+			color:#0ff;
+            left: 0px;
+            top:0px;
+        }
+        #hide{
+            cursor: pointer;
+            position: absolute;
+			color:#0ff;
+            right: 0px;
+            top:0px;
+        }
+        a{
+            color: #86e29f;
+            font-size:24px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<ul>
+    <img id="miao" src="pic/miao.png" alt="miao">
+    <!--li><img src="https://wx3.sinaimg.cn/mw1024/68d84d6dgy1fwqjdpj55qj20yi0pub29.jpg" alt="王风 • 黍离" music="music/bsll.mp3" pic="pic/bsll.png">王风 • 黍离</li>
+	<li><img src="https://wxt.sinaimg.cn/thumb300/68d84d6dly1frar1gzng3j215m0ro4h3.jpg" alt="秦风 • 蒹葭" music="music/jjcc.mp3" pic="pic/jjcc.png">秦风 • 蒹葭</li>
+    <li><img src="https://ww2.sinaimg.cn/mw690/68d84d6djw1ef0ofsk6n0j20zk0z519o.jpg" alt="晴日共剪窗" music="../player01/0.mp3" pic="pic/word.png">晴日共剪窗</li>    
+    <li><img src="https://wxt.sinaimg.cn/mw1024/68d84d6dgy1fsgs3syadnj21ls1591at.jpg" alt="卫风 • 木瓜" music="music/twymg.mp3" pic="pic/twymg.png">卫风 • 木瓜</li>
+    <li><img src="https://wx1.sinaimg.cn/mw690/68d84d6dly1ff67mqlv8xj21bf0qoqj4.jpg" alt="周南 • 关雎" music="music/ggjj.mp3" pic="pic/ggjj.png">周南 • 关雎</li>
+    <li><img src="https://ww3.sinaimg.cn/mw690/68d84d6dgw1f2zfpv2dfxj20qo0qo4b7.jpg" alt="小雅 • 鹿鸣" music="music/yylm.mp3" pic="pic/yylm.png">小雅 • 鹿鸣</li>
+    <li><img src="https://wx1.sinaimg.cn/mw690/68d84d6dgy1ftzxqend9ij20ti0ti7ja.jpg" alt="郑风 • 子衿" music="music/qqzj.mp3" pic="pic/qqzj.png">郑风 • 子衿</li>
+    <li><img src="https://wxt.sinaimg.cn/thumb300/68d84d6dly1fsat5ch2zwj20v80ksqqi.jpg" alt="周南 • 桃夭" music="music/tzyy.mp3" pic="pic/tzyy.png">周南 • 桃夭</li-->
+	<li><img src="pic/01.jpg" alt="王风 • 黍离" music="music/bsll.mp3" pic="pic/bsll.png">王风 • 黍离</li>
+	<li><img src="pic/02.jpg" alt="秦风 • 蒹葭" music="music/jjcc.mp3" pic="pic/jjcc.png">秦风 • 蒹葭</li>
+    <li><img src="pic/03.jpg" alt="晴日共剪窗" music="../player01/0.mp3" pic="pic/word.png">晴日共剪窗</li>    
+    <li><img src="pic/04.jpg" alt="卫风 • 木瓜" music="music/twymg.mp3" pic="pic/twymg.png">卫风 • 木瓜</li>
+    <li><img src="pic/05.jpg" alt="周南 • 关雎" music="music/ggjj.mp3" pic="pic/ggjj.png">周南 • 关雎</li>
+    <li><img src="pic/06.jpg" alt="小雅 • 鹿鸣" music="music/yylm.mp3" pic="pic/yylm.png">小雅 • 鹿鸣</li>
+    <li><img src="pic/07.jpg" alt="郑风 • 子衿" music="music/qqzj.mp3" pic="pic/qqzj.png">郑风 • 子衿</li>
+    <li><img src="pic/08.jpg" alt="周南 • 桃夭" music="music/tzyy.mp3" pic="pic/tzyy.png">周南 • 桃夭</li>
+
+</ul>
+<div id="play">
+    <div id="div0">
+        <audio id="v1" music="">
+            <source src=""></source>
+        </audio>
+        <div id="pauseplay">▶</div>
+        <div id="hide">X</div>
+        <div id="div1"><div id="div2">▼</div></div>
+        <div id="info" alt="">请选择</div>
+    </div>
+</div>
+<!--<audio src="images/miao.mp3" autoplay="autoplay" loop="loop"></audio>-->
+<div id="footer"><a href="http://yuerpatio.com/">返回主页</a></div>
+</body>
+<script>
+    window.onload=function(){
+        var oUl=document.getElementsByTagName('ul');
+        var oLi=oUl[0].getElementsByTagName("li");
+        var oV = document.getElementById('v1');
+        var oMiao=document.getElementById('miao');
+        var oInfo=document.getElementById('info');
+        var oPlay=document.getElementById('play');
+        var oDiv1 = document.getElementById('div1');
+        var oDiv2 = document.getElementById('div2');
+        var oPauseplay = document.getElementById('pauseplay');
+        var oHide = document.getElementById('hide');
+		
+		/* preload */
+		var newimages=[];
+		function preloadimages(arr){
+			
+			var arr=(typeof arr!="object")? [arr] : arr  ;
+			for (var i=0; i<arr.length; i++){
+				newimages[i]=new Image();
+				newimages[i].src=arr[i];
+			}
+		}		
+		preloadimages(['pic/miao1.png', 'pic/miao.png']);
+		/*function getImg(str){
+			for (var i=0; i<newimages.length; i++){		
+				if(newimages[i].src==str) return newimages[i].src;
+			}
+			return "";
+		}*/
+		
+		/***************************************/
+
+        oPauseplay.onclick = function(){
+            playPause();
+        };
+
+        for (var i=0;i<oLi.length;i++) {
+            var sizez=300; if(IsPC()) sizez=400;
+            oLi[i].style.cssText="transform: rotateY("+(360/oLi.length)*i+"deg) translateZ("+sizez+"px);"+
+			"-webkit-transform: rotateY("+(360/oLi.length)*i+"deg) translateZ("+sizez+"px);"+
+			"-ms-transform: rotateY("+(360/oLi.length)*i+"deg) translateZ("+sizez+"px);";
+            (function(x){
+                oLi[x].onmouseover=function(){
+                    //oInfo.innerHTML=oLi[x].children[0].alt;
+                    //oInfo.alt=oLi[x].children[0].alt;
+
+                }
+                oLi[x].onclick=function(){
+					oInfo.innerHTML=oLi[x].children[0].alt;
+                    oInfo.alt=oLi[x].children[0].alt;
+                    oPlay.style.background='url('+oLi[x].children[0].attributes["pic"].nodeValue+') 0px 50px no-repeat rgba(8, 7, 30, 0.5)';
+                    //alert(oV.src);
+					oPlay.style.visibility= "visible";
+                    if(oV.attributes["music"].nodeValue != oLi[x].children[0].attributes["music"].nodeValue) {						
+                        oV.attributes["music"].nodeValue=oLi[x].children[0].attributes["music"].nodeValue;
+                        oV.src = oLi[x].children[0].attributes["music"].nodeValue;
+                        oV.load();
+                    }
+
+                    playPause();
+
+                }
+            })(i);
+
+        }
+
+
+        //var animateStop=false;
+       // var timer1 = null;
+        oUl[0].onmouseover = function(){
+           // animateStop=true;
+            oUl[0].style.animationPlayState="paused";
+            oMiao.style.animationPlayState="paused";
+            //oPlay.style.visibility= "visible";
+            //timer1 = setInterval(animateRun,1000);
+           // oMiao.src="miao1.png";
+        };
+
+        var zaYanct=0;
+        setInterval(function () {
+            zaYanct++;
+            if(zaYanct%10==0) oMiao.src="pic/miao1.png";
+            if(zaYanct%10==1) oMiao.src="pic/miao.png";
+        }, 200);
+
+
+//        oUl[0].onmouseout = function(){
+//            //animateRun();
+//        };
+        //oMiao.onmouseover =
+        //oPlay.onmouseleave 
+		oUl[0].onmouseout = function(){
+            //oPlay.style.visibility="hidden";
+            animateRun();
+        };
+
+		oHide.onclick = function () {
+            oPlay.style.visibility="hidden";
+        };
+
+		oPlay.onmouseout = function(){
+			//oPlay.style.visibility="hidden";
+		};
+		
+        function animateRun() {
+
+            //oPlay.style.visibility="hidden";
+            oUl[0].style.animationPlayState="running";
+            oMiao.style.animationPlayState="running";
+        }
+
+//        oDiv1.onclick = function(){
+//            playPause();
+//        };
+
+
+		oDiv1.ontouchend = function(ev){
+			
+			var touchs = ev.changedTouches[0];
+			var disX = touchs.clientX  - oPlay.offsetLeft-0.5*oDiv1.offsetHeight;
+			//document.getElementById('info1')=disX;
+			//oDiv2.style.left = disX + 'px';
+			setBar(disX);
+			
+		};
+		
+		oDiv1.onclick = function(ev){
+			var ev = ev || window.event;
+			
+			var disX = ev.clientX - oPlay.offsetLeft-0.5*oDiv1.offsetHeight;
+			//document.title=disX;
+			//oDiv2.style.left = disX + 'px';
+			setBar(disX);
+		};
+
+        oDiv2.onmousedown = function(ev){
+            var ev = ev || window.event;
+            disX = ev.clientX - oDiv2.offsetLeft;
+
+            document.onmousemove = function(ev){
+                var ev = ev || window.event;
+                var L = ev.clientX - disX;
+                setBar(L);
+
+            };
+            document.onmouseup = function(){
+                document.onmousemove = null;
+            };
+            return false;
+        };
+
+        function setBar(L){
+
+            if(L<0){
+                L = 0;
+            }
+            else if(L>oDiv1.offsetWidth - oDiv2.offsetWidth){
+                L = oDiv1.offsetWidth - oDiv2.offsetWidth;
+            }
+            oDiv2.style.left = L + 'px';
+            var scale = L/(oDiv1.offsetWidth - oDiv2.offsetWidth);
+            oV.currentTime = scale * oV.duration;
+            nowTime();
+
+        }
+
+
+        function nowTime(){
+
+            if( oV.paused ) oInfo.innerHTML="暂停中：";
+            else {oInfo.innerHTML="播放中：";}
+            oInfo.innerHTML+=(oInfo.alt+" "+changeTime(oV.currentTime));
+            var scale = oV.currentTime/oV.duration;
+
+            oDiv2.style.left = scale * (oDiv1.offsetWidth-oDiv1.offsetHeight) + 'px';
+            if(scale==1)
+            {
+                oV.pause();
+                oInfo.innerHTML= oInfo.alt;
+				oPauseplay.innerHTML="▶";
+            }
+
+        }
+
+        function playPause(){
+            if( oV.paused ){
+                oV.play();
+                oInfo.innerHTML=oInfo.alt;
+                oPauseplay.innerHTML="█";
+                nowTime();
+                timer = setInterval(nowTime,1000);
+                oInfo.innerHTML="播放中：";
+            }
+            else{
+                oV.pause();
+                oInfo.innerHTML="暂停中：";
+                oPauseplay.innerHTML="▶";
+                clearInterval(timer);
+            }
+            oInfo.innerHTML+=(oInfo.alt+" "+changeTime(oV.currentTime));
+        }
+
+        function changeTime(iNum){
+
+            iNum = parseInt( iNum );
+
+            var iH = toZero(Math.floor(iNum/3600));
+            var iM = toZero(Math.floor(iNum%3600/60));
+            var iS = toZero(Math.floor(iNum%60));
+
+            return iM + ':' + iS;
+
+        }
+
+        function toZero(num){
+            if(num<=9){
+                return '0' + num;
+            }
+            else{
+                return '' + num;
+            }
+        }
+
+        function IsPC() {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+            var flag = true;
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+
+
+    };
+
+
+</script>
+</html>

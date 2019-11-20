@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.33,maximum-scale=0.5, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
+	<script src="../../main/js/jquery-3.3.1.min.js"></script>
+	<script src="../../main/js/vue.min.js"></script>
+	<script src="book.js"></script>
+	<style>
+		[v-cloak] {display:none;}
+	</style>
+	<title>书卷集</title>
+
+</head>
+
+<body >
+	<div id="main"v-cloak>
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+		<div v-if="depth==0">
+			<div class="title" align="center">书卷总目</div><br/>			
+			<span v-for="(item,i) in book" >
+				<div v-if="i==0 || book[i].B_FILE.substring(0,book[i].B_FILE.lastIndexOf('/'))!=book[i-1].B_FILE.substring(0,book[i].B_FILE.lastIndexOf('/'))" id="family"><br/>
+					{{book[i].B_FILE.substring(0,book[i].B_FILE.lastIndexOf('/'))}}<br/><br/></div>
+				<a v-if="item.B_EVAL!=''" @click.prevent="getBook(i)" style="cursor:pointer">{{item.B_NAME}}</a>
+				<span v-if="item.B_EVAL==''" @click.prevent="getBook(i)">{{item.B_NAME}}</span>
+			</span>
+			<br/>
+		</div>
+		<div v-if="depth==1">
+			<div class="title" align="center">{{book[bookindex].B_NAME}}</div><br/>
+			<span v-if="text=='' && book[bookindex].B_EVAL!=''">加载中...</span>
+			<span v-if="(text!='' && text.length<200) || book[bookindex].B_EVAL==''">百度百科：<a :href="'https://baike.baidu.com/item/' + book[bookindex].B_NAME.split('《')[1].split('》')[0]">
+				{{book[bookindex].B_NAME.split('《')[1].split('》')[0]}}</a></span>
+			<div v-for="(item,i) in subinfo" @click.prevent="getZhang(i)" style="cursor:pointer">{{item.title}}</div><br/>
+		</div>
+		<div v-if="depth==2">
+			<div>{{book[bookindex].B_NAME}}</div><br/>
+			<div v-html="zhang"></div>
+		</div>
+		<br/><br/>
+		<div align="center">
+			<a v-if="depth==2 && zhangindex>0" @click.prevent="getZhang(zhangindex-1)" style="cursor:pointer">◀</a>
+			<a v-if="depth==2" @click.prevent="depth=1" style="cursor:pointer">返回本书目录</a>
+			<a v-if="depth==2 && zhangindex<subinfo.length-1" @click.prevent="getZhang(zhangindex+1)" style="cursor:pointer">▶</a>
+			<a v-if="depth==1" @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
+			<a v-if="depth==0" href="../../index.html" style="cursor:pointer">返回主页</a>
+		</div>
+		<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br/><br/>
+	</div>
+
+</body>
+<script>
+
+var vm = new Vue({
+    el: '#main',
+    data: {
+        depth:0,book:book,
+		bookindex:0,zhangindex:0,
+		text:"",subinfo:[],zhang:"",
+	},
+
+	created: function created() {
+		book.sort(function (a, b) {return a.B_NAME.localeCompare(b.B_NAME);});
+        book.sort(function (a, b) {return a.B_FILE.substring(0,a.B_FILE.lastIndexOf('/')).localeCompare(b.B_FILE.substring(0,b.B_FILE.lastIndexOf('/')));});
+    },
+
+    methods: {
+        getZhang: function getZhang(i) {
+			this.depth=2;this.zhangindex=i;
+			this.zhang=this.text.substring(this.subinfo[i].start,this.subinfo[i].start+this.subinfo[i].length).replace(/\r\n/g,"<br/>");
+        },
+
+        getBook: function getBook(index) {
+            this.bookindex=index;this.depth=1; 
+			this.subinfo=[];this.text="";
+			if(this.book[index].B_EVAL=="") return;
+            this.loadBook("file/"+this.book[index].B_FILE);
+        },
+
+        setBook: function setBook() {
+            let line=""; let substart=0; let sublength=0;  let subtitle=0;
+            for(let i=0;i<this.text.length;i++) {
+                line+=this.text[i];
+                if(this.text[i]=="\n") {
+                    if(eval(book[this.bookindex].B_EVAL)){
+                        sublength=i-line.length-substart+1;
+                        if(subtitle) this.subinfo.push({'start':substart,'length':sublength,'title':subtitle});
+                        substart=i-line.length+1;
+                        subtitle=line.replace(/(^\s*)|(\s*$)/g, "").replace(/　/g, " ");
+                    }
+                    line="";
+                }
+            }
+            sublength=this.text.length-substart;
+            this.subinfo.push({'start':substart,'length':sublength,'title':subtitle});
+            //console.log(this.subinfo)
+        },
+
+        loadBook: function load(name) {
+			let _this=this; 
+			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
+				//console.log("aa")
+				$.ajax({
+					url: name,
+					success: function(data, status) {
+						_this.text=data;
+						_this.setBook();
+					},
+					error: function(data, status) {
+						_this.text='出错了,Err：' + JSON.stringify(arguments);
+					}
+				});				
+			}
+			else{
+				//console.log("bb")
+				let xhr = new XMLHttpRequest()			
+				xhr.open('GET', name, true);
+				xhr.overrideMimeType("text/html;charset=utf-8");//默认utf-8
+				xhr.send();				
+				xhr.onreadystatechange = function() {
+					if ( xhr.readyState == 4 ) {
+						if ( xhr.status == 200 ) {
+							_this.text=xhr.responseText;
+							_this.setBook();
+						}
+						else _this.text='出错了,Err：' + xhr.status;																				
+					}
+				}				
+			}			
+		},
+
+	}
+});
+</script>
+</html>

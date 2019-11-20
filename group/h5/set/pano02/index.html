@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<head>
+    <script src="../../../../main/js/css3d.js"></script>
+    <style>
+        #main {
+            width: 500px;
+            width: 500px;
+        }
+    </style>
+	<title>古观象台</title>
+</head>
+<body>
+
+<div id="main">
+
+</div>
+<script>
+    //创建场景
+    var s = new C3D.Stage();
+    s.size(window.innerWidth, window.innerHeight).material({
+        color: "#cccccc"
+    }).update();
+    document.getElementById('main').appendChild(s.el);
+
+    //创建第1个立方体放入场景
+    var land = new C3D.Skybox();
+    land.size(3580).position(0, 0, 0).id("land").material({
+        front: {image: "img/land/pano_f.png"},
+        back: {image: "img/land/pano_b.png"},
+        left: {image: "img/land/pano_l.png"},
+        right: {image: "img/land/pano_r.png"},
+        up: {image: ""},
+        down: {image: "img/land/pano_d.jpg"},
+
+    }).update();
+    s.addChild(land);
+	
+	//创建第2个立方体放入场景
+    var sky = new C3D.Skybox();
+    sky.size(3580).position(0, 0, 0).id("sky").scale(2, 2, 2).material({
+        front: {image: "img/sky/pano_f.jpg"},
+        back: {image: "img/sky/pano_b.jpg"},
+        left: {image: "img/sky/pano_l.jpg"},
+        right: {image: "img/sky/pano_r.jpg"},
+        up: {image: "img/sky/pano_u.jpg"},
+        down: {image: "img/sky/pano_d.jpg",id:"222"},
+
+    }).update();
+    s.addChild(sky);
+
+	//var skylock=true;
+	//document.getElementById("land").lastChild.onclick=function(){skylock=!skylock;}
+	var oLand = document.getElementById("land").getElementsByTagName('div');
+	for(var i=0; i<oLand.length;i++){
+		oLand[i].style.backgroundRepeat="no-repeat";
+	}
+	var oSky = document.getElementById("sky").getElementsByTagName('div');
+	for(var i=0; i<oLand.length;i++){
+		oSky[i].style.backgroundRepeat="no-repeat";
+	}
+
+
+
+	/*
+	var myp1 = new C3D.Plane();
+	myp1.size(3584).name('myp1').position(230, -576, 1052).rotation(0, 180, 0).material({image: 'img/land/pano_f.jpg',width: '31px',height: '44px',}).update();
+	mysp.addChild(myp1);*/
+		
+		
+    //响应屏幕调整尺寸
+    function resize() {
+        s.size(window.innerWidth, window.innerHeight).update();
+    }
+
+    window.onresize = function () {
+        resize();
+    };
+    resize();
+
+    //刷新场景
+    requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame ||
+            function (callback) {
+                setTimeout(callback, 1000 / 60);
+            };
+
+	var mousemoving=false;
+    function go() {
+		if(!mousemoving){
+			sky.rotate(0.02, 0, 0).updateT();
+			requestAnimationFrame(go);
+		}
+    }
+	requestAnimationFrame(go);
+	
+	var oMain=document.getElementById('main');
+	oMain.onmousedown = function(ev){
+		return move0(ev,move);
+	};
+	
+	oMain.ontouchstart = function(ev){
+		return move1(ev,move);
+	};
+	
+	function move(a,b)
+	{
+		//if(skylock)land.rotate(b*0.1, -a*0.1, 0).updateT();
+		//if(!skylock)sky.rotate(b*0.1, b*0.1, 0).updateT();
+		land.rotate(b*0.1, -a*0.1, 0).updateT();
+		sky.rotate(b*0.1, -a*0.1, 0).updateT();
+		//sky.rotate(b*0.1, b*0.12, 0).updateT();
+		
+	}
+
+
+	function move0(ev,mvfn)
+	{
+		var ev = ev || window.event;
+		var disX = ev.clientX;
+		var disY = ev.clientY;
+		
+		document.onmousemove = function(ev){
+			mousemoving=true;
+			var ev = ev || window.event;				
+			mvfn(ev.clientX - disX,ev.clientY - disY);
+			disX = ev.clientX;disY = ev.clientY;
+			
+		};
+		document.onmouseup = function(){
+			mousemoving=false;
+			requestAnimationFrame(go);
+			document.onmousemove = null;
+		};
+		return false;
+	}
+
+	function move1(ev,mvfn)
+	{
+		var disX = ev.changedTouches[0].clientX;	
+		var disY = ev.changedTouches[0].clientY;	
+		document.ontouchmove = function(ev){			
+			mousemoving=true;
+			mvfn(ev.changedTouches[0].clientX - disX,ev.changedTouches[0].clientY - disY);
+			disX = ev.changedTouches[0].clientX;
+			disY = ev.changedTouches[0].clientY;
+			
+		};
+		document.ontouchend = function(){	
+			mousemoving=false;	
+			requestAnimationFrame(go);			
+			document.ontouchstart = null;
+			document.ontouchmove = null;
+		};
+		return false;
+	}
+
+
+</script>
+</body>
