@@ -278,7 +278,7 @@ div > input:checked ~ article {
 		<div class="minfo" v-html="svg[getId(c)].info"></div>
 		<div v-if="c=='box'" class="enter"><a href="main/index.html">主目录</a></div>
 		<div v-if="c!='box'" class="enter">
-			<a :href="'group/'+svg[getId(c)].tag+'/index.html'">进入分卷</a>
+			<a :href="'group/'+svg[getId(n)].tag+'/index.html'">进入分卷</a>
 		</div>
 		 <form>
 			<div v-for="(item,i) in svg" v-if="i!=0">
