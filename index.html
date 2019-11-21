@@ -14,9 +14,9 @@ body{
 }
 form { 
     position: relative; 
-    left:calc(50% - 525px);
+    left:calc(50% - 340px);
 	top:20px;
-    width: 1219px; 
+    width: 849px; 
     height: 390px;
 	display: inline-block;
 	overflow: hidden;
@@ -88,8 +88,8 @@ article p {
     font-family: 宋体;
     font-size: 18px;
     line-height: 18px;
-    width: 554px;    
-    padding: 20px 40px;
+    width: 220px;   /**/ 
+    padding: 20px 23px;
 	
 }
 
@@ -103,7 +103,7 @@ article div {
 }
 
 div > input:checked ~ article { 
-	width: 624px; 
+	width: 254px; /**/ 
 	opacity: 1; 
 	background-repeat: no-repeat;
 }
@@ -121,13 +121,13 @@ div > input:checked ~ article {
 	width:108px;
 	height:42px;
 	line-height:42px;
-	bottom:28px;
+	bottom:43px;
 	-webkit-transition: bottom .25s linear; 
     transition: bottom .25s linear; 
 }
 
 #info a:hover,article a:hover { 
-	bottom:35px;
+	bottom:50px;
 }
 
 #img{
@@ -152,7 +152,7 @@ div > input:checked ~ article {
 #info{
 	position:relative;
 	left:453px;
-	width: 600px;
+	width: 230px; /**/ 
 	height:390px;
 	background: url(main/img/bg03.png) no-repeat center;
 	/*z-index:-1;*/
@@ -199,7 +199,7 @@ div > input:checked ~ article {
 	form { 
 		top:90px;
 		left:calc(50% - 219px);
-		width: 494px; 
+		width: 440px; 
 		height:280px;
 	}
 
@@ -275,7 +275,7 @@ div > input:checked ~ article {
 				</g>
 			</svg>
 		</div>
-		<div class="minfo" v-html="svg[getId(c)].info"></div>
+		<div class="minfo" v-html="svg[getId(c)].info.replace(/<br>/g,'').replace(/<rn>/g,'<br>')"></div>
 		<div v-if="c=='box'" class="enter"><a href="main/index.html">主目录</a></div>
 		<div v-if="c!='box'" class="enter">
 			<a :href="'group/'+svg[getId(n)].tag+'/index.html'">进入分卷</a>
@@ -293,7 +293,7 @@ div > input:checked ~ article {
 				</label>
 				<article>
 					</br></br><div>{{item.title}}</div></br></br>
-					<p style="text-align:center;" v-html="item.info"></p>
+					<p style="text-align:center;" v-html="item.info.replace(/<rn>/g, '')"></p>
 					<a :href="'group/'+item.tag+'/index.html'">进入分卷</a>
 				</article>
 			</div>
@@ -306,23 +306,18 @@ div > input:checked ~ article {
 
 </body>
 <script>
-
-
 document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/560+",maximum-scale=1, user-scalable=no"; 
-
 var svg=[
 {title:"魚院",tag:"box",info:"目录"},
-{title:"书卷集",tag:"book",info:"古今之书，搜集于此<br>有目无书"},
-{title:"画卷集",tag:"paint",info:"大师的画作有些多，记不住。整理了些，搁这了。<br>可简单筛选，随便翻翻便好"},
-{title:"本草集",tag:"drug",info:"资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！"},
-{title:"百鸟集",tag:"bird",info:"水积而鱼聚，木茂而鸟集。<br>天上，水上，丛莽间，凡有见者，皆以志之"},
-{title:"百物卷",tag:"photo",info:"小虫 小树 小盆<br>小喵 小贝壳 小果果 小星"},
-{title:"全景卷",tag:"pano",info:"俺画的以及拍的一些<br>喵~"},
-{title:"绘画页",tag:"mypaint",info:"俺画的以及临摹的一些<br>喵~"},
-{title:"设计页",tag:"h5",info:"html5 svg<br>古画 动图 交互"},
+{title:"书卷集",tag:"book",info:"古今之书，搜集于此<rn><br>有目无书"},
+{title:"画卷集",tag:"paint",info:"大师画作有些多，记不住；<br>整理了些，<rn>搁这了；<br>可简单筛选，<br>随便翻翻便好"},
+{title:"本草集",tag:"drug",info:"资料参考《中国药典》、<br>百度百科等。<rn><br>仅供交流学习，<br>求医问药慎参考！"},
+{title:"百鸟集",tag:"bird",info:"水积而鱼聚，木茂而鸟集。<rn><br>天上，水上，丛莽间，<br>凡有见者，皆以志之。"},
+{title:"百物卷",tag:"photo",info:"小虫 小树 小盆<rn><br>小喵 小贝壳 <br>小果果 小星"},
+{title:"全景卷",tag:"pano",info:"俺画的<br>以及<rn>拍的一些 <br>喵喵喵~"},
+{title:"绘画页",tag:"mypaint",info:"俺画的<br>以及<rn>临摹的一些 <br>喵喵喵~"},
+{title:"设计页",tag:"h5",info:"html5 svg<rn><br>古画 动图 交互"},
 ];
-
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('E P=W X({Y:\'#P\',Q:{p:0,b:U,O:Z,c:"",n:"",t:"",4:4,S:14,},R:e R(){5.c=5.n="15";7 4=5.4;E a=5;$(\'#Q\').N("g").T(e(j){7 u=$(5).r("9");9=a.o(u);4[9].4=[];4[9].s=[];$("#"+u).N("13").T(e(i){7 y=$(5).r("11").12(/,/g," ").K(\' \');7 F=[];w(7 8=0;8<y.q;8++)F.10(y[8]);4[9].s[i]=[];4[9].4[i]=[];4[9].4[i]=F;f($(5).r("x"))4[9].s[i]=$(5).r("x").K(\'#\')[1];D 4[9].s[i]="17";f(4[9].s[i].q<6)4[9].s[i]=4[9].s[i][0]+"0"+4[9].s[i][1]+"0"+4[9].s[i][2]+"0"})})},V:{o:e o(G){l 5.4.18(e 1k(I){l I.u==G})},L:e L(i){7 c=5.o(5.c);7 n=5.o(5.n);7 b=5.b;7 d=(5.p%(b+1))/b;7 h="";7 4=5.4;w(7 8=0;8<4[n].4[i].q;8++){f(8>=4[c].4[i].q){f(8%2==0)h+=((1-d)*4[c].4[i][0]+d*4[n].4[i][8]);D h+=((1-d)*4[c].4[i][1]+d*4[n].4[i][8])}D h+=((1-d)*4[c].4[i][8]+d*4[n].4[i][8]);h+=" "}l h},H:e H(i){7 c=5.o(5.c);7 n=5.o(5.n);7 b=5.b;7 d=(5.p%(b+1))/b;7 m=[];7 4=5.4;w(7 k=0;k<3;k++){m[k]=C((1-d)*C(4[c].s[i].J(k*2,2),16)+d*C(4[n].s[i].J(k*2,2),16)).1l(16);f(m[k].q==1)m[k]="0"+m[k]}l"1j:#"+m[0]+m[1]+m[2]},M:e M(i,A){7 h="";7 4=5.4;w(7 8=0;8<4[i].4[A].q;8++)h+=4[i].4[A][8]+" ";l h},z:e z(v){$("#1c").r("x","1d:1b;");$("19>1a").1h("1i");f(v==5.n)l;f(5.p!=0){5.t=v;l}5.n=v;7 a=5;E B=1g(e(){7 b=a.b;f(a.S)l;a.p++;f(a.p>b){a.p=0;a.c=a.n;1e(B);B=1f;f(a.t!=""){a.z(a.t);a.t=""}}},5.O)}}});',62,84,'||||svg|this||let|tmpi|id|_0|stepall||step|function|if||pinfo|||ci|return|color||getId|ct|length|attr||nn|tag|next|for|style|tmp|changeSVG|index|interval|parseInt|else|var|tmp1|name|getStyle|obj|substr|split|getPoints|getPointsOnly|find|frame|all|data|created|stop|each|60|methods|new|Vue|el|24|push|points|replace|polygon|false|box||000000|findIndex|label|div|none|info|display|clearInterval|null|setInterval|removeClass|lightall|fill|objFn|toString'.split('|'),0,{}))
-
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('E M=1i V({12:\'#M\',O:{o:0,b:Y,H:U,c:"",n:"",u:"",4:4,I:10,},S:f S(){5.c=5.n="13";7 4=5.4;E a=5;$(\'#O\').P("g").R(f(j){7 w=$(5).t("9");9=a.p(w);4[9].4=[];4[9].s=[];$("#"+w).P("W").R(f(i){7 y=$(5).t("X").14(/,/g," ").G(\' \');7 z=[];r(7 8=0;8<y.q;8++)z.Z(y[8]);4[9].s[i]=[];4[9].4[i]=[];4[9].4[i]=z;d($(5).t("C"))4[9].s[i]=$(5).t("C").G(\'#\')[1];x 4[9].s[i]="11";d(4[9].s[i].q<6)4[9].s[i]=4[9].s[i][0]+"0"+4[9].s[i][1]+"0"+4[9].s[i][2]+"0"})})},T:{p:f p(L){r(7 i=0;i<5.4.q;i++)d(5.4[i].w==L)m i;m-1},K:f K(i){7 c=5.p(5.c);7 n=5.p(5.n);7 b=5.b;7 e=(5.o%(b+1))/b;7 h="";7 4=5.4;r(7 8=0;8<4[n].4[i].q;8++){d(8>=4[c].4[i].q){d(8%2==0)h+=((1-e)*4[c].4[i][0]+e*4[n].4[i][8]);x h+=((1-e)*4[c].4[i][1]+e*4[n].4[i][8])}x h+=((1-e)*4[c].4[i][8]+e*4[n].4[i][8]);h+=" "}m h},N:f N(i){7 c=5.p(5.c);7 n=5.p(5.n);7 b=5.b;7 e=(5.o%(b+1))/b;7 l=[];7 4=5.4;r(7 k=0;k<3;k++){l[k]=A((1-e)*A(4[c].s[i].J(k*2,2),16)+e*A(4[n].s[i].J(k*2,2),16)).1e(16);d(l[k].q==1)l[k]="0"+l[k]}m"1g:#"+l[0]+l[1]+l[2]},Q:f Q(i,B){7 h="";7 4=5.4;r(7 8=0;8<4[i].4[B].q;8++)h+=4[i].4[B][8]+" ";m h},F:f F(v){$("#17").t("C","15:1d;");$("1c>1a").18("1b");d(v==5.n)m;d(5.o!=0){5.u=v;m}5.n=v;7 a=5;E D=19(f(){7 b=a.b;d(a.I)m;a.o++;d(a.o>b){a.o=0;a.c=a.n;1h(D);D=1f;d(a.u!=""){a.F(a.u);a.u=""}}},5.H)}}});',62,81,'||||svg|this||let|tmpi|id|_0|stepall||if|step|function||pinfo|||ci|color|return||ct|getId|length|for||attr|nn|next|tag|else|tmp|tmp1|parseInt|index|style|interval|var|changeSVG|split|frame|stop|substr|getPoints|name|all|getStyle|data|find|getPointsOnly|each|created|methods|24|Vue|polygon|points|60|push|false|000000|el|box|replace|display||info|removeClass|setInterval|div|lightall|label|none|toString|null|fill|clearInterval|new'.split('|'),0,{}))
 </script>
 </html>

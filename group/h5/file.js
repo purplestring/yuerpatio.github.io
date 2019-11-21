@@ -49,5 +49,6 @@
 {"TITLE":"主页DEMO","F_GROUP":"test","S_GROUP":"其它","F_NAME":"01/01vuec.html"},
 {"TITLE":"CCTV","F_GROUP":"test","S_GROUP":"其它","F_NAME":"cctv"},
 {"TITLE":"小圆点","F_GROUP":"test","S_GROUP":"其它","F_NAME":"points.html"},
+{"TITLE":"屏幕有效尺寸测试","F_GROUP":"test","S_GROUP":"其它","F_NAME":"screentest.html"},
 
 ];

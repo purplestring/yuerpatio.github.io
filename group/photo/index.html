@@ -35,7 +35,12 @@
 				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】<br><br></span>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				<br><img id='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
-				<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a></div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
+					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
+					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
+				</div>
 			</div>
 		</div>
 		<div id="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
