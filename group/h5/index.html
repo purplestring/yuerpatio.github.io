@@ -14,7 +14,11 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
 		<div id="all">		
-			<div class="title" align="center" @click.prevent="test=!test">设计页</div>		
+			<div class="title" align="center" @click.prevent="test=!test">设计页</div><br><br>
+			<div id="desc2">html5 svg 古画 动图 交互<br><br>
+				*此页作品仅供交流学习之用，<br>个别制作使用了小伙伴的插画、皂片以及文字<br>
+				如不愿出现在这或者变更，可<a href="https://weibo.com/u/5679301959">私信</a>俺哦。喵~<br><br>
+			</div>		
 			<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
 				<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" class="family"><br/><br/>{{groupname[item.F_GROUP]}}<br/></div>
 				<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】 </span>
@@ -25,7 +29,7 @@
 		<div align="center">
 			<a href="../../index.html" style="cursor:pointer">返回主页</a>
 		</div>
-		<div id="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
+		<div id="footer">Copyright © 2015~Now 鱼儿.</div><br/><br/>
 	</div>
 </body>
 <script>
