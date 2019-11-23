@@ -20,10 +20,10 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="id==-1">
-			<div id="title" align="center">鳥之册</div><br><br>
-			<div id="desc1">水积而鱼聚，木茂而鸟集。<br>
+			<div class="title" align="center">鳥之册</div><br><br>
+			<div class="desc1">水积而鱼聚，木茂而鸟集。<br>
 				天上，水上，丛莽间，凡有见者，皆以志之。</div><br>
-			<div id="desc2"><span style="color: darkcyan;">浅蓝链</span>主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
+			<div class="desc2"><span style="color: darkcyan;">浅蓝链</span>主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
 				转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br>			
 				 <span v-for="(item, i) in statename">
@@ -44,16 +44,16 @@
 			</span><br><br>
 		</div>
 		<div v-if="id>=0">
-			<br><br><div id='title' align='center'>{{list[id].wu}}<br><br></div>
+			<div class='title' align='center'>{{list[id].wu}}<br></div>
 			<div align='center'>
-			<a @click.prevent="preFamily()" style="cursor: pointer;">◀◀◀</a>
-			<a @click.prevent="prePic()" style="cursor: pointer;">◀◀</a>
-			<a @click.prevent="id=getPre(id)" style="cursor: pointer;">◀　</a>
-			【{{id+1}}】
-			<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶</a>	
-			<a @click.prevent="nextPic()" style="cursor: pointer;">▶▶</a>
-			<a @click.prevent="nextFamily()" style="cursor: pointer;">▶▶▶</a><br>
-				{{list[id].mu}}->{{list[id].ke}}->{{list[id].shu}}->{{list[id].wu}}<br><br>
+				<a @click.prevent="preFamily()" style="cursor: pointer;">◀◀◀</a>
+				<a @click.prevent="prePic()" style="cursor: pointer;">◀◀</a>
+				<a @click.prevent="id=getPre(id)" style="cursor: pointer;">◀　</a>
+				【{{id+1}}】
+				<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶</a>	
+				<a @click.prevent="nextPic()" style="cursor: pointer;">▶▶</a>
+				<a @click.prevent="nextFamily()" style="cursor: pointer;">▶▶▶</a><br>
+					{{list[id].mu}}->{{list[id].ke}}->{{list[id].shu}}->{{list[id].wu}}<br><br>
 			</div>
 			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br><br></span>
 			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br><br></span>
@@ -64,11 +64,11 @@
 			<span v-if="list[id].zu!=null">【脚】{{list[id].zu}}<br><br></span>
 			<span v-if="list[id].vo!=null">【声】{{list[id].vo}}<br><br></span>
 			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br><br></span>
-			<span v-if="list[id].pic!=null">【俺拍嗒】<br><img id='myimg' :src='"birds/"+list[id].pic'><br><br></span>
+			<span v-if="list[id].pic!=null">【俺拍嗒】<br><img class='myimg' :src='"birds/"+list[id].pic'><br><br></span>
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>	
-		<div v-if="id==-1" id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>		
-		<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
+		<div v-if="id==-1" class="ret"><a href="../../index.html"> ▶返回主页◀</a></div>		
+		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
 </body>
 <script>

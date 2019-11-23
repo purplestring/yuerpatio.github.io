@@ -16,6 +16,11 @@
 		animation-delay:0.2s;
 		transition: all 0.8s ease;
 	}
+	.ret3{
+		width:960px;
+		height:36px;
+		text-align: center;
+	}
 	</style>
 	<title>画之册</title>
 	<script src="paints.js"></script>
@@ -39,12 +44,12 @@
 	<div style="display:none;">
     <template id="paint">
         <div>
-            <div id="title" align="center" @click="setTest()">画之册</div><br><br>
-            <div id="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
+            <div class="title" align="center" @click="setTest()">画之册</div><br><br>
+            <div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
 			可简单筛选，随便翻翻便好。<br>
 			（灰：无；黑：是；白：非）
                 <a @click.prevent="anti(-1)">重置</a><br><br><br></div>
-            <div id="desc2">
+            <div class="desc2">
 				<span v-for="(item,i) in typename" >
 					<span :style="{'color': typecolor[type[typename[i]]],'cursor':'pointer'}" @click="anti(typename[i])">{{typeinfo[i]}}</span> 
 					<span v-if="i==8 || i==17 || i==26 || i==34" ><br></span>
@@ -66,14 +71,14 @@
 					<a v-if="list[i].P_INFO=='img' && list[i].P_NAME!='吉他课'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
 				</span>
             </span>
-            <br><br><br><div id="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
+            <br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
         </div>
     </template>
 
     <template id="pic">
         <div>
-            <div id='ptitle' align='center'>{{picinfo.P_NAME}}</div>
-            <div id='desc2'>
+            <div class='ptitle' align='center'>{{picinfo.P_NAME}}</div>
+            <div class='desc2'>
                 <br>{{picinfo.P_DYNASTY}} <span v-if="picinfo.P_YEAR!=''">{{picinfo.P_YEAR}}年 </span>
 				{{picinfo.P_AUTHOR}} 《{{picinfo.P_NAME}}》<br>
                 {{picinfo.P_TYPE}}<br>
@@ -86,21 +91,21 @@
 				<span v-if="picinfo.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+picinfo.P_PICS'></span>
 			</a>
 			<!--img id='myimg' :src='"../../../../../images/largeimg/"+picinfo.P_PICS'-->
-            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 
     <template id="baidupic">
         <div>
             <iframe id="iframes" :src='"https://baike.baidu.com/item/"+picinfo.P_NAME'></iframe>
-            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 	
 	<template id="wikiinfo">
         <div>
             <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+picinfo.A_EN.replace(/ /g,"_")'></iframe>
-            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 	</div>

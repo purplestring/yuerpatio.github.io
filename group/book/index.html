@@ -8,15 +8,12 @@
 	<script src="../../main/js/jquery-3.3.1.min.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="book.js"></script>
-	<style>
-		[v-cloak] {display:none;}
-	</style>
 	<title>书卷集</title>
 
 </head>
 
 <body >
-	<div id="main"v-cloak>
+	<div id="main" v-cloak>
 		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
 		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
@@ -50,7 +47,7 @@
 			<a v-if="depth==1" @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
 			<a v-if="depth==0" href="../../index.html" style="cursor:pointer">返回主页</a>
 		</div>
-		<div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br/><br/>
+		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br/><br/>
 	</div>
 
 </body>
