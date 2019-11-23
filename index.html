@@ -308,6 +308,10 @@ div > input:checked ~ article {
 
 </body>
 <script>
+/*!
+ * 鱼儿 v2.1.0
+ * (c) 2015-Now 魚儿
+ */
 var svg=[
 {title:"魚院",tag:"yuer",info:"以下卷集中选择一个~"},
 {title:"魚院",tag:"box",info:"以下卷集中选择一个~"},
@@ -320,7 +324,109 @@ var svg=[
 {title:"绘画页",tag:"mypaint",info:"俺画的<br>以及<rn>临摹的一些 <br>喵喵喵~"},
 {title:"设计页",tag:"h5",info:"html5 svg<rn><br>古画 动图 交互"},
 ];
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('A H=1i 13({Z:\'#H\',O:{p:0,b:U,N:10,c:"",n:"",u:"",4:4,},P:e P(){5.c=5.n="J";7 4=5.4;A 9=5;$(\'#O\').S("g").R(e(j){7 w=$(5).t("a");a=9.o(w);4[a].4=[];4[a].s=[];$("#"+w).S("X").R(e(i){7 B=$(5).t("Y").W(/,/g," ").I(\' \');7 D=[];v(7 8=0;8<B.q;8++)D.V(B[8]);4[a].s[i]=[];4[a].4[i]=[];4[a].4[i]=D;d($(5).t("F"))4[a].s[i]=$(5).t("F").I(\'#\')[1];E 4[a].s[i]="14";d(4[a].s[i].q<6)4[a].s[i]=4[a].s[i][0]+"0"+4[a].s[i][1]+"0"+4[a].s[i][2]+"0"})});9=5;11(e(){d(9.n=="J"){9.x("Q")}},12)},15:{o:e o(G){v(7 i=0;i<5.4.q;i++)d(5.4[i].w==G)m i;m-1},M:e M(i){7 c=5.o(5.c);7 n=5.o(5.n);7 b=5.b;7 f=(5.p%(b+1))/b;7 h="";7 4=5.4;v(7 8=0;8<4[n].4[i].q;8++){d(8>=4[c].4[i].q){d(8%2==0)h+=((1-f)*4[c].4[i][0]+f*4[n].4[i][8]);E h+=((1-f)*4[c].4[i][1]+f*4[n].4[i][8])}E h+=((1-f)*4[c].4[i][8]+f*4[n].4[i][8]);h+=" "}m h},K:e K(i){7 c=5.o(5.c);7 n=5.o(5.n);7 b=5.b;7 f=(5.p%(b+1))/b;7 l=[];7 4=5.4;v(7 k=0;k<3;k++){l[k]=y((1-f)*y(4[c].s[i].L(k*2,2),16)+f*y(4[n].s[i].L(k*2,2),16)).1e(16);d(l[k].q==1)l[k]="0"+l[k]}m"1j:#"+l[0]+l[1]+l[2]},T:e T(i,C){7 h="";7 4=5.4;v(7 8=0;8<4[i].4[C].q;8++)h+=4[i].4[C][8]+" ";m h},x:e x(r){d(r!="Q"){$("#18").t("F","17:1f;");$("1d>1c").1b("19")}d(r==5.n)m;d(5.p!=0){5.u=r;m}5.n=r;7 9=5;A z=1a(e(){7 b=9.b;9.p++;d(9.p>b){9.p=0;9.c=9.n;1h(z);z=1g;d(9.u!=""){9.x(9.u);9.u=""}}},5.N)}}});',62,82,'||||svg|this||let|tmpi|_0|id|stepall||if|function|step||pinfo|||ci|color|return||getId|ct|length|next||attr|nn|for|tag|changeSVG|parseInt|interval|var|tmp|index|tmp1|else|style|name|all|split|yuer|getStyle|substr|getPoints|frame|data|created|box|each|find|getPointsOnly|80|push|replace|polygon|points|el|24|setTimeout|1600|Vue|000000|methods||display|info|lightall|setInterval|removeClass|div|label|toString|none|null|clearInterval|new|fill'.split('|'),0,{}))
-
+var all=new Vue({
+	el: '#all',
+	data:{ 	
+		ct:0,stepall:80,frame:24,
+		c:"",n:"",nn:"",
+		svg:svg,
+		//stop:false,	
+	},
+	created: function created() {
+		this.c=this.n="yuer";
+		let svg=this.svg;
+		var _this=this;
+		$('#data').find("g").each(function(j){
+			let tag=$(this).attr("id");
+			id=_this.getId(tag);
+			svg[id].svg=[];svg[id].s=[];
+			$("#"+tag).find("polygon").each(function(i){
+				let tmp=$(this).attr("points").replace(/,/g, " ").split(' ');
+				let tmp1=[];
+				for(let tmpi=0;tmpi<tmp.length;tmpi++) tmp1.push(tmp[tmpi]);
+				svg[id].s[i]=[];svg[id].svg[i]=[]; svg[id].svg[i]=tmp1;
+				if($(this).attr("style")) svg[id].s[i]=$(this).attr("style").split('#')[1];
+				else svg[id].s[i]="000000";
+				if(svg[id].s[i].length<6) svg[id].s[i]=svg[id].s[i][0]+"0"+svg[id].s[i][1]+"0"+svg[id].s[i][2]+"0";
+			});	
+		});
+		_this=this;
+		
+		setTimeout(function() { 
+			if(_this.n=="yuer"){	
+				_this.changeSVG("box");
+			}		
+		}, 1600 );
+		
+	},
+	methods: {		
+		getId: function getId(name) {
+			for(let i=0;i<this.svg.length;i++) if(this.svg[i].tag==name) return i;
+			return -1;
+		},
+		
+		getPoints: function getPoints(i) {
+			let c=this.getId(this.c);let n=this.getId(this.n);
+			let stepall=this.stepall;
+			let step=(this.ct%(stepall+1))/stepall;
+			let pinfo="";
+			let svg=this.svg;
+			for(let tmpi=0;tmpi<svg[n].svg[i].length;tmpi++) {
+				if(tmpi>=svg[c].svg[i].length) {
+					if(tmpi%2==0) pinfo+=((1-step)*svg[c].svg[i][0]+step*svg[n].svg[i][tmpi]);
+					else pinfo+=((1-step)*svg[c].svg[i][1]+step*svg[n].svg[i][tmpi]);
+				}
+				else pinfo+=((1-step)*svg[c].svg[i][tmpi]+step*svg[n].svg[i][tmpi]);
+				pinfo+=" ";
+			}
+			return pinfo;				
+		},
+		getStyle: function getStyle(i) {
+			let c=this.getId(this.c);let n=this.getId(this.n);
+			let stepall=this.stepall;
+			let step=(this.ct%(stepall+1))/stepall;
+			let color=[];
+			let svg=this.svg;
+			for(let ci=0;ci<3;ci++) {
+				color[ci]=parseInt((1-step)*parseInt(svg[c].s[i].substr(ci*2,2),16)+
+				step*parseInt(svg[n].s[i].substr(ci*2,2),16)).toString(16);
+				if(color[ci].length==1) color[ci]="0"+color[ci];
+			}
+			return "fill:#"+color[0]+color[1]+color[2];				
+		},
+		
+		getPointsOnly: function getPointsOnly(i,index) {
+			let pinfo=""; let svg=this.svg;
+			for(let tmpi=0;tmpi<svg[i].svg[index].length;tmpi++) pinfo+=svg[i].svg[index][tmpi]+" ";
+			return pinfo;				
+		},
+		
+		changeSVG: function changeSVG(next) {
+			if(next!="box"){
+				$("#info").attr("style","display:none;");
+				$("label>div").removeClass("lightall");
+			}			
+			if(next==this.n) return;
+			if(this.ct!=0) { this.nn=next;return;}
+			this.n=next;
+			let _this=this;
+			var interval = setInterval(function(){
+				let stepall=_this.stepall;
+				//if(_this.stop) return;
+				_this.ct++;
+				if(_this.ct>stepall) {
+					_this.ct=0;
+					_this.c=_this.n;
+					clearInterval(interval); 
+					interval=null;
+					if(_this.nn!=""){						
+						_this.changeSVG(_this.nn);
+						_this.nn="";
+					}
+				}
+			}, this.frame);
+		}
+	}
+});
 </script>
 </html>

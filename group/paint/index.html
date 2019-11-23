@@ -66,7 +66,7 @@
 					<a v-if="list[i].P_INFO=='img' && list[i].P_NAME!='吉他课'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
 				</span>
             </span>
-            <br><br><br><div id="ret3"><a href="#main">▶页面顶部◀</a> <a href="../../index.html"> ▶返回主页◀</a></div>
+            <br><br><br><div id="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
         </div>
     </template>
 
@@ -86,21 +86,21 @@
 				<span v-if="picinfo.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+picinfo.P_PICS'></span>
 			</a>
 			<!--img id='myimg' :src='"../../../../../images/largeimg/"+picinfo.P_PICS'-->
-            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 
     <template id="baidupic">
         <div>
             <iframe id="iframes" :src='"https://baike.baidu.com/item/"+picinfo.P_NAME'></iframe>
-            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 	
 	<template id="wikiinfo">
         <div>
             <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+picinfo.A_EN.replace(/ /g,"_")'></iframe>
-            <br><br><div id="ret3"><a @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
+            <br><br><div id="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
         </div>
     </template>
 	</div>
