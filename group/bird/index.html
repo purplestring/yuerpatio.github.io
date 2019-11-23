@@ -20,7 +20,7 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="id==-1">
-			<div class="title" align="center">鳥之册</div><br><br>
+			<div class="title" @click="test=!test" align="center">鳥之册</div><br><br>
 			<div class="desc1">水积而鱼聚，木茂而鸟集。<br>
 				天上，水上，丛莽间，凡有见者，皆以志之。</div><br>
 			<div class="desc2"><span style="color: darkcyan;">浅蓝链</span>主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
@@ -44,7 +44,7 @@
 			</span><br><br>
 		</div>
 		<div v-if="id>=0">
-			<div class='title' align='center'>{{list[id].wu}}<br></div>
+			<div class='title' @click="test=!test" align='center'>{{list[id].wu}}<br></div>
 			<div align='center'>
 				<a @click.prevent="preFamily()" style="cursor: pointer;">◀◀◀</a>
 				<a @click.prevent="prePic()" style="cursor: pointer;">◀◀</a>
@@ -65,6 +65,8 @@
 			<span v-if="list[id].vo!=null">【声】{{list[id].vo}}<br><br></span>
 			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br><br></span>
 			<span v-if="list[id].pic!=null">【俺拍嗒】<br><img class='myimg' :src='"birds/"+list[id].pic'><br><br></span>
+			<span v-if="test && id<1329">【分布图】<br><img class='myimg' :src='"birdmap/b"+addZero(id+1)+".jpg"'><br><br></span>
+			<span v-if="test && id<1329">【插图】<br><img class='myimg' :src='"birdsall/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>	
 		<div v-if="id==-1" class="ret"><a href="../../index.html"> ▶返回主页◀</a></div>		
@@ -87,6 +89,7 @@ var vm = new Vue({
 		statevalue:[],
 		statecolor:["#888","#000","#fff"],
 		id:-1,
+		test:false,
 	},
 	methods: {		
 		reSet: function reSet(){
@@ -143,6 +146,12 @@ var vm = new Vue({
 			let i=this.getNext(this.id);
 			while(i!=-1) if(this.list[i].ke!=this.list[this.id].ke) break; else i=this.getNext(i);
 			this.id=i;
+		},
+		addZero: function addZero(i){
+			if(i<10) return "000"+i;
+			if(i<100) return "00"+i;
+			if(i<1000) return "0"+i;
+			return i;
 		},
 	},
 	created: function created() {	

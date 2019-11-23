@@ -509,6 +509,12 @@ var book=[
 "B_FILE": "古籍/杂集/神农本草经.txt",
 "B_EVAL": "line[2]=='神' || line[3]=='部' || line[4]=='部'",
 },
+{
+"BOOKS_ID": "86",
+"B_NAME": "《镜花缘》",
+"B_FILE": "古籍/叙事/镜花缘.txt",
+"B_EVAL": "",
+},
 
 
 {
