@@ -401,6 +401,7 @@ var all=new Vue({
 		},
 		
 		changeSVG: function changeSVG(next) {
+			this.$forceUpdate();
 			if(next!="box"){
 				$("#info").attr("style","display:none;");
 				$("label>div").removeClass("lightall");
