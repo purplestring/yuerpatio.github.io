@@ -55,7 +55,7 @@
 					<span v-if="i==8 || i==17 || i==26 || i==34" ><br></span>
 				</span>	
 			</div>
-            <span v-for="(item, i) in list" v-if="test || item.SHOW!='no'">
+            <span v-for="(item, i) in list">
                 <span class='family' v-if="i==0 || (i>0 && list[i].P_DYNASTY!=list[i-1].P_DYNASTY)">
                     <br><br><br>{{list[i].P_DYNASTY}}<br></span>
                 <span v-if="i==0 || (i>0 && ( list[i].P_AUTHOR!=list[i-1].P_AUTHOR || list[i].P_DYNASTY!=list[i-1].P_DYNASTY ))">
@@ -63,10 +63,10 @@
                         v-if="list[i].A_EN!=''" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
 					</span>】
 				</span>
-				<span v-if='test'>
+				<span v-if="test">
 					<a style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
 				</span>
-				<span v-if='test==false'>
+				<span v-if="!test && item.SHOW!='no'">
 					<a v-if="list[i].P_INFO=='http' || list[i].P_INFO=='imgl'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
 					<a v-if="list[i].P_INFO=='img'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
 				</span>
