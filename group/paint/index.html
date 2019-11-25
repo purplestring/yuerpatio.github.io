@@ -41,8 +41,9 @@
 						<br><br><br>{{list[i].P_DYNASTY}}<br>
 					</span>
 					<span v-if="getPre(i)<0 || (list[i].P_AUTHOR!=list[getPre(i)].P_AUTHOR || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY)">
-						<br>【<span><span v-if="list[i].A_EN==null">{{list[i].P_AUTHOR}}</span><span
-							v-if="list[i].A_EN!=null" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
+						<br>【<span><span v-if="list[i].A_EN==null">{{list[i].P_AUTHOR}}</span><a 
+						v-if="list[i].A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
+						:href='"http://wikipedia.moesalih.com/"+item.A_EN.replace(/ /g,"_")'>{{list[i].P_AUTHOR}}</a>
 						</span>】
 					</span>
 					<span v-if="test">
@@ -75,12 +76,7 @@
             </div>
             <span v-if="test || list[id].P_PICS.split('/')[0]=='img'"><img id='myimg' :src='list[id].P_PICS'></span>
 			<span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
-				<span v-if="list[id].A_EN==null">
-					<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
-				</span>
-				<span v-if="list[id].A_EN!=null">
-					<iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+list[id].A_EN.replace(/ /g,"_")'></iframe>
-				</span>
+				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
 			</span>
             <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画之册◀</a></div>
 		</div>		
