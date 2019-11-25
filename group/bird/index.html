@@ -37,7 +37,7 @@
 				<span v-if="list[i].fliter">			
 					<div v-if="i<1329 && (getPre(i)<0 || item.ke!=list[getPre(i)].ke)" class="family"><br/><br/>{{item.mu}}->{{item.ke}}<br/><br/></div>
 					<div v-if="i==1329" class="family"><br/><br/>番外<br/><br/></div>
-					<div v-if="i==1333" class="family"><br/><br/>未知<br/><br/></div>				
+					<div v-if="i==1333" class="family"><br/><br/>其它与未知<br/><br/></div>				
 					<a v-if="item.pic!=null" @click.prevent="id=i" style="color: darkcyan; cursor: pointer;">{{item.wu}} </a>
 					<a v-if="item.pic==null && i<1333" @click.prevent="id=i" style="color: #202096; cursor: pointer;">{{item.wu}} </a>
 				</span>					

@@ -6,333 +6,196 @@
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
 	<style>
-	.v-enter,
-	.v-leave-to{
-		/*transform: translateX(960px);*/
-		opacity: 0;
-	}
-	.v-enter-active,
-	.v-leave-active{
-		animation-delay:0.2s;
-		transition: all 0.8s ease;
-	}
-	.ret3{
-		width:960px;
-		height:36px;
-		text-align: center;
-	}
+		.ret3{
+			width:960px;
+			height:36px;
+			text-align: center;
+		}
 	</style>
 	<title>画之册</title>
 	<script src="paints.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
-    <!--script src="../../../../web/vue/vue.js"></script-->
-
 </head>
 
-<body>	
-	<div id="main">
-        <div id="mt"></div><div id="lm"></div><div id="rm"></div><div id="mb"></div><div id="lt"></div><div id="rt"></div><div id="lb"></div>
-        <div id="rb"></div><div id="ltx"></div><div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
-        <div id='app'>
-            <transition mode='out-in'>
-                <component :is="comName" :picinfo="picinfo" :type="type" :scrolltop="scrolltop"
-					@changepage="changepage" @setpicinfo="setpicinfo" @settype="settype" @savescroll="savescroll"></component>
-            </transition>
-        </div>
-        <div id="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
-    </div>
-	<div style="display:none;">
-    <template id="paint">
-        <div>
-            <div class="title" align="center" @click="setTest()">画之册</div><br><br>
-            <div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
+<body>
+	<div id="main" v-cloak>
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
+		<div v-if="id==-1">
+			<div class="title" align="center" @click="test=!test" >画之册</div><br><br>
+			<div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
 			可简单筛选，随便翻翻便好。<br>
-			（灰：无；黑：是；白：非）
-                <a @click.prevent="anti(-1)">重置</a><br><br><br></div>
-            <div class="desc2">
-				<span v-for="(item,i) in typename" >
-					<span :style="{'color': typecolor[type[typename[i]]],'cursor':'pointer'}" @click="anti(typename[i])">{{typeinfo[i]}}</span> 
-					<span v-if="i==8 || i==17 || i==26 || i==34" ><br></span>
+			【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br><br>									
+			</div>
+			 <div class="desc2">
+				<span v-for="(item,i) in statename" >
+					<span :style="'color:'+statecolor[statevalue[i]]" @click="setType(i)" style="cursor:pointer">{{statename[i]}}</span> 
+					<span v-if="i==8 || i==18 || i==27 || i==35" ><br></span>
 				</span>	
 			</div>
-            <span v-for="(item, i) in list">
-                <span class='family' v-if="i==0 || (i>0 && list[i].P_DYNASTY!=list[i-1].P_DYNASTY)">
-                    <br><br><br>{{list[i].P_DYNASTY}}<br></span>
-                <span v-if="i==0 || (i>0 && ( list[i].P_AUTHOR!=list[i-1].P_AUTHOR || list[i].P_DYNASTY!=list[i-1].P_DYNASTY ))">
-					<br>【<span><span v-if="list[i].A_EN==''">{{list[i].P_AUTHOR}}</span><span
-                        v-if="list[i].A_EN!=''" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
-					</span>】
+			<span v-for="(item, i) in list">
+				<span v-if="list[i].fliter">			
+					<span class='family' v-if="getPre(i)<0 || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY">
+						<br><br><br>{{list[i].P_DYNASTY}}<br>
+					</span>
+					<span v-if="getPre(i)<0 || (list[i].P_AUTHOR!=list[getPre(i)].P_AUTHOR || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY)">
+						<br>【<span><span v-if="list[i].A_EN==null">{{list[i].P_AUTHOR}}</span><span
+							v-if="list[i].A_EN!=null" style='color:blue;cursor:pointer' @click.prevent="wikiinfo(i)">{{list[i].P_AUTHOR}}</span>
+						</span>】
+					</span>
+					<span v-if="test">
+						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+					</span>
+					<span v-if="!test && item.SHOW!='no'">
+						<a v-if="list[i].P_PICS.split('/')[0]=='http' || list[i].P_PICS.split('/')[0]=='imgl'" style='color:Green;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						<a v-if="list[i].P_PICS.split('/')[0]=='img'" style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+					</span>
 				</span>
-				<span v-if="test">
-					<a style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
-				</span>
-				<span v-if="!test && item.SHOW!='no'">
-					<a v-if="list[i].P_INFO=='http' || list[i].P_INFO=='imgl'" style='color:Green;cursor:pointer' @click.prevent="baidupicpage(i)">{{list[i].P_NAME}}</a>
-					<a v-if="list[i].P_INFO=='img'" style='color:DarkCyan;cursor:pointer' @click.prevent="picpage(i)">{{list[i].P_NAME}}</a>
-				</span>
-            </span>
-            <br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
-        </div>
-    </template>
-
-    <template id="pic">
-        <div>
-            <div class='ptitle' align='center'>{{picinfo.P_NAME}}</div>
-            <div class='desc2'>
-                <br>{{picinfo.P_DYNASTY}} <span v-if="picinfo.P_YEAR!=''">{{picinfo.P_YEAR}}年 </span>
-				{{picinfo.P_AUTHOR}} 《{{picinfo.P_NAME}}》<br>
-                {{picinfo.P_TYPE}}<br>
-                <span v-if="picinfo.P_WIDTH!=0">横：{{picinfo.P_WIDTH}}厘米；</span>
-                <span v-if="picinfo.P_HEIGHT!=0">纵：{{picinfo.P_HEIGHT}}厘米</span>
-				<a :href='"https://baike.baidu.com/item/"+picinfo.P_NAME' target="_blank">百科</a><br>
+			</span>
+			<br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
+		</div>
+		<div v-if="id>=0">
+			<div class='title' align='center' @click="test=!test">{{list[id].P_NAME}}</div>
+			<div align='center'>
+				<a @click.prevent="preAuthor()" style="cursor: pointer;">　◀◀　</a>
+				<a @click.prevent="id=getPre(id)" style="cursor: pointer;">　◀　</a>
+				【{{id+1}}】
+				<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶　</a>	
+				<a @click.prevent="nextAuthor()" style="cursor: pointer;">　▶▶　</a>
+			</div>
+            <div v-if="test || list[id].P_PICS.split('/')[0]=='img'" class='desc2'>
+                <br>{{list[id].P_DYNASTY}} <span v-if="list[id].P_YEAR!=null">{{list[id].P_YEAR}}年 </span>
+				{{list[id].P_AUTHOR}} 《{{list[id].P_NAME}}》<br>
+                {{list[id].P_TYPE}}<br>
+                <span v-if="list[id].P_WIDTH!=null">横：{{list[id].P_WIDTH}}厘米；</span>
+                <span v-if="list[id].P_HEIGHT!=null">纵：{{list[id].P_HEIGHT}}厘米</span>
+				<a :href='"https://baike.baidu.com/item/"+list[id].P_NAME' target="_blank">百科</a><br>
             </div>
-            <span v-if="picinfo.P_INFO=='img'"><img id='myimg' :src='"img/"+picinfo.P_PICS'></span>
-			<a :href='"imgl/"+picinfo.P_PICS' target="_blank">
-				<span v-if="picinfo.P_INFO=='imgl'"><img id='myimg' :src='"imgl/"+picinfo.P_PICS'></span>
-			</a>
-			<!--img id='myimg' :src='"../../../../../images/largeimg/"+picinfo.P_PICS'-->
-            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
-        </div>
-    </template>
-
-    <template id="baidupic">
-        <div>
-            <iframe id="iframes" :src='"https://baike.baidu.com/item/"+picinfo.P_NAME'></iframe>
-            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
-        </div>
-    </template>
-	
-	<template id="wikiinfo">
-        <div>
-            <iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+picinfo.A_EN.replace(/ /g,"_")'></iframe>
-            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="changepage('paint')"> ▶返回画之册◀</a></div>
-        </div>
-    </template>
+            <span v-if="test || list[id].P_PICS.split('/')[0]=='img'"><img id='myimg' :src='list[id].P_PICS'></span>
+			<span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
+				<span v-if="list[id].A_EN==null">
+					<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
+				</span>
+				<span v-if="list[id].A_EN!=null">
+					<iframe id="iframes" :src='"http://wikipedia.moesalih.com/"+list[id].A_EN.replace(/ /g,"_")'></iframe>
+				</span>
+			</span>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画之册◀</a></div>
+		</div>		
+		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
 </body>
 <script>
-var test=false;
-var paint= {
-        template: '#paint',
-        props:["type","scrolltop"],
-        data: function data(){
-            return {
-				test:test,
-				list: [],
-                type:{},
-                typecolor:["#888","#000","#fff"],
-                typename:["star","shuimo","shese","youcai","juanben","zhiben","bumian","muban","bihua",
-                    "juanzhou","lizhou","ceye","shan","shufa","renwu","shanshui","huaniao","zongjiao",
-                    "zhongguo","yidali","faguo","xibanya","helan","bilishi","deguo","yingguo","eguo",
-                    "flc","wwns","beifang","baluoke","luokeke","xingudian","langman","xieshi","yinxiang",
-                    "jgdj","sssj","ysj","wm","yzbg","sw","ss"],
-                typeinfo:["精","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
+var vm = new Vue({
+	el: '#main',
+	data:{
+		list:myjson.RECORDS,
+		statename:["精","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
                     "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","宗教",
-                    "中国","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+                    "中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
                     "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
-                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧"],
-            }
-        },
-        methods: {
-		
-			setTest: function setTest(){
-				this.test=!this.test;
-				test=this.test;
-			},
-
-            authorFormat: function authorFormat(author,link){
-                if(link=="" || link==null) return "<br>"+author;
-                else return "<br><a style='color:blue;' target='_blank' href='https://en.wikipedia.org/wiki/"+link+"'>"+author+"</a>";
-            },
-
-            c: function c(t) {
-                if(this.type[t]==1) this.type[t]=2;
-            },
-
-            cleararea: function cleararea(t) {
-                this.c("flc");this.c("wwns");this.c("beifang");this.c("baluoke");this.c("luokeke");this.c("xingudian");this.c("langman");this.c("xieshi");
-                this.c("yinxiang");this.c("jgdj");this.c("sssj");this.c("ysj");this.c("wm");this.c("yzbg");this.c("sw");this.c("ss");
-                this.type[t]=1;
-            },
-
-            setList: function setList(){
-                var k=0;
-                this.list= [];
-
-                for(var i=0;i<myjson.RECORDS.length;i++) {
-
-                    if(this.type["star"]==1 && myjson.RECORDS[i].P_STAR<5) continue;
-                    if(this.type["star"]==2 && myjson.RECORDS[i].P_STAR==5) continue;
-
-                    var iscontinue=false;
-                    for ( var j = 1; j < this.typename.length; j++ )
-                    {
-                        if(this.type[this.typename[j]]==1 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])<=-1) {iscontinue=true;break;};
-                        if(this.type[this.typename[j]]==2 && myjson.RECORDS[i].P_TYPE.indexOf(this.typeinfo[j])>-1) {iscontinue=true;break;};
-                    }
-                    if(iscontinue) continue;
-
-                    this.list[k++]= myjson.RECORDS[i];
-
-                }
-            },
-
-            anti: function anti(t){
-				if(t==-1)
-                {
-                    for ( var i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
-                }
-                else
-                {
-                    if(this.type[t]==1) this.type[t]=2;
-                    else if(this.type[t]==0)
-                    {
-
-                        this.type[t]=1;
-                        if(t=="shufa") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("youcai");this.c("renwu");this.c("shanshui");this.c("huaniao");
-                            this.c("bumian");this.c("bihua");this.c("zongjiao");};
-                        if(t=="juanzhou") {this.c("lizhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
-                        if(t=="lizhou") {this.c("juanzhou");this.c("ceye");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
-                        if(t=="ceye") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("shan");this.c("zongjiao");};
-                        if(t=="shan") {this.c("juanzhou");this.c("lizhou");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("ceye");this.c("zongjiao");};
-                        if(t=="zhiben") {this.c("juanben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
-                        if(t=="juanben") {this.c("zhiben");this.c("bumian");this.c("youcai");this.c("muban");this.c("bihua");this.c("zongjiao");};
-                        if(t=="bumian") {this.c("zhiben");this.c("juanben");this.c("shuimo");this.c("shese");this.c("shufa");this.c("lizhou");this.c("juanzhou");
-                            this.c("ceye");this.c("muban");this.c("bihua");};
-                        if(t=="shese") {this.c("youcai");this.c("shufa");this.c("bumian");this.c("zongjiao");};
-                        if(t=="shuimo") {this.c("youcai");this.c("bumian");this.c("youcai");};
-                        if(t=="youcai") {this.c("shese");this.c("shuimo");this.c("shufa");this.c("zhiben");this.c("juanben");this.c("shan");};
-                        if(t=="renwu") {this.c("shufa");};
-                        if(t=="shanshui") {this.c("shufa");this.c("zongjiao");};
-                        if(t=="muban") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("bihua");this.c("shufa");};
-                        if(t=="bihua") {this.c("lizhou");this.c("ceye");this.c("shan");this.c("juanzhou");this.c("bumian");this.c("zhiben");this.c("muban");this.c("shufa");};
-                        if(t=="huaniao") {this.c("shufa");};
-                        if(t=="zongjiao") {this.c("shese");this.c("juanzhou");this.c("lizhou");this.c("ceye");this.c("shan");this.c("shanshui");this.c("zhiben");this.c("juanben");("shufa");};
-
-                        if(t=="zhongguo") {this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="yidali") {this.c("zhongguo");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="faguo") {this.c("zhongguo");this.c("yidali");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="xibanya") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="helan") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("bilishi");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="bilishi") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("deguo");this.c("yingguo");this.c("eguo");};
-                        if(t=="deguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("yingguo");this.c("eguo");};
-                        if(t=="yingguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("eguo");};
-                        if(t=="eguo") {this.c("zhongguo");this.c("yidali");this.c("faguo");this.c("xibanya");this.c("helan");this.c("bilishi");this.c("deguo");this.c("yingguo");};
-
-                        if(t=="flc")this.cleararea("flc");
-                        if(t=="wwns")this.cleararea("wwns");
-                        if(t=="beifang")this.cleararea("beifang");
-                        if(t=="baluoke")this.cleararea("baluoke");
-                        if(t=="luokeke")this.cleararea("luokeke");
-                        if(t=="xingudian")this.cleararea("xingudian");
-                        if(t=="langman")this.cleararea("langman");
-                        if(t=="xieshi")this.cleararea("xieshi");
-                        if(t=="yinxiang")this.cleararea("yinxiang");
-                        if(t=="jgdj")this.cleararea("jgdj");
-                        if(t=="sssj")this.cleararea("sssj");
-                        if(t=="ysj")this.cleararea("ysj");
-                        if(t=="wm")this.cleararea("wm");
-                        if(t=="yzbg")this.cleararea("yzbg");
-                        if(t=="sw")this.cleararea("sw");
-                        if(t=="ss")this.cleararea("ss");
-                    }
-                    else if(this.type[t]==2) this.type[t]=0;
-                }
-                this.setList();
-            },
-
-            picpage: function picpage(id){
-				this.$emit('settype',this.type);
-				this.$emit('setpicinfo',this.list[id]);
-				this.$emit('savescroll');
-                this.$emit('changepage','pic');
-            },
-
-            baidupicpage: function baidupicpage(id){
-                this.$emit('settype',this.type);
-				this.$emit('setpicinfo',this.list[id]);
-				this.$emit('savescroll');
-				this.$emit('changepage','baidupic');
-            },
-			
-			wikiinfo: function wikiinfo(id){
-                this.$emit('settype',this.type);
-				this.$emit('setpicinfo',this.list[id]);
-				this.$emit('savescroll');
-				this.$emit('changepage','wikiinfo');
-            },
-
-        },
-
-        created: function created() {
-            if(typeof(this.type.star) == "undefined") for ( let i = 0; i < this.typename.length; i++ ) this.type[this.typename[i]]=0;
-            this.setList();
-        },
-		
-		mounted: function mounted() {
-			document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
+		],
+		//stategroup:{"喙":"hui","虹膜":"hm","脚":"zu","分布":"area",},		
+		statevalue:[],
+		statecolor:["#888","#000","#fff"],
+		id:-1,
+		test:false,
+	},
+	methods: {		
+		reSet: function reSet(){
+			for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
+			for(let j=0;j<this.list.length;j++) this.list[j].fliter= true;
+			this.$forceUpdate();		
 		},
-    }
+		setType: function setType(i){
+			this.statevalue[i]=(this.statevalue[i]+1)%3;
+			
+			//if(this.statename[i]=="中国") this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
+			
+			if(i>=this.statename.indexOf("意大利") && i<=this.statename.indexOf("印象")) 
+				this.c(["水墨","设色","绢本","纸本","卷轴","立轴","册页","扇","书法",
+				"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
+				]);
+			if(i>=this.statename.indexOf("荆关董巨") && i<=this.statename.indexOf("四僧") || 
+			this.statename[i]=="中国" || this.statename[i]=="绢本" || this.statename[i]=="纸本" || this.statename[i]=="书法" )
+				this.c(["意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+				"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
 
-    var pic= {
-        template: '#pic',
-        methods: {
-            changepage: function changepage(topage){
-                this.$emit('changepage',topage);
-            },
-        },
-        props: ['picinfo'] ,
-    }
-
-    var baidupic= {
-        template: '#baidupic',
-        methods: {
-            changepage: function changepage(topage){
-				this.$emit('changepage',topage);
-            },
-        },
-       props: ['picinfo'] ,
-    }
-	
-	var wikiinfo= {
-        template: '#wikiinfo',
-        methods: {
-            changepage: function changepage(topage){
-                this.$emit('changepage',topage);
-            },
-        },
-        props: ['picinfo'] ,
-    }
-
-    var vm = new Vue({
-        el: '#app',
-        data:{
-            comName: 'paint',
-            picinfo:'',
-            type:{},
-			scrolltop:0,
-         },
-        methods: {
-            changepage: function changepage(topage){
-                this.comName = topage;
-            },
-			setpicinfo: function setpicinfo(picinfo){
-				this.picinfo=picinfo;
-			},
-			settype: function settype(type){
-				this.type=type;
-			},
-			savescroll: function savescroll(){
-				this.scrolltop = document.body.scrollTop|| document.documentElement.scrollTop;
+			if(i>=this.statename.indexOf("卷轴") && i<=this.statename.indexOf("扇")){
+				this.c(["卷轴","立轴","册页","扇",
+				"意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
+				this.statevalue[i]=1;
+			}			
+			if(i>=this.statename.indexOf("绢本") && i<=this.statename.indexOf("壁画")){
+				this.c(["绢本","纸本","布面","木板","壁画",]);
+				this.statevalue[i]=1;
+			}			
+			if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("俄国")){
+				this.c(["中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",]);
+				this.statevalue[i]=1;
+			}									
+			if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("四僧")){
+				this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
+                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",]);
+				this.statevalue[i]=1;
 			}
-        },
-        components: {
-            paint: paint,
-			pic: pic,
-			baidupic: baidupic,
-			wikiinfo: wikiinfo
-        },
-    });
-
+							
+			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			this.$forceUpdate();
+		},
+		c: function c(staten){
+			for(let i=0;i<staten.length;i++){
+				let n = this.statename.indexOf(staten[i]);
+				if(this.statevalue[n]==1) this.statevalue[n]=2;
+			}
+		},
+		getItem: function getItem(i){
+			for(let j=0;j<this.statename.length;j++) {
+				if(this.statevalue[j]==0) continue;				
+				let get=0;
+				let fenlei="P_TYPE"; if(j==0) fenlei="P_STAR";
+				let word=this.statename[j]; if(j==0) word="5";
+				if(this.list[i][fenlei]==null) get=-1;
+				else get=this.list[i][fenlei].indexOf(word);
+				if(get!=-1 && this.statevalue[j]==1) continue;
+				if(get==-1 && this.statevalue[j]==2) continue;
+				this.list[i].fliter= false;	return;		
+			}
+			this.list[i].fliter= true; return;
+		},
+		getPre: function getPre(j){
+			let i=j-1;
+			for(;i>=0;i--) if(this.list[i].fliter) return i;
+			return -1;
+		},
+		getNext: function getNext(j){
+			let i=j+1;
+			for(;i<this.list.length;i++) if(this.list[i].fliter) return i;
+			return -1;
+		},
+		preAuthor: function prePic(){
+			let i=this.getPre(this.id);
+			while(i!=-1) if(this.list[i].P_AUTHOR!=this.list[this.id].P_AUTHOR) break; else i=this.getPre(i);
+			this.id=i;
+		},
+		nextAuthor: function nextPic(){
+			let i=this.getNext(this.id);
+			while(i!=-1) if(this.list[i].P_AUTHOR!=this.list[this.id].P_AUTHOR) break; else i=this.getNext(i);
+			this.id=i;
+		},
+	},
+	created: function created() {	
+        this.reSet();
+    },
+	updated: function updated(){
+		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.id>=0)document.title=this.list[this.id].P_NAME;
+		else document.title="画之册";	
+	},
+})
 </script>
 </html>
