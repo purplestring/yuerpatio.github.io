@@ -36,6 +36,9 @@ var all=new Vue({
 		groupname:{photo:"照片集",draw:"全景绘",map:"他山之石",piyipi:"皮一皮",test:"测试",},
 		test:false,
 	},
+	created: function created() {	
+        if(self.location.href.substring(0,4)!="http")this.test=true;
+    },
 });
 </script>
 </html>

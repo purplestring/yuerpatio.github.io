@@ -41,7 +41,9 @@ var all=new Vue({
 		groupname:{set:"合集",svg:"SVG",cb:"程璧",paint:"古画",test:"测试",},
 		test:false,
 	},
-	created: function created() {},
+	created: function created() {
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+	},
 });
 </script>
 </html>

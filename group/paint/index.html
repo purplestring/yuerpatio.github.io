@@ -185,7 +185,8 @@ var vm = new Vue({
 		},
 	},
 	created: function created() {	
-        this.reSet();
+        if(self.location.href.substring(0,4)!="http")this.test=true;
+		this.reSet();
     },
 	updated: function updated(){
 		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;

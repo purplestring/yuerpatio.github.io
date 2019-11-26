@@ -58,7 +58,9 @@ var all=new Vue({
 		test:false,
 		id:-1,
 	},
-	created: function created() {},
+	created: function created() {
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+	},
 });
 </script>
 </html>
