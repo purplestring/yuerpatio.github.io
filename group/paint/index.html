@@ -26,7 +26,8 @@
 		<div v-if="id==-1">
 			<div class="title" align="center" @click="test=!test" >画之册</div><br><br>
 			<div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
-			可简单筛选，随便翻翻便好。仅供交流学习，叮！<br>
+			可简单筛选，随便翻翻便好。版权及带宽所限，<br>
+			大图、现代作品有目无画。仅供交流学习，叮！<br>
 			【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br><br>									
 			</div>
 			 <div class="desc2">
@@ -50,8 +51,10 @@
 						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
 					</span>
 					<span v-if="!test && item.SHOW!='no'">
-						<a v-if="list[i].P_PICS.split('/')[0]=='http' || list[i].P_PICS.split('/')[0]=='imgl'" style='color:Green;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
-						<a v-if="list[i].P_PICS.split('/')[0]=='img'" style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						<a v-if="list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪'" 
+						style='color:Green;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						<a v-if="!(list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪')" 
+						style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
 					</span>
 				</span>
 			</span>
@@ -109,35 +112,37 @@ var vm = new Vue({
 		setType: function setType(i){
 			this.statevalue[i]=(this.statevalue[i]+1)%3;
 			
-			//if(this.statename[i]=="中国") this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
-			
-			if(i>=this.statename.indexOf("意大利") && i<=this.statename.indexOf("印象")) 
-				this.c(["水墨","设色","绢本","纸本","卷轴","立轴","册页","扇","书法",
-				"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
-				]);
-			if(i>=this.statename.indexOf("荆关董巨") && i<=this.statename.indexOf("四僧") || 
-			this.statename[i]=="中国" || this.statename[i]=="绢本" || this.statename[i]=="纸本" || this.statename[i]=="书法" )
-				this.c(["意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
-				"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
+			if(this.statevalue[i]==1){
+				//if(this.statename[i]=="中国") this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
+				
+				if(i>=this.statename.indexOf("意大利") && i<=this.statename.indexOf("印象")) 
+					this.c(["水墨","设色","绢本","纸本","卷轴","立轴","册页","扇","书法",
+					"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
+					]);
+				if(i>=this.statename.indexOf("荆关董巨") && i<=this.statename.indexOf("四僧") || 
+				this.statename[i]=="中国" || this.statename[i]=="绢本" || this.statename[i]=="纸本" || this.statename[i]=="书法" )
+					this.c(["意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+					"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
 
-			if(i>=this.statename.indexOf("卷轴") && i<=this.statename.indexOf("扇")){
-				this.c(["卷轴","立轴","册页","扇",
-				"意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
-                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
-				this.statevalue[i]=1;
-			}			
-			if(i>=this.statename.indexOf("绢本") && i<=this.statename.indexOf("壁画")){
-				this.c(["绢本","纸本","布面","木板","壁画",]);
-				this.statevalue[i]=1;
-			}			
-			if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("俄国")){
-				this.c(["中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",]);
-				this.statevalue[i]=1;
-			}									
-			if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("四僧")){
-				this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
-                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",]);
-				this.statevalue[i]=1;
+				if(i>=this.statename.indexOf("卷轴") && i<=this.statename.indexOf("扇")){
+					this.c(["卷轴","立轴","册页","扇",
+					"意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+						"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
+					this.statevalue[i]=1;
+				}			
+				if(i>=this.statename.indexOf("绢本") && i<=this.statename.indexOf("壁画")){
+					this.c(["绢本","纸本","布面","木板","壁画",]);
+					this.statevalue[i]=1;
+				}			
+				if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("俄国")){
+					this.c(["中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",]);
+					this.statevalue[i]=1;
+				}									
+				if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("四僧")){
+					this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
+						"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",]);
+					this.statevalue[i]=1;
+				}
 			}
 							
 			for(let k=0;k<this.list.length;k++) this.getItem(k);
