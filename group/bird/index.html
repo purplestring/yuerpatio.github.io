@@ -23,7 +23,7 @@
 			<div class="title" @click="test=!test" align="center">鳥之册</div><br><br>
 			<div class="desc1">水积而鱼聚，木茂而鸟集。<br>
 				天上，水上，丛莽间，凡有见者，皆以志之。</div><br>
-			<div class="desc2"><span style="color: darkcyan;">浅蓝链</span>主图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
+			<div class="desc2"><span style="color: darkcyan;">浅蓝链</span>附图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
 				转载请注明来源，其他用途请<a href="https://weibo.com/u/5679301959">私信</a>。<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br>			
 				 <span v-for="(item, i) in statename">
@@ -64,7 +64,10 @@
 			<span v-if="list[id].zu!=null">【脚】{{list[id].zu}}<br><br></span>
 			<span v-if="list[id].vo!=null">【声】{{list[id].vo}}<br><br></span>
 			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br><br></span>
-			<span v-if="list[id].pic!=null">【俺拍嗒】<br><img class='myimg' :src='"birds/"+list[id].pic'><br><br></span>
+			<span v-if="list[id].pic!=null">【俺拍嗒】<br>
+				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
+				<img class='myimg' v-if="id>=1329" :src='"others/"+list[id].ke.split("科")[0]+"."+list[id].wu+".jpg"'>
+			<br><br></span>
 			<span v-if="test && id<1329">【分布图】<br><img class='myimg' :src='"birdmap/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<span v-if="test && id<1329">【插图】<br><img class='myimg' :src='"birdsall/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
