@@ -131,8 +131,13 @@ var vm = new Vue({
 				}				
 			}			
 		},
-
-	}
+	},
+	updated: function updated(){
+		//console.log()
+		document.body.scrollTop=document.documentElement.scrollTop=0;
+		if(this.depth==0) document.title="书卷集";
+		if(this.depth>=1) document.title=this.book[this.bookindex].B_NAME;
+	},
 });
 </script>
 </html>
