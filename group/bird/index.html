@@ -154,7 +154,8 @@ var vm = new Vue({
 			return i;
 		},
 	},
-	created: function created() {	
+	created: function created() {
+		if(self.location.href.substring(0,4)!="http")this.test=true;
         this.reSet();
     },
 	updated: function updated(){
