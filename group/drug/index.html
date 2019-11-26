@@ -118,12 +118,19 @@ var vm = new Vue({
         this.reSet();
 		this.wlen=this.words.length;
     },
+	beforeUpdate: function beforeUpdate(){
+		if(this.id>=0){
+			if (document.body && document.body.scrollTop) 
+				this.scrolltop=document.body.scrollTop;
+			if (document.documentElement && document.documentElement.scrollTop) 
+				this.scrolltop=document.documentElement.scrollTop;
+		}
+	},
 	updated: function updated(){
-		//console.log("updated");
-		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].D_NAME;
-		else document.title="中药集";
-		//if(this.newdata!=0) setTimeout(function(){ vm.newdata=0; }, 300);		
+		else document.title="中药集";	
 	},
 })
 </script>

@@ -3,9 +3,6 @@
 	<meta id="meta" name="viewport">
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
-	<style>
-		[v-cloak] {display:none;}
-	</style>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="file.js"></script>
 	<title>百物卷</title>
@@ -63,6 +60,20 @@ var all=new Vue({
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
+	},
+	beforeUpdate: function beforeUpdate(){
+		if(this.id>=0){
+			if (document.body && document.body.scrollTop) 
+				this.scrolltop=document.body.scrollTop;
+			if (document.documentElement && document.documentElement.scrollTop) 
+				this.scrolltop=document.documentElement.scrollTop;
+		}
+	},
+	updated: function updated(){
+		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		else document.body.scrollTop=document.documentElement.scrollTop=0;
+		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		else document.title="百物卷";	
 	},
 });
 </script>

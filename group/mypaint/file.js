@@ -80,6 +80,7 @@
 {F_GROUP:"jieqi",TITLE:"小寒",W_URL:"HazV8uLwd",},
 {F_GROUP:"jieqi",TITLE:"大寒",W_URL:"HcRHE2TqN",},
 {F_GROUP:"jieqi",TITLE:"立春",W_URL:"Hf4G8z7n0",},
+{F_GROUP:"jieqi",TITLE:"立冬",F_NAME: ["lidong.jpg"],F_DESC:"一候，水始冰；</br>二候，地始凍；</br>三候，雉入大水為蜃。</br></br>煢煢孑立，冬山如睡。</br>是名立冬。</br>",},
 {F_GROUP:"jieqi",TITLE:"小雪",F_NAME: ["xiaoxue.jpg"],F_DESC:"一候，虹藏不見；</br>二候，天氣上升、地氣下降；</br>三候，閉塞而成冬。</br></br>山高月小，雪魄冰魂 。</br>是名小雪。</br>",},
 
 

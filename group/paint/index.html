@@ -193,8 +193,17 @@ var vm = new Vue({
         if(self.location.href.substring(0,4)!="http")this.test=true;
 		this.reSet();
     },
+	beforeUpdate: function beforeUpdate(){
+		if(this.id>=0){
+			if (document.body && document.body.scrollTop) 
+				this.scrolltop=document.body.scrollTop;
+			if (document.documentElement && document.documentElement.scrollTop) 
+				this.scrolltop=document.documentElement.scrollTop;
+		}
+	},
 	updated: function updated(){
-		document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].P_NAME;
 		else document.title="画之册";	
 	},
