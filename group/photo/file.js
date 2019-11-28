@@ -140,6 +140,8 @@
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "龟鳖目",S_FAMILY: "龟科",TITLE: "乌龟",F_NAME: "gui.jpg",F_DESC: "看啥呢？"},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "蜥蜴科",TITLE: "四脚蛇",F_NAME: "sijiaoshe.jpg",F_DESC: "路边偶遇"},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "蝰科",TITLE: "竹叶青",F_NAME: "she01.jpg",F_DESC: "路边偶遇"},
+{F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "游蛇科",TITLE: "紫沙蛇",F_NAME: "zishashe01.jpg",F_DESC: "路边偶遇"},
+{F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "游蛇科",TITLE: "红脖颈槽蛇",F_NAME: "hbjcs01.jpg",F_DESC: "路边偶遇"},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "蜥蜴科",TITLE: "黑纹四脚蛇",F_NAME: "sijiaoshe02.jpg",F_DESC: "路边偶遇"},
 {F_GROUP: "miao",S_GROUP: "腹足纲",S_ORDER: "中腹足目",TITLE: "叶螺",F_NAME: "luo01.jpg"},
 {F_GROUP: "miao",S_GROUP: "腹足纲",S_ORDER: "中腹足目",TITLE: "海螺",F_NAME: "luo02.jpg"},

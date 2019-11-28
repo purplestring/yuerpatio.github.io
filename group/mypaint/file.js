@@ -59,7 +59,7 @@
 {F_GROUP:"color",S_GROUP:"小鸟",TITLE:"栗喉蜂虎",W_URL:"GkgnHCSmI",},
 {F_GROUP:"color",S_GROUP:"小鸟",TITLE:"啄木鸟",W_URL:"He3kJidwX",},
 
-{F_GROUP:"color",S_GROUP:"小鸟",TITLE:"土丁桂",W_URL:"Gl2KsoIkq",},
+{F_GROUP:"color",S_GROUP:"其它",TITLE:"土丁桂",W_URL:"Gl2KsoIkq",},
 
 
 

@@ -37,7 +37,7 @@
 			<div v-for="(item,i) in subinfo" @click.prevent="getZhang(i)" style="cursor:pointer">{{item.title}}</div><br/>
 		</div>
 		<div v-if="depth==2">
-			<div>{{book[bookindex].B_NAME}}</div><br/>
+			<div><a @click.prevent="depth=1" style="cursor:pointer">返回</a> | {{book[bookindex].B_NAME}}</div><br/>
 			<div v-html="zhang"></div>
 		</div>
 		<br/><br/>
@@ -84,11 +84,13 @@ var vm = new Vue({
             let line=""; let substart=0; let sublength=0;  let subtitle=0;
             for(let i=0;i<this.text.length;i++) {
                 line+=this.text[i];
-                if(this.text[i]=="\n") {
+                if(this.text[i]=="\n" && line.length!=2) {
                     if(eval(book[this.bookindex].B_EVAL)){
                         sublength=i-line.length-substart+1;
+						//console.log(i+" "+line.length+" "+substart+" "+sublength)
                         if(subtitle) this.subinfo.push({'start':substart,'length':sublength,'title':subtitle});
                         substart=i-line.length+1;
+						//console.log(substart)
                         subtitle=line.replace(/(^\s*)|(\s*$)/g, "").replace(/　/g, " ");
                     }
                     line="";
