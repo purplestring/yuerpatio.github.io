@@ -52,7 +52,7 @@
 					</span>
 					<span v-if="!test && item.SHOW!='no'">
 						<a v-if="list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪'" 
-						style='color:Green;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						style='color:#000;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
 						<a v-if="!(list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪')" 
 						style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
 					</span>
@@ -69,18 +69,18 @@
 				<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶　</a>	
 				<a @click.prevent="nextAuthor()" style="cursor: pointer;">　▶▶　</a>
 			</div>
-            <div v-if="test || list[id].P_PICS.split('/')[0]=='img'" class='desc2'>
+            <div class='desc2'>
                 <br>{{list[id].P_DYNASTY}} <span v-if="list[id].P_YEAR!=null">{{list[id].P_YEAR}}年 </span>
 				{{list[id].P_AUTHOR}} 《{{list[id].P_NAME}}》<br>
                 {{list[id].P_TYPE}}<br>
                 <span v-if="list[id].P_WIDTH!=null">横：{{list[id].P_WIDTH}}厘米；</span>
                 <span v-if="list[id].P_HEIGHT!=null">纵：{{list[id].P_HEIGHT}}厘米</span>
-				<a :href='"https://baike.baidu.com/item/"+list[id].P_NAME' target="_blank">百科</a><br>
+				<a :href='"https://baike.baidu.com/item/"+list[id].P_NAME' target="_blank">百科一下</a><br>
             </div>
             <span v-if="test || list[id].P_PICS.split('/')[0]=='img'"><img id='myimg' :src='list[id].P_PICS'></span>
-			<span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
+			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
-			</span>
+			</span-->
             <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画之册◀</a></div>
 		</div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
