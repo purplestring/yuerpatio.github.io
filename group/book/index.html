@@ -21,7 +21,7 @@
 		<div v-if="depth==0">
 			<div class="title" align="center" @click="test=!test">书卷总目</div><br/>	
 			<div class="desc2">古今之书，搜集于此。版权及带宽所限，<br>
-			厚书、现代作品有目无书。仅供交流学习，叮！<br><br>						
+				厚书、现代作品有目无书。仅供交流学习，叮！<br><br>						
 			</div>			
 			<span v-for="(item,i) in book" >
 				<div v-if="i==0 || book[i].S_GROUP!=book[i-1].S_GROUP" id="family"><br/>
