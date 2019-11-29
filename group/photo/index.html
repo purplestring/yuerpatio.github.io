@@ -20,7 +20,9 @@
 						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>
 						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
 					</div>
-					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>			
+					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
+					<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
+					</span>					
 					<a name="file" @click.prevent="id=i" style="cursor:pointer">{{item.TITLE}}</a>				
 				</span><br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer">返回主页</a></div>

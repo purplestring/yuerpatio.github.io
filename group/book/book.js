@@ -106,6 +106,7 @@ var book=[
 {F_GROUP: "古籍",S_GROUP: "杂集",TITLE: "小窗幽记",FILE: "file/",F_EVAL: "line.indexOf('卷')==0",},
 {F_GROUP: "古籍",S_GROUP: "杂集",TITLE: "小窗自记",FILE: "file/",F_EVAL: "line.indexOf('小')==0",},
 {F_GROUP: "古籍",S_GROUP: "杂集",TITLE: "幽梦影",FILE: "file/",F_EVAL: "line.indexOf('幽梦影')==2",},
+{F_GROUP: "古籍",S_GROUP: "杂集",TITLE: "夜航船",},
 {F_GROUP: "今人",S_GROUP: "叙事",TITLE: "阿Q正传",},
 {F_GROUP: "今人",S_GROUP: "叙事",TITLE: "白鹿原",},
 {F_GROUP: "今人",S_GROUP: "叙事",TITLE: "边城",},
