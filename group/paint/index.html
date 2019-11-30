@@ -75,7 +75,7 @@
                 {{list[id].P_TYPE}}<br>
                 <span v-if="list[id].P_WIDTH!=null">横：{{list[id].P_WIDTH}}厘米；</span>
                 <span v-if="list[id].P_HEIGHT!=null">纵：{{list[id].P_HEIGHT}}厘米</span>
-				<a :href='"https://baike.baidu.com/item/"+list[id].P_NAME' target="_blank">百科一下</a><br>
+				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a><br>
             </div>
             <span v-if="test || list[id].P_PICS.split('/')[0]=='img'"><img id='myimg' :src='list[id].P_PICS'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">

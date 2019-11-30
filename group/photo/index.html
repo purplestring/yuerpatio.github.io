@@ -23,7 +23,10 @@
 					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
 					<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
 					</span>					
-					<a name="file" @click.prevent="id=i" style="cursor:pointer">{{item.TITLE}}</a>				
+					<span @click.prevent="id=i" style="cursor:pointer;">
+						<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
+						<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
+					</span>					
 				</span><br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer">返回主页</a></div>
 			</div>
@@ -33,6 +36,7 @@
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
 				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】<br><br></span>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
+				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
 				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
 				<br><br>				
 				<div align="center">
@@ -62,6 +66,11 @@ var all=new Vue({
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
+		}
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
