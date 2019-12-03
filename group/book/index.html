@@ -99,10 +99,10 @@ var vm = new Vue({
 		text:"",subinfo:[],zhang:"",
 		
 		search:false,
+		bookselect:false,
 		msg:"",
 		searchrst:[],
-		searchstart:-1,
-		bookselect:false,
+		searchstart:-1,		
 		//searchline:"",
 		
 		test:false,
@@ -135,7 +135,9 @@ var vm = new Vue({
 			this.depth=0;
 			this.searchstart=-1;
 			this.msg="";
+			this.search=false;
 			this.bookselect=false;
+			this.searchrst=[];
 			this.$forceUpdate();		
 		},
         getZhang: function getZhang(i) {		
@@ -149,7 +151,7 @@ var vm = new Vue({
         },
 
         getBook: function getBook(index) {
-			if(this.search) return;
+			if(this.search || this.bookselect) return;
             this.bookindex=index;
 			if(this.depth==0) this.depth=1; 
 			this.subinfo=[];this.text="";
@@ -162,7 +164,7 @@ var vm = new Vue({
             for(let i=0;i<this.text.length;i++) {
                 line+=this.text[i];
                 if(this.text[i]=="\n") {
-                    if(eval(book[this.bookindex].F_EVAL)){
+                    if(eval(book[this.bookindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                         sublength=i-line.length-substart+1;
 						//console.log(i+" "+line.length+" "+substart+" "+sublength)
                         if(subtitle) this.subinfo.push({'start':substart,'length':sublength,'title':subtitle});
@@ -219,6 +221,7 @@ var vm = new Vue({
 			//console.log((new Date().getTime() - this.milliseconds) / 1000 + " s");
 			this.bookindex=0;
 			this.search=false;
+			this.bookselect=false;
 			this.text="";
 			this.depth=3;
 			//this.$forceUpdate();
@@ -237,13 +240,13 @@ var vm = new Vue({
 			}
 			//console.log(search)
 			let jstart=0;//卷始
-			let jtitle="";
+			let jtitle="目录页";
 			let getjtitle=false;
             for(let i=0;i<this.text.length;i++) {
 			
                 line+=this.text[i];
                 if(this.text[i]=="\n") {
-                    if(eval(book[this.bookindex].F_EVAL)){
+                    if(eval(book[this.bookindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                          jstart=i-line.length+1;
 						 jtitle=line;
 						 getjtitle=true;
@@ -263,6 +266,8 @@ var vm = new Vue({
 						for(let j=0;j<msg.length;j++) content=content.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
 						content=content.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
 						
+						//console.log(jtitle.replace(/(^\s*)|(\s*$)/g, "").length)
+						//console.log(this.searchrst.length+" "+jstart+" "+jtitle);
 						this.searchrst.push({
 							'bookindex':this.bookindex,
 							//'start':i-linenlength+1,
@@ -273,7 +278,9 @@ var vm = new Vue({
 							//'linen':linen,
 						});
 						//console.log(linen)
-						if(this.searchrst.length>=20) {this.endSearch(); return;}
+						
+						let recordmax=20; if(this.test) recordmax=36;
+						if(this.searchrst.length>=recordmax) {this.endSearch(); return;}
                     }
                     linen="";
 					getjtitle=false;
@@ -292,7 +299,9 @@ var vm = new Vue({
 					){
 					//this.$forceUpdate();
 					//alert(this.book[this.bookindex].TITLE);
-					document.getElementById("searching").innerHTML="<br>正在搜索《"+this.book[this.bookindex].TITLE+"》...  已找到："+this.searchrst.length+"/20";
+					let recordmax=20; if(this.test) recordmax=36;
+					document.getElementById("searching").innerHTML="<br>正在搜索《"+
+					this.book[this.bookindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+recordmax;
 					this.loadBook();
 					return;
 				}
