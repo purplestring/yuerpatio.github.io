@@ -35,7 +35,9 @@
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
 					<a name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL">微博</a><br>
-				</span>				
+				</span>	
+				<a v-if="list[id].LINK!=null" target="_blank" 
+				:href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>				
 				<br>
 				<span v-for="(item,i) in list[id].F_NAME">
 					<img id='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
@@ -60,6 +62,11 @@ var all=new Vue({
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
+		}
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){

@@ -192,6 +192,11 @@ var vm = new Vue({
 	created: function created() {	
         if(self.location.href.substring(0,4)!="http")this.test=true;
 		this.reSet();
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].P_NAME) {this.id=i; break; }
+		}
     },
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){

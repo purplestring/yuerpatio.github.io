@@ -129,4 +129,8 @@ a:hover {
 	input{
 		font-size:36px;
 	}
+	input[type="checkbox"]{
+		width:36px;
+		height:36px;
+	}
 }
