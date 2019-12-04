@@ -114,6 +114,11 @@ var vm = new Vue({
 		if(self.location.href.substring(0,4)!="http")this.test=true;
 		//book.sort(function (a, b) {return a.TITLE.localeCompare(b.TITLE);});
         //book.sort(function (a, b) {return a.B_FILE.substring(0,a.B_FILE.lastIndexOf('/')).localeCompare(b.B_FILE.substring(0,b.B_FILE.lastIndexOf('/')));});
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.book.length;i++) if(urlvalue==this.book[i].TITLE) {this.getBook(i); break; }
+		}
     },
 
     methods: {
