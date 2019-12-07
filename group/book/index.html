@@ -20,8 +20,8 @@
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="depth==0">
 			<div class="title" align="center" @click="test=!test">书卷总目</div><br>	
-			<div class="desc2">古今之书，搜集于此。版权及带宽所限，<br>
-				厚书、现代作品有目无书。仅供交流学习，叮！<br><br>						
+			<div class="desc2">古今之书，搜集于此。版权及带宽等所限，<br>
+				厚书、现代作品等有目无书。仅供交流学习，叮！<br><br>						
 			</div>
 			<div style="text-align:center;">
 				<input type="text" v-model="msg" placeholder="设定搜索文字">
@@ -369,7 +369,8 @@ var vm = new Vue({
 		//console.log()
 		document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.depth==0) document.title="书卷集";
-		if(this.depth>=1) document.title=this.book[this.bookindex].TITLE;
+        else if(this.depth==3) document.title="搜索页";
+		else if(this.depth==1 || this.depth==2)  document.title=this.book[this.bookindex].TITLE;
 	},
 });
 </script>
