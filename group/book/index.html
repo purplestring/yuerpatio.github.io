@@ -32,7 +32,7 @@
 				<span @click="startSearch()" style="cursor:pointer">🔍</span>
 				<span id="searching"></span>
 			</div>				
-			<span v-for="(item,i) in book" >
+			<span v-for="(item,i) in book" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
 				<div v-if="i==0 || book[i].S_GROUP!=book[i-1].S_GROUP" id="family"><br>
 					{{item.F_GROUP}}->{{item.S_GROUP}}
 					<input v-if="bookselect" type="checkbox" v-model="book[i].gselected" @change="setgChange(i)"/>
