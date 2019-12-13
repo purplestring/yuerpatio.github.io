@@ -42,14 +42,15 @@
 					<input v-if="bookselect" v-model="book[i].selected" type="checkbox"/>
 				</span>
 				<span v-if="book[i].FILE==null || (!test && book[i].FILE=='filel/' )" 
-					@click.prevent="getBook(i)">{{item.TITLE}}</span>
+					@click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</span>
 				<span v-if="bookselect">|</span>
 			</span>
 			<br>
 		</div>
 		<div v-if="depth==1">
 			<div class="title" align="center">{{book[bookindex].TITLE}}</div><br>
-			<a @click.prevent="reSet()" style="cursor:pointer">返回书卷目录</a><br><br>
+			<a @click.prevent="reSet()" style="cursor:pointer">返回书卷目录</a><br>
+			{{book[bookindex].DYNASTY}} {{book[bookindex].AUTHOR}}<br><br>
 			<span v-if="text=='' && (book[bookindex].FILE=='file/' || (test && book[bookindex].FILE=='filel/'))">加载中...</span>
 			<span v-if="(text!='' && text.length<200) || book[bookindex].FILE==null || (!test && book[bookindex].FILE=='filel/' )">
 			百度百科：<a :href="'https://baike.baidu.com/item/' + book[bookindex].TITLE">

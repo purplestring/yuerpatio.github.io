@@ -95,7 +95,7 @@
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "毛虫橙紫",F_NAME: "maochong02.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "毛虫橙黑",F_NAME: "maochong03.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "白点黑",F_NAME: "die21.jpg",},
-{F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "眼纹蝶",F_NAME: "die04.jpg",},
+{F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "荫眼蝶",F_NAME: "die04.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "破草蝶",F_NAME: "die19.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "粉蝶",F_NAME: "die01.jpg",F_DESC: "最常见的白蝴蝶，到处都能看见。",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "红蝶",F_NAME: "die08.jpg",},
