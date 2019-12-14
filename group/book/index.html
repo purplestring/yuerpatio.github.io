@@ -19,61 +19,72 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="depth==0">
-			<div class="title" align="center" @click="test=!test">书卷总目</div><br>	
+			<div class="title" align="center" @click="test=!test;reSet();">书卷总目</div><br>	
 			<div class="desc2">古今之书，搜集于此。版权及带宽等所限，<br>
 				厚书、现代作品等有目无书。仅供交流学习，叮！<br><br>						
-			</div>
+				<span v-if="stateor">【<span @click="reSet(false);" 
+				style="color:green;cursor:pointer;">或</span>筛选🔍】黑：是 | 白：非 |</span>
+				<span v-if="!stateor">【<span @click="reSet(true);" 
+				style="color:green;cursor:pointer;">与</span>筛选🔍】灰：无 | 黑：是 | 白：非 |</span>
+				<span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br>			
+				 <span v-for="(item, i) in statename">
+					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
+					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
+					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
+					<span v-if="item=='朝代|隋' || item=='类属|合集'" ><br></span>
+				</span>								
+			</div><br><br>
 			<div style="text-align:center;">
 				<input type="text" v-model="msg" placeholder="设定搜索文字">
-				<span @click="bookSelect()" style="cursor:pointer">
-					<span v-if="bookselect" style="color:Green;">选书</span>
-					<span v-if="!bookselect" style="color:White">选书</span>
+				<span @click="listSelect()" style="cursor:pointer">
+					<span v-if="listselect" style="color:White">选书</span>
+					<span v-if="!listselect" style="color:Green">选书</span>
 				</span>
-				<span @click="startSearch()" style="cursor:pointer">🔍</span>
+				<span @click="startSearch()" style="color:Green;cursor:pointer">搜索</span>
 				<span id="searching"></span>
 			</div>				
-			<span v-for="(item,i) in book" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
-				<div v-if="i==0 || book[i].S_GROUP!=book[i-1].S_GROUP" id="family"><br>
-					{{item.F_GROUP}}->{{item.S_GROUP}}
-					<input v-if="bookselect" type="checkbox" v-model="book[i].gselected" @change="setgChange(i)"/>
+			<span v-for="(item,i) in list" v-if="item.fliter">
+				<div v-if="getPre(i)<0 || item.F_GROUP!=list[getPre(i)].F_GROUP || item.S_GROUP!=list[getPre(i)].S_GROUP" id="family"><br>
+					{{item.F_GROUP}}->{{item.S_GROUP}}					
 					<br><br></div>
-				<span v-if="book[i].FILE=='file/' || (test && book[i].FILE=='filel/')">					
+				<span v-if="list[i].FILE=='file/' || (test && list[i].FILE=='filel/')">					
 					<a @click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</a>
-					<input v-if="bookselect" v-model="book[i].selected" type="checkbox"/>
+					<input v-if="listselect" v-model="list[i].selected" type="checkbox"/>
 				</span>
-				<span v-if="book[i].FILE==null || (!test && book[i].FILE=='filel/' )" 
+				<span v-if="list[i].FILE==null || (!test && list[i].FILE=='filel/' )" 
 					@click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</span>
-				<span v-if="bookselect">|</span>
+				<span v-if="listselect">|</span>
 			</span>
 			<br>
 		</div>
 		<div v-if="depth==1">
-			<div class="title" align="center">{{book[bookindex].TITLE}}</div><br>
-			<a @click.prevent="reSet()" style="cursor:pointer">返回书卷目录</a><br>
-			{{book[bookindex].DYNASTY}} {{book[bookindex].AUTHOR}}<br><br>
-			<span v-if="text=='' && (book[bookindex].FILE=='file/' || (test && book[bookindex].FILE=='filel/'))">加载中...</span>
-			<span v-if="(text!='' && text.length<200) || book[bookindex].FILE==null || (!test && book[bookindex].FILE=='filel/' )">
-			百度百科：<a :href="'https://baike.baidu.com/item/' + book[bookindex].TITLE">
-				{{book[bookindex].TITLE}}</a></span>
+			<div class="title" align="center">{{list[listindex].TITLE}}</div><br>
+			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br>
+			{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}<br><br>
+			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/'))">加载中...</span>
+			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
+			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE">
+				{{list[listindex].TITLE}}</a></span>
 			<a v-for="(item,i) in subinfo" @click.prevent="getZhang(i)" style="cursor:pointer">{{item.title}}<br></a><br>
 		</div>
 		<div v-if="depth==2">
 			<div>
 				<a v-if="searchstart==-1" @click.prevent="depth=1" style="cursor:pointer">返回本书目录</a>
 				<a v-if="searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
-				 | {{book[bookindex].TITLE}}
+				 | {{list[listindex].TITLE}}
 			</div>
 			<br>
 			<div v-html="zhang"></div>
 		</div>
 		<div v-if="depth==3">
 			<div class="title" align="center">搜索结果</div><br>
+			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br><br>
 			<span v-if="searchrst.length==0">
 				什么也没找到...
 			</span>
 			<span v-for="(item,i) in searchrst">
-				<a @click.prevent="searchstart=item.jstart;getBook(item.bookindex);" style="cursor:pointer;font-weight:900;">
-					{{i+1}}/{{searchrst.length}} {{book[item.bookindex].TITLE}} <span v-if="item.jtitle!=''">>{{item.jtitle}}</span></a><br><br>
+				<a @click.prevent="searchstart=item.jstart;getBook(item.listindex);" style="cursor:pointer;font-weight:900;">
+					{{i+1}}/{{searchrst.length}} {{list[item.listindex].TITLE}} <span v-if="item.jtitle!=''">>{{item.jtitle}}</span></a><br><br>
 				<div v-html="item.content"></div>
 			<br><br></span>
 		</div>
@@ -83,7 +94,7 @@
 			<a v-if="depth==2 && searchstart==-1" @click.prevent="depth=1" style="cursor:pointer">返回本书目录</a>
 			<a v-if="depth==2 && searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
 			<a v-if="depth==2 && zhangindex<subinfo.length-1" @click.prevent="getZhang(zhangindex+1)" style="cursor:pointer">▶</a>
-			<a v-if="depth==1 || depth==3" @click.prevent="reSet()" style="cursor:pointer">返回书卷目录</a>
+			<a v-if="depth==1 || depth==3" @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
 			<a v-if="depth==0" href="../../index.html" style="cursor:pointer">返回主页</a>
 		</div>
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -95,12 +106,24 @@
 var vm = new Vue({
     el: '#main',
     data: {
-        depth:0,book:book,
-		bookindex:0,zhangindex:0,
+        depth:0,list:book,
+		listindex:0,zhangindex:0,
 		text:"",subinfo:[],zhang:"",
-		
-		search:false,
-		bookselect:false,
+				
+		statename:["主类|古籍","主类|今人","主类|外国",
+		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
+		"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代","朝代|无",		
+		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
+		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
+		],
+		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP",},		
+		statevalue:[],
+		stateor:false,
+		statecoloror:["#fff","#000"],
+		statecolorand:["#888","#000","#fff"],
+				
+		search:false,		
+		listselect:false,
 		msg:"",
 		searchrst:[],
 		searchstart:-1,		
@@ -110,15 +133,15 @@ var vm = new Vue({
 		//milliseconds:0,
 	},
 
-	created: function created() {
-		this.reSet();
+	created: function created() {		
 		if(self.location.href.substring(0,4)!="http")this.test=true;
-		//book.sort(function (a, b) {return a.TITLE.localeCompare(b.TITLE);});
-        //book.sort(function (a, b) {return a.B_FILE.substring(0,a.B_FILE.lastIndexOf('/')).localeCompare(b.B_FILE.substring(0,b.B_FILE.lastIndexOf('/')));});
+		this.reSet();
+		//list.sort(function (a, b) {return a.TITLE.localeCompare(b.TITLE);});
+        //list.sort(function (a, b) {return a.B_FILE.substring(0,a.B_FILE.lastIndexOf('/')).localeCompare(b.B_FILE.substring(0,b.B_FILE.lastIndexOf('/')));});
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.book.length;i++) if(urlvalue==this.book[i].TITLE) {this.getBook(i); break; }
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.getBook(i); break; }
 		}
     },
 
@@ -136,16 +159,111 @@ var vm = new Vue({
 				document.getElementById("main").style.visibility = "visible";
 			}, 0);
 		},
-		reSet: function reSet(){
-			for(let j=0;j<this.book.length;j++) { this.book[j].selected= false; this.book[j].gselected= false;}
+		reSet: function reSet(stateor){
+			if(stateor!=null) this.stateor=stateor; else this.stateor=false;
+			if(this.searchrst.length==0) for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
+			for(let j=0;j<this.list.length;j++) { 
+				this.list[j].fliter= false; 
+				if(this.test || (this.list[j].SHOW!='no' && this.list[j].F_GROUP!='test')) this.list[j].fliter=true;
+				this.list[j].selected= false; 
+				if(this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/')) this.list[j].selected= true; 
+				//this.list[j].gselected= false;
+				this.getItem(j);
+			}
 			this.depth=0;
 			this.searchstart=-1;
 			this.msg="";
 			this.search=false;
-			this.bookselect=false;
+			this.listselect=false;
 			this.searchrst=[];
 			this.$forceUpdate();		
 		},
+		setType: function setType(i){
+			if(this.stateor){
+				this.statevalue[i]=(this.statevalue[i]+1)%2;
+				if(this.statevalue[i]==1){				
+					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|清")) this.c(["主类|古籍",],1);	
+					if(i==this.statename.indexOf("主类|今人"))this.c(["朝代|近现代",],1);	
+					if(i==this.statename.indexOf("朝代|近现代"))this.c(["主类|今人",],1);	
+					if(i==this.statename.indexOf("主类|外国"))this.c(["朝代|无",],1);						
+				}
+			}
+			else{
+				this.statevalue[i]=(this.statevalue[i]+1)%3;
+				if(this.statevalue[i]==1){					
+					if(i>=this.statename.indexOf("主类|古籍") && i<=this.statename.indexOf("主类|外国")) 
+						this.c(["主类|古籍","主类|今人","主类|外国",]);
+					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|无")) 
+						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
+						"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代","朝代|无",]);
+					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
+						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
+						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
+					if(i==this.statename.indexOf("主类|外国")) 
+						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
+						"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代",]);
+					this.statevalue[i]=1;
+				}
+			}			
+			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			this.$forceUpdate();
+		},
+		c: function c(staten,v){
+			for(let i=0;i<staten.length;i++){
+				let n = this.statename.indexOf(staten[i]);
+				if(this.stateor) this.statevalue[n]=v;
+				else{
+					if(this.statevalue[n]==1) this.statevalue[n]=2;
+				}
+			}
+		},
+		getItem: function getItem(i){
+			//console.log("s");
+			if(this.stateor){
+				for(let j=0;j<this.statename.length;) {
+					//if(this.statevalue[j]==0) continue;				
+					let get=-1;
+					let fenlei=this.statename[j].split("|")[0];
+					let word=this.statename[j].split("|")[1];				
+					if(this.list[i][this.stategroup[fenlei]]==null) {if(word=="无") get=0;}
+					else if(this.list[i][this.stategroup[fenlei]]==word) get=0;
+					if( get!=-1 && this.statevalue[j]==1 ) {
+						if(this.nextStateGroup(j)==-1) {this.list[i].fliter= true; return;}
+						else j=this.nextStateGroup(j);
+					}
+					else if( get!=-1 && this.statevalue[j]!=1 ) {this.list[i].fliter= false; return;}
+					else j++;	
+				}
+				this.list[i].fliter= false; return;
+			}
+			else{			
+				for(let j=0;j<this.statename.length;j++) {
+					if(this.statevalue[j]==0) continue;				
+					let get=-1;
+					let fenlei=this.statename[j].split("|")[0];
+					let word=this.statename[j].split("|")[1];
+					if(this.list[i][this.stategroup[fenlei]]==null) {if(word=="无") get=0;}
+					else if(this.list[i][this.stategroup[fenlei]]==word) get=0;
+					if(get!=-1 && this.statevalue[j]==1) continue;
+					if(get==-1 && this.statevalue[j]==2) continue;
+					this.list[i].fliter= false;	return;		
+				}
+				this.list[i].fliter= true; return;			
+			}
+			
+		},
+		nextStateGroup: function nextStateGroup(j){
+			if(j>=(this.statename.length-1)) return -1;
+			let jfenlei=this.statename[j].split("|")[0];
+			for(i=j+1;i<this.statename.length;i++) if(this.statename[i].split("|")[0]!=jfenlei) return i;
+			return -1;
+		},		
+		getPre: function getPre(j){
+			let i=j-1;
+			for(;i>=0;i--) if(this.list[i].fliter) return i;
+			return -1;
+		},
+		
         getZhang: function getZhang(i) {		
 			this.zhang=this.text.substring(this.subinfo[i].start,this.subinfo[i].start+this.subinfo[i].length);
 			if(this.searchstart!=-1) {
@@ -157,11 +275,11 @@ var vm = new Vue({
         },
 
         getBook: function getBook(index) {
-			if(this.search || this.bookselect) return;
-            this.bookindex=index;
+			if(this.search) return;
+            this.listindex=index;
 			if(this.depth==0) this.depth=1; 
 			this.subinfo=[];this.text="";
-			if(this.book[index].FILE==null ||(!this.test && this.book[index].FILE=='filel/')) return;
+			if(this.list[index].FILE==null ||(!this.test && this.list[index].FILE=='filel/')) return;
             this.loadBook();
         },
 
@@ -170,7 +288,7 @@ var vm = new Vue({
             for(let i=0;i<this.text.length;i++) {
                 line+=this.text[i];
                 if(this.text[i]=="\n") {
-                    if(eval(book[this.bookindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
+                    if(eval(this.list[this.listindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                         sublength=i-line.length-substart+1;
 						//console.log(i+" "+line.length+" "+substart+" "+sublength)
                         if(subtitle) this.subinfo.push({'start':substart,'length':sublength,'title':subtitle});
@@ -196,28 +314,28 @@ var vm = new Vue({
         },
 		
 		
-		bookSelect: function bookSelect(){
-			this.bookselect=!this.bookselect;
+		listSelect: function listSelect(){
+			this.listselect=!this.listselect;
 			this.$forceUpdate();
 		},
 		
-		setgChange: function setgChange(i){			
-			for(let j=0;j<this.book.length;j++) 
+		/*setgChange: function setgChange(i){			
+			for(let j=0;j<this.list.length;j++) 
 				if(
-					this.book[i].F_GROUP==this.book[j].F_GROUP &&
-					this.book[i].S_GROUP==this.book[j].S_GROUP &&
-					( this.book[j].FILE=='file/' || (this.test && this.book[j].FILE=='filel/') )
-				) this.book[j].selected=this.book[i].gselected;
+					this.list[i].F_GROUP==this.list[j].F_GROUP &&
+					this.list[i].S_GROUP==this.list[j].S_GROUP &&
+					( this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/') )
+				) this.list[j].selected=this.list[i].gselected;
 				
 			this.reFresh();
 			
-		},
+		},*/
 		
 		startSearch: function startSearch() {
 			//this.milliseconds = new Date().getTime();
 			this.msg=this.msg.replace(/(^\s*)|(\s*$)/g, "").replace(/,/g," ").replace(/，/g," ");
 			if(this.msg=="")return;
-			this.bookindex=0;
+			this.listindex=0;
 			this.search=true;
 			this.searchrst=[];
 			this.nextSearch();			 
@@ -225,16 +343,16 @@ var vm = new Vue({
 		
 		endSearch: function endSearch() {
 			//console.log((new Date().getTime() - this.milliseconds) / 1000 + " s");
-			this.bookindex=0;
+			this.listindex=0;
 			this.search=false;
-			this.bookselect=false;
+			//this.listselect=false;
 			this.text="";
 			this.depth=3;
 			//this.$forceUpdate();
         },
 		
 		doSearch: function doSearch() {
-			//console.log("search: "+this.book[this.bookindex].FILE+this.book[this.bookindex].TITLE+".txt");
+			//console.log("search: "+this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt");
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
 			var msg=this.msg.split(' ');
@@ -252,7 +370,7 @@ var vm = new Vue({
 			
                 line+=this.text[i];
                 if(this.text[i]=="\n") {
-                    if(eval(book[this.bookindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
+                    if(eval(this.list[this.listindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                          jstart=i-line.length+1;
 						 jtitle=line;
 						 getjtitle=true;
@@ -275,7 +393,7 @@ var vm = new Vue({
 						//console.log(jtitle.replace(/(^\s*)|(\s*$)/g, "").length)
 						//console.log(this.searchrst.length+" "+jstart+" "+jtitle);
 						this.searchrst.push({
-							'bookindex':this.bookindex,
+							'listindex':this.listindex,
 							//'start':i-linenlength+1,
 							'jstart':jstart,
 							//'length':linenlength,
@@ -294,20 +412,19 @@ var vm = new Vue({
 				
             }
 			
-			this.bookindex++;
+			this.listindex++;
 			this.nextSearch();			
         },
 		
 		nextSearch: function nextSearch() {
-			for(;this.bookindex<this.book.length;this.bookindex++) {
-				if	(	(this.bookselect && this.book[this.bookindex].selected) ||
-						(!this.bookselect && ( this.book[this.bookindex].FILE=='file/' || (this.test && this.book[this.bookindex].FILE=='filel/')))
-					){
+			for(;this.listindex<this.list.length;this.listindex++) {
+				if(this.list[this.listindex].fliter && this.list[this.listindex].FILE!=null && 
+					( (this.listselect && this.list[this.listindex].selected) || !this.listselect )){
 					//this.$forceUpdate();
-					//alert(this.book[this.bookindex].TITLE);
+					//alert(this.list[this.listindex].TITLE);
 					let recordmax=20; if(this.test) recordmax=36;
 					document.getElementById("searching").innerHTML="<br>正在搜索《"+
-					this.book[this.bookindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+recordmax;
+					this.list[this.listindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+recordmax;
 					this.loadBook();
 					return;
 				}
@@ -318,17 +435,17 @@ var vm = new Vue({
 		
 		/*getSearch: function getSearch(item) {
 			//console.log(JSON.stringify(item))
-			this.bookindex=item.bookindex;
+			this.listindex=item.listindex;
 			this.loadBook();
 			//searchstart=item.start;
-			//getBook(item.bookindex);
+			//getBook(item.listindex);
 			//this.depth=2;
 		},*/
 		
 
         loadBook: function loadBook() {
 			let _this=this; 
-			name=this.book[this.bookindex].FILE+this.book[this.bookindex].TITLE+".txt";
+			name=this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt";
 			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
 				//console.log("aa")
 				$.ajax({
@@ -340,7 +457,7 @@ var vm = new Vue({
 					},
 					error: function(data, status) {
 						_this.text='出错了,Err：' + JSON.stringify(arguments);
-						if(_this.search) { _this.bookindex=0; _this.search=false; document.getElementById("searching").innerHTML="搜索出错";}
+						if(_this.search) { _this.listindex=0; _this.search=false; document.getElementById("searching").innerHTML="搜索出错";}
 					}
 				});				
 			}
@@ -359,7 +476,7 @@ var vm = new Vue({
 						}
 						else {
 							_this.text='出错了,Err：' + xhr.status;	
-							if(_this.search) { _this.bookindex=0; _this.search=false;document.getElementById("searching").innerHTML="搜索出错";}
+							if(_this.search) { _this.listindex=0; _this.search=false;document.getElementById("searching").innerHTML="搜索出错";}
 						}							
 					}
 				}				
@@ -371,7 +488,7 @@ var vm = new Vue({
 		document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.depth==0) document.title="书卷集";
         else if(this.depth==3) document.title="搜索页";
-		else if(this.depth==1 || this.depth==2)  document.title=this.book[this.bookindex].TITLE;
+		else if(this.depth==1 || this.depth==2)  document.title=this.list[this.listindex].TITLE;
 	},
 });
 </script>
