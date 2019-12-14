@@ -33,7 +33,7 @@
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
 					<span v-if="item=='朝代|隋' || item=='类属|合集'" ><br></span>
 				</span>								
-			</div><br><br>
+			</div><br>
 			<div style="text-align:center;">
 				<input type="text" v-model="msg" placeholder="设定搜索文字">
 				<span @click="listSelect()" style="cursor:pointer">
@@ -60,7 +60,7 @@
 		<div v-if="depth==1">
 			<div class="title" align="center">{{list[listindex].TITLE}}</div><br>
 			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br>
-			{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}<br><br>
+			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}<br><br>
 			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/'))">加载中...</span>
 			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
 			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE">
@@ -115,8 +115,9 @@ var vm = new Vue({
 		"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代","朝代|无",		
 		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
+		"地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",
 		],
-		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP",},		
+		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY",},		
 		statevalue:[],
 		stateor:false,
 		statecoloror:["#fff","#000"],
@@ -185,7 +186,7 @@ var vm = new Vue({
 					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|清")) this.c(["主类|古籍",],1);	
 					if(i==this.statename.indexOf("主类|今人"))this.c(["朝代|近现代",],1);	
 					if(i==this.statename.indexOf("朝代|近现代"))this.c(["主类|今人",],1);	
-					if(i==this.statename.indexOf("主类|外国"))this.c(["朝代|无",],1);						
+					if(i==this.statename.indexOf("主类|外国"))this.c(["朝代|无","地域|无"],1);					
 				}
 			}
 			else{
@@ -199,6 +200,8 @@ var vm = new Vue({
 					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
 						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
+					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
+						this.c(["地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",]);
 					if(i==this.statename.indexOf("主类|外国")) 
 						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
 						"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代",]);
