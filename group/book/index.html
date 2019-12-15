@@ -31,7 +31,7 @@
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
-					<span v-if="item=='朝代|隋' || item=='类属|合集'" ><br></span>
+					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='类属|合集'" ><br></span>
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
@@ -111,11 +111,12 @@ var vm = new Vue({
 		text:"",subinfo:[],zhang:"",
 				
 		statename:["主类|古籍","主类|今人","主类|外国",
-		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
-		"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代","朝代|无",		
-		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
-		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
+		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
+		"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
+		"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
 		"地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",
+		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
+		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",		
 		],
 		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY",},		
 		statevalue:[],
@@ -184,8 +185,9 @@ var vm = new Vue({
 				this.statevalue[i]=(this.statevalue[i]+1)%2;
 				if(this.statevalue[i]==1){				
 					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|清")) this.c(["主类|古籍",],1);	
-					if(i==this.statename.indexOf("主类|今人"))this.c(["朝代|近现代",],1);	
-					if(i==this.statename.indexOf("朝代|近现代"))this.c(["主类|今人",],1);	
+					if(i==this.statename.indexOf("主类|今人"))this.c(["朝代|现代","朝代|当代",],1);	
+					if(i==this.statename.indexOf("朝代|现代"))this.c(["主类|今人",],1);	
+					if(i==this.statename.indexOf("朝代|当代"))this.c(["主类|今人",],1);	
 					if(i==this.statename.indexOf("主类|外国"))this.c(["朝代|无","地域|无"],1);					
 				}
 			}
@@ -195,16 +197,17 @@ var vm = new Vue({
 					if(i>=this.statename.indexOf("主类|古籍") && i<=this.statename.indexOf("主类|外国")) 
 						this.c(["主类|古籍","主类|今人","主类|外国",]);
 					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|无")) 
-						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
-						"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代","朝代|无",]);
+						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
+						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
+						"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",	]);
 					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
 						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
 					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
 						this.c(["地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",]);
 					if(i==this.statename.indexOf("主类|外国")) 
-						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|两晋","朝代|南北朝","朝代|隋",
-						"朝代|唐","朝代|五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清","朝代|近现代",]);
+						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
+						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",]);
 					this.statevalue[i]=1;
 				}
 			}			
