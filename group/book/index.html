@@ -361,14 +361,18 @@ var vm = new Vue({
 			//console.log("search: "+this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt");
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
-			var msg=this.msg.split(' ');
-			var search="";
-			for(let i=0;i<msg.length;i++) {
-				if(i>0) search+=" && ";
-				if(msg[i][0]=="-") search+='linen.indexOf("'+msg[i]+'")<0';
-				else search+='linen.indexOf("'+msg[i]+'")>0';
+			var msg="";var search="";			
+			//if(this.msg.indexOf('function')<0)
+			{
+				msg=this.msg.split(' ');
+				for(let i=0;i<msg.length;i++) {
+					if(i>0) search+=" && ";
+					if(msg[i][0]=="-") search+='linen.indexOf("'+msg[i]+'")<0';
+					else search+='linen.indexOf("'+msg[i]+'")>0';
+				}
+				//console.log(search)
 			}
-			//console.log(search)
+			//else search=this.msg;
 			let jstart=0;//卷始
 			let jtitle="目录页";
 			let getjtitle=false;
@@ -383,32 +387,28 @@ var vm = new Vue({
                     }
                     line="";					
                 }
-				
-				
+								
 				linen+=this.text[i];				
                 if(getjtitle || (this.text[i]=="\n" && linen.length>100) || (this.text[i]=="。" && linen.length>300)) {
                     if(eval(search)){
-						//let linenlength=linen.length;
 						let content="";
-						if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;
-						else content=linen;
-						
-						for(let j=0;j<msg.length;j++) content=content.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
-						content=content.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
-						
-						//console.log(jtitle.replace(/(^\s*)|(\s*$)/g, "").length)
-						//console.log(this.searchrst.length+" "+jstart+" "+jtitle);
+						//if(this.msg.indexOf('function')<0)
+						{						
+							if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;
+							else content=linen;							
+							for(let j=0;j<msg.length;j++) content=content.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
+							content=content.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
+						}
+						//else{ }
+
 						this.searchrst.push({
 							'listindex':this.listindex,
-							//'start':i-linenlength+1,
 							'jstart':jstart,
-							//'length':linenlength,
 							'jtitle':jtitle.replace(/(^\s*)|(\s*$)/g, ""),
 							'content':content,
-							//'linen':linen,
+
 						});
-						//console.log(linen)
-						
+
 						let recordmax=20; if(this.test) recordmax=36;
 						if(this.searchrst.length>=recordmax) {this.endSearch(); return;}
                     }
@@ -424,7 +424,8 @@ var vm = new Vue({
 		
 		nextSearch: function nextSearch() {
 			for(;this.listindex<this.list.length;this.listindex++) {
-				if(this.list[this.listindex].fliter && this.list[this.listindex].FILE!=null && 
+				if(this.list[this.listindex].fliter && 
+					( this.book[this.bookindex].FILE=='file/' || (this.test && this.book[this.bookindex].FILE=='filel/')) && 
 					( (this.listselect && this.list[this.listindex].selected) || !this.listselect )){
 					//this.$forceUpdate();
 					//alert(this.list[this.listindex].TITLE);
