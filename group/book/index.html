@@ -425,7 +425,7 @@ var vm = new Vue({
 		nextSearch: function nextSearch() {
 			for(;this.listindex<this.list.length;this.listindex++) {
 				if(this.list[this.listindex].fliter && 
-					( this.book[this.bookindex].FILE=='file/' || (this.test && this.book[this.bookindex].FILE=='filel/')) && 
+					( this.list[this.listindex].FILE=='file/' || (this.test && this.list[this.listindex].FILE=='filel/')) && 
 					( (this.listselect && this.list[this.listindex].selected) || !this.listselect )){
 					//this.$forceUpdate();
 					//alert(this.list[this.listindex].TITLE);
