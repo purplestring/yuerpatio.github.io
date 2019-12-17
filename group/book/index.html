@@ -65,7 +65,17 @@
 			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
 			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE">
 				{{list[listindex].TITLE}}</a></span>
-			<a v-for="(item,i) in subinfo" @click.prevent="getZhang(i)" style="cursor:pointer">{{item.title}}<br></a><br>
+			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))">
+				<a v-for="i of 100" v-if='(listpage*100+i-1)<subinfo.length' @click="getZhang(listpage*100+i-1)" style="cursor:pointer">{{subinfo[listpage*100+i-1].title}}<br></a><br>
+				<a v-if="listpage>=50" @click="listpage-=50;" style="cursor:pointer">◀◀◀　</a>
+				<a v-if="listpage>=5" @click="listpage-=5;" style="cursor:pointer">◀◀　</a>
+				<a v-if="listpage>0" @click="listpage--;" style="cursor:pointer">◀</a>
+				<span v-if="subinfo.length>100">第{{listpage+1}}/{{Math.ceil(subinfo.length/100)}}页</span>
+				<a v-if="subinfo.length>(listpage+1)*100" @click="listpage++;" style="cursor:pointer">▶</a>
+				<a v-if="subinfo.length>(listpage+5)*100" @click="listpage+=5;" style="cursor:pointer">　▶▶</a>
+				<a v-if="subinfo.length>(listpage+50)*100" @click="listpage+=50;" style="cursor:pointer">　▶▶▶</a>
+			</span>
+			<br>
 		</div>
 		<div v-if="depth==2">
 			<div>
@@ -83,9 +93,9 @@
 				什么也没找到...
 			</span>
 			<span v-for="(item,i) in searchrst">
-				<a @click.prevent="searchstart=item.jstart;getBook(item.listindex);" style="cursor:pointer;font-weight:900;">
+				<a @click.prevent="searchstart=item.jstart;getBook(item.listindex);searchshow=item.content;" style="cursor:pointer;font-weight:900;">
 					{{i+1}}/{{searchrst.length}} {{list[item.listindex].TITLE}} <span v-if="item.jtitle!=''">>{{item.jtitle}}</span></a><br><br>
-				<div v-html="item.content"></div>
+				<div v-html="item.content.replace(/\r\n/g,'<br>').replace(/\n/g,'<br>')"></div>
 			<br><br></span>
 		</div>
 		<br><br>		
@@ -107,7 +117,7 @@ var vm = new Vue({
     el: '#main',
     data: {
         depth:0,list:book,
-		listindex:0,zhangindex:0,
+		listindex:0,zhangindex:0,listpage:0,
 		text:"",subinfo:[],zhang:"",
 				
 		statename:["主类|古籍","主类|今人","主类|外国",
@@ -128,7 +138,8 @@ var vm = new Vue({
 		listselect:false,
 		msg:"",
 		searchrst:[],
-		searchstart:-1,		
+		searchstart:-1,	
+		searchshow:"",		
 		//searchline:"",
 		
 		test:false,
@@ -148,6 +159,7 @@ var vm = new Vue({
     },
 
     methods: {
+		//isNumber: function isNumber(str){ var re = /^([0-9]+)([.]?)([0-9]*)$/;  return re.test(str);},
 		reFresh: function reFresh(){
 			if (document.body && document.body.scrollTop) 
 				this.scrolltop=document.body.scrollTop;
@@ -164,6 +176,10 @@ var vm = new Vue({
 		reSet: function reSet(stateor){
 			if(stateor!=null) this.stateor=stateor; else this.stateor=false;
 			if(this.searchrst.length==0) for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
+			if(this.stateor) this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
+				"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
+				"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
+				"地域|中",],1);	
 			for(let j=0;j<this.list.length;j++) { 
 				this.list[j].fliter= false; 
 				if(this.test || (this.list[j].SHOW!='no' && this.list[j].F_GROUP!='test')) this.list[j].fliter=true;
@@ -273,8 +289,13 @@ var vm = new Vue({
         getZhang: function getZhang(i) {		
 			this.zhang=this.text.substring(this.subinfo[i].start,this.subinfo[i].start+this.subinfo[i].length);
 			if(this.searchstart!=-1) {
-				let msg=this.msg.split(' ');
-				for(let j=0;j<msg.length;j++) this.zhang=this.zhang.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
+				if(this.msg.indexOf('function')<0){
+					let msg=this.msg.split(' ');
+					for(let j=0;j<msg.length;j++) this.zhang=this.zhang.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
+				}
+				else{
+					this.zhang=this.zhang.replace(new RegExp(this.searchshow,"gm"),"<span style='color:blue'>"+this.searchshow+"</span>");
+				}
 			}
 			this.zhang=this.zhang.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
 			this.depth=2;this.zhangindex=i;
@@ -283,7 +304,7 @@ var vm = new Vue({
         getBook: function getBook(index) {
 			if(this.search) return;
             this.listindex=index;
-			if(this.depth==0) this.depth=1; 
+			if(this.depth==0) { this.depth=1; this.listpage=0; }
 			this.subinfo=[];this.text="";
 			if(this.list[index].FILE==null ||(!this.test && this.list[index].FILE=='filel/')) return;
             this.loadBook();
@@ -339,7 +360,7 @@ var vm = new Vue({
 		
 		startSearch: function startSearch() {
 			//this.milliseconds = new Date().getTime();
-			this.msg=this.msg.replace(/(^\s*)|(\s*$)/g, "").replace(/,/g," ").replace(/，/g," ");
+			if(this.msg.indexOf('function')<0) this.msg=this.msg.replace(/(^\s*)|(\s*$)/g, "").replace(/,/g," ").replace(/，/g," ");
 			if(this.msg=="")return;
 			this.listindex=0;
 			this.search=true;
@@ -361,9 +382,8 @@ var vm = new Vue({
 			//console.log("search: "+this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt");
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
-			var msg="";var search="";			
-			//if(this.msg.indexOf('function')<0)
-			{
+			var msg="";var search="";var nbreak=100;dbreak=300;		
+			if(this.msg.indexOf('function')<0){
 				msg=this.msg.split(' ');
 				for(let i=0;i<msg.length;i++) {
 					if(i>0) search+=" && ";
@@ -372,7 +392,11 @@ var vm = new Vue({
 				}
 				//console.log(search)
 			}
-			//else search=this.msg;
+			else {
+				search=this.msg;
+				nbreak=10;
+				dbreak=10;	
+			}
 			let jstart=0;//卷始
 			let jtitle="目录页";
 			let getjtitle=false;
@@ -388,25 +412,21 @@ var vm = new Vue({
                     line="";					
                 }
 								
-				linen+=this.text[i];				
-                if(getjtitle || (this.text[i]=="\n" && linen.length>100) || (this.text[i]=="。" && linen.length>300)) {
-                    if(eval(search)){
+				linen+=this.text[i];		
+                if(getjtitle || (this.text[i]=="\n" && linen.length>nbreak) || (this.text[i]=="。" && linen.length>dbreak)) {
+					if(eval(search)){
 						let content="";
-						//if(this.msg.indexOf('function')<0)
-						{						
-							if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;
-							else content=linen;							
-							for(let j=0;j<msg.length;j++) content=content.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");
-							content=content.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
-						}
-						//else{ }
-
+						if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;
+						else content=linen;
+						if(this.msg.indexOf('function')<0){																				
+							for(let j=0;j<msg.length;j++) content=content.replace(new RegExp(msg[j],"gm"),"<span style='color:red'>"+msg[j]+"</span>");							
+						}					
+						//content=content.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
 						this.searchrst.push({
 							'listindex':this.listindex,
 							'jstart':jstart,
 							'jtitle':jtitle.replace(/(^\s*)|(\s*$)/g, ""),
 							'content':content,
-
 						});
 
 						let recordmax=20; if(this.test) recordmax=36;
