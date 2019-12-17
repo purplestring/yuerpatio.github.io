@@ -77,7 +77,8 @@
                 <span v-if="list[id].P_HEIGHT!=null">纵：{{list[id].P_HEIGHT}}厘米</span>
 				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a><br>
             </div>
-            <span v-if="test || list[id].P_PICS.split('/')[0]=='img'"><img id='myimg' :src='list[id].P_PICS'></span>
+            <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='现代' && list[id].P_DYNASTY!='20世纪')">
+				<img id='myimg' :src='list[id].P_PICS'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
 			</span-->
