@@ -104,7 +104,7 @@
 		</div>
 		<div v-if="depth==3">
 			<div class="title" align="center">搜索结果</div><br>
-			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br><br>
+			<a @click.prevent="depth=0;searchstart=-1;" style="cursor:pointer">返回书卷目录</a><br><br>
 			<span v-if="searchrst.length==0">
 				什么也没找到...
 			</span>
@@ -120,7 +120,7 @@
 			<a v-if="depth==2 && searchstart==-1" @click.prevent="depth=1" style="cursor:pointer">返回本书目录</a>
 			<a v-if="depth==2 && searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
 			<a v-if="depth==2 && zhangindex<subinfo.length-1" @click.prevent="getZhang(zhangindex+1)" style="cursor:pointer">▶</a>
-			<a v-if="depth==1 || depth==3" @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
+			<a v-if="depth==1 || depth==3" @click.prevent="depth=0;searchstart=-1;" style="cursor:pointer">返回书卷目录</a>
 			<a v-if="depth==0" href="../../index.html" style="cursor:pointer">返回主页</a>
 		</div>
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -150,9 +150,11 @@ var vm = new Vue({
 		statecoloror:["#fff","#000"],
 		statecolorand:["#888","#000","#fff"],
 				
-		search:false,		
+		search:false,
+		//notes:false,
 		listselect:false,
 		msg:"",
+		note:"",
 		searchrst:[],
 		searchstart:-1,	
 		searchshow:"",		
@@ -190,6 +192,7 @@ var vm = new Vue({
 			}, 0);
 		},
 		reSet: function reSet(stateor){
+			document.getElementById("searching").innerHTML="";
 			if(stateor!=null) this.stateor=stateor; else this.stateor=false;
 			if(this.searchrst.length==0) for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
 			if(this.stateor) this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
@@ -207,6 +210,8 @@ var vm = new Vue({
 			this.depth=0;
 			this.searchstart=-1;
 			this.msg="";
+			this.text="";
+			this.note="";
 			this.search=false;
 			this.listselect=false;
 			this.searchrst=[];
@@ -314,6 +319,17 @@ var vm = new Vue({
 				}
 			}
 			this.zhang=this.zhang.replace(/\r\n/g,"<br>").replace(/\n/g,"<br>");
+			
+			if(this.note!="" && this.searchstart==-1){
+				let subtitle=this.zhang.split("<br>")[0];
+				let note=JSON.parse(this.note)[subtitle];
+				if(note!=null) {
+					for(let j=0;j<note.length;j++){
+						this.zhang=this.zhang.replace(note[j].s,note[j].s+"<span style='font-weight:900;color:red'>"+note[j].w+"</span>")
+					}
+				}
+			}
+			
 			this.depth=2;this.zhangindex=i;
         },
 
@@ -323,10 +339,12 @@ var vm = new Vue({
 			if(this.depth==0) { this.depth=1; this.listpage=0; }
 			this.subinfo=[];this.text="";
 			if(this.list[index].FILE==null ||(!this.test && this.list[index].FILE=='filel/')) return;
-            this.loadBook();
+            this.loadFile(this.setBook,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
         },
 
         setBook: function setBook() {
+			if(this.text[0]=='出' && this.text[1]=='错') return;
+			if(this.test) this.getNote();
             let line=""; let substart=0; let sublength=0;  let subtitle=0;
             for(let i=0;i<this.text.length;i++) {
                 line+=this.text[i];
@@ -356,23 +374,21 @@ var vm = new Vue({
 			}
         },
 		
+		getNote: function getNote() {
+			this.note="";
+			this.loadFile(this.setNote,"notes/"+this.list[this.listindex].TITLE+".txt","note");
+        },
+		
+		setNote: function setNote() {
+			if(this.note[0]=='出' && this.note[1]=='错') {this.note="";return;}
+			//else console.log(this.note);
+        },
+		
 		
 		listSelect: function listSelect(){
 			this.listselect=!this.listselect;
 			this.$forceUpdate();
 		},
-		
-		/*setgChange: function setgChange(i){			
-			for(let j=0;j<this.list.length;j++) 
-				if(
-					this.list[i].F_GROUP==this.list[j].F_GROUP &&
-					this.list[i].S_GROUP==this.list[j].S_GROUP &&
-					( this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/') )
-				) this.list[j].selected=this.list[i].gselected;
-				
-			this.reFresh();
-			
-		},*/
 		
 		startSearch: function startSearch() {
 			//this.milliseconds = new Date().getTime();
@@ -396,6 +412,7 @@ var vm = new Vue({
 		
 		doSearch: function doSearch() {
 			//console.log("search: "+this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt");
+			if(this.text[0]=='出' && this.text[1]=='错') { this.listindex=0; this.search=false;document.getElementById("searching").innerHTML="搜索出错";return;}
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
 			var msg="";var search="";var nbreak=100;dbreak=300;		
@@ -468,7 +485,7 @@ var vm = new Vue({
 					let recordmax=20; if(this.test) recordmax=36;
 					document.getElementById("searching").innerHTML="<br>正在搜索《"+
 					this.list[this.listindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+recordmax;
-					this.loadBook();
+					this.loadFile(this.doSearch,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
 					return;
 				}
 			}
@@ -476,31 +493,20 @@ var vm = new Vue({
 			this.search=false;
         },
 		
-		/*getSearch: function getSearch(item) {
-			//console.log(JSON.stringify(item))
-			this.listindex=item.listindex;
-			this.loadBook();
-			//searchstart=item.start;
-			//getBook(item.listindex);
-			//this.depth=2;
-		},*/
-		
-
-        loadBook: function loadBook() {
+        loadFile: function loadFile(fn,name,t) {
 			let _this=this; 
-			name=this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt";
+			//name=this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt";
 			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
 				//console.log("aa")
 				$.ajax({
 					url: name,
 					success: function(data, status) {
-						_this.text=data;
-						if(_this.search) _this.doSearch();
-						else _this.setBook();
+						_this[t]=data;
+						fn();
 					},
 					error: function(data, status) {
-						_this.text='出错了,Err：' + JSON.stringify(arguments);
-						if(_this.search) { _this.listindex=0; _this.search=false; document.getElementById("searching").innerHTML="搜索出错";}
+						_this[t]='出错了,Err：' + JSON.stringify(arguments);
+						fn();
 					}
 				});				
 			}
@@ -513,13 +519,12 @@ var vm = new Vue({
 				xhr.onreadystatechange = function() {
 					if ( xhr.readyState == 4 ) {
 						if ( xhr.status == 200 ) {
-							_this.text=xhr.responseText;
-							if(_this.search) _this.doSearch();
-							else _this.setBook();
+							_this[t]=xhr.responseText;
+							fn();
 						}
 						else {
-							_this.text='出错了,Err：' + xhr.status;	
-							if(_this.search) { _this.listindex=0; _this.search=false;document.getElementById("searching").innerHTML="搜索出错";}
+							_this[t]='出错了,Err：' + xhr.status;	
+							fn();
 						}							
 					}
 				}				
