@@ -5,6 +5,20 @@
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060+",maximum-scale=1, user-scalable=no"; </script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
+	<style>
+	textarea{
+		height:17px;
+		font-size:14px;
+		width:240px;
+	}
+	@media screen and (max-device-width:640px){
+		textarea{
+			font-size:42px;
+			height:54px;
+			width:480px;
+		}
+	}
+	</style>
 	<script src="../../main/js/jquery-3.3.1.min.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="book.js"></script>
@@ -25,8 +39,7 @@
 				<span v-if="stateor">【<span @click="reSet(false);" 
 				style="color:green;cursor:pointer;">或</span>筛选🔍】黑：是 | 白：非 |</span>
 				<span v-if="!stateor">【<span @click="reSet(true);" 
-				style="color:green;cursor:pointer;">与</span>筛选🔍】灰：无 | 黑：是 | 白：非 |</span>
-				<span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br>			
+				style="color:green;cursor:pointer;">与</span>筛选🔍】灰：无 | 黑：是 | 白：非 |</span><br>			
 				 <span v-for="(item, i) in statename">
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
@@ -35,13 +48,16 @@
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
-				<input type="text" v-model="msg" placeholder="设定搜索文字">
-				<span @click="listSelect()" style="cursor:pointer">
-					<span v-if="listselect" style="color:White">选书</span>
-					<span v-if="!listselect" style="color:Green">选书</span>
-				</span>
-				<span @click="startSearch()" style="color:Green;cursor:pointer">搜索</span>
-				<span id="searching"></span>
+				<textarea type="text" v-model="msg" placeholder="设定搜索文字" :style="(msg.length>20)?'width:80%;height:200px;':''"></textarea>
+				<div>
+					<span @click="listSelect()" style="cursor:pointer;padding-top:10px;">
+						<span v-if="listselect" style="color:White">选书</span>
+						<span v-if="!listselect" style="color:Green">选书</span>
+					</span>
+					<span @click="startSearch()" style="color:Green;cursor:pointer">搜索</span>
+					<span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span>
+					<span id="searching"></span>
+				</div>
 			</div>				
 			<span v-for="(item,i) in list" v-if="item.fliter">
 				<div v-if="getPre(i)<0 || item.F_GROUP!=list[getPre(i)].F_GROUP || item.S_GROUP!=list[getPre(i)].S_GROUP" id="family"><br>
