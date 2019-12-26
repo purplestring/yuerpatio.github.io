@@ -22,9 +22,10 @@
 				<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" class="family"><br/><br/>{{groupname[item.F_GROUP]}}<br/><br/></div>
 					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>			
-					<a v-if="item.F_NAME==null" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+item.W_URL">{{item.TITLE}}</a>
+					<a v-if="item.F_NAME==null" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+item.W_URL[0]">{{item.TITLE}}</a>
 					<a v-if="item.F_NAME!=null" @click.prevent="id=i" style="color: darkcyan; cursor: pointer;">{{item.TITLE}}</a>
-					<span v-if="item.F_GROUP=='guhua' || item.F_GROUP=='shufa'"></br></span>				
+					<span v-if="item.F_GROUP=='guhua' || item.F_GROUP=='shufa'"></br></span>
+					<span v-if="item.TITLE=='谷雨' || item.TITLE=='大暑' || item.TITLE=='霜降'"></br></span>					
 				</span><br/><br/>
 				<div align="center">
 					<a href="../../index.html" style="cursor:pointer">返回主页</a>
@@ -34,7 +35,7 @@
 				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
-					<a name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL">微博</a><br>
+					<a v-for="i in list[id].W_URL.length" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}<br></a><br>
 				</span>	
 				<a v-if="list[id].LINK!=null" target="_blank" 
 				:href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>				
@@ -44,7 +45,9 @@
 				</span>
 				<br>				
 				<div align="center">
+					<a @click.prevent="id=getPre(id)" style="cursor: pointer;">◀　</a>
 					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
+					<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶</a>	
 				</div>
 			</div>
 		</div>		
@@ -82,6 +85,18 @@ var all=new Vue({
 		if(this.id>=0)document.title=this.list[this.id].TITLE;
 		else document.title="画集";	
 	},
+	methods: {		
+		getPre: function getPre(j){
+			let i=j-1;
+			for(;i>=0;i--) if(this.list[i].F_NAME!=null) return i;
+			return -1;
+		},
+		getNext: function getNext(j){
+			let i=j+1;
+			for(;i<this.list.length;i++) if(this.list[i].F_NAME!=null) return i;
+			return -1;
+		},
+	}
 });
 </script>
 </html>
