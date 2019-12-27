@@ -119,12 +119,15 @@
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 司马光 神采帖",W_URL:["H8QqTgvu8"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 李建中 土母帖",W_URL:["GEnFVuaWT"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 陆游 尊眷帖",W_URL:["HamYV2WXF"],F_NAME: ["zjt1.jpg","zjt2.jpg"],F_DESC:"全文如下：<br><br>游惶恐拜问契家尊眷，共惟并拥寿祺。<br>镜中有委敢请，子聿六粗能勤苦，但恨不能卒业。<br>函丈若不弃遗，尚未晚也。<br>张七三哥□贫可念，官期尚远，奈何。<br>每为之心折，顾无所置力耳。<br>三丈亦念之否。游惶恐再拜。<br>",LINK: "paint/尊眷帖",},
+{F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 辛弃疾 去国帖",W_URL:["ImJsNidVb"],F_NAME: ["qgt.jpg"],F_DESC:"全文如下：<br><br>弃疾自秋初去国，倏忽见冬，詹咏之诚，朝夕不替。第缘驱驰到官，即专意督捕，日从事於兵车羽檄间，坐是倥偬，略无少暇。起居之问，缺然不讲，非敢懈怠，当蒙情亮也。指吴会云间，未龟合并。心旌所向，坐以神驰。右谨具呈。宣教郎新除秘阁修撰，权江南西路提点刑狱公事，辛弃疾札子。<br>",LINK: "paint/去国帖",},
+{F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 文天祥 陋室铭",W_URL:["HuLIx9dzP"],F_NAME: ["Wlsm.jpg"],F_DESC:"全文如下：<br><br>山不在高，有仙则名。<br>水不在深，有龙则灵。<br>斯是陋室，惟吾德馨。<br>苔痕上阶绿，草色入帘青。<br>谈笑有鸿儒，往来无白丁。<br>可以调素琴，阅金经。<br>无丝竹之乱耳，无案牍之劳形。<br>南阳诸葛庐，西蜀子云亭。<br>孔子云：何陋之有？<br>",LINK: "paint/陋室铭",},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 秋声赋",W_URL:["GBVAkEbTJ"],},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 心经",W_URL:["H0yd0iAoJ"],},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 真草千文 卷首",W_URL:["HdiLJwdDh"],},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 王冕 梅花诗",W_URL:["HrTiyu6SV"],F_NAME: ["Wmhs.jpg"],F_DESC:"全文如下：<br><br>吾家洗砚池头树，<br>个个花开淡墨痕。<br>不要人夸好颜色，<br>只流清气满乾坤。<br>",LINK: "paint/墨梅·吾家洗研池头树",},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"明 文徵明 陋室铭",W_URL:["GDCHO0kML"],},
 {F_GROUP:"shufa",S_GROUP:"清至近代",TITLE:"近代 黄帝纪元帖",W_URL:["GDjms0qnx"],},
-
+ 
 
 
 {F_GROUP:"guhua",S_GROUP:"先秦两汉",TITLE:"西汉 瓦当",W_URL:["GoOirzTzu"],},
