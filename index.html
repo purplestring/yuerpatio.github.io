@@ -282,7 +282,7 @@ div > input:checked ~ article {
 		</div>
 		 <form>
 			<div v-for="(item,i) in svg" v-if="i>1">
-				<input type="radio" name="size" :id="'p'+i" value="'p'+i" @click="changeSVG(item.tag)"/> 
+				<input type="radio" name="size" :id="'p'+i" :value="'p'+i" @click="changeSVG(item.tag)"/> 
 				<label :for="'p'+i" :style="'background: #333 no-repeat center;'">
 					<svg viewBox="0 0 400 400">
 						<g>
@@ -312,6 +312,7 @@ div > input:checked ~ article {
  * 您如果对俺的设计感兴趣，可在微博中私信俺。
  * 喵喵喵~
  */
+if(window.name != "noReload"){ window.name = "noReload"; location.reload();} else window.name = "";
 var svg=[
 {title:"魚院",tag:"yuer",info:"以下卷集中选择一个~"},
 {title:"魚院",tag:"box",info:"以下卷集中选择一个~"},
