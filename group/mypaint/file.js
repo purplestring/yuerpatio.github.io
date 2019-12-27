@@ -89,7 +89,7 @@
 {F_GROUP:"jieqi",TITLE:"大寒",W_URL:["HcRHE2TqN"],F_NAME: ["35dahan.jpg"],F_DESC:"一候，雞乳；<br>二候，徵鳥厲疾；<br>三候，水澤腹堅。<br><br>啼饑號寒，居大不易。<br>是名大寒。<br>",},
 
 
-
+{F_GROUP:"shufa",S_GROUP:"魏晋南北",TITLE:"三国 钟繇 淳化阁帖宣示表",W_URL:["Hguh6Axau"],F_NAME: ["Zchg.jpg"],F_DESC:"其文如下：<br><br>尚书宣示孙权所求，诏令所报，所以博示。逮于卿佐，必冀良方出于阿是。刍荛之言可择廊庙，况繇始以疏贱，得为前恩。横所盱睨，公私见异，爱同骨肉，殊遇厚宠，以至今日。再世荣名，同国休戚，敢不自量。窃致愚虑，仍日达晨，坐以待旦，退思鄙浅。圣意所弃，则又割意，不敢献闻。深念天下，今为已平，权之委质，外震神武。度其拳拳，无有二计。高尚自疏，况未见信。今推款诚，欲求见信，实怀不自信之心，亦宜待之以信，而当护其未自信也。其所求者，不可不许，许之而反，不必可与，求之而不许，势必自绝，许而不与，其曲在己。里语曰：何以罚？与之夺；何以怒？许不与。思省所示报权疏，曲折得宜，宜神圣之虑。非今臣下所能有增益，昔与文若奉事先帝，事有数者，有似于此。粗表二事，以为今者事势，尚当有所依违愿君思省。若以在所虑可，不须复貌。节度唯君，恐不可采，故不自拜表。<br>",},
 {F_GROUP:"shufa",S_GROUP:"魏晋南北",TITLE:"东晋 王珣 伯远帖",W_URL:["GD94T9MRo"],},
 {F_GROUP:"shufa",S_GROUP:"魏晋南北",TITLE:"东晋 王献之 中秋帖",W_URL:["GD65InEHL"],},
 {F_GROUP:"shufa",S_GROUP:"魏晋南北",TITLE:"东晋 王羲之 兰亭集序",W_URL:["GCdyICmzK"],},
@@ -101,15 +101,16 @@
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 欧阳询 梦奠帖",W_URL:["GD96xmvgp"],},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 欧阳询 张翰帖",W_URL:["GE53DoZeq"],},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 颜真卿 祭侄文稿",W_URL:["GCRQTv4rx"],},
-{F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 柳公权 蒙诏帖",W_URL:["H2PNb4HxV"],},
+{F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 柳公权 蒙诏帖",W_URL:["H2PNb4HxV"],F_NAME: ["Lmzt.jpg"],F_DESC:"全文如下：<br><br>公权蒙诏，出守翰林，<br>职在闲冷，亲情嘱托，<br>谁肯响应，深察感幸。<br>公权呈。<br>",LINK: "paint/蒙诏帖",},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 钟绍京 灵飞经 之 正月二月",W_URL:["H1VELkelq"],},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 钟绍京 灵飞经 之 四月五月",W_URL:["H7Yuabs6P"],},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 李白 上阳台帖",W_URL:["GClbNr6Qa"],},
-{F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 陆柬之 文赋 首段",W_URL:["H6BxigXPL"],},
+{F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐 陆柬之 文赋 首段",W_URL:["H6BxigXPL"],F_NAME: ["Lwf1.jpg"],F_DESC:"全文如下：<br><br>余每观才士之所作，窃有以得其用心。夫放言谴辞，良多变矣，妍蚩好恶，可得而言。每自属文，尤见其情。恒患意不称物，文不逮意。盖非知之难，能之难也。故作《文赋》，以述先士之盛藻，因论作文之利害所由，他日殆可谓曲尽其妙。至于操斧伐柯，虽取则不远，若夫随手之变，良难以辞逮。盖所能言者具于此云。<br>",LINK: "paint/文赋",},
 {F_GROUP:"shufa",S_GROUP:"隋唐五代",TITLE:"唐末五代 杨凝式 韭花帖",W_URL:["GEGC9nWUa"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 米芾 蜀素帖 拟古",W_URL:["GDih3qQe7"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 米芾 蜀素帖 吴江垂虹亭作",W_URL:["GDVIlwckL"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 米芾 元日帖",W_URL:["H9XupFBs6"],},
+{F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 米芾 参政帖",W_URL:["Hqx58nZCa"],F_NAME: ["Mczt.jpg"],F_DESC:"全文如下：<br><br>苏太简参政家物，多著，<br>邳公之后四代相印，或用，<br>翰林学士院印。芾记。<br>",},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 蔡襄 澄心堂帖",W_URL:["H5gpe48I9"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 黄庭坚 松风阁",W_URL:["H2VbCzpgt"],},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"北宋 范仲淹 二札帖",W_URL:["GDLZZda8E"],},
@@ -121,13 +122,23 @@
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 陆游 尊眷帖",W_URL:["HamYV2WXF"],F_NAME: ["zjt1.jpg","zjt2.jpg"],F_DESC:"全文如下：<br><br>游惶恐拜问契家尊眷，共惟并拥寿祺。<br>镜中有委敢请，子聿六粗能勤苦，但恨不能卒业。<br>函丈若不弃遗，尚未晚也。<br>张七三哥□贫可念，官期尚远，奈何。<br>每为之心折，顾无所置力耳。<br>三丈亦念之否。游惶恐再拜。<br>",LINK: "paint/尊眷帖",},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 辛弃疾 去国帖",W_URL:["ImJsNidVb"],F_NAME: ["qgt.jpg"],F_DESC:"全文如下：<br><br>弃疾自秋初去国，倏忽见冬，詹咏之诚，朝夕不替。第缘驱驰到官，即专意督捕，日从事於兵车羽檄间，坐是倥偬，略无少暇。起居之问，缺然不讲，非敢懈怠，当蒙情亮也。指吴会云间，未龟合并。心旌所向，坐以神驰。右谨具呈。宣教郎新除秘阁修撰，权江南西路提点刑狱公事，辛弃疾札子。<br>",LINK: "paint/去国帖",},
 {F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 文天祥 陋室铭",W_URL:["HuLIx9dzP"],F_NAME: ["Wlsm.jpg"],F_DESC:"全文如下：<br><br>山不在高，有仙则名。<br>水不在深，有龙则灵。<br>斯是陋室，惟吾德馨。<br>苔痕上阶绿，草色入帘青。<br>谈笑有鸿儒，往来无白丁。<br>可以调素琴，阅金经。<br>无丝竹之乱耳，无案牍之劳形。<br>南阳诸葛庐，西蜀子云亭。<br>孔子云：何陋之有？<br>",LINK: "paint/陋室铭",},
+{F_GROUP:"shufa",S_GROUP:"宋",TITLE:"南宋 文天祥 草书木鸡集序卷",W_URL:["Hi0G3acYU"],F_NAME: ["Wcsmjjxj.jpg"],F_DESC:"其文如下：<br><br>三百五篇，优柔而笃厚，选出焉，故极其平易，而极不易学。予嘗讀詩, 以選求之。如曰：駕言陟崔嵬。我馬何虺隤。我姑酌金罍。维以不永怀。如曰：自子之東方，我首如飞蓬。 豈無膏与沭。为誰作春容。詩非選也。而詩未嘗不選。以此見選实出於詩，特從魏而下，多作五言耳。故嘗谓学選而以選为法。則選为吾祖宗以詩求選，則吾視選为兄弟之国。予言之而莫予信也。一日，吉水张彊宗甫以木雞集示予，何其酷似選也。从宗甫道予素，宗甫欣然。便有平视曹劉沈謝意思。三百五篇，家有其书，子歸而求之，所謂吾道东矣。咸淳癸酉长至，里友人文天祥书于楚观。<br>",},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 秋声赋",W_URL:["GBVAkEbTJ"],},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 心经",W_URL:["H0yd0iAoJ"],},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 望江南净土词",W_URL:["HiUZWrxjk"],F_NAME: ["Zwjnjtc1.jpg"],F_DESC:"其文如下：<br><br>西方好，群鸟美音声。华下和鸣歌六度，光中哀雅攒三乘。闻者悟无生。<br>三恶道，犹自不知名。皆是佛慈亲变化，欲宣法语警迷情。心地顿圆明。<br>",},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 玄都坛歌",W_URL:["Hoq3qlHk5"],F_NAME: ["Zxdtg.jpg"],F_DESC:"其文如下：<br><br>玄都坛歌<br><br>故人昔隐东蒙峰，已佩含景苍精龙。<br>故人今居子午谷，独在阴崖结茅屋。<br>屋前太古玄都坛，青石漠漠常风寒。<br>子规夜啼山竹裂，王母昼下云旗翻。<br>知君此计成长往，芝草琅玕日应长。<br>铁锁高垂不可攀，致身福地何萧爽。<br><br>大德十年正月十八日，<br>南谷尊师过我车桥之馆。<br>要写古诗，乃书此篇。<br><br>",LINK: "paint/玄都坛歌",},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 真草千文 卷首",W_URL:["HdiLJwdDh"],},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 赵孟頫 吴兴赋",W_URL:["HgvLLyF58"],F_NAME: ["Zwxf1.jpg"],},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"元 王冕 梅花诗",W_URL:["HrTiyu6SV"],F_NAME: ["Wmhs.jpg"],F_DESC:"全文如下：<br><br>吾家洗砚池头树，<br>个个花开淡墨痕。<br>不要人夸好颜色，<br>只流清气满乾坤。<br>",LINK: "paint/墨梅·吾家洗研池头树",},
 {F_GROUP:"shufa",S_GROUP:"元明",TITLE:"明 文徵明 陋室铭",W_URL:["GDCHO0kML"],},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"明 文徵明 游石湖追和徐天全满庭芳",W_URL:["Hj24IDOnS"],F_NAME: ["Wmtf.jpg"],F_DESC:"岸柳霏烟 溪桃炫昼",},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"明 徐渭 珮几不须长",W_URL:["Hmzj3CcbR"],F_NAME: ["Xpjbxc.jpg"],F_DESC:"其文如下：<br><br>珮几不须长，高唐侍楚王。红蘅椠边出，白雪口中翔。听青供不及，一夜白潇湘。天池。<br>",},
+{F_GROUP:"shufa",S_GROUP:"元明",TITLE:"明 陈继儒 小窗幽记",W_URL:["HlvGluV22"],F_NAME: ["Cxcyj1.jpg"],F_DESC:"全文如下：<br><br>竹篱茅舍，石屋花轩，松柏群吟，藤萝翳景，流水绕户，飞泉挂簷，烟霞欲栖，林壑将瞑，中处野叟山翁四五，予以闲身，作此中主人。<br>",},
 {F_GROUP:"shufa",S_GROUP:"清至近代",TITLE:"近代 黄帝纪元帖",W_URL:["GDjms0qnx"],},
- 
+{F_GROUP:"shufa",S_GROUP:"清至近代",TITLE:"近代 林徽因 李成江村秋晚",W_URL:["HEcVchgFs"],F_NAME: ["Llcjcsw.jpg"],F_DESC:"<br><br>元·吴镇 《李成江村秋晚》全文如下：<br><br>咸熙画图无与共，传世希微爱者众。<br>二李之后已寥寥，宣和当日尤珍重。<br>新图一旦落人间，神宫寂寞何时还。<br>经营意匠出尘表，上下五百谁能攀。<br>水回中有渔舟泊，山顶崇台招白鹤。<br>篱根浮出水潺潺，万竹琳琅奏天乐。<br>霜飞木落一天秋，栖禽向晚声啾啾。<br>柳溪错认渊明宅，过桥岂是王弘俦。<br>景色萧条如太古，路僻村深贮烟雾。<br>分明再见辋川人，芜词何敢轻为附。<br>清容自是鉴赏家，持将却向天之涯。<br>几回试展未能去，落尽庭前无数花。<br>",},
+{F_GROUP:"shufa",S_GROUP:"清至近代",TITLE:"近代 佚名 道德经",W_URL:["Hhon24zhh"],F_NAME: ["Yddj1.jpg"],},
+{F_GROUP:"shufa",S_GROUP:"海外",TITLE:"梵高 开花的梅树",W_URL:["HmGqldSKd"],F_NAME: ["Fkhdms.jpg"],F_DESC:"其文如下：<br><br>大黑屋锦木江户町一丁目<br>新吉原大丁耳屋木<br>",},
+
 
 
 {F_GROUP:"guhua",S_GROUP:"先秦两汉",TITLE:"西汉 瓦当",W_URL:["GoOirzTzu"],},
