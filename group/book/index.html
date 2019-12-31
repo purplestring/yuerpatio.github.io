@@ -201,7 +201,7 @@ var vm = new Vue({
 				"地域|中",],1);	
 			for(let j=0;j<this.list.length;j++) { 
 				this.list[j].fliter= false; 
-				if(this.test || (this.list[j].SHOW!='no' && this.list[j].F_GROUP!='test')) this.list[j].fliter=true;
+				//if(this.test || this.list[j].SHOW==null || this.list[j].F_GROUP=='test') this.list[j].fliter=true;
 				this.list[j].selected= false; 
 				if(this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/')) this.list[j].selected= true; 
 				//this.list[j].gselected= false;
@@ -262,6 +262,7 @@ var vm = new Vue({
 		},
 		getItem: function getItem(i){
 			//console.log("s");
+			if(!this.test && this.list[i].SHOW=="no" && this.list[i].F_GROUP!='test') {this.list[i].fliter= false; return;}
 			if(this.stateor){
 				for(let j=0;j<this.statename.length;) {
 					//if(this.statevalue[j]==0) continue;				
