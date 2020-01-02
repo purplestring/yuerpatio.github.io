@@ -55,6 +55,7 @@
 						<span v-if="!listselect" style="color:Green">选书</span>
 					</span>
 					<span @click="startSearch()" style="color:Green;cursor:pointer">搜索</span>
+					<span @click.prevent="searchClear()" style="cursor:pointer;color:green;">清空</span>
 					<span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span>
 					<span id="searching"></span>
 				</div>
@@ -214,6 +215,17 @@ var vm = new Vue({
 			this.note="";
 			this.search=false;
 			this.listselect=false;
+			this.searchrst=[];
+			this.$forceUpdate();		
+		},
+		searchClear: function searchClear(){
+			document.getElementById("searching").innerHTML="";
+			this.depth=0;
+			this.searchstart=-1;
+			this.msg="";
+			this.text="";
+			this.note="";
+			this.search=false;
 			this.searchrst=[];
 			this.$forceUpdate();		
 		},
@@ -416,7 +428,8 @@ var vm = new Vue({
 			if(this.text[0]=='出' && this.text[1]=='错') { this.listindex=0; this.search=false;document.getElementById("searching").innerHTML="搜索出错";return;}
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
-			var msg="";var search="";var nbreak=100;dbreak=300;		
+			var msg="";var search="";var nbreak=100;dbreak=300;	
+			 
 			if(this.msg.indexOf('function')<0){
 				msg=this.msg.split(' ');
 				for(let i=0;i<msg.length;i++) {
