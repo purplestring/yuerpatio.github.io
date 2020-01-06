@@ -85,7 +85,7 @@
 {F_GROUP:"jieqi",TITLE:"小雪",W_URL:["H3S4Yr4Jx","IhmRZw788"],F_NAME: ["31xiaoxue.jpg"],F_DESC:"一候，虹藏不見；<br>二候，天氣上升、地氣下降；<br>三候，閉塞而成冬。<br><br>山高月小，雪魄冰魂 。<br>是名小雪。<br>",},
 {F_GROUP:"jieqi",TITLE:"大雪",W_URL:["H69JVfhKB","IjElEzkqE"],F_NAME: ["32daxue.jpg"],F_DESC:"一候，鹖鴠不鳴；<br> 二候，虎始交；三候，荔挺出。<br><br>大賢虎變，雪爪鴻泥。<br>是名大雪。 <br>​​​​",},
 {F_GROUP:"jieqi",TITLE:"冬至",W_URL:["H8qAXDYWa","IlVTCsTTy"],F_NAME: ["33dongzhi.jpg"],F_DESC:"一候，蚯蚓結；<br>二候，麋角解；<br>三候，水泉動。<br><br>數九寒冬，至於此極。<br><br>是名冬至。<br>",},
-{F_GROUP:"jieqi",TITLE:"小寒",W_URL:["HazV8uLwd"],F_NAME: ["34xiaohan.jpg"],F_DESC:"一候，雁北鄉；<br>二候，鵲始巢；<br>三候，雉始鴝。<br><br>一尺寒光，造化小兒。<br>是名小寒。<br>",},
+{F_GROUP:"jieqi",TITLE:"小寒",W_URL:["HazV8uLwd","Iod4XoZxD"],F_NAME: ["34xiaohan.jpg"],F_DESC:"一候，雁北鄉；<br>二候，鵲始巢；<br>三候，雉始鴝。<br><br>一尺寒光，造化小兒。<br>是名小寒。<br>",},
 {F_GROUP:"jieqi",TITLE:"大寒",W_URL:["HcRHE2TqN"],F_NAME: ["35dahan.jpg"],F_DESC:"一候，雞乳；<br>二候，徵鳥厲疾；<br>三候，水澤腹堅。<br><br>啼饑號寒，居大不易。<br>是名大寒。<br>",},
 
 
