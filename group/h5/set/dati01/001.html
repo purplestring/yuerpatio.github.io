@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>答题</title>
+		<style>
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Times New Roman","宋体","黑体";
+}
+body {
+}
+[v-cloak] {
+  display: none;
+}
+.title{
+	font-size:48px;
+	text-align:center;
+}
+.footer{
+	text-align:center;
+}
+#all{
+	width:80%;
+	left:10%;
+	position:relative;
+}
+button{
+	position:relative;
+	left:85%;
+}
+		</style>		
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+		<script src="md5.js"></script>
+    </head>
+	<body>
+		<br>
+		<div class="title">答题</div>
+		<br><br>
+		<div id="all" v-cloak>
+			<div v-for="(item, i) in timu">
+				<div>【第{{i+1}}题】 {{item.ti}}</div>
+				<div v-for="(xuan, j) in item.xuan">
+					{{String.fromCharCode(65+j)}}. <span>{{xuan}}</span><input v-model="timu[i].selected[j]" type="checkbox"/>
+				</div>
+				<br>
+			</div>
+			<button @click="linkTo">提交</button>
+		</div>
+	<br>		
+	<div class="footer">
+		Copyright © 2015~Now 魚儿.
+	</div><br>
+	</body>
+	<script>
+	var timu=[		
+		{ti:"曹雪芹纪念馆在哪里？",xuan:["动物园","植物园","古观象台","颐和园",],},
+		{ti:"“蓬牖茅椽”后一句是：",xuan:["晨风夕月","绳床瓦灶","箪食瓢饮","朝齑暮盐",],},
+		{ti:"《红楼梦》里提到几种风筝，哪个是没有的？",xuan:["螃蟹","蝴蝶","蝙蝠","蜻蜓","凤凰"],},
+		{ti:"如果要将姜夔比作《红楼梦》中的一个人，你会选：",xuan:["宝玉","黛玉","妙玉","宝钗","香菱"],},
+	];
+	var all=new Vue({
+		el: '#all',
+		data:{ 
+			timu:timu,			
+		},
+		created: function created() {
+			for(let i=0;i<timu.length;i++){
+				timu[i].selected=[];
+				for(let j=0;j<timu[i].xuan.length;j++) timu[i].selected[j]=false;			
+			}
+		},
+		updated: function updated() {			
+		},
+		mounted: function mounted() {	
+		},
+		methods: {
+			calcChar: function calcChar(s,hex,del){
+				let t=s;
+				for(let j=0;j<hex.length;j++){
+					i=j%s.length;					
+					let v=0;
+					if(hex.charCodeAt(j)>=97)v=hex.charCodeAt(j)-87;
+					else v=hex.charCodeAt(j)-48;
+					let ti=t.charCodeAt(i);
+					if(del) ti+=v; else ti-=v;
+					if(t.charCodeAt(i)>=65 && t.charCodeAt(i)<=90) { if(ti>90) ti-=26; if(ti<65) ti+=26;}
+					if(t.charCodeAt(i)>=97 && t.charCodeAt(i)<=122) {if(ti>122) ti-=26;if(ti<97) ti+=26;}
+					let tn=""; for(let k=0;k<t.length;k++) if(k!=i) tn+=t[k]; else tn+=String.fromCharCode(ti);t=tn;
+				}
+				return t;
+			},		
+			linkTo: function linkTo(){
+				let da="";
+				for(let i=0;i<this.timu.length;i++){
+					da+=(i+1)+".";
+					for(let j=0;j<this.timu[i].xuan.length;j++) if(this.timu[i].selected[j]) da+=String.fromCharCode(65+j);
+					da+=" ";					
+				}
+				console.log(this.calcChar("SegZlbPR",$.md5(da),true));	
+				window.location.href="http://t.cn/"+this.calcChar("SegZlbPR",$.md5(da),true)	
+			},
+		},
+	});
+	</script>
+</html>

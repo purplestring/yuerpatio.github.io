@@ -16,6 +16,7 @@
 {"TITLE":"兰亭序卷轴","F_GROUP":"set","S_GROUP":"交互","F_NAME":"reel02",},
 {"TITLE":"地图","F_GROUP":"set","S_GROUP":"交互","F_NAME":"map01","SHOW":"no",},
 {"TITLE":"小盒子","F_GROUP":"set","S_GROUP":"交互","F_NAME":"box01",},
+{"TITLE":"答题","F_GROUP":"set","S_GROUP":"交互","F_NAME":"dati01/001.html"},
 {"TITLE":"微博","F_GROUP":"set","S_GROUP":"交互","F_NAME":"weibo",},
 {"TITLE":"长江千里图","F_GROUP":"set","S_GROUP":"交互·长卷","F_NAME":"scroll03","SHOW":"no",},
 {"TITLE":"古堡","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano01",},
