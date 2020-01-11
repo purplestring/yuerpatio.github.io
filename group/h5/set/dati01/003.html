@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>答题</title>
+		<style>
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Times New Roman","宋体","黑体";
+}
+body {
+}
+[v-cloak] {
+  display: none;
+}
+.title{
+	font-size:48px;
+	text-align:center;
+}
+.info{
+	position:relative;
+	color:#888;
+	width:80%;
+	left:10%;
+	font-size:12px;
+}
+.footer{
+	text-align:center;
+}
+#all{
+	width:80%;
+	left:10%;
+	position:relative;
+}
+button{
+	position:relative;
+	left:85%;
+	border-radius: 2px;
+	box-shadow: inset rgba(255,255,255,0.3) 1px 1px 0;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	padding: 3px 6px 4px;
+	margin: .5em .5em .5em 0;
+	cursor: pointer;
+}
+img{
+	max-width:100%;
+}
+.ti{
+	border-bottom-style:dashed;
+	border-bottom-width:thin;
+}
+		</style>		
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<script src="../../../../main/js/jquery-3.3.1.min.js"></script>
+		<script src="../../../../main/js/vue.min.js"></script>
+		<script src="md5.js"></script>
+    </head>
+	<body>
+		<br>
+		<div class="title">答题</div><br><br>		
+		<div id="all" v-cloak>
+			<div v-for="(item, i) in timu" class="ti"><br>
+				<div v-html="'【第'+(i+1)+'题】'+item.ti"></div>
+				<div v-if="item.type=='xz'" v-for="(xuan, j) in item.xuan">
+					<input v-model="timu[i].selected[j]" type="checkbox"/> {{String.fromCharCode(65+j)}}. <span>{{xuan}}</span>
+				</div>
+				<div v-if="item.type=='tk'">
+					<input v-model="timu[i].da" type="textarea" style="width:100%;height:24px;background:#f6feff;"/>
+				</div>
+				<br>
+			</div>
+			<button @click="linkTo">提交</button>
+		</div>
+	<br>
+	<div class="info">
+		【说明】答对所有题目，提交后跳转至相关微博；否则跳转至错误页面，返回再答即可。
+		手机上不便操作的小伙伴，亦可于计算机中答题。注意，使用中文标点符号答题，有需要的记得写上书名号。
+		本次题目来源：《中国诗词大会》题库，仅作交流学习。
+	</div><br><br>	
+	<div class="footer">
+		Copyright © 2020~Now 魚儿.
+	</div><br>
+	</body>
+	<script>
+	var timu=[		
+		{type:"tk",ti:"根据以下画作说出一首诗的诗名：<br><img src='img/003001.jpg' />",},
+		{type:"tk",ti:"根据以下画作猜出一联诗：<br><img src='img/003002.jpg' />",},
+		{type:"tk",ti:"根据以下画作猜出一联诗句：<br><img src='img/003003.jpg' />",},
+		{type:"tk",ti:"根据以下线索说出一位词人： <br>A、他是宋代著名词人；<br>B、他的词属于婉约派；<br>C、他是苏门四学士之一；<br>D、外号“淮海居士”。",},
+		{type:"tk",ti:"请根据以下线索，说出这首诗的诗名：<br>A、这是一首描写亲情的诗；<br>B、本诗写于作者晚年；<br>C、歌颂的是母爱；<br>D、此诗的作者是孟郊。",},
+		{type:"tk",ti:"根据以下线索说出一个节日：<br>A、我国传统重要节日；<br>B、在唐代还未成为法定节日；<br>C、宋代才正式成为法定节日；<br>D、苏轼为它写过《水调歌头》。",},
+		{type:"xz",ti:"下列哪句诗不是李白写的？",xuan:["李白乘舟将欲行","李白一斗诗百篇","呼儿将出换美酒"],},
+		{type:"xz",ti:"奥地利作曲家马勒的《大地之歌》以哪首唐诗结尾？",xuan:["孟浩然《宿业师山房待丁大不至》","李白《采莲曲》","王维《送别》"],},
+	];
+	var all=new Vue({
+		el: '#all',
+		data:{ 
+			timu:timu,			
+		},
+		created: function created() {
+			for(let i=0;i<timu.length;i++){				
+				if(timu[i].type=="xz") {
+					timu[i].selected=[];
+					for(let j=0;j<timu[i].xuan.length;j++) timu[i].selected[j]=false;
+				}
+				if(timu[i].type=="tk") timu[i].da="";				
+			}
+		},
+		updated: function updated() {			
+		},
+		mounted: function mounted() {	
+		},
+		methods: {
+			calcChar: function calcChar(s,hex,del){
+				let t=s;
+				for(let j=0;j<hex.length;j++){
+					i=j%s.length;					
+					let v=0;
+					if(hex.charCodeAt(j)>=97)v=hex.charCodeAt(j)-87;
+					else v=hex.charCodeAt(j)-48;
+					let ti=t.charCodeAt(i);
+					if(del) ti+=v; else ti-=v;
+					if(t.charCodeAt(i)>=65 && t.charCodeAt(i)<=90) { if(ti>90) ti-=26; if(ti<65) ti+=26;}
+					if(t.charCodeAt(i)>=97 && t.charCodeAt(i)<=122) {if(ti>122) ti-=26;if(ti<97) ti+=26;}
+					if(t.charCodeAt(i)>=48 && t.charCodeAt(i)<=57) { ti=t.charCodeAt(i);}
+					let tn=""; for(let k=0;k<t.length;k++) if(k!=i) tn+=t[k]; else tn+=String.fromCharCode(ti);t=tn;
+				}
+				return t;
+			},		
+			linkTo: function linkTo(){
+				let da="";
+				for(let i=0;i<this.timu.length;i++){
+					da+=(i+1)+".";
+					if(timu[i].type=="xz") for(let j=0;j<this.timu[i].xuan.length;j++) if(this.timu[i].selected[j]) da+=String.fromCharCode(65+j);
+					if(timu[i].type=="tk") da+=this.timu[i].da;
+					da+=" ";					
+				}
+				window.location.href="http://t.cn/"+this.calcChar("DnmWvMPX",$.md5(da),true);	
+			},
+		},
+	});
+	</script>
+</html>
