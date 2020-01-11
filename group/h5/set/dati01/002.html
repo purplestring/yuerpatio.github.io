@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>答题</title>
+		<style>
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Times New Roman","宋体","黑体";
+}
+body {
+}
+[v-cloak] {
+  display: none;
+}
+.title{
+	font-size:48px;
+	text-align:center;
+}
+.footer{
+	text-align:center;
+}
+#all{
+	width:80%;
+	left:10%;
+	position:relative;
+}
+button{
+	position:relative;
+	left:85%;
+	border-radius: 2px;
+	box-shadow: inset rgba(255,255,255,0.3) 1px 1px 0;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	padding: 3px 6px 4px;
+	margin: .5em .5em .5em 0;
+	cursor: pointer;
+}
+.ti{
+	border-bottom-style:dotted;
+	border-bottom-width:thin;
+}
+		</style>		
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+		<script src="http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
+    </head>
+	<body>
+		<br>
+		<div class="title">答题</div>
+		<br><br>
+		<div id="all" v-cloak>
+			<div v-for="(item, i) in timu" class="ti"><br>
+				<div>【第{{i+1}}题】 {{item.ti}}</div>
+				<div v-if="item.type=='xz'" v-for="(xuan, j) in item.xuan">
+					<input v-model="timu[i].selected[j]" type="checkbox"/> {{String.fromCharCode(65+j)}}. <span>{{xuan}}</span>
+				</div>
+				<div v-if="item.type=='tk'">
+					<input v-model="timu[i].da" type="textarea"/>
+				</div>
+				<br>
+			</div>
+			<button @click="linkTo">提交</button>
+		</div>
+	<br>		
+	<div class="footer">
+		Copyright © 2015~Now 魚儿.
+	</div><br>
+	</body>
+	<script>
+	var timu=[		
+		{type:"tk",ti:"花来不恨别鸟人惊泪",},
+		{type:"tk",ti:"黄鹤人西故楼已昔去乘空余",},
+		{type:"tk",ti:"__________，池鱼思故渊",},
+		{type:"xz",ti:"苏轼“老夫聊发少年狂 左牵黄 右擎苍”中的“黄”和“苍”分别指？",xuan:["黄马 苍鹰","黄犬 苍鹰","黄犬 黑犬"],},
+		{type:"xz",ti:"“只恐双溪舴艋舟 载不动 许多愁”中“舴艋舟”是什么舟？",xuan:["蚱蜢纹饰的小舟","形式蚱蜢的小舟","雄伟坚固的战船"],},
+		{type:"xz",ti:"以下那句诗中所提到的植物不会出现在日本江户时代的儒学者细井徇的《诗经名物图解》中？",xuan:["杨柳青青江水平，闻郎江上唱歌声","玄都观里桃千树，尽是刘郎去后栽","年年战骨埋荒外，空见蒲桃入汉家"],},
+	];
+	var all=new Vue({
+		el: '#all',
+		data:{ 
+			timu:timu,			
+		},
+		created: function created() {
+			for(let i=0;i<timu.length;i++){				
+				if(timu[i].type=="xz") {
+					timu[i].selected=[];
+					for(let j=0;j<timu[i].xuan.length;j++) timu[i].selected[j]=false;
+				}
+				if(timu[i].type=="tk") timu[i].da="";				
+			}
+		},
+		updated: function updated() {			
+		},
+		mounted: function mounted() {	
+		},
+		methods: {
+			calcChar: function calcChar(s,hex,del){
+				let t=s;
+				for(let j=0;j<hex.length;j++){
+					i=j%s.length;					
+					let v=0;
+					if(hex.charCodeAt(j)>=97)v=hex.charCodeAt(j)-87;
+					else v=hex.charCodeAt(j)-48;
+					let ti=t.charCodeAt(i);
+					if(del) ti+=v; else ti-=v;
+					if(t.charCodeAt(i)>=65 && t.charCodeAt(i)<=90) { if(ti>90) ti-=26; if(ti<65) ti+=26;}
+					if(t.charCodeAt(i)>=97 && t.charCodeAt(i)<=122) {if(ti>122) ti-=26;if(ti<97) ti+=26;}
+					if(t.charCodeAt(i)>=48 && t.charCodeAt(i)<=57) { ti=t.charCodeAt(i);}
+					let tn=""; for(let k=0;k<t.length;k++) if(k!=i) tn+=t[k]; else tn+=String.fromCharCode(ti);t=tn;
+				}
+				return t;
+			},		
+			linkTo: function linkTo(){
+				let da="";
+				for(let i=0;i<this.timu.length;i++){
+					da+=(i+1)+".";
+					if(timu[i].type=="xz") for(let j=0;j<this.timu[i].xuan.length;j++) if(this.timu[i].selected[j]) da+=String.fromCharCode(65+j);
+					if(timu[i].type=="tk") da+=this.timu[i].da;
+					da+=" ";					
+				}
+				window.location.href="http://t.cn/"+this.calcChar("MdnhYPk2",$.md5(da),true)	
+			},
+		},
+	});
+	</script>
+</html>
