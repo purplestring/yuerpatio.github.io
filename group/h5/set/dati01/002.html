@@ -17,6 +17,13 @@ body {
 	font-size:48px;
 	text-align:center;
 }
+.info{
+	position:relative;
+	color:#888;
+	width:80%;
+	left:10%;
+	font-size:12px;
+}
 .footer{
 	text-align:center;
 }
@@ -50,8 +57,7 @@ button{
     </head>
 	<body>
 		<br>
-		<div class="title">答题</div>
-		<br><br>
+		<div class="title">答题</div><br><br>		
 		<div id="all" v-cloak>
 			<div v-for="(item, i) in timu" class="ti"><br>
 				<div>【第{{i+1}}题】 {{item.ti}}</div>
@@ -65,9 +71,14 @@ button{
 			</div>
 			<button @click="linkTo">提交</button>
 		</div>
-	<br>		
+	<br>
+	<div class="info">
+		【说明】答对所有题目，提交后跳转至相关微博；否则跳转至错误页面，返回再答即可。
+		手机上不便操作的小伙伴，亦可于计算机中答题。
+		本次题目来源：《中国诗词大会》题库，仅作交流学习。
+	</div><br><br>	
 	<div class="footer">
-		Copyright © 2015~Now 魚儿.
+		Copyright © 2020~Now 魚儿.
 	</div><br>
 	</body>
 	<script>
