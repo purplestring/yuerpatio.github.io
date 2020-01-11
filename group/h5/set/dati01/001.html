@@ -20,6 +20,13 @@ body {
 .footer{
 	text-align:center;
 }
+.info{
+	position:relative;
+	color:#888;
+	width:80%;
+	left:10%;
+	font-size:12px;
+}
 #all{
 	width:80%;
 	left:10%;
@@ -50,7 +57,11 @@ button{
 			</div>
 			<button @click="linkTo">提交</button>
 		</div>
-	<br>		
+	<br>
+	<div class="info">
+		【说明】答对所有题目，提交后跳转至相关微博；否则跳转至错误页面，返回再答即可。
+		手机上不便操作的小伙伴，亦可于计算机中答题。
+	</div><br><br>			
 	<div class="footer">
 		Copyright © 2015~Now 魚儿.
 	</div><br>
