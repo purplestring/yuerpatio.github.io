@@ -46,7 +46,7 @@ button{
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
-		<script src="http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
+		<script src="md5.js"></script>
     </head>
 	<body>
 		<br>
@@ -122,8 +122,7 @@ button{
 					if(timu[i].type=="tk") da+=this.timu[i].da;
 					da+=" ";					
 				}
-				alert(this.calcChar("MdnhYPk2",$.md5(da),true))
-				//window.location.href="http://t.cn/"+this.calcChar("MdnhYPk2",$.md5(da),true);	
+				window.location.href="http://t.cn/"+this.calcChar("MdnhYPk2",$.md5(da),true);	
 			},
 		},
 	});
