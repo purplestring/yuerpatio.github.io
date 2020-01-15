@@ -511,9 +511,13 @@ body {
 tl = new TimelineMax();
 tl.to("#ring", { duration: 2, scale: 1.5, opacity: 0, transformOrigin:"center", repeat: -1,});
 tl.to("#stars", { duration: 1, opacity: 1, repeat: -1, yoyo: true, });
+var click1=false;
 $("#hecheng").click(function(){
-	tl.to("#stars", { duration: 2, rotate:360, transformOrigin:"center", scale: 0.25,},2);
-	tl.to("#cards", { duration: 2, rotate:360, transformOrigin:"center", scale: 0.25,},2);
+	if(click1==false) {
+		tl.to("#stars", { duration: 2, rotate:360, transformOrigin:"center", scale: 0.25,},2);
+		tl.to("#cards", { duration: 2, rotate:360, transformOrigin:"center", scale: 0.25,},2);
+		click1=true;
+	}
 });
 
 /*document.body.addEventListener('click', () => {
