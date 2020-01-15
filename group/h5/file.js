@@ -16,7 +16,7 @@
 {"TITLE":"兰亭序卷轴","F_GROUP":"set","S_GROUP":"交互","F_NAME":"reel02",},
 {"TITLE":"地图","F_GROUP":"set","S_GROUP":"交互","F_NAME":"map01","SHOW":"no",},
 {"TITLE":"小盒子","F_GROUP":"set","S_GROUP":"交互","F_NAME":"box01",},
-{"TITLE":"答题","F_GROUP":"set","S_GROUP":"交互","F_NAME":"dati01/001.html"},
+{"TITLE":"答题","F_GROUP":"set","S_GROUP":"交互","F_NAME":"dati01/index.html"},
 {"TITLE":"微博","F_GROUP":"set","S_GROUP":"交互","F_NAME":"weibo",},
 {"TITLE":"长江千里图","F_GROUP":"set","S_GROUP":"交互·长卷","F_NAME":"scroll03","SHOW":"no",},
 {"TITLE":"古堡","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano01",},
@@ -33,6 +33,7 @@
 {"TITLE":"小鸟时钟","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"birdclock.html",},
 {"TITLE":"微博集卡抽奖","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"weibojkcj.html",},
 {"TITLE":"火箭起飞01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"rocket01.html",},
+{"TITLE":"下雪01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"snow01.html",},
 
 
 {"TITLE":"小盒子","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"box03",},

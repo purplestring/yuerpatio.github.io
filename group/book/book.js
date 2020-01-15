@@ -304,6 +304,7 @@ var book=[{F_GROUP: "古籍",S_GROUP: "经",TITLE: "诗经",COUNTRY: "中",DYNAS
 {F_GROUP: "今人",S_GROUP: "其它",TITLE: "人心与人生",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "梁漱溟",FILE: "filel/",F_EVAL: "line[0]=='●'",},
 {F_GROUP: "今人",S_GROUP: "其它",TITLE: "傅雷家书",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "傅雷",},
 {F_GROUP: "今人",S_GROUP: "其它",TITLE: "松子落：京都九年",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "苏枕书",FILE: "filel/",F_EVAL: "line[0]=='●'",SHOW: "no",},
+{F_GROUP: "今人",S_GROUP: "其它",TITLE: "成语大全",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "佚名",FILE: "filel/",F_EVAL: "line[0]=='●'",SHOW: "no",},
 {F_GROUP: "外国",S_GROUP: "人文",TITLE: "国富论",COUNTRY: "法",AUTHOR: "亚当·斯密",},
 {F_GROUP: "外国",S_GROUP: "人文",TITLE: "战争论",COUNTRY: "德",AUTHOR: "卡尔·冯·克劳塞维茨",},
 {F_GROUP: "外国",S_GROUP: "人文",TITLE: "正义论",COUNTRY: "美",AUTHOR: "约翰·罗尔斯",},
