@@ -33,6 +33,7 @@
 {"TITLE":"小鸟时钟","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"birdclock.html",},
 {"TITLE":"微博集卡抽奖","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"weibojkcj.html",},
 {"TITLE":"火箭起飞01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"rocket01.html",},
+{"TITLE":"四季01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"season01.html",},
 {"TITLE":"下雪01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"snow01.html",},
 
 
