@@ -1,5 +1,6 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=1, user-scalable=no">
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.5/gsap.min.js"></script>
 <title>寒江雪</title>
 <style>
@@ -14,6 +15,10 @@ body {
   max-width:700px;
   width: 100%;
   background:#fff;
+}
+
+path,rect,polygon,ellipse,circle,line,polyline{
+	opacity:0;
 }
 
 
@@ -4335,13 +4340,15 @@ body {
 </section>
 </body>
 <script>
- 
+//gsap.set($('svg').find("path,rect,polygon,ellipse,circle,line,polyline"),{opacity:0});
+gsap.to($('svg').find("path,rect,polygon,ellipse,circle,line,polyline"), {duration: 0.5, opacity: 1,stagger: 0.1},0);
+
 gsap.to("#snow0", { duration: 2, y:640,repeat: -1,ease: "none",},0);
 gsap.to("#snow1", { duration: 4, y:640,repeat: -1,ease: "none",},0);
 gsap.to("#snow2", { duration: 8, y:640,repeat: -1,ease: "none",},0);
 gsap.to("#snow0", { duration: 2, x:20,repeat: -1,ease: "none",yoyo:true},0);
 gsap.to("#snow1", { duration: 4, x:10,repeat: -1,ease: "none",yoyo:true},0);
 gsap.to("#snow2", { duration: 8, x:5,repeat: -1,ease: "none",yoyo:true},0);
- 
+
 </script>
 </html>
