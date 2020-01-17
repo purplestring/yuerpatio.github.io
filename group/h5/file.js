@@ -35,6 +35,7 @@
 {"TITLE":"火箭起飞01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"rocket01.html",},
 {"TITLE":"四季01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"season01.html","SHOW":"no",},
 {"TITLE":"下雪01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"snow01.html","SHOW":"no",},
+{"TITLE":"寒江雪","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"hjx01.html","SHOW":"no",},
 
 
 {"TITLE":"小盒子","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"box03",},
