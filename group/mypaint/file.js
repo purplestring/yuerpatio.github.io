@@ -86,7 +86,7 @@
 {F_GROUP:"jieqi",TITLE:"大雪",W_URL:["H69JVfhKB","IjElEzkqE"],F_NAME: ["32daxue.jpg"],F_DESC:"一候，鹖鴠不鳴；<br> 二候，虎始交；三候，荔挺出。<br><br>大賢虎變，雪爪鴻泥。<br>是名大雪。 <br>​​​​",},
 {F_GROUP:"jieqi",TITLE:"冬至",W_URL:["H8qAXDYWa","IlVTCsTTy"],F_NAME: ["33dongzhi.jpg"],F_DESC:"一候，蚯蚓結；<br>二候，麋角解；<br>三候，水泉動。<br><br>數九寒冬，至於此極。<br><br>是名冬至。<br>",},
 {F_GROUP:"jieqi",TITLE:"小寒",W_URL:["HazV8uLwd","Iod4XoZxD"],F_NAME: ["34xiaohan.jpg"],F_DESC:"一候，雁北鄉；<br>二候，鵲始巢；<br>三候，雉始鴝。<br><br>一尺寒光，造化小兒。<br>是名小寒。<br>",},
-{F_GROUP:"jieqi",TITLE:"大寒",W_URL:["HcRHE2TqN"],F_NAME: ["35dahan.jpg"],F_DESC:"一候，雞乳；<br>二候，徵鳥厲疾；<br>三候，水澤腹堅。<br><br>啼饑號寒，居大不易。<br>是名大寒。<br>",},
+{F_GROUP:"jieqi",TITLE:"大寒",W_URL:["HcRHE2TqN","IqoPMeGaV"],F_NAME: ["35dahan.jpg"],F_DESC:"一候，雞乳；<br>二候，徵鳥厲疾；<br>三候，水澤腹堅。<br><br>啼饑號寒，居大不易。<br>是名大寒。<br>",},
 
 
 {F_GROUP:"shufa",S_GROUP:"魏晋南北",TITLE:"三国 钟繇 淳化阁帖宣示表",W_URL:["Hguh6Axau"],F_NAME: ["Zchg.jpg"],F_DESC:"其文如下：<br><br>尚书宣示孙权所求，诏令所报，所以博示。逮于卿佐，必冀良方出于阿是。刍荛之言可择廊庙，况繇始以疏贱，得为前恩。横所盱睨，公私见异，爱同骨肉，殊遇厚宠，以至今日。再世荣名，同国休戚，敢不自量。窃致愚虑，仍日达晨，坐以待旦，退思鄙浅。圣意所弃，则又割意，不敢献闻。深念天下，今为已平，权之委质，外震神武。度其拳拳，无有二计。高尚自疏，况未见信。今推款诚，欲求见信，实怀不自信之心，亦宜待之以信，而当护其未自信也。其所求者，不可不许，许之而反，不必可与，求之而不许，势必自绝，许而不与，其曲在己。里语曰：何以罚？与之夺；何以怒？许不与。思省所示报权疏，曲折得宜，宜神圣之虑。非今臣下所能有增益，昔与文若奉事先帝，事有数者，有似于此。粗表二事，以为今者事势，尚当有所依违愿君思省。若以在所虑可，不须复貌。节度唯君，恐不可采，故不自拜表。<br>",},
