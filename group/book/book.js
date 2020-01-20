@@ -286,7 +286,7 @@ var book=[{F_GROUP: "古籍",S_GROUP: "经",TITLE: "诗经",COUNTRY: "中",DYNAS
 {F_GROUP: "今人",S_GROUP: "诗文",TITLE: "水问",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "简媜",},
 {F_GROUP: "今人",S_GROUP: "诗文",TITLE: "背影",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "朱自清",},
 {F_GROUP: "今人",S_GROUP: "单集",TITLE: "毛泽东选集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "毛泽东",FILE: "filel/",F_EVAL: "line[0]=='●'",},
-{F_GROUP: "今人",S_GROUP: "单集",TITLE: "毛泽东文集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "毛泽东",},
+{F_GROUP: "今人",S_GROUP: "单集",TITLE: "毛泽东文集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "毛泽东",FILE: "filel/",F_EVAL: "line[0]=='●'",},
 {F_GROUP: "今人",S_GROUP: "单集",TITLE: "张爱玲文集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "张爱玲",},
 {F_GROUP: "今人",S_GROUP: "单集",TITLE: "王朔文集",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "王朔",},
 {F_GROUP: "今人",S_GROUP: "单集",TITLE: "沈从文文集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "沈从文",},
