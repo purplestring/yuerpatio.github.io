@@ -247,21 +247,15 @@
 				<text transform="translate(170 85)" style="fill:#fff">
 					{{timeline[ct].substring(0,2)}}月{{timeline[ct].substring(2,4)}}日{{timeline[ct].substring(4,6)}}时{{timeline[ct].substring(6,8)}}分
 				</text>
-				<text transform="translate(160 102)" style="fill:#fff;font-size:8px;">确诊数来源：各卫健委官网、@人民日报 等</text>
-				<text transform="translate(190 112)" style="fill:#fff;font-size:8px;">AI绘图、Html5制作：紫月</text>
 				<text @click="stop=!stop" transform="translate(130 330)" :style="'fill:#'+(stop?'fff':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
-				<text transform="translate(20 340)" style="fill:#fff;font-size:20px;">+{{
+				<text transform="translate(20 340)" style="fill:#fff;font-size:20px;">{{
 				Number(Number(timeline[ct].substring(0,2))==12?(-8):0)+
 				Number(Number(timeline[ct].substring(0,2))==1?23:0)+
-				Number(timeline[ct].substring(2,4))}}D 
+				Number(timeline[ct].substring(2,4))}}天 
 				</text>
-				<text transform="translate(68 340)" style="fill:#fff;font-size:12px;">{{timeline[ct].substring(4,6)}}h{{timeline[ct].substring(6,8)}}m</text>
+				<text transform="translate(68 340)" style="fill:#fff;font-size:12px;">{{timeline[ct].substring(4,6)}}时{{timeline[ct].substring(6,8)}}分</text>
 				<text transform="translate(20 370)" style="fill:#fff;font-size:12px;" v-if="news[ct].length>8" v-html="news[ct].substring(9)"></text>
 			</svg>
-		</div>
-		<div class="footer">
-			<a href="../index.html" style="cursor:pointer;">返回分页</a>
-			<div>Copyright © 2015~Now 鱼儿.</div>
 		</div>
 		
 	</body>
