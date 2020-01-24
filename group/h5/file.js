@@ -31,7 +31,7 @@
 {"TITLE":"GDP变迁","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"datagdp.html",},
 {"TITLE":"军运会","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"junyunhui.html",},
 {"TITLE":"小鸟时钟","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"birdclock.html",},
-{"TITLE":"微博集卡抽奖","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"weibojkcj.html",},
+{"TITLE":"微博集卡抽奖","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"weibojkcj.html","SHOW":"no",},
 {"TITLE":"火箭起飞01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"rocket01.html",},
 {"TITLE":"疫情地图","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"map-2019-nCoV.html",},
 {"TITLE":"四季01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"season01.html","SHOW":"no",},
