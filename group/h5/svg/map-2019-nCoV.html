@@ -230,9 +230,9 @@
 				</text>
 				<text transform="translate(160 102)" style="fill:#fff;font-size:8px;">确诊数来源：各卫健委官网、@人民日报 等</text>
 				<text transform="translate(190 112)" style="fill:#fff;font-size:8px;">AI绘图、Html5制作：紫月</text>
-				<text @click="stop=!stop" transform="translate(120 330)" :style="'fill:#'+(stop?'fff':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
-				<text v-if="stop" @click="ct=(ct+data[0].length-1)%data[0].length;" transform="translate(105 328)" style="fill:#fff;font-size:18;cursor: pointer;">◀</text>
-				<text v-if="stop" @click="ct=(ct+1)%data[0].length;" transform="translate(172 328)" style="fill:#fff;font-size:18;cursor: pointer;">▶</text>
+				<text @click="stop=!stop" transform="translate(110 324)" :style="'fill:#'+(stop?'fff':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
+				<text v-if="stop" @click="ct=(ct+data[0].length-1)%data[0].length;" transform="translate(80 322)" style="fill:#fff;font-size:18;cursor: pointer;">◀</text>
+				<text v-if="stop" @click="ct=(ct+1)%data[0].length;" transform="translate(177 322)" style="fill:#fff;font-size:18;cursor: pointer;">▶</text>
 				<text transform="translate(20 340)" style="fill:#fff;font-size:20px;">+{{
 				Number(Number(timeline[ct].substring(0,2))==12?(-1):0)+
 				Number(Number(timeline[ct].substring(0,2))==1?30:0)+
