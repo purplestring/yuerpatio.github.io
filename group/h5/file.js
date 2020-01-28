@@ -35,6 +35,7 @@
 {"TITLE":"火箭起飞01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"rocket01.html",},
 {"TITLE":"疫情地图","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"map-2019-nCoV.html",},
 {"TITLE":"疫情地图Demo","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"map-2019-nCoV-Demo.html","SHOW":"no",},
+{"TITLE":"SARS疫情地图","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"map-2003-SARS.html","SHOW":"no",},
 {"TITLE":"四季01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"season01.html","SHOW":"no",},
 {"TITLE":"下雪01","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"snow01.html","SHOW":"no",},
 {"TITLE":"寒江雪1","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"hjx01.html","SHOW":"no",},
