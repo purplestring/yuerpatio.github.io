@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
-	<!--meta name="viewport" content="width=device-width, initial-scale=0.25,maximum-scale=1"-->
+	<meta id="meta" name="viewport">
+	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060+",maximum-scale=1, user-scalable=no"; </script>
     <head>
         <title>疫情地图</title>
 		<style id="style">
@@ -27,7 +28,7 @@
 			.st9{fill:#000;}
 			.footer,#footer{
 				position:absolute;
-				top:1760px;
+				top:1720px;
 				text-align:center;
 				width:90%;
 				left:5%;
@@ -35,21 +36,22 @@
 			}
 			@media screen and (max-device-width:640px){
 				.footer,#footer{
-					top:1280px;
 					font-size:28px;
 				}	
 			}
 			a:link {color: #ddd}
 			a:visited {color: #fff}
+			[v-cloak]{
+				display: none;
+			}
 
 		</style>
-		<meta name="viewport" content="width=device-width,initial-scale=0.5,user-scalable=0">
-		<!--sscript src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script-->
+		<!--script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script-->
 		<script src="../../../main/js/vue.min.js"></script>
     </head>
 	<body>
 		<div id="all" v-cloak>		
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.4 860">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.4 840">
 				<g>
 					<path v-for="(item,i) in value" @click="cpro=i;" :id="item.n" :style="'stroke:#fff;stroke-width:0.4;cursor: pointer;'+color(i)" :d="item.psvg"/>
 				</g>
@@ -210,13 +212,16 @@
 				<text transform="translate(68 340)" style="fill:#fff;font-size:12px;">{{timeline[ct].substring(4,6)}}h{{timeline[ct].substring(6,8)}}m</text>
 				<text transform="translate(20 370)" style="fill:#fff;font-size:12px;" v-if="news[ct].length>8" v-html="news[ct].substring(9)"></text>
 				
+				
 				<rect x="15.4" y="419" style="fill:#EFEFEF;" width="460" height="389"/>
 				<polyline style="fill:none;stroke:#000000;stroke-miterlimit:10;" points="50,450 50,775 440,775 "/>
-				<circle v-for="(t,i) in timeline" v-if="i>21 && value[cpro].v[i]!=value[cpro].v[i-1]" :cx="50+420*(datex(t)-86400*46)/(86400*20)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
+				<text transform="matrix(1 0 0 1 60 440)" style="font-family:'宋体'; font-size:24px;">{{value[cpro].n}}</text>
+				<circle v-for="(t,i) in timeline" v-if="i>21 && (value[cpro].v[i]!=value[cpro].v[i-1] || i==ct)" :style="i==ct?'fill:#f00;':''"
+				:cx="50+420*(datex(t)-86400*46)/(86400*20)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
 				<text v-for="(t,i) in timeline" v-if="i>21 && t.substring(2,4)!=timeline[i-1].substring(2,4)" 
-				:transform="'translate('+(46+420*(datex(t)-86400*46)/(86400*20)) +' 786)'" style="fill:#000;font-size:6px;">{{Number(t.substring(2,4))}}</text>
-				<text v-for="(t,i) in timeline" v-if="i>21 && timeline[i].substring(2,4)!=timeline[i-1].substring(2,4)" 
-				:transform="'translate(36 '+(775-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" style="fill:#000;font-size:6px;">{{data[cpro][i]}}</text>
+				:transform="'translate('+(46+420*(datex(t)-86400*46)/(86400*20)) +' 786)'" style="fill:#000;font-size:8px;">{{Number(t.substring(2,4))}}</text>
+				<text v-for="(t,i) in timeline" v-if="i==21 || (i>21 && timeline[i].substring(2,4)!=timeline[i-1].substring(2,4) && ((data[cpro][i]-data[cpro][i-2])/data[cpro][data[cpro].length-1])>0.02)" 
+				:transform="'translate(32 '+(775-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" style="fill:#000;font-size:8px;">{{data[cpro][i]}}</text>
 			</svg>
 		</div>
 		<div class="footer">
@@ -357,18 +362,6 @@ var data0=[
 		"01222400","01231400","01240304","01240900","01241700","01250800","01252200","01260953","01262121","01270800",
 		"01272240","01280917","01282100","01290931","01292358","01300934","01302222","01310918","01312241","02010958",
 	];
-	var timelineshow=[
-		/*true,true,true,false,false,false,true,false,false,false,
-		false,true,false,false,false,true,false,false,true,false,
-		false,true,false,false,false,true,false,false,false,false,
-		false,false,false,false,false,true,false,false,false,false,
-		false,false,false,false,false,true,false,false,false,false,*/
-		/*false,false,false,false,false,false,false,false,false,false,
-		false,false,false,false,false,false,false,false,false,false,
-		false,false,false,false,false,false,false,false,false,false,
-		false,true,false,true,false,true,false,true,false,true,false,true,
-		false,true,false,true,false,true,false,true,false,true,false,true,*/
-	];
 	var news=[
 	"12010000 首例患者出现，无华南海鲜市场暴露史",
 	"12102400 首例来自华南海鲜市场的患者出现（8日）",
@@ -415,10 +408,9 @@ var data0=[
 			data:data,
 			data0:data0,
 			news:news,
-			ct:0,
+			ct:18,
 			cpro:16,
 			timeline:timeline,
-			timelineshow:timelineshow,
 			stop:false,
 		},
 		beforeCreate() {		
