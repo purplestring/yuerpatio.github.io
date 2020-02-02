@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>答题</title>
+		<style>
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Times New Roman","宋体","黑体";
+}
+body {
+}
+[v-cloak] {
+  display: none;
+}
+.title{
+	font-size:48px;
+	text-align:center;
+}
+.info{
+	position:relative;
+	color:#888;
+	width:80%;
+	left:10%;
+	font-size:12px;
+}
+.footer{
+	text-align:center;
+}
+#all{
+	width:80%;
+	left:10%;
+	position:relative;
+}
+button{
+	position:relative;
+	left:85%;
+	border-radius: 2px;
+	box-shadow: inset rgba(255,255,255,0.3) 1px 1px 0;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	padding: 3px 6px 4px;
+	margin: .5em .5em .5em 0;
+	cursor: pointer;
+}
+img{
+	max-width:100%;
+}
+.ti{
+	border-bottom-style:dashed;
+	border-bottom-width:thin;
+}
+		</style>		
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<!--script src="../../../../main/js/jquery-3.3.1.min.js"></script>
+		<script src="../../../../main/js/vue.min.js"></script-->
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="vue.min.js"></script>
+		<script src="md5.js"></script>
+    </head>
+	<body>
+		<br>
+		<div class="title">答题</div><br><br>		
+		<div id="all" v-cloak>
+			<div v-for="(item, i) in timu" class="ti"><br>
+				<div v-html="'【第'+(i+1)+'题】'+item.ti"></div>
+				<div v-if="item.type=='xz'" v-for="(xuan, j) in item.xuan">
+					<input v-model="timu[i].selected[j]" type="checkbox"/> {{String.fromCharCode(65+j)}}、<span>{{xuan}}</span>
+				</div>
+				<div v-if="item.type=='tk'">
+					<input v-model="timu[i].da" type="textarea" style="width:100%;height:24px;background:#f6feff;"/>
+				</div>
+				<br>
+			</div>
+			<button @click="linkTo">提交</button>
+		</div>
+	<br>
+	<div class="info">
+		【说明】答对所有题目，提交后跳转至一只有意思的微博。
+		手机上不便操作的小伙伴，亦可于计算机中答题
+		本次题目来源：各处找来的~ 
+	</div><br><br>
+	<div class="footer">
+		Copyright © 2020~Now 魚儿.
+	</div><br>
+	</body>
+	<script>
+	
+	if(window.name != "noReload"){ window.name = "noReload"; location.reload();} else window.name = "";
+	var timu=[		
+		{type:"xz",ti:"2019 山西 英语 <br><br>Name: Chen Geng <br>Age: ____ years old.<br>"+
+			"Interest: <br>"+
+			"&nbsp;&nbsp;●loves simple and beautiful poems <br>"+
+			"&nbsp;&nbsp;●is touched by the ____ of the poems <br>"+
+			"&nbsp;&nbsp;●understands Chinese poems more and more deeply <br>"+
+			"Experience: <br>"+
+			"&nbsp;&nbsp;●took part in the Chinese Poetry Quiz Show several times <br>"+
+			"&nbsp;&nbsp;●missed winning because of careless mistakes <br>"+
+			"&nbsp;&nbsp;●came first this year with a perfect performance<br>"+
+			"Feeling: <br>"+
+			"&nbsp;&nbsp;●The joy is not winning but learning about poems.<br>"+
+			"&nbsp;&nbsp;●She enjoyes meeting people who share her interest.",
+			xuan:["25 beauty","26 miaow","27 magic","28 power",],},
+		{type:"xz",ti:"2019 安徽 道法<br>"+
+		"陈更获得2019年《中国诗词大会》第四季度总冠军，她从2016年开始参加比赛，经历次攻擂的失败，最终取得成功。从陈更的夺冠经历中，我们懂得了：",
+			xuan:["遇到的困难越大，取得的成绩就越大","坚强的意志是成功的保证","只要一直参加，最终总会取得成功","参加大赛是我们体现坚强意志的重要渠道"],},//B
+		{type:"xz",ti:"连续四年参加《中国诗词大会》、获得第四季总冠军的陈更曾表示，我不是学霸，智商也不比别人高，只是我更刻苦，更努力。下列诗句能够形容她夺冠之路的是",
+			xuan:["先天下之忧而忧","学海无涯苦作舟","留取丹心照汗青","天下谁人不识君"],},//B
+		{type:"xz",ti:"北宋文学家苏轼在《和董传留别》中著有一句“腹有诗书气自华”，形容一个人满腹经纶，饱读诗书，气质自然与众不同。"+
+		"第四季《中国诗词大会》上北大工科女博士陈更夺得冠军，完美的诠释了“腹有诗书气自华”，文化对人的影响不言而喻。下列诗句与其意思相近的是（微博群里翻答案~）",
+			xuan:["历览前贤国与家，成由勤俭破由奢","随风潜入夜，润物细无声","忽如一夜春风来，千树万树梨花开","少小离家老大回，乡音无改鬓毛衰"],},//D
+		{type:"tk",ti:"《中国诗词大会》第四季总冠军陈更曾对媒体坦言，自己虽是理工科学生，但一直热爱古典诗词，并以之为乐。这正如孔子所言“____________，____________”。（用《<论语>十二章》中的句子填空，中文逗号隔开，结尾写上句号）",},
+		//知之者不如好之者，好之者不如乐之者。	
+	];
+	var all=new Vue({
+		el: '#all',
+		data:{ 
+			timu:timu,			
+		},
+		created: function created() {
+			for(let i=0;i<timu.length;i++){				
+				if(timu[i].type=="xz") {
+					timu[i].selected=[];
+					for(let j=0;j<timu[i].xuan.length;j++) timu[i].selected[j]=false;
+				}
+				if(timu[i].type=="tk") timu[i].da="";				
+			}
+		},
+		updated: function updated() {			
+		},
+		mounted: function mounted() {	
+		},
+		methods: {
+			calcChar: function calcChar(s,hex,del){
+				let t=s;
+				for(let j=0;j<hex.length;j++){
+					i=j%s.length;					
+					let v=0;
+					if(hex.charCodeAt(j)>=97)v=hex.charCodeAt(j)-87;
+					else v=hex.charCodeAt(j)-48;
+					let ti=t.charCodeAt(i);
+					if(del) ti+=v; else ti-=v;
+					if(t.charCodeAt(i)>=65 && t.charCodeAt(i)<=90) { if(ti>90) ti-=26; if(ti<65) ti+=26;}
+					if(t.charCodeAt(i)>=97 && t.charCodeAt(i)<=122) {if(ti>122) ti-=26;if(ti<97) ti+=26;}
+					if(t.charCodeAt(i)>=48 && t.charCodeAt(i)<=57) { ti=t.charCodeAt(i);}
+					let tn=""; for(let k=0;k<t.length;k++) if(k!=i) tn+=t[k]; else tn+=String.fromCharCode(ti);t=tn;
+				}
+				return t;
+			},		
+			linkTo: function linkTo(){
+				let da="";
+				for(let i=0;i<this.timu.length;i++){
+					da+=(i+1)+".";
+					if(timu[i].type=="xz") for(let j=0;j<this.timu[i].xuan.length;j++) if(this.timu[i].selected[j]) da+=String.fromCharCode(65+j);
+					if(timu[i].type=="tk") da+=this.timu[i].da;
+					da+=" ";					
+				}
+				
+				if(this.timu[0].selected[3])
+				{
+					if(window.confirm('第一题你确定要D么？')){
+					 //alert("确定");
+						//return true;
+						window.location.href="https://weibo.com/5825621326/Ir0KC0BTu";	
+					  }else{
+						 //alert("取消");
+						 //return false;
+					 }
+				 }
+				 else{
+					console.log($.md5(da));
+					//if(this.timu[0].selected[3]) alert();
+					if($.md5(da)=="198e5cfd9b541d95eb6922e55f6637c1") window.location.href="https://weibo.com/1626681424/Is0aNi3eR";
+					else alert("再想想~");
+					//window.location.href="http://t.cn/"+this.calcChar("DnmWvMPX",$.md5(da),true);	
+				}
+			},
+		},
+	});
+	</script>
+</html>
