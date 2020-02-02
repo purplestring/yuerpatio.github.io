@@ -215,6 +215,7 @@
 				
 				<rect x="15.4" y="419" style="fill:#EFEFEF;" width="460" height="389"/>
 				<polyline style="fill:none;stroke:#000000;stroke-miterlimit:10;" points="50,450 50,775 440,775 "/>
+				<text transform="matrix(1 0 0 1 20 415)" style="font-family:'宋体'; fill:#fff;font-size:12px;">点击版图切换地区</text>
 				<text transform="matrix(1 0 0 1 60 440)" style="font-family:'宋体'; font-size:24px;">{{value[cpro].n}}</text>
 				<circle v-for="(t,i) in timeline" v-if="i>21 && (value[cpro].v[i]!=value[cpro].v[i-1] || i==ct)" :style="i==ct?'fill:#f00;':''"
 				:cx="50+420*(datex(t)-86400*46)/(86400*20)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
@@ -409,7 +410,7 @@ var data0=[
 			data:data,
 			data0:data0,
 			news:news,
-			ct:0,
+			ct:22,
 			cpro:16,
 			timeline:timeline,
 			stop:false,
