@@ -287,7 +287,7 @@
 
 /*
 SELECT * FROM
-(SELECT * FROM `weibo` where author="5679301959" and visible=1 and pubdate>"2018-01-01 00:00:00" and pubdate<"2018-04-01 00:00:00") as tableA
+(SELECT * FROM `weibo` where author="5679301959" and visible=1 and pubdate>="2018-01-01 00:00:00" and pubdate<"2018-04-01 00:00:00") as tableA
 LEFT JOIN
 (SELECT link as linkb,mid as midb,author as authorb,name as nameb,pubdate as pubdateb,
 text as textb, source as sourceb, pic_ids as pic_idsb
@@ -340,7 +340,9 @@ var jsonFile="201412.json";
         else if(nian==2018 && yue<12) jsonFile="201812.json";
         else if(nian==2019 && yue<3) jsonFile="201903.json";
 		else if(nian==2019 && yue<6) jsonFile="201906.json";
-		else if(nian==2019 && yue<12) jsonFile="201909.json";
+		else if(nian==2019 && yue<9) jsonFile="201909.json";
+		else if(nian==2019 && yue<12) jsonFile="201912.json";
+		else if(nian==2020 && yue<3) jsonFile="202003.json";
 		info="";
 			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
 				//console.log("aa")
