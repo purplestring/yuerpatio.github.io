@@ -77,7 +77,7 @@
 					<line x1="322.5" y1="456.1" x2="321.8" y2="469.3"/>
 					<line x1="303" y1="514.4" x2="305.3" y2="528.1"/>
 					<line x1="348.8" y1="550.2" x2="359.9" y2="546.5"/>
-					<line x1="383.9" y1="505.7" x2="391.2" y2="495.9"/>
+					<line x1="388.3" y1="507.3" x2="395.1" y2="497.1"/>
 					<line x1="412.7" y1="460.6" x2="416.3" y2="449.4"/>
 					<line x1="411.7" y1="416.1" x2="411.2" y2="404.6"/>
 					<line x1="412.8" y1="382" x2="416.3" y2="370.3"/>
@@ -90,38 +90,43 @@
 				<!--text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+8)+')'" style="font-size:10px;">{{data0[i][ct]>0?"亡"+data0[i][ct]:""}}</text-->	
 				
 
-				<text transform="translate(185 65)" style="font-size:22px;">疫情地图</text>
-				<text transform="translate(198 85)">
+				<!--text transform="translate(185 65)" style="font-size:22px;">疫情地图</text-->
+				<text transform="translate(176 85)" style="font-size:32px;">
 					{{timeline[ct].substring(0,2)}}月{{timeline[ct].substring(2,4)}}日
 				</text>
 				
-				<text @click="stop=!stop" transform="translate(110 324)" :style="'fill:#'+(stop?'000':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
-				<text v-if="stop" @click="ct=(ct+data[0].length-1)%data[0].length;" transform="translate(80 322)" style="font-size:18;cursor: pointer;">◀</text>
-				<text v-if="stop" @click="ct=(ct+1)%data[0].length;" transform="translate(177 322)" style="font-size:18;cursor: pointer;">▶</text>
+				<text @click="stop=!stop" transform="translate(80 364)" :style="'fill:#'+(stop?'000':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
+				<text v-if="stop" @click="ct=(ct+data[0].length-1)%data[0].length;" transform="translate(50 362)" style="font-size:18;cursor: pointer;">◀</text>
+				<text v-if="stop" @click="ct=(ct+1)%data[0].length;" transform="translate(147 362)" style="font-size:18;cursor: pointer;">▶</text>
 				
-				<text transform="translate(20 340)" style="font-size:20px;">{{
+				<text transform="translate(205 118)" style="font-size:24px;">第{{
 					Number(Number(timeline[ct].substring(0,2))==12?(-1):0)+
 					Number(Number(timeline[ct].substring(0,2))==1?30:0)+
 					Number(Number(timeline[ct].substring(0,2))==2?61:0)+
 					Number(timeline[ct].substring(2,4))}}天 
 				</text>				
 				
-				<rect x="15.4" y="419" style="opacity:0.8;fill:#fff;" width="460" height="389"/>
-				<polyline style="fill:none;stroke:#000000;stroke-miterlimit:10;" points="50,450 50,775 440,775 "/>
-				<text transform="matrix(1 0 0 1 20 415)" style="font-family:'宋体'; font-size:12px;">点击版图切换地区</text>
-				<text transform="matrix(1 0 0 1 60 440)" style="font-family:'宋体'; font-size:24px;">{{value[cpro].n}}</text>
+				<rect x="15.4" y="409" style="opacity:0.8;fill:#fff;" width="460" height="389"/>
+				<polyline style="fill:none;stroke:#000000;stroke-miterlimit:10;" points="50,440 50,765 440,765 "/>
+				<text transform="matrix(1 0 0 1 20 405)" style="font-family:'宋体'; font-size:16px;">点击版图切换地区</text>
+				<text transform="matrix(1 0 0 1 60 430)" style="font-family:'宋体'; font-size:24px;">{{value[cpro].n}}</text>
+				
+				<line v-for="(t,i) in timeline" v-if="i>0" style="fill:none;stroke:#333;stroke-width:0.2;"
+					:x1="50+420*(datex(timeline[i-1])-86400*48)/(86400*20)" 
+					:y1="765-320*data[cpro][i-1]/data[cpro][data[cpro].length-1]"
+					:x2="50+420*(datex(timeline[i])-86400*48)/(86400*20)" 
+					:y2="765-320*data[cpro][i]/data[cpro][data[cpro].length-1]"
+				/>
 				<circle v-for="(t,i) in timeline" :style="i==ct?'fill:#f00;':''"
-				:cx="50+420*(datex(t)-86400*48)/(86400*20)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
-				<text v-for="(t,i) in timeline" :transform="'translate('+(46+420*(datex(t)-86400*48)/(86400*20)) +' 786)'" style="font-size:8px;">{{Number(t.substring(2,4))}}</text>
-				<text v-for="(t,i) in timeline" :transform="'translate(32 '+(775-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" 
+				:cx="50+420*(datex(t)-86400*48)/(86400*20)" :cy="765-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
+				<text v-for="(t,i) in timeline" :transform="'translate('+(46+420*(datex(t)-86400*48)/(86400*20)) +' 776)'" style="font-size:8px;">{{Number(t.substring(2,4))}}</text>
+				<text v-for="(t,i) in timeline" :transform="'translate(28 '+(765-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" 
 				v-if="i==2 || (i>2 && ((data[cpro][i]-data[cpro][i-2])/data[cpro][data[cpro].length-1])>0.02)" style="font-size:8px;">{{data[cpro][i]}}</text>
+				
+
 				
 			</svg>
 		</div>
-		<!--div class="footer">
-			<a href="../index.html" style="cursor:pointer;">返回分页</a>
-			<div>Copyright © 2015~Now 鱼儿.</div>
-		</div-->
 		
 	</body>
 	<script>
