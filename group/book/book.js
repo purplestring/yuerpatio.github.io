@@ -445,4 +445,5 @@ var book=[{F_GROUP: "古籍",S_GROUP: "经",TITLE: "诗经",COUNTRY: "中",DYNAS
 {F_GROUP: "外国",S_GROUP: "其它",TITLE: "天演论",COUNTRY: "英",AUTHOR: "赫胥黎",FILE: "file/",F_EVAL: "line.length>2 && line.length<10 && line.indexOf('：')<0 && line[0]!='回' && line[0]!='天'",},
 {F_GROUP: "外国",S_GROUP: "其它",TITLE: "时间简史",COUNTRY: "英",AUTHOR: "霍金",},
 {F_GROUP: "外国",S_GROUP: "其它",TITLE: "物种起源",},
+{F_GROUP: "其它",S_GROUP: "其它",TITLE: "2019-nCoV",FILE: "filel/",F_EVAL: "line[0]=='●'",SHOW: "no",},
 ];
