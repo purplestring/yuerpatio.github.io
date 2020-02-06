@@ -86,23 +86,25 @@
 					<line x1="434.6" y1="313.7" x2="435.2" y2="302.8"/>
 				</g>
 					
-				<text v-for="(item,i) in value" @click="cpro=i;" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+item.pp[1]+')'" style="font-size:10px;cursor: pointer;">{{item.n}}</text>	
-				<text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+9)+')'" style="font-size:10px;" v-html="dataShow(i,ct)"></text>	
+				<text v-for="(item,i) in value" @click="cpro=i;" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+item.pp[1]+')'" style="font-size:12px;cursor: pointer;">{{item.n}}</text>	
+				<text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+11)+')'" style="font-size:12px;" v-html="dataShow(i,ct)"></text>	
 
-				<text transform="translate(176 85)" style="font-size:32px;">
-					{{timeline[ct].substring(0,2)}}月{{timeline[ct].substring(2,4)}}日
+				<text transform="translate(176 55)" style="font-size:32px;">
+					{{timeline[ct].substring(1,2)}}月{{timeline[ct].substring(2,4)}}日
 				</text>
+				
+				<text transform="translate(160 88)" style="font-size:24px;">第{{
+					Number(Number(timeline[ct].substring(0,2))==12?(-1):0)+
+					Number(Number(timeline[ct].substring(0,2))==1?30:0)+
+					Number(Number(timeline[ct].substring(0,2))==2?61:0)+
+					Number(timeline[ct].substring(2,4))}}天 {{sum[ct]}}人
+				</text>		
 				
 				<text @click="stop=!stop" transform="translate(80 364)" :style="'fill:#'+(stop?'000':'aaa')+';font-size:26;cursor: pointer;'">{{stop?"播放":"暂停"}}</text>
 				<text v-if="stop" @click="ct=(ct+data[0].length-1)%data[0].length;" transform="translate(50 362)" style="font-size:18;cursor: pointer;">◀</text>
 				<text v-if="stop" @click="ct=(ct+1)%data[0].length;" transform="translate(147 362)" style="font-size:18;cursor: pointer;">▶</text>
 				
-				<text transform="translate(205 118)" style="font-size:24px;">第{{
-					Number(Number(timeline[ct].substring(0,2))==12?(-1):0)+
-					Number(Number(timeline[ct].substring(0,2))==1?30:0)+
-					Number(Number(timeline[ct].substring(0,2))==2?61:0)+
-					Number(timeline[ct].substring(2,4))}}天 
-				</text>				
+						
 				
 				<rect x="15.4" y="409" style="opacity:0.8;fill:#fff;" width="460" height="389"/>
 				<polyline style="fill:none;stroke:#000000;stroke-miterlimit:10;" :points="'50,415 50,'+charty+' 440,'+charty"/>
@@ -134,10 +136,10 @@
 					</g>
 					
 					<text :transform="'translate('+(52+420*(datex(t)-86400*48)/(86400*20))+' '+(charty-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" 
-						:style="(i==ct?'fill:#f00;':'')+'font-size:10px;'">{{data[cpro][i]}}</text>		
+						:style="(i==ct?'fill:#f00;':'')+'font-size:12px;'">{{data[cpro][i]}}</text>		
 						
 					<circle :style="i==ct?'fill:#f00;':''" :cx="50+420*(datex(t)-86400*48)/(86400*20)" :cy="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
-					<text :transform="'translate('+(46+420*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" :style="(i==ct?'fill:#f00;':'')+'font-size:10px;'">{{Number(t.substring(2,4))}}</text>
+					<text :transform="'translate('+(46+420*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" :style="(i==ct?'fill:#f00;':'')+'font-size:12px;'">{{Number(t.substring(2,4))}}</text>
 					<line :style="(i==ct?'stroke:#f00;':'stroke:#000;')+'stroke-width:1;'"
 							:x1="50+420*(datex(t)-86400*48)/(86400*20)" 
 							:y1="charty-3" 
@@ -150,8 +152,8 @@
 				</g>
 				
 				<g v-for="c in 9" v-if="datax1(data[cpro][data[cpro].length-1],8,c-1)<=1.12*data[cpro][data[cpro].length-1]">
-					<text :transform="'translate('+(44-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
-					style="font-size:10px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
+					<text :transform="'translate('+(40-6*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
+					style="font-size:12px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
 					<line style="stroke:#000;stroke-width:1;"
 							x1="50" 
 							:y1="charty-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)" 
@@ -253,15 +255,18 @@
 	[329.0001,224.5],[316,254],[315,287],[337.9004,333.5],[288.9001,346.2],[303.4001,382],[274,262],[239.0002,267.9998],
 	[274.375,302.5],[216,332.2359],[112.5,262.95],[284.5,227],[245.5,217.3],[201.9188,200.75],[260,196.3002],[75.3335,147],[354,345.3],[332,347.7],[410.7997,317.4]];
 	var timeline=["0119","0120","0121","0122","0123","0124","0125","0126","0127","0128","0129","0130","0131","0201","0202","0203","0204","0205",];
-	var show=[];
+	var show=[];	
 	for(let i=0;i<proName.length;i++) {
 		let tmp=[];
 		for(let j=0;j<data[i].length;j++) {
-			if(data[i][j]!=null) tmp[j]=10*256*data[i][j]/data[16][j]; 
-			else tmp[j]=null;
+			tmp[j]=10*256*data[i][j]/data[16][j]; 
 		}
-		show.push({n:proName[i],ps:proShort[i],pp:proPoint[i],psvg:proSvg[i],v:tmp});	
+		show.push({n:proName[i],ps:proShort[i],pp:proPoint[i],psvg:proSvg[i],v:tmp});
 	}
+	
+	var sum=[];
+	for(let i=0;i<data[0].length;i++) { sum[i]=0; for(let j=0;j<data.length;j++) sum[i]+=data[j][i];}
+	//console.log(sum)
 	
 	var all=new Vue({
 		el: '#all',
@@ -270,6 +275,7 @@
 			data:data,
 			ct:0,
 			cpro:16,
+			sum:sum,
 			timeline:timeline,
 			stop:false,
 			charty:778,
