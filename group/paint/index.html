@@ -44,7 +44,7 @@
 					<span v-if="getPre(i)<0 || (list[i].P_AUTHOR!=list[getPre(i)].P_AUTHOR || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY)">
 						<br>【<span><span v-if="list[i].A_EN==null">{{list[i].P_AUTHOR}}</span><a 
 						v-if="list[i].A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
-						:href='"http://wikipedia.moesalih.com/"+item.A_EN.replace(/ /g,"_")'>{{list[i].P_AUTHOR}}</a>
+						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{list[i].P_AUTHOR}}</a>
 						</span>】
 					</span>
 					<span v-if="test">

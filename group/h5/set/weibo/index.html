@@ -387,7 +387,7 @@ function setInfo(nian,yue){
 	for(var key in info.RECORDS)
 	{
 		if(info.RECORDS[key].visible==0 ||
-			(info.RECORDS[key].author!="5679301959" && info.RECORDS[key].author!="5027860414" && info.RECORDS[key].author!="1759006061")
+			(info.RECORDS[key].author!="5679301959" && info.RECORDS[key].author!="5027860414" && info.RECORDS[key].author!="1759006061" && info.RECORDS[key].author!="7382953936")
 		) continue;
 		thisnian=info.RECORDS[key].pubdate.split('/')[2].split(' ')[0];
 		thisyue=info.RECORDS[key].pubdate.split('/')[1];
@@ -458,7 +458,7 @@ function setInfo(nian,yue){
 				}, false);
 			})(daytext,thisday);
 
-			if(info.RECORDS[key].author=="5679301959" && info.RECORDS[key].link2=="")yuetext+=thistxt;
+			if( info.RECORDS[key].author=="5679301959" && info.RECORDS[key].link2=="")yuetext+=thistxt;
 		}
 		lastnian=thisnian;lastyue=thisyue;lastday=thisday;
 	}
