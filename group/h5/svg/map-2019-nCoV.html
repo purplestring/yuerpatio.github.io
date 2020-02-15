@@ -418,7 +418,7 @@ var data0=[
 			data:data,
 			data0:data0,
 			news:news,
-			ct:22,//22,
+			ct:43,//22,
 			cpro:16,
 			timeline:timeline,
 			stop:false,
@@ -441,6 +441,11 @@ var data0=[
 					let t=province[i];
 					for(let j=0;j<this.value.length;j++){
 						if(this.value[j].n==t){
+							if(this.dayOut(this.ct,j)>6) {
+								let green=236-(this.dayOut(this.ct,j)-6)*2;
+								if(green<180) green=180;
+								return 'fill:rgb('+green+',236,'+green+');';
+							}
 							if(this.value[j].v[this.ct]==null) return "fill:#bbb";
 							if(this.value[j].v[this.ct]==0) return "fill:#bbb";
 							if(this.value[j].v[this.ct]>0) {
@@ -459,6 +464,12 @@ var data0=[
 					Number(Number(t.substring(0,2))==2?61:0)+
 					Number(t.substring(2,4)) )*86400 +					
 					(t.substring(4,6))*3600+ (t.substring(6,8))*60;			
+			},
+			dayOut(ct,p){
+				if(ct==0) return 0;
+				let i=ct-1;			
+				for(;i>0;i--) if( this.data[p][ct]!=this.data[p][i]) return ct-1-i;
+				return 0;
 			},
 		}
 	});

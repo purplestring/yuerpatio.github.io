@@ -86,8 +86,10 @@
 					<line x1="434.6" y1="313.7" x2="435.2" y2="302.8"/>
 				</g>
 					
-				<text v-for="(item,i) in value" @click="cpro=i;" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+item.pp[1]+')'" style="font-size:12px;cursor: pointer;">{{item.n}}</text>	
-				<text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+11)+')'" style="font-size:12px;" v-html="dataShow(i,ct)"></text>	
+				<text v-for="(item,i) in value" @click="cpro=i;" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+item.pp[1]+')'" 
+				:style="'font-size:12px;cursor: pointer;'+(i==16?'fill:#fff;':'')">{{item.n}}</text>	
+				<text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+11)+')'" 
+				:style="'font-size:12px;'+(i==16?'fill:#fff;':'')" v-html="dataShow(i,ct)"></text>	
 
 				<text transform="translate(176 55)" style="font-size:32px;">
 					{{timeline[ct].substring(1,2)}}月{{timeline[ct].substring(2,4)}}日
@@ -298,6 +300,12 @@
 					let t=proName[i];
 					for(let j=0;j<this.value.length;j++){
 						if(this.value[j].n==t){
+							if(this.dayOut(this.ct,j)>3) {
+								let green=240-this.dayOut(this.ct,j)*2;
+								if(green<180) green=180;
+								return 'fill:rgb('+green+',240,'+green+');';
+							}
+							
 							if(this.value[j].v[this.ct]==null) return "fill:#ddd";
 							if(this.value[j].v[this.ct]==0) return "fill:#ddd";
 							if(this.value[j].v[this.ct]>0) {
@@ -350,6 +358,12 @@
 				let v=d;let i=0;
 				while(v>=10) {v/=10; i++;}
 				return i;
+			},
+			dayOut(ct,p){
+				if(ct==0) return 0;
+				let i=ct-1;			
+				for(;i>0;i--) if( this.data[p][ct]!=this.data[p][i]) return ct-1-i;
+				return 0;
 			},
 		}
 	});
