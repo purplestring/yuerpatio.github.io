@@ -300,8 +300,8 @@
 					let t=proName[i];
 					for(let j=0;j<this.value.length;j++){
 						if(this.value[j].n==t){
-							if(this.dayOut(this.ct,j)>3) {
-								let green=240-this.dayOut(this.ct,j)*2;
+							if(this.dayOut(this.ct,j)>=10) {
+								let green=240-(this.dayOut(this.ct,j)-10)*2;
 								if(green<180) green=180;
 								return 'fill:rgb('+green+',240,'+green+');';
 							}
