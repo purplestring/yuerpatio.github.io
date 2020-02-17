@@ -170,7 +170,7 @@
 				<!--Y轴标尺-->
 				<g v-for="c in 9" v-if="datax1(data[cpro][data[cpro].length-1],8,c-1)<=1.12*data[cpro][data[cpro].length-1]">
 					<!--标尺数-->
-					<text :transform="'translate('+(43-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
+					<text :transform="'translate('+(41-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
 					style="font-size:10px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
 					<line style="stroke:#000;stroke-width:1;"
 							x1="50" 
