@@ -42,7 +42,7 @@
     </head>
 	<body>
 		<div id="all" v-cloak>		
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.4 860">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.4 836">
 				<path v-for="(item,i) in value" @click="cpro=i;" :id="item.n" :style="'stroke:#000;stroke-width:0.2;cursor: pointer;'+color(i)" :d="item.psvg"/>
 				<path style="fill:#E0E0E0;" d="M361.6,523c0.4,0.3,0.4,1,0.1,1.3c-0.6,0.4-2.1-0.1-1.8-0.8C359.9,523.2,360.9,522.7,361.6,523z M361.8,410.3
 					c-0.3,0.7,0.2,1.7,0.5,1.6c0.3,0,0.3-0.4,0.6-0.7c0.3-0.7,0.2-1.4-0.2-1.7C362.4,409.5,362.1,409.6,361.8,410.3z M361.2,407.3
@@ -91,7 +91,7 @@
 				<text v-for="(item,i) in value" :transform="'matrix(1 0 0 1 '+item.pp[0]+' '+(item.pp[1]+11)+')'" 
 				:style="'font-size:12px;'+(i==16?'fill:#fff;':'')" v-html="dataShow(i,ct)"></text>	
 				
-				<text v-for="i in (proName.length-34)" :transform="'matrix(1 0 0 1 '+(18+78*((i-1)%6))+' '+(410+Math.floor((i-1)/6)*12)+')'" 
+				<text v-for="i in (proName.length-34)" :transform="'matrix(1 0 0 1 '+(18+78*((i-1)%6))+' '+(400+Math.floor((i-1)/6)*12)+')'" 
 				@click="cpro=(i+33);" style="font-size:12px;cursor: pointer;">{{proName[i+33]}}:{{data[i+33][ct]}}</text>
 
 				<text transform="translate(176 55)" style="font-size:32px;">
@@ -106,10 +106,10 @@
 				</text>							
 				
 				<!--坐标轴等-->
-				<rect x="15" :y="charty-369" style="opacity:0.8;fill:#fff;" width="460" height="396"/>
-				<polyline style="fill:none;stroke:#000000;" :points="'50,'+(charty-363)+' 50,'+charty+' 440,'+charty"/>
-				<text transform="matrix(1 0 0 1 20 390)" style="font-family:'宋体'; font-size:16px;">点击地名、时间轴切换</text>
-				<text :transform="'matrix(1 0 0 1 60 '+(charty-348)+')'" style="font-family:'宋体'; font-size:24px;">{{proName[cpro]}}</text>
+				<rect x="15" :y="charty-354" style="opacity:0.8;fill:#fff;" width="460" height="380"/>
+				<polyline style="fill:none;stroke:#000000;" :points="'50,'+(charty-347)+' 50,'+charty+' 440,'+charty"/>
+				<text transform="matrix(1 0 0 1 20 380)" style="font-family:'宋体'; font-size:16px;">点击地名、时间轴切换</text>
+				<text :transform="'matrix(1 0 0 1 60 '+(charty-332)+')'" style="font-family:'宋体'; font-size:24px;">{{proName[cpro]}}</text>
 				<rect x="34" :y="charty+7" style="opacity:0.2;fill:#f00;" width="16" height="16"/>
 				<text @click="stop=!stop" :transform="'translate(38 '+(charty+20)+')'" style="font-size:12px;fill:red;cursor: pointer;">{{stop?"▶":"𝗹𝗹"}}</text>
 
@@ -117,46 +117,46 @@
 				<g v-for="(t,i) in timeline" >
 					<!--连线-->
 					<line v-if="i>0" style="stroke:#333;stroke-width:0.2;"
-						:x1="50+chartr*(datex(timeline[i-1])-86400*48)/(86400*20)" 
-						:y1="charty-320*data[cpro][i-1]/data[cpro][data[cpro].length-1]"
-						:x2="50+chartr*(datex(timeline[i])-86400*48)/(86400*20)" 
-						:y2="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]"
+						:x1="50+chartrx*(datex(timeline[i-1])-86400*48)/(86400*20)" 
+						:y1="charty-chartry*data[cpro][i-1]/data[cpro][data[cpro].length-1]"
+						:x2="50+chartrx*(datex(timeline[i])-86400*48)/(86400*20)" 
+						:y2="charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1]"
 					/>
 					<!--虚线-->
 					<g v-if="i==ct" style="stroke:#f00;stroke-width:0.2;stroke-dasharray:1,1;">
 						<line 
 							x1="50" 
-							:y1="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]" 
-							:x2="50+chartr*(datex(timeline[i])-86400*48)/(86400*20)" 
-							:y2="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]"
+							:y1="charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1]" 
+							:x2="50+chartrx*(datex(timeline[i])-86400*48)/(86400*20)" 
+							:y2="charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1]"
 						/>						
 						<line
-							:x1="50+chartr*(datex(timeline[i])-86400*48)/(86400*20)" 
-							:y1="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]" 
-							:x2="50+chartr*(datex(timeline[i])-86400*48)/(86400*20)" 
+							:x1="50+chartrx*(datex(timeline[i])-86400*48)/(86400*20)" 
+							:y1="charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1]" 
+							:x2="50+chartrx*(datex(timeline[i])-86400*48)/(86400*20)" 
 							:y2="charty"
 						/>
 					</g>
 					
-					<text :transform="'translate('+(52+chartr*(datex(t)-86400*48)/(86400*20))+' '+(charty-320*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" 
+					<text :transform="'translate('+(52+chartrx*(datex(t)-86400*48)/(86400*20))+' '+(charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1])+')'" 
 						:style="(i==ct?'fill:#f00;':'')+'font-size:8px;'">{{data[cpro][i]}}</text>		
 						
-					<circle :style="i==ct?'fill:#f00;':''" :cx="50+chartr*(datex(t)-86400*48)/(86400*20)" :cy="charty-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
+					<circle :style="i==ct?'fill:#f00;':''" :cx="50+chartrx*(datex(t)-86400*48)/(86400*20)" :cy="charty-chartry*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
 					<!--标尺数-->
-					<text @click="ct=i" :transform="'translate('+((Number(t.substring(2,4))<10?2.5:0)+45+chartr*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" 
+					<text @click="ct=i" :transform="'translate('+((Number(t.substring(2,4))<10?2.5:0)+45+chartrx*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" 
 					:style="(i==ct?'fill:#f00;':'')+'font-size:10px;cursor: pointer;'">{{Number(t.substring(2,4))}}</text>
 					<!--标尺点-->
 					<line :style="(i==ct?'stroke:#f00;':'stroke:#000;')+'stroke-width:1;'"
-							:x1="50+chartr*(datex(t)-86400*48)/(86400*20)" 
+							:x1="50+chartrx*(datex(t)-86400*48)/(86400*20)" 
 							:y1="charty-3" 
-							:x2="50+chartr*(datex(t)-86400*48)/(86400*20)" 
+							:x2="50+chartrx*(datex(t)-86400*48)/(86400*20)" 
 							:y2="charty"
 					/>
 					<!--时间轴点-->
 					<line @click="ct=i" :style="i==ct?'stroke:#f00;stroke-width:4;':'stroke:#fff;stroke-width:12;'+'cursor: pointer;'"
-							:x1="50+chartr*(datex(t)-86400*48)/(86400*20)" 
+							:x1="50+chartrx*(datex(t)-86400*48)/(86400*20)" 
 							:y1="charty+12" 
-							:x2="50+chartr*(datex(t)-86400*48)/(86400*20)" 
+							:x2="50+chartrx*(datex(t)-86400*48)/(86400*20)" 
 							:y2="charty+20"
 					/>					
 				</g>
@@ -170,13 +170,13 @@
 				<!--Y轴标尺-->
 				<g v-for="c in 9" v-if="datax1(data[cpro][data[cpro].length-1],8,c-1)<=1.12*data[cpro][data[cpro].length-1]">
 					<!--标尺数-->
-					<text :transform="'translate('+(43-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
+					<text :transform="'translate('+(43-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
 					style="font-size:10px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
 					<line style="stroke:#000;stroke-width:1;"
 							x1="50" 
-							:y1="charty-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)" 
+							:y1="charty-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)" 
 							x2="52" 
-							:y2="charty-40*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)"
+							:y2="charty-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)"
 					/>
 				</g>
 				
@@ -326,8 +326,9 @@
 			sum:sum,
 			timeline:timeline,
 			stop:false,
-			charty:830,
-			chartr:266,
+			charty:804,
+			chartrx:266,
+			chartry:300,
 		},
 		beforeCreate() {		
 			this.ct=timeline.length;
@@ -391,7 +392,7 @@
 				while(v>10) {v/=10; i*=10;}
 				v=c*i*Math.ceil(v);
 
-				if(v>0 && v<1) return v.toFixed(1);
+				if(v>0 && v<10) return v.toFixed(1);
 				return v;
 			},
 			datax2(t,d){
@@ -399,7 +400,7 @@
 				return v/t;				
 			},
 			dataLeft(d){
-				if(d>0 && d<1) return 2;
+				if(d>0 && d<10) return 2;
 				let v=d;let i=0;
 				while(v>=10) {v/=10; i++;}
 				return i;
