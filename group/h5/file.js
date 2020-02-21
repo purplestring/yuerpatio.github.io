@@ -27,6 +27,7 @@
 
 {"TITLE":"芭妖的夏天","F_GROUP":"svg","S_GROUP":"交互","F_NAME":"bayaoxia.html",},
 {"TITLE":"芭妖的樱桃","F_GROUP":"svg","S_GROUP":"交互","F_NAME":"yingtao.html","SHOW":"no",},
+{"TITLE":"寒江雪Scroll","F_GROUP":"svg","S_GROUP":"交互","F_NAME":"Scroll01.html","SHOW":"no",},
 {"TITLE":"TIOBE变迁","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"datatiobe.html",},
 {"TITLE":"GDP变迁","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"datagdp.html",},
 {"TITLE":"军运会","F_GROUP":"svg","S_GROUP":"动图","F_NAME":"junyunhui.html",},
