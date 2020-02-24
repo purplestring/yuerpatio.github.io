@@ -218,7 +218,9 @@
 				<text transform="matrix(1 0 0 1 20 415)" style="font-family:'宋体'; fill:#fff;font-size:12px;">点击版图切换地区</text>
 				<text transform="matrix(1 0 0 1 60 440)" style="font-family:'宋体'; font-size:24px;">{{value[cpro].n}}</text>
 				<circle v-for="(t,i) in timeline" v-if="i>21 && (value[cpro].v[i]!=value[cpro].v[i-1] || i==ct)" :style="i==ct?'fill:#f00;':''"
-					:cx="50+225*(datex(t)-86400*46)/(86400*23)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="2"/>
+					:cx="50+225*(datex(t)-86400*46)/(86400*23)" :cy="775-320*data[cpro][i]/data[cpro][data[cpro].length-1]" r="1.6"/>
+				<circle v-for="(t,i) in timeline" v-if="i>21 && (value[cpro].v[i]!=value[cpro].v[i-1] || i==ct)" :style="i==ct?'fill:#f00;':''"
+					:cx="50+225*(datex(t)-86400*46)/(86400*23)" :cy="775-320*data0[cpro][i]/data[cpro][data[cpro].length-1]" r="1.6"/>
 				<text @click="ct=i;" v-for="(t,i) in timeline" v-if="i>21 && t.substring(2,4)!=timeline[i-1].substring(2,4)" 
 					:transform="'translate('+(46+225*(datex(t)-86400*46)/(86400*23)) +' 786)'" 
 					:style="(i==ct?'fill:#f00;':'')+'font-size:8px;cursor: pointer;'">{{Number(t.substring(2,4))}}</text>
