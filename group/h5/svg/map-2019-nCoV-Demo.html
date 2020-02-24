@@ -146,8 +146,8 @@
 						:style="(i==ct?'fill:#f00;':'')+'font-size:8px;'">{{data[cpro][i]}}</text>		
 
 					<!--标尺数-->
-					<text @click="ct=i" :transform="'translate('+((Number(t.substring(2,4))<10?2.5:0)+45+chartrx*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" 
-					:style="(i==ct?'fill:#f00;':'')+'font-size:10px;cursor: pointer;'">{{Number(t.substring(2,4))}}</text>
+					<text @click="ct=i" :transform="'translate('+((Number(t.substring(2,4))<10?3:0)+45+chartrx*(datex(t)-86400*48)/(86400*20)) +' '+(charty+11)+')'" 
+					:style="(i==ct?'fill:#f00;':'')+'font-size:8px;cursor: pointer;'">{{Number(t.substring(2,4))}}</text>
 					<!--标尺点-->
 					<line :style="(i==ct?'stroke:#f00;':'stroke:#000;')+'stroke-width:1;'"
 							:x1="50+chartrx*(datex(t)-86400*48)/(86400*20)" 
@@ -173,8 +173,8 @@
 				<!--Y轴标尺-->
 				<g v-for="c in 9" v-if="datax1(data[cpro][data[cpro].length-1],8,c-1)<=1.12*data[cpro][data[cpro].length-1]">
 					<!--标尺数-->
-					<text :transform="'translate('+(41-5*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
-					style="font-size:10px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
+					<text :transform="'translate('+(42-4*dataLeft(datax1(data[cpro][data[cpro].length-1],8,c-1)))+' '+(charty+3-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1))+')'" 
+					style="font-size:8px;">{{datax1(data[cpro][data[cpro].length-1],8,c-1)}}</text>
 					<line style="stroke:#000;stroke-width:1;"
 							x1="50" 
 							:y1="charty-(chartry/8)*datax2(data[cpro][data[cpro].length-1],8,c-1)*(c-1)" 
