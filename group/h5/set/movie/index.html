@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<head>
+	<meta charste="utf-8">
+	<meta id="meta" name="viewport">
+	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060+",maximum-scale=1, user-scalable=no"; </script>
+	<link rel="stylesheet" href="../../../../main/css/style.css" type="text/css" />	
+	<script src="../../../../main/js/vue.min.js"></script>
+	<script src="movies.js"></script>
+	<title>影视集</title>
+<body>
+	<div id="main">
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+		<div id="all" v-cloak>
+			<div v-if="id==-1">		
+				<div class="title" align="center" @click.prevent="test=!test">影视集</div><br><br>
+				<div class="desc2" style="text-align:center;">
+					评分<input type="text" v-model="ratingmin"><br>
+					~<input type="text" v-model="ratingmax"><br>
+					地区<input type="text" v-model="countries"><br>
+					导演<input type="text" v-model="directors"><br>
+					原著<input type="text" v-model="writers"><br>
+					主演<input type="text" v-model="actors"><br>
+					分类<input type="text" v-model="genres"><br>
+					年份<input type="text" v-model="pubdates"><br>
+					<span @click.prevent="doFliter()" style="color:green;cursor:pointer;">筛选</span>
+					<span @click.prevent="reSet()" style="color:green;cursor:pointer;">重置</span>
+				</div><br><br><br>
+				<span v-for="(item,i) in list" v-if="item.fliter" @click.prevent="id=i" style="cursor:pointer;color:Green;">
+						{{item.name}} | 
+				</span>
+				<br/><br/>
+				<div align="center"><a href="../../index.html" style="cursor:pointer">返回起始页</a></div>
+			</div>
+			<div v-if="id!=-1">
+				<div class="title" align='center'>{{list[id].name}}</div><br>
+				<span v-if="list[id].directors!=null" >【导演】<span v-for="(director,j) in list[id].directors" 
+					@click.prevent="directors=director.name;doFliter();id=-1;" style="color:green;cursor:pointer;">{{director.name}} </span><br></span>
+				<span v-if="list[id].writers!=null" >【原著】<span v-for="(writer,j) in list[id].writers" 
+					@click.prevent="writers=writer.name;doFliter();id=-1;" style="color:green;cursor:pointer;">{{writer.name}} </span><br></span>
+				<span v-if="list[id].actors!=null" >【主演】<span v-for="(actor,j) in list[id].actors" 
+					@click.prevent="actors=actor.name;doFliter();id=-1;" style="color:green;cursor:pointer;">{{actor.name}} </span><br></span>
+				<span v-if="list[id].genres!=null" >【分类】<span v-for="(genre,j) in list[id].genres" 
+					@click.prevent="genres=genre;doFliter();id=-1;" style="color:green;cursor:pointer;">{{genre}} </span><br></span>
+				<span v-if="list[id].countries!=null" >【国家/地区】<span v-for="(country,j) in list[id].countries" 
+					@click.prevent="countries=country;doFliter();id=-1;" style="color:green;cursor:pointer;">{{country}} </span><br></span>
+				<span v-if="list[id].languages!=null" >【语言】<span v-for="(languages,j) in list[id].languages" >{{languages}} </span><br></span>
+				<span v-if="list[id].pubdates!=null" >【上映日期】<span v-for="(pubdate,j) in list[id].pubdates" 
+					@click.prevent="pubdates=pubdate.split('-')[0];doFliter();id=-1;" style="color:green;cursor:pointer;">{{pubdate}} </span><br></span>
+				<span v-if="list[id].episodes!=null" >【集】<span v-for="(episodes,j) in list[id].episodes" >{{episodes}} </span><br></span>
+				<span v-if="list[id].durations!=null" >【长度】<span v-for="(durations,j) in list[id].durations" >{{durations}} </span><br></span>
+				<span v-if="list[id].other_names!=null" >【别名】<span v-for="(other_names,j) in list[id].other_names" >{{other_names}} </span><br></span>
+				<span v-if="list[id].rating.average!=null" >【评分】{{list[id].rating.average}}<br></span>
+				<span v-if="list[id].rating.reviews_count!=null" >【浏览量】{{list[id].rating.reviews_count}}<br></span>
+				<span v-if="list[id].summary!=null" >【概要】{{list[id].summary}}<br></span>
+				<br><img class='myimg' :src='list[id].image_url'>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id=getPre(id);" style="cursor:pointer">◀</a>
+					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
+					<a @click.prevent="id=getNext(id);" style="cursor:pointer">▶</a>
+				</div>
+			</div>
+		</div>
+		<div class="footer">Copyright © 2020~Now 鱼儿. All Rights Reserved.</div><br/><br/>
+	</div>
+</body>
+<script>
+var all=new Vue({
+	el: '#all',
+	data:{ 	
+		list:file,
+		//groupname:{photo:"照片集",draw:"全景绘",map:"他山之石",piyipi:"皮一皮",test:"测试",},
+		test:false,
+		id:-1,
+		ratingmin:0,
+		ratingmax:10,
+		countries:"",
+		directors:"",
+		writers:"",
+		actors:"",
+		genres:"",
+		pubdates:"",
+	},
+	methods: {		
+		reSet: function reSet(){
+			//for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
+			for(let j=0;j<this.list.length;j++) this.list[j].fliter= true;
+			this.ratingmin=0;
+			this.ratingmax=10;
+			this.countries="";
+			this.directors="";
+			this.writers="";
+			this.actors="";
+			this.genres="";
+			this.$forceUpdate();		
+		},
+		doFliter: function doFliter(){
+			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			this.$forceUpdate();		
+		},
+		getItem: function getItem(i){
+			this.list[i].fliter= false;
+			if(this.list[i].rating.average.name=="") return;
+			if(parseFloat(this.list[i].rating.average)<this.ratingmin) return;
+			if(parseFloat(this.list[i].rating.average)>this.ratingmax) return;
+			if(this.countries!="") if(this.list[i].countries[0]!=this.countries) return;
+			if(this.directors!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].directors.length;j++) if( this.list[i].directors[j].name==this.directors ) {get=true;break;} 
+				if(get==false) return;
+			}
+			if(this.writers!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].writers.length;j++) if( this.list[i].writers[j].name==this.writers ) {get=true;break;} 
+				if(get==false) return;
+			}				
+			if(this.actors!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].actors.length;j++) if( this.list[i].actors[j].name==this.actors ) {get=true;break;} 
+				if(get==false) return;
+			}
+			if(this.genres!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].genres.length;j++) if( this.list[i].genres[j]==this.genres ) {get=true;break;} 
+				if(get==false) return;
+			}
+			if(this.countries!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].countries.length;j++) if( this.list[i].countries[j]==this.countries ) {get=true;break;} 
+				if(get==false) return;
+			}
+			if(this.pubdates!="") {
+				let get=false;
+				for(let j=0;j<this.list[i].pubdates.length;j++) if( this.list[i].pubdates[j].split('-')[0]==this.pubdates ) {get=true;break;} 
+				if(get==false) return;
+			}
+			this.list[i].fliter= true; return;
+		},
+		getPre: function getPre(j){
+			let i=j-1;
+			for(;i>=0;i--) if(this.list[i].fliter) return i;
+			return -1;
+		},
+		getNext: function getNext(j){
+			let i=j+1;
+			for(;i<this.list.length;i++) if(this.list[i].fliter) return i;
+			return -1;
+		},
+	},
+	created: function created() {	
+        if(self.location.href.substring(0,4)!="http")this.test=true;
+		this.reSet();this.doFliter()
+		var _this = this;
+        document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) _this.id=_this.getPre(_this.id);
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.id=_this.getNext(_this.id);
+            }
+        };
+    },
+});
+</script>
+</html>
