@@ -27,7 +27,7 @@
 					年份<input type="text" v-model="pubdates"><br>
 					关键字<input type="text" v-model="keywords"><br>
 					<span @click.prevent="doFliter()" style="color:green;cursor:pointer;">筛选</span>
-					<span @click.prevent="reSet()" style="color:green;cursor:pointer;">重置</span>
+					<span @click.prevent="reSet();doFliter();" style="color:green;cursor:pointer;">重置</span>
 				</div><br><br><br>
 				<span v-for="(item,i) in list" v-if="item.fliter" @click.prevent="id=i" style="cursor:pointer;color:Green;">
 						{{item.name}} | 
@@ -102,50 +102,51 @@ var all=new Vue({
 			this.$forceUpdate();		
 		},
 		doFliter: function doFliter(){
-			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			let ct=0;
+			for(let k=0;k<this.list.length;k++){
+				if(ct>100) this.list[k].fliter=false;
+				else {
+					this.list[k].fliter=this.getItem(k);
+					if(this.list[k].fliter) ct++;
+				}
+			}
 			this.$forceUpdate();		
 		},
 		getItem: function getItem(i){
-			this.list[i].fliter= false;
-			if(this.list[i].rating.average.name=="") return;
-			if(parseFloat(this.list[i].rating.average)<this.ratingmin) return;
-			if(parseFloat(this.list[i].rating.average)>this.ratingmax) return;
-			if(this.countries!="") if(this.list[i].countries[0]!=this.countries) return;
+			if(this.list[i].rating.average.name=="") return false;
+			if(parseFloat(this.list[i].rating.average)<this.ratingmin) return false;
+			if(parseFloat(this.list[i].rating.average)>this.ratingmax) return false;
+			if(this.countries!="") if(this.list[i].countries[0]!=this.countries) return false;
 			if(this.directors!="") {
-				let get=false;
-				for(let j=0;j<this.list[i].directors.length;j++) if( this.list[i].directors[j].name==this.directors ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].directors.length;j++) if( this.list[i].directors[j].name==this.directors ) return true;
+				return false;
 			}
 			if(this.writers!="") {
 				let get=false;
-				for(let j=0;j<this.list[i].writers.length;j++) if( this.list[i].writers[j].name==this.writers ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].writers.length;j++) if( this.list[i].writers[j].name==this.writers ) return true;
+				return false;
 			}				
 			if(this.actors!="") {
-				let get=false;
-				for(let j=0;j<this.list[i].actors.length;j++) if( this.list[i].actors[j].name==this.actors ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].actors.length;j++) if( this.list[i].actors[j].name==this.actors ) return true;
+				return false;
 			}
 			if(this.genres!="") {
-				let get=false;
-				for(let j=0;j<this.list[i].genres.length;j++) if( this.list[i].genres[j]==this.genres ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].genres.length;j++) if( this.list[i].genres[j]==this.genres ) return true;
+				return false;
 			}
 			if(this.countries!="") {
-				let get=false;
-				for(let j=0;j<this.list[i].countries.length;j++) if( this.list[i].countries[j]==this.countries ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].countries.length;j++) if( this.list[i].countries[j]==this.countries ) return true;
+				return false;
 			}
 			if(this.pubdates!="") {
-				let get=false;
-				for(let j=0;j<this.list[i].pubdates.length;j++) if( this.list[i].pubdates[j].split('-')[0]==this.pubdates ) {get=true;break;} 
-				if(get==false) return;
+				for(let j=0;j<this.list[i].pubdates.length;j++) if( this.list[i].pubdates[j].split('-')[0]==this.pubdates ) return true;
+				return false;
 			}
 			if(this.keywords!="") {
-				if( this.list[i].summary.indexOf(this.keywords)!=-1 ) {this.list[i].fliter= true;return;} 
-				return;
+				if( this.list[i].summary.indexOf(this.keywords)!=-1 ) return true;
+				return false;
 			}
-			this.list[i].fliter= true; return;
+			return true;
 		},
 		getPre: function getPre(j){
 			let i=j-1;
