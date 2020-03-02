@@ -25,6 +25,7 @@
 					主演<input type="text" v-model="actors"><br>
 					分类<input type="text" v-model="genres"><br>
 					年份<input type="text" v-model="pubdates"><br>
+					关键字<input type="text" v-model="keywords"><br>
 					<span @click.prevent="doFliter()" style="color:green;cursor:pointer;">筛选</span>
 					<span @click.prevent="reSet()" style="color:green;cursor:pointer;">重置</span>
 				</div><br><br><br>
@@ -83,6 +84,7 @@ var all=new Vue({
 		actors:"",
 		genres:"",
 		pubdates:"",
+		keywords:"",
 	},
 	methods: {		
 		reSet: function reSet(){
@@ -95,6 +97,8 @@ var all=new Vue({
 			this.writers="";
 			this.actors="";
 			this.genres="";
+			this.pubdates="";
+			this.keywords="";
 			this.$forceUpdate();		
 		},
 		doFliter: function doFliter(){
@@ -136,6 +140,10 @@ var all=new Vue({
 				let get=false;
 				for(let j=0;j<this.list[i].pubdates.length;j++) if( this.list[i].pubdates[j].split('-')[0]==this.pubdates ) {get=true;break;} 
 				if(get==false) return;
+			}
+			if(this.keywords!="") {
+				if( this.list[i].summary.indexOf(this.keywords)!=-1 ) {this.list[i].fliter= true;return;} 
+				return;
 			}
 			this.list[i].fliter= true; return;
 		},
