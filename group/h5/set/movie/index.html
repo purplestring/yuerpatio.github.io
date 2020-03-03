@@ -27,7 +27,7 @@
 					年份<input type="text" v-model="pubdates"><br>
 					关键字<input type="text" v-model="keywords"><br>
 					<span @click.prevent="doFliter()" style="color:green;cursor:pointer;">筛选</span>
-					<span @click.prevent="reSet();doFliter();" style="color:green;cursor:pointer;">重置</span>
+					<span @click.prevent="reSet()" style="color:green;cursor:pointer;">重置</span>
 				</div><br><br><br>
 				<span v-for="(item,i) in list" v-if="item.fliter" @click.prevent="id=i" style="cursor:pointer;color:Green;">
 						{{item.name}} | 
@@ -99,7 +99,8 @@ var all=new Vue({
 			this.genres="";
 			this.pubdates="";
 			this.keywords="";
-			this.$forceUpdate();		
+			//this.$forceUpdate();	
+			this.doFliter();
 		},
 		doFliter: function doFliter(){
 			let ct=0;
@@ -113,7 +114,7 @@ var all=new Vue({
 			this.$forceUpdate();		
 		},
 		getItem: function getItem(i){
-			if(this.list[i].rating.average.name=="") return false;
+			if(this.list[i].rating.average=="") this.list[i].rating.average=0;
 			if(parseFloat(this.list[i].rating.average)<this.ratingmin) return false;
 			if(parseFloat(this.list[i].rating.average)>this.ratingmax) return false;
 			if(this.countries!="") if(this.list[i].countries[0]!=this.countries) return false;
@@ -161,7 +162,7 @@ var all=new Vue({
 	},
 	created: function created() {	
         if(self.location.href.substring(0,4)!="http")this.test=true;
-		this.reSet();this.doFliter()
+		this.reSet();
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;

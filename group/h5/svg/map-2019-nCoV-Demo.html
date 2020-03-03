@@ -16,19 +16,6 @@
 				height:720px;
 				max-width:100%;
 			}
-			.footer,#footer{
-				position:absolute;
-				top:1720px;
-				text-align:center;
-				width:90%;
-				left:5%;
-				color:#000;
-			}
-			@media screen and (max-device-width:640px){
-				.footer,#footer{
-					font-size:28px;
-				}	
-			}
 			a:link {color: #ddd}
 			a:visited {color: #000}
 			[v-cloak]{
@@ -333,10 +320,10 @@
 			chartrx:184,
 			chartry:280,
 		},
-		beforeCreate() {		
+		beforeCreate: function beforeCreate() {		
 			this.ct=timeline.length;
 		},
-		created() {		
+		created: function created() {		
 			let _this=this;			
 			setInterval(function(){ 	
 				if(_this.stop) return;			
@@ -344,7 +331,7 @@
 			}, 1000);
 		},
 		methods: {		
-			color(i){
+			color: function color(i){
 				if(i>=0 && i<=33) {
 					let t=proName[i];
 					for(let j=0;j<this.value.length;j++){
@@ -356,16 +343,17 @@
 							}
 							
 							if(this.value[j].v[this.ct]==null) return "fill:#ddd";
-							if(this.value[j].v[this.ct]==0) return "fill:#ddd";
-							if(this.value[j].v[this.ct]>0) {
-								let rgb=256-this.value[j].v[this.ct];
+							if(this.value[j].v[this.ct]==0) return "fill:#ddd";						
+							if(this.value[j].v[this.ct]>0) {						
+								var rgb=256-this.value[j].v[this.ct];
+								rgb=Math.floor(rgb);
 								if(rgb<0) {	
 									rgb+=256;
 									if(rgb<128) rgb=128;
 									return 'fill:rgb('+rgb+',0,0);';
 								}
 								else {
-									if(rgb>255) rgb=255;						
+									if(rgb>255) rgb=255;																		
 									return 'fill:rgb(255,'+rgb+','+rgb+');';
 								}
 							}
@@ -374,20 +362,20 @@
 				}
 				return "fill:#ddd";
 			},
-			datex(t){
+			datex: function datex(t){
 				return (Number(Number(t.substring(0,2))==12?(-1):0)+
 					Number(Number(t.substring(0,2))==1?30:0)+
 					Number(Number(t.substring(0,2))==2?61:0)+
 					Number(Number(t.substring(0,2))==3?90:0)+
 					Number(t.substring(2,4)) )*86400 ;			
 			},
-			dataShow(i,c){
+			dataShow: function dataShow(i,c){
 				let tmp=this.data[i][c];
 				if(tmp==0) return "";
 				else if(tmp<100) return "&ensp;"+tmp;
 				else return tmp;
 			},
-			datax1(t,d,c){
+			datax1: function datax1(t,d,c){
 				let v=t;
 				v/=d;
 				if(v<=0) return 0;
@@ -399,17 +387,17 @@
 				if(v>0 && v<10) return v.toFixed(1);
 				return v;
 			},
-			datax2(t,d){
+			datax2: function datax2(t,d){
 				let v=this.datax1(t,d,d);
 				return v/t;				
 			},
-			dataLeft(d){
+			dataLeft: function dataLeft(d){
 				if(d>0 && d<10) return 2;
 				let v=d;let i=0;
 				while(v>=10) {v/=10; i++;}
 				return i;
 			},
-			dayOut(ct,p){
+			dayOut: function dayOut(ct,p){
 				if(ct==0) return 0;
 				let i=ct-1;			
 				for(;i>0;i--) if( this.data[p][ct]!=this.data[p][i]) return ct-1-i;

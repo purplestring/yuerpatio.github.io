@@ -129,7 +129,7 @@
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑点白",F_NAME: "die13.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑白头黄",F_NAME: "die17.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "燄駝蛾",F_NAME: "die24.jpg",},
-{F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黄蝶对",F_NAME: "die25.jpg",},
+{F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "尖角黄粉蝶",F_NAME: "die25.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑凤蝶",F_NAME: "die06.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑凤蝶棕斑",F_NAME: "die32.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑凤蝶飞",F_NAME: "die22.jpg",},
