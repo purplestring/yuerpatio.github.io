@@ -198,6 +198,17 @@ var vm = new Vue({
 			let urlvalue=decodeURI(url.split('=')[1]);
 			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].P_NAME) {this.id=i; break; }
 		}
+		var _this = this;
+		document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) _this.id=_this.getPre(_this.id);
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.id=_this.getNext(_this.id);
+            }
+        };
     },
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
