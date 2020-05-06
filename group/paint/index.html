@@ -24,7 +24,7 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="id==-1">
-			<div class="title" align="center" @click="test=!test" >画之册</div><br><br>
+			<div class="title" align="center" @click="test=!test;reSet();" >画之册</div><br><br>
 			<div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
 			可简单筛选，随便翻翻便好。版权及带宽所限，<br>
 			大图、现代作品有目无画。仅供交流学习，叮！<br>
@@ -37,31 +37,31 @@
 				</span>	
 			</div>
 			<span v-for="(item, i) in list">
-				<span v-if="list[i].fliter">			
-					<span class='family' v-if="getPre(i)<0 || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY">
-						<br><br><br>{{list[i].P_DYNASTY}}<br>
+				<span v-if="item.fliter">			
+					<span class='family' v-if="getPre(i)<0 || item.P_DYNASTY!=list[getPre(i)].P_DYNASTY">
+						<br><br><br>{{item.P_DYNASTY}}<br>
 					</span>
-					<span v-if="getPre(i)<0 || (list[i].P_AUTHOR!=list[getPre(i)].P_AUTHOR || list[i].P_DYNASTY!=list[getPre(i)].P_DYNASTY)">
-						<br>【<span><span v-if="list[i].A_EN==null">{{list[i].P_AUTHOR}}</span><a 
-						v-if="list[i].A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
-						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{list[i].P_AUTHOR}}</a>
+					<span v-if="!(!test && item.SHOW=='no' && item.P_DYNASTY=='现代') && (getPre(i)<0 || (item.P_AUTHOR!=list[getPre(i)].P_AUTHOR || item.P_DYNASTY!=list[getPre(i)].P_DYNASTY))">
+						<br>【<span><span v-if="item.A_EN==null">{{item.P_AUTHOR}}</span><a 
+						v-if="item.A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
+						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a>
 						</span>】
 					</span>
 					<span v-if="test">
-						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
 					</span>
 					<span v-if="!test && item.SHOW!='no'">
-						<a v-if="list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪'" 
-						style='color:#000;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
-						<a v-if="!(list[i].P_PICS.split('/')[0]!='img' || list[i].P_DYNASTY=='现代' || list[i].P_DYNASTY=='20世纪')" 
-						style='color:DarkCyan;cursor:pointer' @click="id=i">{{list[i].P_NAME}}</a>
+						<a v-if="item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='现代' || item.P_DYNASTY=='20世纪'" 
+						style='color:#000;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
+						<a v-if="!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='现代' || item.P_DYNASTY=='20世纪')" 
+						style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
 					</span>
 				</span>
 			</span>
 			<br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
 		</div>
 		<div v-if="id>=0">
-			<div class='title' align='center' @click="test=!test">{{list[id].P_NAME}}</div>
+			<div class='title' align='center' @click="test=!test;">{{list[id].P_NAME}}</div>
 			<div align='center'>
 				<a @click.prevent="preAuthor()" style="cursor: pointer;">　◀◀　</a>
 				<a @click.prevent="id=getPre(id)" style="cursor: pointer;">　◀　</a>
@@ -78,7 +78,7 @@
 				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a><br>
             </div>
             <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='现代' && list[id].P_DYNASTY!='20世纪')">
-				<img id='myimg' :src='list[id].P_PICS'></span>
+				<img id='myimg' :src='list[id].P_PICS' @dblclick='window.open(list[id].P_PICS);'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
 			</span-->
@@ -107,7 +107,10 @@ var vm = new Vue({
 	methods: {		
 		reSet: function reSet(){
 			for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
-			for(let j=0;j<this.list.length;j++) this.list[j].fliter= true;
+			for(let j=0;j<this.list.length;j++) {
+				this.list[j].fliter= true;
+				if(!this.test && this.list[j].SHOW=="no") this.list[j].fliter= false;
+			}
 			this.$forceUpdate();		
 		},
 		setType: function setType(i){
@@ -156,6 +159,7 @@ var vm = new Vue({
 			}
 		},
 		getItem: function getItem(i){
+			if(!this.test && this.list[i].SHOW=="no") {this.list[i].fliter= false;	return;}
 			for(let j=0;j<this.statename.length;j++) {
 				if(this.statevalue[j]==0) continue;				
 				let get=0;

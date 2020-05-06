@@ -38,6 +38,7 @@
 			</div>
 			<div v-if="id!=-1">
 				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
+				<span v-if="list[id].S_GROUP!=null" >【{{list[id].S_GROUP}}】 </span>
 				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
 				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】<br><br></span>

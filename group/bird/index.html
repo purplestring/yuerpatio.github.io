@@ -55,19 +55,19 @@
 				<a @click.prevent="nextFamily()" style="cursor: pointer;">▶▶▶</a><br>
 					{{list[id].mu}}->{{list[id].ke}}->{{list[id].shu}}->{{list[id].wu}}<br><br>
 			</div>
-			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br><br></span>
-			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br><br></span>
-			<span v-if="list[id].des!=null">【特征】{{list[id].des}}<br><br></span>
-			<span v-if="list[id].de2!=null">【百科】{{list[id].de2}}<br><br></span>
-			<span v-if="list[id].hm!=null">【虹膜】{{list[id].hm}}<br><br></span>
-			<span v-if="list[id].hui!=null">【喙】{{list[id].hui}}<br><br></span>
-			<span v-if="list[id].zu!=null">【脚】{{list[id].zu}}<br><br></span>
-			<span v-if="list[id].vo!=null">【声】{{list[id].vo}}<br><br></span>
-			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br><br></span>
+			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br></span>
+			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br></span>
 			<span v-if="list[id].pic!=null">【俺拍嗒】<br>
 				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
 				<img class='myimg' v-if="id>=1329" :src='"others/"+list[id].ke.split("科")[0]+"."+list[id].wu+".jpg"'>
-			<br><br></span>
+			<br></span><br>
+			<span v-if="list[id].des!=null">【特征】{{list[id].des}}<br><br></span>
+			<span v-if="list[id].de2!=null">【百科】{{list[id].de2}}<br><br></span>
+			<span v-if="list[id].hm!=null">【虹膜】{{list[id].hm}}<br></span>
+			<span v-if="list[id].hui!=null">【喙】{{list[id].hui}}<br></span>
+			<span v-if="list[id].zu!=null">【脚】{{list[id].zu}}<br></span>
+			<span v-if="list[id].vo!=null">【声】{{list[id].vo}}<br><br></span>
+			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br></span>			
 			<span v-if="test && id<1329">【分布图】<br><img class='myimg' :src='"birdmap/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<span v-if="test && id<1329">【插图】<br><img class='myimg' :src='"birdsall/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
@@ -165,6 +165,17 @@ var vm = new Vue({
 			let urlvalue=decodeURI(url.split('=')[1]);
 			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].wu) {this.id=i; break; }
 		}
+		var _this = this;
+		document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) _this.prePic();//_this.id=_this.getPre(_this.id);
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.nextPic();//_this.id=_this.getNext(_this.id);
+            }
+        };
     },
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
