@@ -238,10 +238,12 @@
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"岁",F_NAME:"muxing.jpg",F_DESC:"《甘石星经》有云<br>\r\n“单阏之岁，摄提格在卯，岁星在子，与须女、虚、危晨出夕入，其状甚大有光，若有小赤星附于其侧，是谓同盟。”<br>\r\n小赤星，图一岁星右上最外一颗，即是。",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"海王星",F_NAME:"hwx01.jpg",F_DESC:"2019 09 12",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"火星",F_NAME:"mars01.jpg",F_DESC:"2018 07 28",},
-{F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"彗星",F_NAME:"46P.jpg",F_DESC:"2018 12 18",},
+{F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"彗星46P",F_NAME:"46P.jpg",F_DESC:"2018 12 18",},
+{F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"彗星2020F3",F_NAME:"2020F3.jpg",F_DESC:"2020 07 12",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"青天白日",F_NAME:"qtbr.jpg",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"太阳黑子",F_NAME:"heizi01.jpg",F_DESC:"2019 05 12 18:23",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"日偏食",F_NAME:"rishi2019.jpg",F_DESC:"2019 12 26 13:09",},
+{F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"日环食",F_NAME:"rishi2020a.jpg",F_DESC:"2020 06 21 16:08",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"日暮霞光",F_NAME:"xiaguang01.jpg",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"月全食",F_NAME:"yuequanshi01.jpg",F_DESC:"2018 07 28 0‏‎3:50:16",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"月下娘娘庙",F_NAME:"nnm.jpg",F_DESC:"月下娘娘庙，海月共潮升",},
@@ -253,6 +255,7 @@
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"树月",F_NAME:"shuyue.jpg",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"冷月",F_NAME:"yue1.jpg",},
 {F_GROUP: "scene",S_GROUP:"星辰日月",TITLE:"海月升",F_NAME:"haiyuesheng.jpg",},
+
 
 {F_GROUP: "scene",S_GROUP:"林海花果",TITLE:"稻田",F_NAME:"daotian.jpg",},
 {F_GROUP: "scene",S_GROUP:"林海花果",TITLE:"夜树",F_NAME:"yeshu.jpg",},
