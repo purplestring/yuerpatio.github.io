@@ -342,7 +342,13 @@ var jsonFile="201412.json";
 		else if(nian==2019 && yue<6) jsonFile="201906.json";
 		else if(nian==2019 && yue<9) jsonFile="201909.json";
 		else if(nian==2019 && yue<12) jsonFile="201912.json";
-		else if(nian==2020 && yue<3) jsonFile="202003.json";
+		else if(nian==2020 && yue==0) jsonFile="202001.json";
+		else if(nian==2020 && yue==1) jsonFile="202002.json";
+		else if(nian==2020 && yue==2) jsonFile="202003.json";
+		else if(nian==2020 && yue==3) jsonFile="202004.json";
+		else if(nian==2020 && yue<4) jsonFile="202004.json";
+		else if(nian==2020 && yue<6) jsonFile="202006.json";
+		else if(nian==2020 && yue<8) jsonFile="202008.json";
 		info="";
 			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
 				//console.log("aa")

@@ -23,17 +23,25 @@
 				<div class="title" align="center" @click.prevent="test=!test">百物卷</div>		
 				<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
-						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>
+						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
 						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
+						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
+						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
 					</div>
-					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
-					<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
-					</span>					
-					<span @click.prevent="id=i" style="cursor:pointer;">
-						<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
-						<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
-					</span>					
-				</span><br/><br/>
+					<span v-if="groupname[item.F_GROUP][2]==1">						
+						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
+						<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
+						</span>					
+						<span @click.prevent="id=i" style="cursor:pointer;">
+							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
+							<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
+						</span>	
+					</span>	
+					<div v-if="i==list.length-1 || item.F_GROUP!=list[i+1].F_GROUP" style="text-align:center;"><br/>
+						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▲收起▲ —————</span>
+					</div>					
+				</span>
+				<br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer">返回主页</a></div>
 			</div>
 			<div v-if="id!=-1">
@@ -62,13 +70,14 @@ var all=new Vue({
 	data:{ 	
 		list:file,
 		groupname:{
-			bug:["虫之卷","雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之"],
-			miao:["喵之卷","一道自由的光芒<br>是风和花和星空 是鱼和沙和海洋"],
-			scene:["风之卷","人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之"],
-			utensil:["器之卷","形而上者谓之道，形而下者谓之器<br>器物，建筑，雕塑，皆以志之"],
-			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之"],
+			bug:["虫之卷","雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之",0],
+			miao:["喵之卷","一道自由的光芒<br>是风和花和星空 是鱼和沙和海洋",0],
+			scene:["风之卷","人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之",0],
+			utensil:["器之卷","形而上者谓之道，形而下者谓之器<br>器物，建筑，雕塑，皆以志之",0],
+			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之",0],
 		},
 		test:false,
+		cgroup:2,
 		id:-1,
 	},
 	created: function created() {
@@ -89,6 +98,7 @@ var all=new Vue({
                 if(_this.id!=-1) _this.id=(_this.id+1)%_this.list.length;
             }
         };
+
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
