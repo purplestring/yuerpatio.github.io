@@ -25,7 +25,7 @@
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
 						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
 						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
-						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
+						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
 						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
 					</div>
 					<span v-if="groupname[item.F_GROUP][2]==1">						
@@ -42,7 +42,7 @@
 					</div>					
 				</span>
 				<br/><br/>
-				<div align="center"><a href="../../index.html" style="cursor:pointer">返回主页</a></div>
+				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
 			</div>
 			<div v-if="id!=-1">
 				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
@@ -56,7 +56,7 @@
 				<br><br>				
 				<div align="center">
 					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
-					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
+					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">返回卷主页</a>
 					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
 				</div>
 			</div>

@@ -149,7 +149,6 @@
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "红黑蛾",F_NAME: "die36.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑点条白",F_NAME: "die37.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "琉璃蛱蝶幼虫",F_NAME: "die38.jpg",},
-{F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "黑红蛾",F_NAME: "die39.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "橙白黑点",F_NAME: "die40.jpg",},
 {F_GROUP: "bug",S_GROUP: "鳞翅目",TITLE: "白蛾黑纹",F_NAME: "die41.jpg",},
 {F_GROUP: "bug",S_GROUP: "脉翅目",TITLE: "蚜狮",F_NAME: "yashi01.jpg",F_DESC: "蚜狮是草蛉的幼虫，纺锤状，喜在树叶间捕食蚜虫，故称蚜狮。",},
