@@ -279,6 +279,7 @@ var book=[{F_GROUP: "古籍",S_GROUP: "经",TITLE: "诗经",COUNTRY: "中",DYNAS
 {F_GROUP: "今人",S_GROUP: "小说戏剧",TITLE: "庆余年TV",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "猫腻",FILE: "filel/",F_EVAL: "line[0]=='●'",SHOW: "no",},
 {F_GROUP: "今人",S_GROUP: "小说戏剧",TITLE: "庆余年",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "猫腻",FILE: "filel/",F_EVAL: "line.length<30 && line.indexOf('第')>=0 && line.indexOf('章')>=0",SHOW: "no",},
 {F_GROUP: "今人",S_GROUP: "小说戏剧",TITLE: "长安十二时辰",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "马伯庸",FILE: "filel/",F_EVAL: "line.length<30 && (line[0]=='第' || line[0]=='后')",SHOW: "no",},
+{F_GROUP: "今人",S_GROUP: "小说戏剧",TITLE: "琉璃美人煞",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "十四郎",FILE: "filel/",F_EVAL: "line.length<30 && (((line[0]=='第' || line[2]=='第') && line.indexOf('章')>=0) || line[0]=='最' || (line[2]=='最' && line[3]=='终') )",SHOW: "no",},
 {F_GROUP: "今人",S_GROUP: "诗文",TITLE: "毛泽东诗集",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "毛泽东",FILE: "filel/",F_EVAL: "line.indexOf('《')>=0 && line.length<30",},
 {F_GROUP: "今人",S_GROUP: "诗文",TITLE: "海子诗全编",COUNTRY: "中",DYNASTY: "当代",AUTHOR: "海子",},
 {F_GROUP: "今人",S_GROUP: "诗文",TITLE: "云雀叫了一整天",COUNTRY: "中",DYNASTY: "现代",AUTHOR: "木心",},
