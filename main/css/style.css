@@ -41,7 +41,12 @@ a:hover {
 	text-align: center;
 }
 .myimg,#myimg{
-	width:100%;
+	max-width:100%;
+	max-height:600px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+	margin: 0 auto;
 }
 .family,#family {
 	color:#f30d43;
@@ -191,6 +196,10 @@ a:hover {
 	.footer,#footer{
 		font-size:36px;
 		margin-top:48px;
+	}
+	.myimg,#myimg{
+		width:100%;
+		max-height:100%;
 	}
 	#iframes{
 		height:1200px;

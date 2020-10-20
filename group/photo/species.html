@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta id="meta" name="viewport">
+	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
+	<script src="../../main/js/vue.min.js"></script>
+	<script src="species.js"></script>
+	<style>
+	.myimg1{
+		max-height: 60vh;
+		left:calc(50% - 50vh);
+	}
+	</style>
+	<title>分类页</title>
+<body>
+	<div id="main">
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/><br/>
+		<div id="all" v-cloak>
+			<div v-if="id==-1">
+				<div class="title" align="center">分类页</div>
+				<div class="desc2">万物苍生 拍摄搜集于此<br>
+				列阵为页 止于纲目<br>
+				浅蓝链是所遇 黑色是未遇<br>
+				</div>
+				<br/><div class="family" style="text-align:center;"><a href="index.html">百物卷</a></div>	
+				<span v-for="(item,i) in list">	
+					<span v-if="i==0 ||item.S_KINGDOM!=list[i-1].S_KINGDOM" class="family" ><br/><br/>{{list[i].S_DOMAIN}} > {{list[i].S_KINGDOM}}</span>	
+					<span v-if="i==0 ||item.S_CLASS!=list[i-1].S_CLASS ||item.S_PHYLUM!=list[i-1].S_PHYLUM ||item.S_KINGDOM!=list[i-1].S_KINGDOM"><br/>
+						<span style="font-weight:900"><span v-if="list[i].S_PHYLUM!='未知门'">【{{list[i].S_PHYLUM}}<span v-if="list[i].S_CLASS!='未知纲'"> > {{list[i].S_CLASS}}</span>】 </span></span>				
+					</span>			
+					<span v-if="list[i].F_NAME==null && list[i].S_ORDER!='未知目'" style="color:Black;">{{list[i].S_ORDER}} </span>
+					<span @click.prevent="id=i" v-if="list[i].F_NAME!=null" style="color:DarkCyan;cursor:pointer;">{{list[i].S_ORDER}} </span>
+				</span>
+				<br/><br/>
+				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
+			</div>
+			<div v-if="id!=-1">
+				<div class="title" align='center'>{{list[id].S_ORDER}}</div><br>
+				<span v-if="list[id].S_DOMAIN!=null" >【{{list[id].S_DOMAIN}}】></span>
+				<span v-if="list[id].S_KINGDOM!=null" >【{{list[id].S_KINGDOM}}】></span>
+				<span v-if="list[id].S_PHYLUM!=null" >【{{list[id].S_PHYLUM}}】></span>
+				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】>>> </span>{{list[id].TITLE}}<br>
+				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
+				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
+					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">返回卷主页</a>
+					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
+				</div>
+			</div>
+		</div>
+		<div class="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
+	</div>
+</body>
+<script>
+var all=new Vue({
+	el: '#all',
+	data:{ 	
+		list:file,
+		test:false,
+		id:-1,
+	},
+	methods: {
+		prePic: function prePic(){
+			let i=this.id-1;
+			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
+			this.id=i;
+		},
+		nextPic: function nextPic(){
+			let i=this.id+1;
+			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
+			if(i>=this.list.length)i=-1;
+			this.id=i;
+		},
+	},
+	created: function created() {
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
+		}
+		var _this = this;
+        document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) _this.prePic();
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.nextPic();
+            }
+        };
+
+	},
+	beforeUpdate: function beforeUpdate(){
+		if(this.id>=0){
+			if (document.body && document.body.scrollTop) 
+				this.scrolltop=document.body.scrollTop;
+			if (document.documentElement && document.documentElement.scrollTop) 
+				this.scrolltop=document.documentElement.scrollTop;
+		}
+	},
+	updated: function updated(){
+		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		else document.body.scrollTop=document.documentElement.scrollTop=0;
+		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		else document.title="分类页";	
+	},
+});
+</script>
+</html>

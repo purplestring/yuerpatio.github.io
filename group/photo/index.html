@@ -20,7 +20,11 @@
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
 		<div id="all" v-cloak>
 			<div v-if="id==-1">
-				<div class="title" align="center" @click.prevent="test=!test">百物卷</div>		
+				<div class="title" align="center" @click.prevent="test=!test">百物卷</div>
+				<div class="desc2">小虫 小树 小盆 小喵 小果果 小星<br>
+				搜集于此 列阵为页<br>
+				</div>
+				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a></div>				
 				<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
 						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
@@ -49,8 +53,8 @@
 				<span v-if="list[id].S_GROUP!=null" >【{{list[id].S_GROUP}}】 </span>
 				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
-				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】<br><br></span>
-				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
+				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>
+				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
 				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
 				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
 				<br><br>				
