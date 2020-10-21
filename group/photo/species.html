@@ -48,9 +48,9 @@
 				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
 				<br><br>				
 				<div align="center">
-					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
+					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
 					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">返回卷主页</a>
-					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
+					<a @click.prevent="if(id!=-1)nextPic();" style="cursor:pointer">▶</a>
 				</div>
 			</div>
 		</div>
