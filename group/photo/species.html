@@ -3,12 +3,54 @@
 	<meta id="meta" name="viewport">
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
+	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="species.js"></script>
 	<style>
 	.myimg1{
 		max-height: 60vh;
 		left:calc(50% - 50vh);
+	}
+	
+	.waterfall {
+		width: 100%;
+		column-gap:10px;
+		column-count: 4;
+		margin: 0 auto;
+		padding-top: 10px;
+	}
+	.water {
+		padding: 2px;
+		margin-bottom: 6px;
+		break-inside: avoid;
+		border: 1px solid #000;
+		background:#fff;
+		overflow: hidden;
+	}
+	.water img {
+		width: 100%;
+		cursor: pointer;
+		transition: all 0.6s;
+	}
+	.water img:hover{
+		transform: scale(1.1);
+	}
+	.water p {
+		line-height: 30px;
+	}
+	.waterfall iframe{
+		width:100%;
+		height:100%;
+		border: medium none;
+	}
+	@media screen and (max-device-width:640px){
+		.waterfall {
+			column-count: 2;
+		}
+		.water p {
+			font-size: 36px;
+			line-height: 36px;
+		}
 	}
 	</style>
 	<title>分类页</title>
@@ -20,7 +62,7 @@
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/><br/>
 		<div id="all" v-cloak>
 			<div v-if="id==-1">
-				<div class="title" align="center">分类页</div>
+				<div class="title" @click="test=!test;reSet();" align="center">分类页</div>
 				<div class="desc2">万物苍生 拍摄搜集于此<br>
 				列阵为页 止于纲目<br>
 				浅蓝链是所遇 黑色是未遇<br>
@@ -29,23 +71,77 @@
 				<span v-for="(item,i) in list">	
 					<span v-if="i==0 ||item.S_KINGDOM!=list[i-1].S_KINGDOM" class="family" ><br/><br/>{{list[i].S_DOMAIN}} > {{list[i].S_KINGDOM}}</span>	
 					<span v-if="i==0 ||item.S_CLASS!=list[i-1].S_CLASS ||item.S_PHYLUM!=list[i-1].S_PHYLUM ||item.S_KINGDOM!=list[i-1].S_KINGDOM"><br/>
-						<span style="font-weight:900"><span v-if="list[i].S_PHYLUM!='未知门'">【{{list[i].S_PHYLUM}}<span v-if="list[i].S_CLASS!='未知纲'"> > {{list[i].S_CLASS}}</span>】 </span></span>				
+						<span style="font-weight:900">
+							<span v-if="list[i].S_PHYLUM!='未知门'">【{{list[i].S_PHYLUM}}
+								<span @click.prevent="S_CLASS=item.S_CLASS;if(getClassNum(i)!='')id=-2" v-if="item.S_CLASS!='未知纲'" 
+								style="cursor:pointer;"> > {{list[i].S_CLASS}}{{getClassNum(i)}}</span>】
+							</span>
+						</span>				
 					</span>			
-					<span v-if="list[i].F_NAME==null && list[i].S_ORDER!='未知目'" style="color:Black;">{{list[i].S_ORDER}} </span>
-					<span @click.prevent="id=i" v-if="list[i].F_NAME!=null" style="color:DarkCyan;cursor:pointer;">{{list[i].S_ORDER}} </span>
+					<span v-if="item.F_NAME==null && item.S_ORDER!='未知目'" style="color:Black;">{{item.S_ORDER}} </span>
+					<span :style="(item.F_GROUP=='wai')?'color:DarkRed;cursor:pointer;':'color:DarkCyan;cursor:pointer;'" 
+						v-if="item.F_NAME!=null && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)">
+						<span @click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">{{item.S_ORDER}}</span><span 
+							@click.prevent="id=-3">{{getOrderNum(i)}}</span>
+					</span>
 				</span>
 				<br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
 			</div>
-			<div v-if="id!=-1">
-				<div class="title" align='center'>{{list[id].S_ORDER}}</div><br>
+			<div v-if="id==-2">
+				<div class="title" align='center'>{{S_CLASS}}</div><br>
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.F_NAME && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)"
+						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p>{{item.S_ORDER}}{{getOrderNum(i)}}：{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回卷主页◀</a>
+				</div>
+			</div>
+			<div v-if="id==-3">
+				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER}}</div><br>
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.F_NAME && (i==0 || item.S_FAMILY!=list[i-1].S_FAMILY || item.S_FAMILY==null)"
+						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;S_FAMILY=item.S_FAMILY;(i==list.length-1 || item.S_FAMILY==null || item.S_FAMILY!=list[i+1].S_FAMILY)?id=i:id=-4">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p><span v-if="item.S_FAMILY!=null" >{{item.S_FAMILY}}{{getFamilyNum(i)}}：</span>{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回纲◀</a>
+				</div>
+			</div>
+			<div v-if="id==-4">
+				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER+">"+S_FAMILY}}</div><br>
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" 
+						v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.S_FAMILY==S_FAMILY && item.F_NAME">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p>{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回目◀</a>
+				</div>
+			</div>
+			<div v-if="id>=0">
+				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
 				<span v-if="list[id].S_DOMAIN!=null" >【{{list[id].S_DOMAIN}}】></span>
 				<span v-if="list[id].S_KINGDOM!=null" >【{{list[id].S_KINGDOM}}】></span>
-				<span v-if="list[id].S_PHYLUM!=null" >【{{list[id].S_PHYLUM}}】></span>
-				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】>>> </span>{{list[id].TITLE}}<br>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{list[id].S_PHYLUM}}】></span>
+				<span v-if="list[id].S_CLASS!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{list[id].S_CLASS}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{list[id].S_ORDER}}】></span>
+				<span v-if="list[id].S_FAMILY!=null"
+					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
+					style="cursor:pointer;font-weight:bold;" >【{{list[id].S_FAMILY}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
-				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+				<br><div v-for="(item, i) in list[id].F_NAME.split(',')"><img class='myimg' :src='list[id].F_GROUP+"/"+item' /><br/></div>
 				<br><br>				
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
@@ -58,14 +154,31 @@
 	</div>
 </body>
 <script>
+//http://species.sciencereading.cn/biology/v/speciesDetails/122/ZW/1709135.html
 var all=new Vue({
 	el: '#all',
 	data:{ 	
-		list:file,
+		list:sfile,
 		test:false,
 		id:-1,
+		S_CLASS:"",
+		S_ORDER:"",
+		S_FAMILY:"",
+		test:false,
 	},
 	methods: {
+		reSet: function reSet(){
+			this.list=[];
+			for(let i=0;i<sfile.length;i++) 
+				if(this.test || sfile[i].F_GROUP!="wai") this.list.push(sfile[i]);
+				else if(i==0 || sfile[i].S_ORDER!=sfile[i-1].S_ORDER) {
+					let tmpObj ={};
+					tmpObj["S_DOMAIN"] = sfile[i]["S_DOMAIN"];tmpObj["S_KINGDOM"] = sfile[i]["S_KINGDOM"];tmpObj["S_PHYLUM"] = sfile[i]["S_PHYLUM"];
+					tmpObj["S_CLASS"] = sfile[i]["S_CLASS"];tmpObj["S_ORDER"] = sfile[i]["S_ORDER"];
+					this.list.push(tmpObj);
+				}
+			this.$forceUpdate();		
+		},
 		prePic: function prePic(){
 			let i=this.id-1;
 			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
@@ -77,14 +190,31 @@ var all=new Vue({
 			if(i>=this.list.length)i=-1;
 			this.id=i;
 		},
+		getFamilyNum: function getFamilyNum(j){
+			if(this.list[j].S_FAMILY==null)return "";
+			let i=j+1;
+			while(i<this.list.length) if(this.list[i].S_FAMILY!=this.list[j].S_FAMILY) break; else i++;
+			if(i-j==1)return "";
+			return j-i;
+		},
+		getOrderNum: function getOrderNum(j){
+			let i=j+1;
+			while(i<this.list.length) if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; else i++;
+			if(i-j==1)return "";
+			return j-i;
+		},
+		getClassNum: function getClassNum(j){
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; else {if(this.list[i].F_NAME!=null)k++; i++;}
+			if(k==0)return "";
+			return -k;
+		},
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
+		else this.reSet();
 		let url=self.location.href;
-		if(url.indexOf('=')>=0){
-			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
-		}
+		if(url.indexOf('=')>=0) this.id=decodeURI(url.split('sid=')[1]);
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
@@ -110,6 +240,9 @@ var all=new Vue({
 		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		else if(this.id==-2) document.title="分类页·"+this.S_CLASS;
+		else if(this.id==-3) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER;
+		else if(this.id==-4) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER+"·"+this.S_FAMILY;
 		else document.title="分类页";	
 	},
 });

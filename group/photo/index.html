@@ -2,9 +2,11 @@
 <head>
 	<meta id="meta" name="viewport">
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
-	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
+	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="file.js"></script>
+	<script src="species.js"></script>
 	<style>
 	.myimg1{
 		max-height: 60vh;
@@ -20,12 +22,12 @@
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
 		<div id="all" v-cloak>
 			<div v-if="id==-1">
-				<div class="title" align="center" @click.prevent="test=!test">百物卷</div>
+				<div class="title" align="center" @click.prevent="test=!test;reSet()">百物卷</div>
 				<div class="desc2">小虫 小树 小盆 小喵 小果果 小星<br>
 				搜集于此 列阵为页<br>
 				</div>
 				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a></div>				
-				<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
+				<span v-for="(item,i) in list">
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
 						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
 						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
@@ -36,7 +38,7 @@
 						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
 						<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
 						</span>					
-						<span @click.prevent="id=i" style="cursor:pointer;">
+						<span @click.prevent="getSpecies(i);id=i" style="cursor:pointer;">
 							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
 							<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
 						</span>	
@@ -53,9 +55,10 @@
 				<span v-if="list[id].S_GROUP!=null" >【{{list[id].S_GROUP}}】 </span>
 				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
-				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>
-				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
+				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>			
+				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a>
 				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
+				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
 				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
 				<br><br>				
 				<div align="center">
@@ -73,6 +76,7 @@ var all=new Vue({
 	el: '#all',
 	data:{ 	
 		list:file,
+		slist:sfile,
 		groupname:{
 			bug:["虫之卷","雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之",0],
 			miao:["喵之卷","一道自由的光芒<br>是风和花和星空 是鱼和沙和海洋",0],
@@ -81,28 +85,41 @@ var all=new Vue({
 			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之",0],
 		},
 		test:false,
-		cgroup:2,
 		id:-1,
+		sid:-1,
+	},
+	methods: {
+		reSet: function reSet(){
+			this.list=[];
+			for(let i=0;i<file.length;i++) if(this.test || file[i].SHOW!="no") this.list.push(file[i]);
+			this.$forceUpdate();		
+		},
+		getSpecies: function getSpecies(j){
+			let F_GROUP=this.list[j].F_GROUP;let F_NAME=this.list[j].F_NAME;let i=0;
+			for(;i<this.slist.length;i++) if(this.slist[i].F_GROUP==F_GROUP && this.slist[i].F_NAME.split(',').includes(F_NAME)) break;
+			if(i==this.slist.length) this.sid=-1;
+			else this.sid=i;
+		},
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
+		else this.reSet();
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i;this.getSpecies(i);break; }
 		}
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
 			if (key == 36) _this.id=-1;
             if (key == 37) {
-                if(_this.id!=-1) _this.id=(_this.id-1)%_this.list.length;
+                if(_this.id!=-1) {_this.id=(_this.id-1)%_this.list.length;_this.getSpecies(_this.id);}
             }
 			if (key == 39) {
-                if(_this.id!=-1) _this.id=(_this.id+1)%_this.list.length;
+                if(_this.id!=-1) {_this.id=(_this.id+1)%_this.list.length;_this.getSpecies(_this.id);}
             }
         };
-
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
