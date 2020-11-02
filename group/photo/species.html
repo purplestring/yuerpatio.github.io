@@ -6,6 +6,7 @@
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="species.js"></script>
+	<script src="info.js"></script>
 	<style>
 	.myimg1{
 		max-height: 60vh;
@@ -81,15 +82,14 @@
 					<span v-if="item.F_NAME==null && item.S_ORDER!='未知目'" style="color:Black;">{{item.S_ORDER}} </span>
 					<span :style="(item.F_GROUP=='wai')?'color:DarkRed;cursor:pointer;':'color:DarkCyan;cursor:pointer;'" 
 						v-if="item.F_NAME!=null && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)">
-						<span @click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">{{item.S_ORDER}}</span><span 
-							@click.prevent="id=-3">{{getOrderNum(i)}}</span>
+						<span @click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">{{item.S_ORDER}}<span>{{getOrderNum(i)}}</span></span>						
 					</span>
 				</span>
 				<br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
 			</div>
 			<div v-if="id==-2">
-				<div class="title" align='center'>{{S_CLASS}}</div><br>
+				<div class="title" align='center'>{{S_CLASS}}</div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.F_NAME && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)"
 						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">
@@ -103,7 +103,7 @@
 				</div>
 			</div>
 			<div v-if="id==-3">
-				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER}}</div><br>
+				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER}}</div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.F_NAME && (i==0 || item.S_FAMILY!=list[i-1].S_FAMILY || item.S_FAMILY==null)"
 						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;S_FAMILY=item.S_FAMILY;(i==list.length-1 || item.S_FAMILY==null || item.S_FAMILY!=list[i+1].S_FAMILY)?id=i:id=-4">
@@ -117,7 +117,7 @@
 				</div>
 			</div>
 			<div v-if="id==-4">
-				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER+">"+S_FAMILY}}</div><br>
+				<div class="title" align='center'>{{S_CLASS+">"+S_ORDER+">"+S_FAMILY}}</div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" 
 						v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.S_FAMILY==S_FAMILY && item.F_NAME">
@@ -154,11 +154,13 @@
 	</div>
 </body>
 <script>
-//http://species.sciencereading.cn/biology/v/speciesDetails/122/ZW/1709135.html
+//普通植物 http://species.sciencereading.cn/biology/v/speciesDetails/122/ZW/1709135.html
+//藻类 http://haizao.jmu.edu.cn/info/1080/1235.htm
 var all=new Vue({
 	el: '#all',
 	data:{ 	
 		list:sfile,
+		info:ifile,
 		test:false,
 		id:-1,
 		S_CLASS:"",
@@ -198,16 +200,37 @@ var all=new Vue({
 			return j-i;
 		},
 		getOrderNum: function getOrderNum(j){
-			let i=j+1;
-			while(i<this.list.length) if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; else i++;
-			if(i-j==1)return "";
-			return j-i;
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; 
+				else {if(this.list[i].F_NAME!=null && this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY)k++; i++;}
+			if(k<=1)return "";
+			return -k;
 		},
 		getClassNum: function getClassNum(j){
 			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
-			while(i<this.list.length) if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; else {if(this.list[i].F_NAME!=null)k++; i++;}
+			while(i<this.list.length) 
+				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
+				else {if(this.list[i].F_NAME!=null && this.list[i].S_ORDER!=this.list[i-1].S_ORDER)k++; i++;}
 			if(k==0)return "";
 			return -k;
+		},
+		getInfo: function getInfo(){
+			let str="";
+			switch(this.id) {
+				 case -2:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS) {str=this.info[i].INFO; break;}
+					break;
+				 case -3:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS && this.S_ORDER==this.info[i].S_ORDER) {str=this.info[i].INFO; break;}
+					break;
+				 case -4:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS && 
+						this.S_ORDER==this.info[i].S_ORDER && this.S_FAMILY==this.info[i].S_FAMILY) {str=this.info[i].INFO; break;}
+				 break;
+				 default:break;
+			} 
+			return str;
 		},
 	},
 	created: function created() {
