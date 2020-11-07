@@ -231,29 +231,34 @@
     var yue = dat.getMonth(); //当前月 
     var tian = dat.getDate(); //当前天 
     var arr=["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]; 
-    document.getElementById('nian').innerText = nian; 
-    document.getElementById('yue').innerText = arr[yue]; 
+    //document.getElementById('nian').innerText = nian; 
+    //document.getElementById('yue').innerText = arr[yue]; 
+	$("#nian").text(nian); $("#yue").text(arr[yue]);
       
     var setDat = new Date(nian,yue + 1,1 - 1); //把时间设为下个月的1号 然后天数减去1 就可以得到 当前月的最后一天; 
     var setTian = setDat.getDate(); //获取 当前月最后一天 
     var setZhou = new Date(nian,yue,1).getDay(); //获取当前月第一天 是 周几 
       
     for(var i=0;i<setZhou ;i++){//渲染空白 与 星期 对应上 
-     var li=document.createElement('li'); 
-     document.getElementById('date').appendChild(li); 
+     //var li=document.createElement('li'); 
+     //document.getElementById('date').appendChild(li); 
+	 $("<li/>").appendTo("#date");
     } 
       
     for(var i=1;i<=setTian;i++){//利用获取到的当月最后一天 把 前边的 天数 都循环 出来 
-     var li=document.createElement('li'); 
+     /*var li=document.createElement('li'); 
      li.innerText = i; 
 	 li.id= "d"+i;
      if(nian == nianD && yue == yueD && i == tianD){ 
       li.className = "active"; 
      }else{ 
       li.className = "hover"; 
-     } 
+     } */
       //li.onclick =function(){alert(this.id);};
-     document.getElementById('date').appendChild(li); 
+     //document.getElementById('date').appendChild(li); 
+	 //$(li).appendTo("#date");
+	 
+	 $("<li/>").text(i).attr({"id":"d"+i,"className":(nian == nianD && yue == yueD && i == tianD)?"active":"hover"}).appendTo("#date");
     } 
 	
 	//console.log(nian+" "+yue+" "+i);
@@ -267,22 +272,23 @@
       
    } 
      
-   document.getElementById("next").onclick = function(){ 
+
+   $("#next").click(function(){ 
     dat.setMonth(dat.getMonth() + 1); //当点击下一个月时 对当前月进行加1; 
     add(); //重新执行渲染 获取去 改变后的 年月日 进行渲染; 
-   }; 
-   document.getElementById("prev").onclick = function(){ 
+   }); 
+   $("#prev").click(function(){ 
     dat.setMonth(dat.getMonth() - 1); //与下一月 同理 
     add(); 
-   }; 
-   document.getElementById("nextn").onclick = function(){ 
+   }); 
+   $("#nextn").click(function(){ 
     dat.setMonth(dat.getMonth() + 12); 
     add(); 
-   }; 
-   document.getElementById("prevn").onclick = function(){ 
+   }); 
+   $("#prevn").click(function(){ 
     dat.setMonth(dat.getMonth() - 12); 
     add(); 
-   }; 
+   }); 
   
 
 /*
@@ -362,7 +368,7 @@ var jsonFile="201412.json";
 					error: function(data, status) {
 						info='出错了,Err：' + JSON.stringify(arguments);
 					}
-				});				
+				});	
 			}
 			else{
 				
@@ -384,7 +390,7 @@ var jsonFile="201412.json";
 
 function setInfo(nian,yue){
 
-	document.getElementById('info').innerHTML="";
+	$("#info").html("");
 	lastnian=lastyue=lastday=yuetext=daytext="";
 	footer = '<br><div id="ret"><a href="javascript:window.scrollTo(\'0\',\'0\');">↑返回顶部↑</a><br>';
 	footer+='<a href="../../../index.html"> ▶返回主页◀</a></div><br><br>';
@@ -469,7 +475,7 @@ function setInfo(nian,yue){
 		}
 		lastnian=thisnian;lastyue=thisyue;lastday=thisday;
 	}
-	document.getElementById('info').innerHTML=yuetext+footer;
+	$("#info").html(yuetext+footer);
 
 }
 
