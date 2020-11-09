@@ -261,10 +261,23 @@ var all=new Vue({
 		},
 	},
 	created: function created() {
-		if(self.location.href.substring(0,4)!="http")this.test=true;
-		else this.reSet();
+	
 		let url=self.location.href;
 		if(url.indexOf('=')>=0) this.id=decodeURI(url.split('sid=')[1]);
+		var tmp="";
+		if(this.id>=0) tmp=this.list[this.id].TITLE;
+		
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+		else this.reSet();
+		
+		if(this.id>=0) for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
+			this.id=i;
+			this.S_CLASS=this.list[i].S_CLASS;
+			this.S_ORDER=this.list[i].S_ORDER;
+			this.S_FAMILY=this.list[i].S_FAMILY;
+			break;
+		}
+
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;

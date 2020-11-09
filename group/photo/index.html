@@ -56,7 +56,7 @@
 				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
 				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>			
-				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a>
+				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a> <a v-if="sid!=-1" :href="'tree.html?sid='+sid">树状图</a>
 				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
 				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
 				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
