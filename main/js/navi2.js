@@ -8,7 +8,6 @@ document.body.appendChild(div);
 
 Vue.component('navi2', {
 	props:['lang','langid','page','navinames','current','state'],
-	icon:'≡',
 	methods:{
 	},
 	template: 

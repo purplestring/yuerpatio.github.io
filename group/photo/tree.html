@@ -243,7 +243,7 @@
 				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回百物卷◀</a></div>
 			</div>
 			<div v-if="id==-2">
-				<div class="title" align='center'>{{S_CLASS}}</div><br>{{getInfo()}}
+				<div class="title" align='center'>{{langTrans(S_CLASS)}}</div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.F_NAME && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)"
 						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">
@@ -257,12 +257,12 @@
 				</div>
 			</div>
 			<div v-if="id==-3">
-				<div class="title" align='center'>{{S_CLASS}}<span v-if="S_CLASS!=S_ORDER">{{">"+S_ORDER}}</span></div><br>{{getInfo()}}
+				<div class="title" align='center'>{{langTrans(S_CLASS)}}<span v-if="S_CLASS!=S_ORDER">{{">"}}{{langTrans(S_ORDER)}}</span></div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.F_NAME && (i==0 || item.S_FAMILY!=list[i-1].S_FAMILY || item.S_FAMILY==null)"
 						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;S_FAMILY=item.S_FAMILY;(i==list.length-1 || item.S_FAMILY==null || item.S_FAMILY!=list[i+1].S_FAMILY)?id=i:id=-4">
 						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
-						<p><span v-if="item.S_FAMILY!=null" >{{item.S_FAMILY}}{{getFamilyChildNum(i)}}：</span>{{item.TITLE}}</p>
+						<p><span v-if="item.S_FAMILY!=null" >{{langTransFamily(item.S_FAMILY)}}{{getFamilyChildNum(i)}}：</span>{{item.TITLE}}</p>
 					</div>
 				</div>
 				<br><br>				
@@ -271,7 +271,7 @@
 				</div>
 			</div>
 			<div v-if="id==-4">
-				<div class="title" align='center'>{{S_CLASS+">"+S_FAMILY}}</div><br>{{getInfo()}}
+				<div class="title" align='center'>{{langTrans(S_CLASS)+">"}}{{langTransFamily(S_FAMILY)}}</div><br>{{getInfo()}}
 				<div id="waterfall" class="waterfall" >
 					<div class="water" v-for="(item, i) in list" 
 						v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.S_FAMILY==S_FAMILY && item.F_NAME">
@@ -286,13 +286,13 @@
 			</div>
 			<div v-if="id>=0">
 				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
-				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{list[id].S_PHYLUM}}】></span>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
 				<span v-if="list[id].S_CLASS!=null && S_CLASS!=S_ORDER" 
-					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{list[id].S_CLASS}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{list[id].S_ORDER}}】></span>
+					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
 				<span v-if="list[id].S_FAMILY!=null"
 					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
-					style="cursor:pointer;font-weight:bold;" >【{{list[id].S_FAMILY}}】></span> {{list[id].TITLE}}<br>
+					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				<br><div v-for="(item, i) in list[id].F_NAME.split(',')"><img class='myimg' :src='list[id].F_GROUP+"/"+item' /><br/></div>
 				<br><br>				
@@ -328,6 +328,7 @@ var all=new Vue({
 	el: '#all',
 	data:{ 	
 		lang:lang,
+		langFamily:langFamily,
 		langid:1,
 		list:sfile,
 		info:ifile,
@@ -439,6 +440,11 @@ var all=new Vue({
 			if(this.lang[str]) return this.lang[str];
 			else return str;
 		},
+		langTransFamily: function langTransFamily(str){
+			if(this.langid==1) return str;
+			if(this.langFamily[str]) return this.langFamily[str];
+			else return str;
+		},
 		setNewOrderName: function setNewOrderName(){
 		//console.log(this.N_NAME["樟科"])
 			for(let i in this.list) 
@@ -538,9 +544,9 @@ var all=new Vue({
 		
 		let url=self.location.href;
 		if(url.indexOf('=')>=0) this.id=decodeURI(url.split('sid=')[1]);
+		
 		var tmp="";
 		if(this.id>=0) tmp=this.list[this.id].TITLE;
-		
 		//this.setNewOrderName();this.setOrderId();
 		//if(self.location.href.substring(0,4)!="http")this.test=true;
 		this.reSet();
@@ -555,6 +561,8 @@ var all=new Vue({
 		
 		if(sessionStorage.getItem("langid")==null) sessionStorage.setItem("langid",this.langid);
 		else this.langid=sessionStorage.getItem("langid");
+		
+		//if(sessionStorage.getItem("treeid")>0) this.id=sessionStorage.getItem("treeid");
 		
 		var _this = this;
         document.onkeydown = function(e) {
@@ -585,6 +593,7 @@ var all=new Vue({
 		else if(this.id==-3) document.title="树状图·"+this.S_CLASS+"·"+this.S_ORDER;
 		else if(this.id==-4) document.title="树状图·"+this.S_CLASS+"·"+this.S_ORDER+"·"+this.S_FAMILY;
 		else document.title="树状图";	
+		//sessionStorage.setItem("treeid",this.id);
 	},
 });
 </script>
