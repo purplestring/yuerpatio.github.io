@@ -324,6 +324,21 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+//兼容IE排序
+Array.prototype.sort2 = function(fn){
+    var fn = fn || function(a, b){ return a > b;};
+    for(var i=0; i<this.length; i++){
+        for(var j=i; j<this.length; j++){
+            if(fn(this[i], this[j]) > 0){
+                var t = this[i];
+                this[i] = this[j];
+                this[j] = t;
+            }
+        }
+    }
+    return this;
+};
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -446,7 +461,6 @@ var all=new Vue({
 			else return str;
 		},
 		setNewOrderName: function setNewOrderName(){
-		//console.log(this.N_NAME["樟科"])
 			for(let i in this.list) 
 				if(this.list[i].F_NAME!=null && this.list[i].S_FAMILY!=null && this.N_NAME[this.list[i].S_FAMILY]!=null)
 					this.list[i].S_ORDER=this.N_NAME[this.list[i].S_FAMILY];
@@ -458,8 +472,9 @@ var all=new Vue({
 					this.list[i].S_ORDER=this.N_NAME2[this.list[i].S_CLASS];
 					this.list[i].S_CLASS=this.N_NAME2[this.list[i].S_CLASS];
 				}
-					
-			this.list.sort(function (a,b){if(a.S_ORDER>b.S_ORDER)return -1;else return 1;});
+				
+			this.list.sort2(function (a,b){if(a.S_ORDER>b.S_ORDER)return -1;else return 1;});this.list.reverse();
+			//for(let i in this.list) console.log(this.list[i].S_ORDER)
 		},
 		setOrderId: function setOrderId(){
 			for(let j=0;j<this.words.length;j++) {this.words[j].id=-1;this.words[j].num=0;}
