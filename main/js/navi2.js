@@ -1,8 +1,10 @@
-﻿document.body.innerHTML+=`
+﻿var div=document.createElement("div");
+div.innerHTML=`
 <div id="navi" v-cloak>
 	<navi2 :lang="lang" :langid="langid" :page="page" :navinames="navinames" :current="current" :state="state"></navi2>
 </div>
 `;
+document.body.appendChild(div);
 
 Vue.component('navi2', {
 	props:['lang','langid','page','navinames','current','state'],
