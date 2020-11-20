@@ -7,12 +7,7 @@
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="file.js"></script>
 	<script src="species.js"></script>
-	<style>
-	.myimg1{
-		max-height: 60vh;
-		left:calc(50% - 50vh);
-	}
-	</style>
+	<style></style>
 	<title>百物卷</title>
 <body>
 	<div id="main">
@@ -70,8 +65,18 @@
 		</div>
 		<div class="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
 	</div>
-</body>
 <script>
+var cpageName=self.location.href.split('group/')[1].split('/')[0];
+function loadScript(script){
+	var _script = document.createElement('script');
+	_script.type = "text/javascript";
+	_script.src = script;
+	document.head.appendChild(_script);
+}
+loadScript("../../main/js/head.js");
+if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+else loadScript("../../main/js/navi1.js");
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -137,4 +142,5 @@ var all=new Vue({
 	},
 });
 </script>
+</body>
 </html>

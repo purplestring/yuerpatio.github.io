@@ -19,7 +19,7 @@
 		}
 	}
 	</style>
-	<script src="../../main/js/jquery-3.3.1.min.js"></script>
+	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="book.js"></script>
 	<title>书卷集</title>
@@ -129,6 +129,16 @@
 
 </body>
 <script>
+var cpageName=self.location.href.split('group/')[1].split('/')[0];
+function loadScript(script){
+	var _script = document.createElement('script');
+	_script.type = "text/javascript";
+	_script.src = script;
+	document.head.appendChild(_script);
+}
+loadScript("../../main/js/head.js");
+if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+else loadScript("../../main/js/navi1.js");
 
 var vm = new Vue({
     el: '#main',

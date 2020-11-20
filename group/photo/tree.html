@@ -6,6 +6,7 @@
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="species.js"></script>
+	<script src="lang.js"></script>
 	<script src="info.js"></script>
 	<style>
 	.myimg1{
@@ -187,55 +188,55 @@
 								<path fill="#0255AF" d="M161.2894,544.6533v25.6406c7.0804,0,12.8203-5.7398,12.8203-12.8203
 									C174.1098,550.3931,168.3699,544.6533,161.2894,544.6533z"/>
 							</g>
-						<g v-for="(item,i) in words">
+						<g v-for="(item,i) in words" :style="langid==0?'font-family:Onyx':''">
 							<text @click.prevent="if(item.num>0){S_ORDER=item.n;setClass(item.n);id=-3};if(item.num==0)window.open('https://baike.baidu.com/item/'+item.n);"
 								:transform='"matrix(1 0 0 1 "+item.x+" "+item.y+")"' font-size="10px" 
-								:style="item.num>0?'fill:DarkCyan;cursor:pointer;':'fill:Gray;cursor:pointer;'" >{{item.n}}{{item.num>0?item.num:""}}</text>
+								:style="item.num>0?'fill:DarkCyan;cursor:pointer;':'fill:Gray;cursor:pointer;'" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
 						</g>
-						<g id="图层_1" fill="#FFFF00" font-size="12px">
-							<text transform="matrix(0.7216 -0.6923 0.6923 0.7216 469.6526 207.208)" >豆类</text>
-							<text transform="matrix(0.5608 0.8279 -0.8279 0.5608 354.8714 173.6678)" >超菊类 </text>
-							<text transform="matrix(0.7876 -0.6162 0.6162 0.7876 321.7393 114.6701)" >桔梗类</text>
-							<text transform="matrix(1 0.0042 -0.0042 1 384.1378 210.3236)" >超蔷薇类</text>
-							<text transform="matrix(0.7358 -0.6772 0.6772 0.7358 263.3167 330.1648)" >双子叶</text>
-							<text transform="matrix(0.7249 0.6889 -0.6889 0.7249 226.7973 310.8788)" >单子叶</text>
-							<text transform="matrix(1 -0.0007 0.0007 1 263.8847 377.0002)" >基部类</text>
-							<text transform="matrix(0.9999 0.0145 -0.0145 0.9999 261.8289 460.098)" >蕨类</text>
-							<text transform="matrix(1 -0.0055 0.0055 1 231.0407 478.7935)" >石松</text>
-							<text transform="matrix(0.7925 0.6098 -0.6098 0.7925 284.0353 91.5497)" >唇形类</text>
-							<text transform="matrix(1 0 0 1 466.4841 207.8683)"  glyph-orientation-vertical="0" writing-mode="tb">锦葵类</text>
-							<text transform="matrix(1 0 0 1 229.7505 441.7292)" >裸子</text>
-							<text transform="matrix(1 0 0 1 258.5675 409.0844)"  glyph-orientation-vertical="0" writing-mode="tb">被子</text>
-							<text transform="matrix(1 0 0 1 360.0998 670.1647)">节肢</text>
-							<text transform="matrix(0.3942 0.919 -0.919 0.3942 453.2005 763.0483)">昆虫</text>
-							<text transform="matrix(1 0 0 1 272.0929 789.4236)">爬行</text>
-							<text transform="matrix(0.8003 -0.5996 0.5996 0.8003 247.5763 800.0698)">鸟</text>
-							<text transform="matrix(0.4426 0.8967 -0.8967 0.4426 474.783 812.1122)">真变态</text>
-							<text transform="matrix(1 0 0 1 305.7966 779.5519)">两栖</text>
-							<text transform="matrix(1 0 0 1 300.5925 792.7231)" glyph-orientation-vertical="0" writing-mode="tb">哺乳</text>
-							<text transform="matrix(1 0 0 1 299.4593 957.2975)" glyph-orientation-vertical="0" writing-mode="tb">灵长</text>
-							<text transform="matrix(1 0 0 1 449.4633 737.3486)">内口</text>
-							<text transform="matrix(1 0 0 1 403.4738 637.754)" glyph-orientation-vertical="0" writing-mode="tb">多足</text>
-							<text transform="matrix(0.405 0.9143 -0.9143 0.405 413.0219 673.1056)">六足</text>
-							<text transform="matrix(1 0 0 1 420.0953 670.1651)">甲壳</text>
-							<text transform="matrix(1 0 0 1 379.1073 609.058)" glyph-orientation-vertical="0" writing-mode="tb">螯肢</text>
-							<text transform="matrix(1 0 0 1 244.1382 802.4193)" glyph-orientation-vertical="0" writing-mode="tb">古颚</text>
-							<text transform="matrix(1 0 0 1 131.3322 875.7668)" glyph-orientation-vertical="0" writing-mode="tb">水鸟半水鸟</text>
-							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 220.5015 817.915)">今颚</text>
-							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 194.1875 835.6816)">新鸟</text>
-							<text transform="matrix(0.5849 0.8111 -0.8111 0.5849 79.4108 874.0316)">南鸟</text>
-							<text transform="matrix(0.8352 -0.5499 0.5499 0.8352 68.9139 919.2384)">非洲禽</text>
-							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 122.3809 815.7367)">基部陆鸟</text>
-							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 197.0615 793.923)">鸡雁</text>
-							<text transform="matrix(0.7717 0.636 -0.636 0.7717 319.1592 920.1011)">非洲兽</text>
-							<text transform="matrix(0.7733 -0.634 0.634 0.7733 270.5105 976.5696)">劳亚兽</text>
-							<text transform="matrix(0.6267 -0.7793 0.7793 0.6267 452.321 842.6832)">渐变态</text>
-							<text transform="matrix(1 0 0 1 259.0674 529.3889)" fill="#FFFFFF" glyph-orientation-vertical="0" writing-mode="tb">植物</text>
-							<text transform="matrix(1 0 0 1 300.9073 561.8901)" fill="#FFFFFF" glyph-orientation-vertical="0" writing-mode="tb">动物</text>
-							<text transform="matrix(1 0 0 1 216.1315 561.8903)" fill="#FFFFFF" >原生</text>
-							<text transform="matrix(1 0 0 1 173.3659 561.8896)" fill="#FFFFFF" >原核</text>
-							<text transform="matrix(1 0 0 1 304.6205 561.3896)" fill="#FFFFFF" >真菌</text>
-							<text transform="matrix(1 0 0 1 154.8794 561.8898)" fill="#FFFFFF" >炁</text>
+						<g id="图层_1" fill="#FFFF00" font-size="12px" :style="langid==0?'font-family:Onyx':''">
+							<text transform="matrix(0.7216 -0.6923 0.6923 0.7216 469.6526 207.208)" >{{langTrans("豆类")}}</text>
+							<text transform="matrix(0.5608 0.8279 -0.8279 0.5608 354.8714 173.6678)" >{{langTrans("超菊类")}}</text>
+							<text transform="matrix(0.7876 -0.6162 0.6162 0.7876 321.7393 114.6701)" >{{langTrans("桔梗类")}}</text>
+							<text transform="matrix(1 0.0042 -0.0042 1 384.1378 210.3236)" >{{langTrans("超蔷薇类")}}</text>
+							<text transform="matrix(0.7358 -0.6772 0.6772 0.7358 263.3167 330.1648)" >{{langTrans("双子叶")}}</text>
+							<text transform="matrix(0.7249 0.6889 -0.6889 0.7249 226.7973 310.8788)" >{{langTrans("单子叶")}}</text>
+							<text transform="matrix(1 -0.0007 0.0007 1 263.8847 377.0002)" >{{langTrans("基部类")}}</text>
+							<text transform="matrix(0.9999 0.0145 -0.0145 0.9999 261.8289 460.098)" >{{langTrans("蕨类")}}</text>
+							<text transform="matrix(1 -0.0055 0.0055 1 231.0407 478.7935)" >{{langTrans("石松")}}</text>
+							<text transform="matrix(0.7925 0.6098 -0.6098 0.7925 284.0353 91.5497)" >{{langTrans("唇形类")}}</text>
+							<text transform="matrix(1 0 0 1 466.4841 207.8683)"  glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("锦葵类")}}</text>
+							<text transform="matrix(1 0 0 1 229.7505 441.7292)" >{{langTrans("裸子")}}</text>
+							<text transform="matrix(1 0 0 1 258.5675 409.0844)"  glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("被子")}}</text>
+							<text transform="matrix(1 0 0 1 360.0998 670.1647)" >{{langTrans("节肢")}}</text>
+							<text transform="matrix(0.3942 0.919 -0.919 0.3942 453.2005 763.0483)" >{{langTrans("昆虫")}}</text>
+							<text transform="matrix(1 0 0 1 272.0929 789.4236)" >{{langTrans("爬行")}}</text>
+							<text transform="matrix(0.8003 -0.5996 0.5996 0.8003 247.5763 800.0698)" >{{langTrans("鸟")}}</text>
+							<text transform="matrix(0.4426 0.8967 -0.8967 0.4426 474.783 812.1122)" >{{langTrans("真变态")}}</text>
+							<text transform="matrix(1 0 0 1 305.7966 779.5519)" >{{langTrans("两栖")}}</text>
+							<text transform="matrix(1 0 0 1 300.5925 792.7231)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("哺乳")}}</text>
+							<text transform="matrix(1 0 0 1 299.4593 957.2975)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("灵长")}}</text>
+							<text transform="matrix(1 0 0 1 449.4633 737.3486)" >{{langTrans("内口")}}</text>
+							<text transform="matrix(1 0 0 1 403.4738 637.754)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("多足")}}</text>
+							<text transform="matrix(0.405 0.9143 -0.9143 0.405 413.0219 673.1056)" >{{langTrans("六足")}}</text>
+							<text transform="matrix(1 0 0 1 420.0953 670.1651)" >{{langTrans("甲壳")}}</text>
+							<text transform="matrix(1 0 0 1 379.1073 609.058)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("螯肢")}}</text>
+							<text transform="matrix(1 0 0 1 244.1382 802.4193)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("古颚")}}</text>
+							<text transform="matrix(1 0 0 1 131.3322 875.7668)" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("水鸟半水鸟")}}</text>
+							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 220.5015 817.915)" >{{langTrans("今颚")}}</text>
+							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 194.1875 835.6816)" >{{langTrans("新鸟")}}</text>
+							<text transform="matrix(0.5849 0.8111 -0.8111 0.5849 79.4108 874.0316)" >{{langTrans("南鸟")}}</text>
+							<text transform="matrix(0.8352 -0.5499 0.5499 0.8352 68.9139 919.2384)" >{{langTrans("非洲禽")}}</text>
+							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 122.3809 815.7367)" >{{langTrans("基部陆鸟")}}</text>
+							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 197.0615 793.923)" >{{langTrans("鸡雁")}}</text>
+							<text transform="matrix(0.7717 0.636 -0.636 0.7717 319.1592 920.1011)" >{{langTrans("非洲兽")}}</text>
+							<text transform="matrix(0.7733 -0.634 0.634 0.7733 270.5105 976.5696)" >{{langTrans("劳亚兽")}}</text>
+							<text transform="matrix(0.6267 -0.7793 0.7793 0.6267 452.321 842.6832)" >{{langTrans("渐变态")}}</text>
+							<text transform="matrix(1 0 0 1 259.0674 529.3889)" fill="#FFFFFF" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("植物")}}</text>
+							<text transform="matrix(1 0 0 1 300.9073 561.8901)" fill="#FFFFFF" glyph-orientation-vertical="0" writing-mode="tb" >{{langTrans("动物")}}</text>
+							<text transform="matrix(1 0 0 1 216.1315 561.8903)" fill="#FFFFFF" >{{langTrans("原生")}}</text>
+							<text transform="matrix(1 0 0 1 173.3659 561.8896)" fill="#FFFFFF" >{{langTrans("原核")}}</text>
+							<text transform="matrix(1 0 0 1 304.6205 561.3896)" fill="#FFFFFF" >{{langTrans("真菌")}}</text>
+							<text transform="matrix(1 0 0 1 154.8794 561.8898)" fill="#FFFFFF" >{{langTrans("炁")}}</text>
 						</g>
 					</svg>
 				<br/><br/>
@@ -312,10 +313,22 @@
 //藻类 http://haizao.jmu.edu.cn/info/1080/1235.htm
 //地衣 https://wenku.baidu.com/view/6dcda3e35acfa1c7ab00cc25.html
 //https://taieol.tw/pages/209893
-//雨燕目 蜂鸟目 未有归属
+var cpageName=self.location.href.split('group/')[1].split('/')[0];
+function loadScript(script){
+	var _script = document.createElement('script');
+	_script.type = "text/javascript";
+	_script.src = script;
+	document.head.appendChild(_script);
+}
+loadScript("../../main/js/head.js");
+if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+else loadScript("../../main/js/navi1.js");
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
+		lang:lang,
+		langid:1,
 		list:sfile,
 		info:ifile,
 		test:false,
@@ -348,7 +361,7 @@ var all=new Vue({
 			{x:29.8366,y:1040.6324,n:"鴷形目"},{x:71.3042,y:1040.3489,n:"佛法僧目"},{x:311.0302,y:806.3702,n:"蚓螈目"},{x:346.998,y:773.1506,n:"有尾目"},{x:347.7462,y:795.8938,n:"无尾目"},
 			{x:211.6593,y:875.0212,n:"无翼目"},{x:313.3722,y:872.9855,n:"单孔目"},{x:253.3895,y:895.6309,n:"有袋目"},{x:192.8917,y:1012.4648,n:"奇蹄目"},{x:214.8252,y:1030.4644,n:"偶蹄目"},
 			{x:367.0372,y:938.0333,n:"管齿目"},{x:305.7965,y:972.9986,n:"蹄兔目"},{x:321.739,y:993.9051,n:"海牛目"},{x:359.3878,y:997.0338,n:"长鼻目"},{x:194.5166,y:990.265,n:"食肉目"},
-			{x:333.32,y:1022.9038,n:"兔型目"},{x:342.78,y:1008.524,n:"啮齿目"},{x:197.0619,y:963.033,n:"鳞甲目"},{x:321.9973,y:898.6497,n:"贫齿目"},{x:303.0746,y:1043.382,n:"灵长目"},
+			{x:333.32,y:1022.9038,n:"兔形目"},{x:342.78,y:1008.524,n:"啮齿目"},{x:197.0619,y:963.033,n:"鳞甲目"},{x:321.9973,y:898.6497,n:"贫齿目"},{x:303.0746,y:1043.382,n:"灵长目"},
 			{x:256.7272,y:1002.8378,n:"翼手目"},{x:216.1315,y:949.4874,n:"真盲缺目"},{x:263.3168,y:1043.3821,n:"皮翼目"},{x:367.0375,y:983.9935,n:"非洲猬目"},{x:396.4332,y:968.4547,n:"象鼩目"},
 			{x:248.5191,y:1021.8752,n:"树鼩目"},{x:387.5343,y:840.4597,n:"蛩蠊目"},{x:451.9383,y:868.9991,n:"革翅目"},{x:376.2034,y:855.4077,n:"直翅目"},{x:497.8333,y:728.3254,n:"弹尾目"},
 			{x:526.8229,y:800.4191,n:"衣鱼目"},{x:496.7922,y:752.5773,n:"双尾目"},{x:365.4447,y:895.6229,n:"螳䗛目"},{x:407.7044,y:905.3835,n:"螳螂目"},{x:499.5742,y:830.1104,n:"襀翅目"},
@@ -420,6 +433,11 @@ var all=new Vue({
 			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
+		},
+		langTrans: function langTrans(str){
+			if(this.langid==1) return str;
+			if(this.lang[str]) return this.lang[str];
+			else return str;
 		},
 		setNewOrderName: function setNewOrderName(){
 		//console.log(this.N_NAME["樟科"])
@@ -533,7 +551,10 @@ var all=new Vue({
 			this.S_ORDER=this.list[i].S_ORDER;
 			this.S_FAMILY=this.list[i].S_FAMILY;
 			break;
-		}
+		};
+		
+		if(sessionStorage.getItem("langid")==null) sessionStorage.setItem("langid",this.langid);
+		else this.langid=sessionStorage.getItem("langid");
 		
 		var _this = this;
         document.onkeydown = function(e) {

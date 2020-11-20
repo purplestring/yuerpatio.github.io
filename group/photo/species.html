@@ -159,6 +159,17 @@
 //藻类 http://haizao.jmu.edu.cn/info/1080/1235.htm
 //地衣 https://wenku.baidu.com/view/6dcda3e35acfa1c7ab00cc25.html
 //https://taieol.tw/pages/209893
+var cpageName=self.location.href.split('group/')[1].split('/')[0];
+function loadScript(script){
+	var _script = document.createElement('script');
+	_script.type = "text/javascript";
+	_script.src = script;
+	document.head.appendChild(_script);
+}
+loadScript("../../main/js/head.js");
+if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+else loadScript("../../main/js/navi1.js");
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -166,9 +177,8 @@ var all=new Vue({
 		info:ifile,
 		test:false,
 		id:-1,
-		S_CLASS:"",
-		S_ORDER:"",
-		S_FAMILY:"",
+		S_CLASS:"", S_ORDER:"", S_FAMILY:"",
+		ClassChildNum:{},ClassGrandChildNum:{},ClassGrandGrandChildNum:{},OrderChildNum:{},	
 	},
 	methods: {
 		reSet: function reSet(){
@@ -181,7 +191,29 @@ var all=new Vue({
 					tmpObj["S_CLASS"] = sfile[i]["S_CLASS"];tmpObj["S_ORDER"] = sfile[i]["S_ORDER"];
 					this.list.push(tmpObj);
 				}
+			this.calcNum();
 			this.$forceUpdate();		
+		},
+		calcNum: function calcNum(){
+			this.ClassChildNum={};this.ClassGrandChildNum={};this.ClassGrandGrandChildNum={};this.OrderChildNum={};
+			for(let i in this.list) {
+				if(this.list[i].F_NAME!=null){ 
+					if(i==0 || this.list[i].S_ORDER!=this.list[i-1].S_ORDER){			
+						if(!this.ClassChildNum[this.list[i].S_CLASS]) this.ClassChildNum[this.list[i].S_CLASS]=1;
+						else this.ClassChildNum[this.list[i].S_CLASS]++;
+					}
+					if(i==0 || this.list[i].S_ORDER!=this.list[i-1].S_ORDER || this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY){			
+							if(!this.ClassGrandChildNum[this.list[i].S_CLASS]) this.ClassGrandChildNum[this.list[i].S_CLASS]=1;
+							else this.ClassGrandChildNum[this.list[i].S_CLASS]++;
+							
+							if(!this.OrderChildNum[this.list[i].S_ORDER]) this.OrderChildNum[this.list[i].S_ORDER]=1;
+							else this.OrderChildNum[this.list[i].S_ORDER]++;
+					}						
+					if(!this.ClassGrandGrandChildNum[this.list[i].S_CLASS]) this.ClassGrandGrandChildNum[this.list[i].S_CLASS]=1;
+					else this.ClassGrandGrandChildNum[this.list[i].S_CLASS]++;					
+				}
+			}
+			this.OrderChildNum["未知目"]=1;
 		},
 		prePic: function prePic(){
 			let i=this.id-1;
@@ -202,12 +234,14 @@ var all=new Vue({
 			return j-i;
 		},
 		getOrderChildNum: function getOrderChildNum(j){
-			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			/*let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
 			while(i<this.list.length) 
 				if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; 
 				else {if(this.list[i].F_NAME!=null && this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY)k++; i++;}
 			if(k<=1)return "";
-			return -k;
+			return -k;*/
+			if(this.OrderChildNum[this.list[j].S_ORDER]>1)return -this.OrderChildNum[this.list[j].S_ORDER];
+			else return "";
 		},
 		getOrderGrandChildNum: function getOrderChildNum(j){
 			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
@@ -218,29 +252,34 @@ var all=new Vue({
 			return "/"+k;
 		},
 		getClassChildNum: function getClassChildNum(j){
-			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			/*let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
 			while(i<this.list.length) 
 				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
 				else {if(this.list[i].F_NAME!=null && this.list[i].S_ORDER!=this.list[i-1].S_ORDER)k++; i++;}
-			if(k==0)return "";
-			return -k;
+			*/
+			if(this.ClassChildNum[this.list[j].S_CLASS])return -this.ClassChildNum[this.list[j].S_CLASS];
+			else return "";
 		},
 		getClassGrandChildNum: function getClassGrandChildNum(j){
-			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			/*let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
 			while(i<this.list.length) 
 				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
 				else {if(this.list[i].F_NAME!=null && 
 				(this.list[i].S_ORDER!=this.list[i-1].S_ORDER || this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY) )k++; i++;}
 			if(k==0)return "";
-			return "/"+k;
+			return "/"+k;*/
+			if(this.ClassGrandChildNum[this.list[j].S_CLASS])return "/"+this.ClassGrandChildNum[this.list[j].S_CLASS];
+			else return "";
 		},
 		getClassGrandGrandChildNum: function getClassGrandGrandChildNum(j){
-			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			/*let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
 			while(i<this.list.length) 
 				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
 				else {if(this.list[i].F_NAME!=null)k++; i++;}
 			if(k==0)return "";
-			return "/"+k;
+			return "/"+k;*/
+			if(this.ClassGrandGrandChildNum[this.list[j].S_CLASS])return "/"+this.ClassGrandGrandChildNum[this.list[j].S_CLASS];
+			else return "";
 		},
 		getInfo: function getInfo(){
 			let str="";
@@ -261,13 +300,15 @@ var all=new Vue({
 		},
 	},
 	created: function created() {
-	
 		let url=self.location.href;
 		if(url.indexOf('=')>=0) this.id=decodeURI(url.split('sid=')[1]);
 		var tmp="";
 		if(this.id>=0) tmp=this.list[this.id].TITLE;
-		
-		if(self.location.href.substring(0,4)!="http")this.test=true;
+			
+		if(self.location.href.substring(0,4)!="http"){
+			this.test=true;
+			this.calcNum();
+		}
 		else this.reSet();
 		
 		if(this.id>=0) for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
@@ -289,7 +330,6 @@ var all=new Vue({
                 if(_this.id!=-1) _this.nextPic();
             }
         };
-
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
@@ -299,14 +339,14 @@ var all=new Vue({
 				this.scrolltop=document.documentElement.scrollTop;
 		}
 	},
-	updated: function updated(){
+	updated: function updated(){		
 		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].TITLE;
 		else if(this.id==-2) document.title="分类页·"+this.S_CLASS;
 		else if(this.id==-3) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER;
 		else if(this.id==-4) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER+"·"+this.S_FAMILY;
-		else document.title="分类页";	
+		else document.title="分类页";
 	},
 });
 </script>
