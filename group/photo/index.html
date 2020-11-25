@@ -101,7 +101,7 @@ var all=new Vue({
 		},
 		getSpecies: function getSpecies(j){
 			let F_GROUP=this.list[j].F_GROUP;let F_NAME=this.list[j].F_NAME;let i=0;
-			for(;i<this.slist.length;i++) if(this.slist[i].F_GROUP==F_GROUP && this.slist[i].F_NAME.split(',').includes(F_NAME)) break;
+			for(;i<this.slist.length;i++) if(this.slist[i].F_GROUP==F_GROUP && this.slist[i].F_NAME.split(',').indexOf(F_NAME)>=0) break;
 			if(i==this.slist.length) this.sid=-1;
 			else this.sid=i;
 		},

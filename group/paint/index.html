@@ -104,7 +104,7 @@ var vm = new Vue({
 	el: '#main',
 	data:{
 		list:myjson.RECORDS,
-		statename:["精","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
+		statename:["SS","S","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
                     "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","宗教",
                     "中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
                     "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
@@ -175,8 +175,9 @@ var vm = new Vue({
 			for(let j=0;j<this.statename.length;j++) {
 				if(this.statevalue[j]==0) continue;				
 				let get=0;
-				let fenlei="P_TYPE"; if(j==0) fenlei="P_STAR";
-				let word=this.statename[j]; if(j==0) word="5";
+				let fenlei="P_TYPE"; if(j<2) fenlei="P_STAR";
+				let word=this.statename[j]; 
+				if(j==0) word="6";if(j==1) word="5";
 				if(this.list[i][fenlei]==null) get=-1;
 				else get=this.list[i][fenlei].indexOf(word);
 				if(get!=-1 && this.statevalue[j]==1) continue;

@@ -259,7 +259,7 @@ var all=new Vue({
 		reSet: function reSet(){		
 			this.list=[];
 			for(let i=0;i<sfile.length;i++) 
-				if(this.test || sfile[i].F_GROUP!="wai") this.list.push(sfile[i]);
+				if(this.test || sfile[i].F_GROUP!="zwai") this.list.push(sfile[i]);
 				else if(i==0 || sfile[i].S_ORDER!=sfile[i-1].S_ORDER) {
 					let tmpObj ={};
 					tmpObj["S_DOMAIN"] = sfile[i]["S_DOMAIN"];tmpObj["S_KINGDOM"] = sfile[i]["S_KINGDOM"];tmpObj["S_PHYLUM"] = sfile[i]["S_PHYLUM"];

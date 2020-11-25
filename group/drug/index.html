@@ -51,7 +51,7 @@
 			<br><br><div class='title' align='center'>{{list[id].D_NAME}}<br><br></div>
 			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}<br>
 			<a :href="'https://baike.baidu.com/item/'+list[id].D_NAME" target="_blank" style="cursor:pointer;">百度百科</a>
-			<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
+			<a v-if="list[id].LINK!=null" :href="setUrl(id)">本站参考<br></a>
 			</div>	
 			<br><br><div v-html="list[id].D_INFO"></div>		
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
@@ -123,6 +123,12 @@ var vm = new Vue({
 				mohu--;
 			}
 			this.list[i].fliter= true; return;
+		},
+		setUrl: function setUrl(id){
+			let group=this.list[id].LINK.split('/')[0];
+			let name=this.list[id].LINK.split('/')[1];
+			if(group=="tree") return '../photo/tree.html?wd='+name;
+			return '../'+group+'/index.html?wd='+name;
 		},
 		reSet: function reSet(){
 			for(let j=0;j<this.words.length;j++) this.wselect[j]=0;			

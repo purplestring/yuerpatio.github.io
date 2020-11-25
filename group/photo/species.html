@@ -80,7 +80,7 @@
 						</span>				
 					</span>			
 					<span v-if="item.F_NAME==null && item.S_ORDER!='未知目'" style="color:Black;">{{item.S_ORDER}} </span>
-					<span :style="(item.F_GROUP=='wai')?'color:DarkRed;cursor:pointer;':'color:DarkCyan;cursor:pointer;'" 
+					<span :style="(item.F_GROUP=='zwai')?'color:DarkRed;cursor:pointer;':'color:DarkCyan;cursor:pointer;'" 
 						v-if="item.F_NAME!=null && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)">
 						<span @click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">{{item.S_ORDER}}<span>{{getOrderChildNum(i)}}</span></span>						
 					</span>
@@ -184,7 +184,7 @@ var all=new Vue({
 		reSet: function reSet(){
 			this.list=[];
 			for(let i=0;i<sfile.length;i++) 
-				if(this.test || sfile[i].F_GROUP!="wai") this.list.push(sfile[i]);
+				if(this.test || sfile[i].F_GROUP!="zwai") this.list.push(sfile[i]);
 				else if(i==0 || sfile[i].S_ORDER!=sfile[i-1].S_ORDER) {
 					let tmpObj ={};
 					tmpObj["S_DOMAIN"] = sfile[i]["S_DOMAIN"];tmpObj["S_KINGDOM"] = sfile[i]["S_KINGDOM"];tmpObj["S_PHYLUM"] = sfile[i]["S_PHYLUM"];

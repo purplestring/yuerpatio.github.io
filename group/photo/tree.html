@@ -8,6 +8,7 @@
 	<script src="species.js"></script>
 	<script src="lang.js"></script>
 	<script src="info.js"></script>
+	<script src="svg.js"></script>
 	<style>
 	.myimg1{
 		max-height: 60vh;
@@ -189,9 +190,20 @@
 									C174.1098,550.3931,168.3699,544.6533,161.2894,544.6533z"/>
 							</g>
 						<g v-for="(item,i) in words" :style="langid==0?'font-family:Onyx':''">
-							<text @click.prevent="if(item.num>0){S_ORDER=item.n;setClass(item.n);id=-3};if(item.num==0)window.open('https://baike.baidu.com/item/'+item.n);"
-								:transform='"matrix(1 0 0 1 "+item.x+" "+item.y+")"' font-size="10px" 
-								:style="item.num>0?'fill:DarkCyan;cursor:pointer;':'fill:Gray;cursor:pointer;'" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
+							<g @click.prevent="pointer='';if(item.num>0){S_ORDER=item.n;setClass(item.n);id=-3};if(item.num==0)window.open('https://baike.baidu.com/item/'+item.n);" style="cursor:pointer;">
+								<text v-if="!pic || !(item.n in svg)" :transform='"matrix(1 0 0 1 "+item.x+" "+item.y+")"' font-size="10px" 
+									:style="item.num>0?'fill:DarkCyan;':'fill:Black;opacity:0.4;'" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
+								<g v-if="pic && item.n in svg" @mouseenter='needUpdate=false;pointer=item.n;' @mouseout='needUpdate=false;pointer=""'>
+									<image width="100" height="100" :href="svg[item.n]" 
+										:transform='"matrix("+(pointer==item.n?0.4:0.25)+" 0 0 "+(pointer==item.n?0.4:0.25)+" "+(item.x+8*(item.n.length-3)+(pointer==item.n?0:7))+" "+(item.y-(pointer==item.n?33:16))+")"'>
+									</image>
+								</g>
+							</g>
+						</g>
+						<g v-for="(item,i) in words" :style="langid==0?'font-family:Onyx':''">
+							<text v-if="pic && item.n in svg && pointer==item.n" :transform='"matrix(1 0 0 1 "+(item.x-3)+" "+(item.y+13)+")"' 
+								font-size="12px" font-weight="600" 
+								style="fill:Red;" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
 						</g>
 						<g id="图层_1" fill="#FFFF00" font-size="12px" :style="langid==0?'font-family:Onyx':''">
 							<text transform="matrix(0.7216 -0.6923 0.6923 0.7216 469.6526 207.208)" >{{langTrans("豆类")}}</text>
@@ -236,8 +248,8 @@
 							<text transform="matrix(1 0 0 1 216.1315 561.8903)" fill="#FFFFFF" >{{langTrans("原生")}}</text>
 							<text transform="matrix(1 0 0 1 173.3659 561.8896)" fill="#FFFFFF" >{{langTrans("原核")}}</text>
 							<text transform="matrix(1 0 0 1 304.6205 561.3896)" fill="#FFFFFF" >{{langTrans("真菌")}}</text>
-							<text transform="matrix(1 0 0 1 154.8794 561.8898)" fill="#FFFFFF" >{{langTrans("炁")}}</text>
-						</g>
+							<text transform="matrix(1 0 0 1 154.8794 561.8898)" fill="#FFFFFF" @click.prevent="pic=!pic" style="cursor:pointer;" >{{langTrans("炁")}}</text>
+						</g>											
 					</svg>
 				<br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回百物卷◀</a></div>
@@ -313,6 +325,7 @@
 //藻类 http://haizao.jmu.edu.cn/info/1080/1235.htm
 //地衣 https://wenku.baidu.com/view/6dcda3e35acfa1c7ab00cc25.html
 //https://taieol.tw/pages/209893
+//蜻蜓 https://wenku.baidu.com/view/30d1698a4afe04a1b171de01.html
 var cpageName=self.location.href.split('group/')[1].split('/')[0];
 function loadScript(script){
 	var _script = document.createElement('script');
@@ -323,6 +336,38 @@ function loadScript(script){
 loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
+
+function base64_encode(str){
+    var c1, c2, c3;
+    var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";        
+    var i = 0, len= str.length, string = '';
+ 
+    while (i < len){
+        c1 = str.charCodeAt(i++) & 0xff;
+        if (i == len){
+            string += base64EncodeChars.charAt(c1 >> 2);
+            string += base64EncodeChars.charAt((c1 & 0x3) << 4);
+            string += "==";
+            break;
+        }
+        c2 = str.charCodeAt(i++);
+        if (i == len){
+            string += base64EncodeChars.charAt(c1 >> 2);
+            string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+            string += base64EncodeChars.charAt((c2 & 0xF) << 2);
+            string += "=";
+            break;
+        }
+        c3 = str.charCodeAt(i++);
+        string += base64EncodeChars.charAt(c1 >> 2);
+        string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+        string += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+        string += base64EncodeChars.charAt(c3 & 0x3F)
+    }
+        return string
+};
+
+for(let key in svg) svg[key]="data:image/svg+xml;base64,"+base64_encode(svg[key]);
 
 //兼容IE排序
 Array.prototype.sort2 = function(fn){
@@ -348,13 +393,17 @@ var all=new Vue({
 		list:sfile,
 		info:ifile,
 		test:false,
+		svg:svg,
+		pointer:"",
+		needUpdate:true,
+		pic:false,		
 		words:[
 			{x:280.1214,y:437.8553,n:"木贼目"},{x:50.6955,y:432.3687,n:"南洋杉目"},{x:36.0343,y:399.0561,n:"金松目"},{x:114.1529,y:356.2472,n:"柏目"},{x:134.7224,y:480.5191,n:"麻黄目"},
 			{x:53.8676,y:458.7293,n:"百岁兰目"},{x:73.2011,y:484.1218,n:"买麻藤目"},{x:400.1519,y:238.2135,n:"虎耳草目"},{x:436.9763,y:183.1549,n:"葡萄目"},{x:478.1047,y:218.976,n:"蒺藜目"},
-			{x:221.4956,y:240.3187,n:"露兜树目"},{x:197.062,y:228.3281,n:"薯蓣目"},{x:123.0109,y:269.134,n:"百合目"},{x:148.4691,y:223.1587,n:"天门冬目"},{x:282.0549,y:420.2984,n:"无油樟目"},
+			{x:221.4956,y:240.3187,n:"露兜树目"},{x:187.062,y:228.3281,n:"薯蓣目"},{x:123.0109,y:269.134,n:"百合目"},{x:148.4691,y:223.1587,n:"天门冬目"},{x:282.0549,y:420.2984,n:"无油樟目"},
 			{x:198.0973,y:401.0287,n:"睡莲目"},{x:268.7397,y:402.5153,n:"木兰藤目"},{x:331.5179,y:346.7823,n:"木兰目"},{x:349.5679,y:368.2232,n:"樟目"},{x:344.4462,y:386.0082,n:"胡椒目"},
 			{x:334.2195,y:409.0842,n:"白樟目"},{x:182.7238,y:349.6495,n:"金粟兰目"},{x:181.7238,y:323.3575,n:"菖蒲目"},{x:221.7453,y:283.5496,n:"泽泻目"},{x:141.6967,y:300.7373,n:"无叶莲目"},
-			{x:92.3721,y:242.7026,n:"棕榈目"},{x:142.1564,y:195.7244,n:"禾本目"},{x:90.7853,y:189.9402,n:"鸭跖草目"},{x:78.6221,y:212.0304,n:"姜目"},{x:321.0767,y:307.9041,n:"金鱼藻目"},
+			{x:92.3721,y:242.7026,n:"棕榈目"},{x:132.1564,y:199.7244,n:"禾本目"},{x:86.7853,y:189.9402,n:"鸭跖草目"},{x:78.6221,y:212.0304,n:"姜目"},{x:321.0767,y:307.9041,n:"金鱼藻目"},
 			{x:258.5676,y:257.3117,n:"毛茛目"},{x:347.1623,y:278.5307,n:"山龙眼目"},{x:275.9442,y:230.0999,n:"昆栏树目"},{x:378.7243,y:250.1618,n:"黄杨目"},{x:299.4592,y:207.9211,n:"大叶草目"},
 			{x:374.2585,y:181.0202,n:"五桠果目"},{x:451.1729,y:144.1009,n:"豆目"},{x:513.0912,y:134.7225,n:"蔷薇目"},{x:453.4167,y:99.7068,n:"壳斗目"},{x:491.9545,y:98.8226,n:"葫芦目"},
 			{x:513.0912,y:217.1268,n:"卫矛目"},{x:540.4544,y:172.221,n:"金虎尾目"},{x:543.277,y:194.8944,n:"酢浆草目"},{x:515.3795,y:283.5495,n:"牻牛儿苗目"},{x:496.8009,y:302.5132,n:"桃金娘目"},
@@ -398,9 +447,9 @@ var all=new Vue({
 			],
 		N_NAME:{
 			"樟科":"樟目","棕榈科":"棕榈目","豆科":"豆目","酢浆草科":"酢浆草目","桑科":"蔷薇目","荨麻科":"蔷薇目","天南星科":"泽泻目","罂粟科":"毛茛目",
-			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","菊科":"菊目","莎草科":"禾本目","芸香科":"无患子目","藤黄科":"大戟目",
+			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","菊科":"菊目","莎草科":"禾本目","芸香科":"无患子目","藤黄科":"金虎尾目","大戟科":"金虎尾目","兰科":"天门冬目",
 			"观音座莲科":"合囊蕨目","桫椤科":"桫椤目","里白科":"里白目","松科":"松目","柏科":"柏目",
-			"石竹科":"石竹目","紫茉莉科":"石竹目","仙人掌科":"石竹目","马齿苋科":"石竹目","商陆科":"石竹目","苋科":"石竹目","蓼科":"石竹目","藜科":"石竹目",
+			"石竹科":"石竹目","紫茉莉科":"石竹目","仙人掌科":"石竹目","马齿苋科":"石竹目","商陆科":"石竹目","苋科":"石竹目","蓼科":"石竹目","藜科":"石竹目","白花丹科":"石竹目",
 			"茄科":"茄目","旋花科":"茄目",
 			"鸭跖草科":"鸭跖草目","雨久花科":"鸭跖草目",
 			"姜科":"姜目","美人蕉科":"姜目","芭蕉科":"姜目",
@@ -429,7 +478,7 @@ var all=new Vue({
 		reSet: function reSet(){		
 			this.list=[];
 			for(let i=0;i<sfile.length;i++) 
-				if(this.test || sfile[i].F_GROUP!="wai") this.list.push(sfile[i]);
+				if(this.test || sfile[i].F_GROUP!="zwai") this.list.push(sfile[i]);
 				else if(i==0 || sfile[i].S_ORDER!=sfile[i-1].S_ORDER) {
 					let tmpObj ={};
 					tmpObj["S_DOMAIN"] = sfile[i]["S_DOMAIN"];tmpObj["S_KINGDOM"] = sfile[i]["S_KINGDOM"];tmpObj["S_PHYLUM"] = sfile[i]["S_PHYLUM"];
@@ -558,15 +607,17 @@ var all=new Vue({
 		//console.log(this.words.length);	
 		
 		let url=self.location.href;
-		if(url.indexOf('=')>=0) this.id=decodeURI(url.split('sid=')[1]);
-		
+		if(url.indexOf('sid=')>=0) this.id=decodeURI(url.split('sid=')[1].split('&')[0]);
+	
 		var tmp="";
 		if(this.id>=0) tmp=this.list[this.id].TITLE;
+		if(url.indexOf('wd=')>=0) tmp=decodeURI(url.split('wd=')[1].split('&')[0]);
+		console.log(tmp);
 		//this.setNewOrderName();this.setOrderId();
-		//if(self.location.href.substring(0,4)!="http")this.test=true;
+		if(self.location.href.substring(0,4)!="http"){this.test=true;this.pic=true;};
 		this.reSet();
 		
-		if(this.id>=0) for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
+		if(this.id>=0 || tmp!="") for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
 			this.id=i;
 			this.S_CLASS=this.list[i].S_CLASS;
 			this.S_ORDER=this.list[i].S_ORDER;
@@ -593,6 +644,7 @@ var all=new Vue({
 
 	},
 	beforeUpdate: function beforeUpdate(){
+		if(this.needUpdate==false)return;
 		if(this.id!=-1){
 			if (document.body && document.body.scrollTop) 
 				this.scrolltop=document.body.scrollTop;
@@ -601,6 +653,7 @@ var all=new Vue({
 		}
 	},
 	updated: function updated(){
+		if(this.needUpdate==false){this.needUpdate=true;return;}
 		if(this.id==-1) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].TITLE;
