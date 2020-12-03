@@ -396,7 +396,7 @@ var all=new Vue({
 		svg:svg,
 		pointer:"",
 		needUpdate:true,
-		pic:false,		
+		pic:true,		
 		words:[
 				{x:329.2457,y:450.0722,n:"木贼目"},{x:51.4161,y:450.0722,n:"南洋杉目"},{x:36.7549,y:416.7596,n:"金松目"},{x:114.8735,y:373.9507,n:"柏目"},{x:135.443,y:498.2226,n:"麻黄目"},
 				{x:54.5883,y:476.4328,n:"百岁兰目"},{x:85.732,y:505.6832,n:"买麻藤目"},{x:400.8725,y:255.9169,n:"虎耳草目"},{x:437.697,y:200.8584,n:"葡萄目"},{x:478.8721,y:239.235,n:"蒺藜目"},
@@ -621,7 +621,7 @@ var all=new Vue({
 		if(url.indexOf('wd=')>=0) tmp=decodeURI(url.split('wd=')[1].split('&')[0]);
 		//console.log(tmp);
 		//this.setNewOrderName();this.setOrderId();
-		if(self.location.href.substring(0,4)!="http")this.pic=true;
+		//if(self.location.href.substring(0,4)!="http")this.pic=true;
 		this.reSet();
 		
 		if(this.id>=0 || tmp!="") for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
