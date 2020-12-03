@@ -68,7 +68,7 @@
 				列阵为页 止于纲目<br>
 				浅蓝链是所遇 黑色是未遇<br>
 				</div>
-				<br/><div class="family" style="text-align:center;"><a href="index.html">百物卷</a> <a href="tree.html">树状图</a></div>	
+				<br/><div class="family" style="text-align:center;"><a href="photo.html">百物卷</a> <a href="index.html">万叶集</a></div>	
 				<span v-for="(item,i) in list">	
 					<span v-if="i==0 ||item.S_KINGDOM!=list[i-1].S_KINGDOM" class="family" ><br/><br/>{{list[i].S_DOMAIN}} > {{list[i].S_KINGDOM}}</span>	
 					<span v-if="i==0 ||item.S_CLASS!=list[i-1].S_CLASS ||item.S_PHYLUM!=list[i-1].S_PHYLUM ||item.S_KINGDOM!=list[i-1].S_KINGDOM"><br/>

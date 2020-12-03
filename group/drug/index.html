@@ -18,7 +18,7 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="id==-1">
-			<div class="title" align="center">本草集</div><br><br>
+			<div class="title" align="center">本草卷</div><br><br>
 			<div class="desc2">资料参考《中国药典》、百度百科等，<br>仅供交流学习，求医问药慎参考！<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br>			
 				<span v-for="(item, i) in words">
@@ -125,10 +125,7 @@ var vm = new Vue({
 			this.list[i].fliter= true; return;
 		},
 		setUrl: function setUrl(id){
-			let group=this.list[id].LINK.split('/')[0];
-			let name=this.list[id].LINK.split('/')[1];
-			if(group=="tree") return '../photo/tree.html?wd='+name;
-			return '../'+group+'/index.html?wd='+name;
+			return linkTo(this.list[id].LINK);
 		},
 		reSet: function reSet(){
 			for(let j=0;j<this.words.length;j++) this.wselect[j]=0;			

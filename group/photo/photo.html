@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta id="meta" name="viewport">
+	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
+	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
+	<script src="../../main/js/vue.min.js"></script>
+	<script src="file.js"></script>
+	<script src="species.js"></script>
+	<style></style>
+	<title>百物卷</title>
+<body>
+	<div id="main">
+		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+		<div id="all" v-cloak>
+			<div v-if="id==-1">
+				<div class="title" align="center" @click.prevent="test=!test;reSet()">百物卷</div>
+				<div class="desc2">小虫 小树 小盆 小喵 小果果 小星<br>
+				搜集于此 列阵为页<br>
+				</div>
+				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a> <a href="index.html">万叶集</a> </div>				
+				<span v-for="(item,i) in list">
+					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
+						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
+						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
+						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
+						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
+					</div>
+					<span v-if="groupname[item.F_GROUP][2]==1">						
+						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
+						<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
+						</span>					
+						<span @click.prevent="getSpecies(i);id=i" style="cursor:pointer;">
+							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
+							<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
+						</span>	
+					</span>	
+					<div v-if="i==list.length-1 || item.F_GROUP!=list[i+1].F_GROUP" style="text-align:center;"><br/>
+						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▲收起▲ —————</span>
+					</div>					
+				</span>
+				<br/><br/>
+				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
+			</div>
+			<div v-if="id!=-1">
+				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
+				<span v-if="list[id].S_GROUP!=null" >【{{list[id].S_GROUP}}】 </span>
+				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
+				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>			
+				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a> <a v-if="sid!=-1" :href="'index.html?sid='+sid">万叶集</a>
+				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
+				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
+				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
+					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">返回卷主页</a>
+					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
+				</div>
+			</div>
+		</div>
+		<div class="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
+	</div>
+<script>
+var cpageName=self.location.href.split('group/')[1].split('/')[0];
+function loadScript(script){
+	var _script = document.createElement('script');
+	_script.type = "text/javascript";
+	_script.src = script;
+	document.head.appendChild(_script);
+}
+loadScript("../../main/js/head.js");
+if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+else loadScript("../../main/js/navi1.js");
+
+var all=new Vue({
+	el: '#all',
+	data:{ 	
+		list:file,
+		slist:sfile,
+		groupname:{
+			bug:["虫之卷","雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之",0],
+			miao:["喵之卷","一道自由的光芒<br>是风和花和星空 是鱼和沙和海洋",0],
+			scene:["风之卷","人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之",0],
+			utensil:["器之卷","形而上者谓之道，形而下者谓之器<br>器物，建筑，雕塑，皆以志之",0],
+			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之",0],
+		},
+		test:false,
+		id:-1,
+		sid:-1,
+	},
+	methods: {
+		reSet: function reSet(){
+			this.list=[];
+			for(let i=0;i<file.length;i++) if(this.test || file[i].SHOW!="no") this.list.push(file[i]);
+			this.$forceUpdate();		
+		},
+		getSpecies: function getSpecies(j){
+			let F_GROUP=this.list[j].F_GROUP;let F_NAME=this.list[j].F_NAME;let i=0;
+			for(;i<this.slist.length;i++) 
+				if( (this.slist[i].F_GROUP==F_GROUP && this.slist[i].F_NAME.split(',').indexOf(F_NAME)>=0) ||
+					(this.slist[i].F_GROUP && this.slist[i].F_NAME.split(',').indexOf(F_GROUP+"/"+F_NAME)>=0) ) break;
+			if(i==this.slist.length) this.sid=-1;
+			else this.sid=i;
+		},
+	},
+	created: function created() {
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+		else this.reSet();
+		let url=self.location.href;
+		if(url.indexOf('=')>=0){
+			let urlvalue=decodeURI(url.split('=')[1]);
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i;this.getSpecies(i);break; }
+		}
+		var _this = this;
+        document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) {_this.id=(_this.id-1)%_this.list.length;_this.getSpecies(_this.id);}
+            }
+			if (key == 39) {
+                if(_this.id!=-1) {_this.id=(_this.id+1)%_this.list.length;_this.getSpecies(_this.id);}
+            }
+        };
+	},
+	beforeUpdate: function beforeUpdate(){
+		if(this.id>=0){
+			if (document.body && document.body.scrollTop) 
+				this.scrolltop=document.body.scrollTop;
+			if (document.documentElement && document.documentElement.scrollTop) 
+				this.scrolltop=document.documentElement.scrollTop;
+		}
+	},
+	updated: function updated(){
+		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		else document.body.scrollTop=document.documentElement.scrollTop=0;
+		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		else document.title="百物卷";	
+	},
+});
+</script>
+</body>
+</html>

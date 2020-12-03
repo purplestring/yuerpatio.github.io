@@ -2,70 +2,329 @@
 <head>
 	<meta id="meta" name="viewport">
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
-	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
-	<script src="file.js"></script>
 	<script src="species.js"></script>
-	<style></style>
-	<title>百物卷</title>
+	<script src="lang.js"></script>
+	<script src="info.js"></script>
+	<script src="svg.js"></script>
+	<style>
+	.myimg1{
+		max-height: 60vh;
+		left:calc(50% - 50vh);
+	}
+	
+	svg{
+		height:1800px;
+	}
+	
+	.waterfall {
+		width: 100%;
+		column-gap:10px;
+		column-count: 4;
+		margin: 0 auto;
+		padding-top: 10px;
+	}
+	.water {
+		padding: 2px;
+		margin-bottom: 6px;
+		break-inside: avoid;
+		border: 1px solid #000;
+		background:#fff;
+		overflow: hidden;
+	}
+	.water img {
+		width: 100%;
+		cursor: pointer;
+		transition: all 0.6s;
+	}
+	.water img:hover{
+		transform: scale(1.1);
+	}
+	.water p {
+		line-height: 30px;
+	}
+	.waterfall iframe{
+		width:100%;
+		height:100%;
+		border: medium none;
+	}
+	@media screen and (max-device-width:640px){
+		.waterfall {
+			column-count: 2;
+		}
+		.water p {
+			font-size: 36px;
+			line-height: 36px;
+		}
+	}
+	</style>
+	<title>万叶集</title>
 <body>
 	<div id="main">
 		<div id="mt"></div><div id="lm"></div><div id="rm"></div>
 		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
-		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/><br/>
 		<div id="all" v-cloak>
 			<div v-if="id==-1">
-				<div class="title" align="center" @click.prevent="test=!test;reSet()">百物卷</div>
-				<div class="desc2">小虫 小树 小盆 小喵 小果果 小星<br>
-				搜集于此 列阵为页<br>
+				<div class="title" @click="test=!test;reSet();" align="center">万叶集</div>
+				<div class="desc2">万物苍生 拍摄搜集于此<br>
+				列阵为页 止于纲目<br>
+				浅蓝链是所遇 灰色是未遇<br>
 				</div>
-				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a> <a href="tree.html">树状图</a> </div>				
-				<span v-for="(item,i) in list">
-					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
-						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
-						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
-						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
-						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
-					</div>
-					<span v-if="groupname[item.F_GROUP][2]==1">						
-						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
-						<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
-						</span>					
-						<span @click.prevent="getSpecies(i);id=i" style="cursor:pointer;">
-							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
-							<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
-						</span>	
-					</span>	
-					<div v-if="i==list.length-1 || item.F_GROUP!=list[i+1].F_GROUP" style="text-align:center;"><br/>
-						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▲收起▲ —————</span>
-					</div>					
-				</span>
+				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a> <a href="photo.html">百物卷</a></div>	
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewBox="0 0 640 1200" enable-background="new 0 0 640 1200" xml:space="preserve">
+						<g id="图层_3">
+							<path fill="#2BC11F" d="M590.32,1050.85l-9.82-16.15l17-9.66l-19.83,3.46l-40.72-17.17l21.23-17.06L529.11,1008l-20.27-8.55
+							l-0.13-25.01l14.05,3.88l-14.09-10.86l-0.2-39.09l26,10.7l16.67,16.53l-9.61-18.6l19.75-6.28l-22.13-0.53l-30.73-12.65l-0.45-88.52
+							l17.94,6.23l9.81,21.74l-2.41-19.17l9.72,3.38l0.04-0.11l16.29,12.72l-11.41-16.93l19.7-5.82l-24.28-0.33l-35.45-12.32l-0.22-43.35
+							l50.95-0.13v10.38h10v-10.41l22.4-0.06l-0.03-10l-8.54,0.02l-0.01-10.48l-10,0.01l0.01,10.5l-29.87,0.08v-10.28h-10V765
+							l-68.09,0.18v-14.75l9.33,0v-10l-9.33,0v-7.41h-10v32.18l-14.38,0.04l0.08-50.18l11.16-0.01l-0.01-10l-11.13,0.01l0.02-12.14
+							l-10-0.02l-0.02,12.16l-12.3,0.01l0.01,10l12.27-0.01l-0.04,22.28l-13-0.03l-0.02,10l13.01,0.03l-0.03,17.92l-124.67,0.32
+							l-0.06-29.13l19.08-0.06l-0.03-10l-19.06,0.06l-0.06-28.93l18.25,0.12l0.06-10l-18.33-0.12l-0.04-20.17l53.63-0.13v6.62h10v-6.64
+							l34.45-0.08l-0.02-10l-14.41,0.03v-7.28h-10v7.3l-33.08,0.08v-7.38h-10v7.41l-17.72,0.04l0.24-36.46h0.02v-3.22l0-0.74l0,0v-6.03
+							h-54.9l0.03-10.67l17.29,0.01l0.01-10l-17.26-0.01l0.03-10.33l17.29,0.01l0.01-10l-17.27-0.01l0.04-11.17h17.29v-10h-17.26
+							l0.08-23.75l12.09-0.02v10.76h10v-10.78l28.29-0.04l-0.02-10l-11.44,0.02v-10.96h-10v10.98l-28.88,0.05l0.12-37.29l91.95,0.07
+							l19.11,21.3l6.6,21.89l0.51-21.15l21.39,5.91l-21.46-13.77l-12.71-14.17l42.83,0.03l15.95,13.72l-7.9-13.72l29.19,0.02l16.01,14.31
+							l-7.43-14.31l33.83,0.02l15.28,13.15l-7.57-13.15l18.07,0.01l22.77,14.19l-17.36-19.09l19.55-15.4l-25.69,10.3l-34.81-0.03
+							l11.21-12.87l-21.3,12.86l-30.45-0.02l10.89-12.49l-20.67,12.48l-40.7-0.03l11.95-13.71l-22.13,13.36l0.29,0.34l-44.6-0.03
+							l11.64-15.74l-19.77,15.74l-64.45-0.05l0.08-24.72l21.1-8.19l-21.08,1.91l0.07-22.73l14.48-3.54l-14.45-3.54l0.06-20.26l36.83,0
+							l12.58,9.65l18.47,21.52l-10.32-22.45l23.92-4.45l-26.14-2.67l-6.64-5.09l7.24-2.26l0,0l29.31-9.25l-26.6,1.19l8.61-21.89
+							l-16.01,20.93l-15.31,4.78l-35.89,0l0.08-25.52l17.65-18.01l25.19,0.82l-19.76-6.36l37.1-37.85l25.22,1.07l-19.31-7.09l21.03-21.45
+							l30.01-1.67l-23.55-4.92l26.44-26.98l23.64-0.14l18.17,23.29l-9.89-23.34l45.82-0.27l0.29,37.38L450.39,279l-22.03-0.87l16.78,6.77
+							l-15.03,16.88l-29.24,7.26l22.41,0.4l-9.13,10.25l-26.97,11.58l26.23-3.82l-2.92,25.76l9.77-25.35l21.1-23.7l5.66,22.97l0.46-29.85
+							l14.17-15.91l12.08,18.07l-7.03-23.74l2.27-2.55l32.66,23.94l14.57,17.39l-8.16-20.44l16.32-8.93l-18.83,2.44l-33.19-24.33
+							l-0.3-39.36l2.73-2.67l18.54,8.54l-13.88-13.09l11.91-11.65l9.23-0.05l-0.12,0.15l24.95,14.92l-14.25-15.12l2.85-0.01l28.65,3.78
+							l-22.68-9.52l21.21-14.55l-28.67,10.3l-19.67,0.1l-0.31-29.33l17.01-20.64l-17.1,11.81l-0.15-14.39l10.35-24.54l-15.5,18.95
+							l-15.57-20.13l10.73,26.41l0.34,31.95l-16.75-13.28l16.85,23.2l0.15,14.28l-19.31,18.89l-27.3,0.16l10.77-18.37l-18.65,18.41
+							l-39.93,0.24l10.62-19.39l-15.95,16.7l-18.95-28.4l10.81-27.91l-15.38,21.05l-14.14-21.2l10.56-27.27l-15.03,20.57l-15.32-22.96
+							l31.79-23.83l26.31,10.71l-20.06-15.4l8.31-6.23l22.8,4.02l-16.31-8.89l11.31-8.48l26.96,0.2l-19.28-5.96l17.9-13.42l-0.05-0.07
+							l24.12-0.83l-25.38-6.2l-5.69-23.88l-1.13,24.6l-7.31,5.48l-10.86-15.55l5.06,19.89l-21.06,15.79l-6.35-23.74l-0.01,28.51
+							l-48.62,36.45l-34.25-25.06l-3.55-28.53l-2.81,23.88l-22.41-16.4l-1.89-26.83l-4.85,21.9l-22.14-16.2l-1.58-25.38l-3.92,19.03
+							l-22.82-16.62l16.81,20.14l-28.22-6.91l26.05,13.11l-26.76,8.6l26.97-2.4l-13.64,16.63l23.01-16.8l33.6,24.59l-18.55,7.79
+							l25.38-2.79l53.16,38.9l0.26-0.36l6.51,9.76l-25.72,4.48l30.53,2.72l14.14,21.19l-23.82,4.15l28.27,2.52l13.65,20.47l-24.33,4.24
+							l28.88,2.58l11.79,17.67l-14.29,14.58l-14.88-18.29l9.67,23.62l-20.63,21.05l-13.1-20.15l8.2,25.16l-23.75,24.23l-13.6-20.91
+							l8.51,26.11l-44.49,45.39l-19.84-17.97l-2.02-24.56l-3.55,19.52l-28.8-26.07l4.39-13.7l19.91-10.47l-20.58,3.23l-1.42-0.46
+							l-5.4-19.78l-1.5,22.74l-3.54,11.06l-17.14-15.52l-2.41-29.4l-4.25,23.38l-23.8-21.55l-2.2-26.81l-3.87,21.31l-8.15-7.38
+							l-11.77-24.97l3.81,23.89l-25.81-4.66l26.31,12.48l19.33,17.5l-19.87,0.31l27.96,7.01l22.22,20.11l-19.26,0.3l27.1,6.8L209,313.38
+							l-21.02,0.33l29.58,7.42l18.02,16.32l-20.57,0.32l28.94,7.26l10.34,9.36l-0.08,23.45l-23.57-0.2l23.54,7.1l-0.11,34.58l-23.98-2.57
+							l23.95,9.81L254,449.03l-40.8-0.23l-14.39-15.36l7.1,15.32l-49.9-0.28l-11.75-7.08l-8.82-26.21l1.48,21.78l-29.39-17.71l0.63-17.87
+							l7.36-26.11l-12.1,20.55l-18.97-17.95l13.75,22.14l-0.61,17.29l-26.07-4.94l27.05,13.17l12.15,7.32l-11.67,10.77l17.83-7.06
+							l29.11,17.54l-22.03,16.16l-20.81,0.21l19.28,6.47l-10.6,18.35l18.81-17.52l10.72-7.86l8.19,19.19l-2.47-23.39l9.86-7.23
+							l26.25,0.15l-11.35,13.51l20.78-13.46l61.36,0.35l-0.12,38.13l-5.43-0.05l-16.86-14.36l8.4,14.28l-10.91-0.1l-20-5.58l17.49,11.71
+							l-13.37,9.9l20.8-5.99l19.85,0.18l-0.1,31.71h-17.03v10h17l-0.04,11.16h-16.56v10h16.53l-0.03,9.83h-39.04v10h12.21v6.93h10v-6.93
+							h16.79l-0.11,33.5h-16.93v10h16.9l-0.02,6.97h-17.03v10h17l-0.02,7.14l-54.36,0.13v-10.56h-10v10.58l-27.91,0.07l0.02,10l43.01-0.1
+							v8.64h10v-8.66l23.52-0.06v8.72h10v-8.74l47.66-0.11l0.09,47.37l-19.77-0.18l-0.09,10l19.88,0.19l0.03,14.72l-19.89-0.1l-0.05,10
+							l19.96,0.1l0.09,44.56l-19.63-0.05l-0.03,10l19.68,0.05l0.02,11l-19.99-0.05l-0.03,10l20.04,0.05l0.02,10.85l-19.85-0.1l-0.05,10
+							l19.92,0.1l0.08,39.41l-8.03,0.04l-8.89-14.5l-3.84-13.77l-2.8,11.32l-19.2-8.17l16.53,14.47l-0.04,0.03l6.54,10.67l-16.22,0.07
+							l-11.91-7.55l7.11,10.56l-37.72,25.25l-9.58-14.83l-5.77-21.52l-1.56,20.39l-13.39-1.28l12.56,8.2l9.44,14.6l-53.73,35.97
+							l-26.26-40.73l9.25-16.89l13.26-6.8l-16.19,0.39l-10.45-14.27l4,16.99l-6.03,11.01l-16.05-24.89l9.79-17.88l11.82-8.27l-15.12,2.26
+							l-10.36-14.15l4,16.99l-6.29,11.48l-17.85-27.68l0.31-19.58l-7.36,18.07l-19.43-3.69l17.79,10.19l9.49,14.71l-16.22,3.87
+							l-18.31-7.31l14.49,13.14l-8.78,11.02l14.2-6.94l20.36-4.86l15.88,24.63l-17.78,4.24l-16.95-2.34l14.26,8.52l-8,13.06l14.13-9.78
+							l20.08-4.79l36.01,55.85l-46.47,31.11l-2.87-3.73l6.86-19.72L93.25,982.6l-16.71-21.71l-7.47-21.05l0.54,20.06l-19.12-2.07
+							l18.02,9.01l7.6,9.88l-10.56,8.96l14.12-4.33l12.44,16.16l-23.52,15.74l-9.22,0.02l-12.41-5.08l9.47,10.54l-9.77,8.51l15.08-3.98
+							l2.33,0l0.04,11.54l-17.41,17.89l17.43-9.85l0.14,43.47l-18.83,14.99l18.85-7.84l0.12,36.36l-17.16,16.62l17.18-8.56l0.03,8.62
+							l-13.39,21.05l18.31-16.55l13.36,16.55l-8.28-21.57l-0.09-26.81l11.8,6.04l-11.83-13.97l-0.15-45.63l14.77,7.88l-14.79-15.86
+							l-0.12-36.01l52.17-34.92l0.01,29.7l-12.27,16.12l12.27-7.78l0.02,59.1l-0.03-0.04l-15.63,20.39l15.67-10.82l0.01,35.48l-13,21.3
+							l17.53-16.45l16.1,18.2l-10.63-22.02l-0.02-68.45l6.93,8.45l7.63,13.94l-0.68-14.26l15.34-2.19l-14.15-3.35l-14.97-18.26l-0.1,0.08
+							l-0.01-28.01l3.98,4.85l9.24,15.08l-1.69-14.77l17.83-3.2l-17.07-2.72l-12.3-15.01l-0.01-22.07l37.3-24.97l0.06,16.05l-10.24,15.1
+							l15.16-10.46l16.09,12.25l-11.02-17l-0.08-22.61l55.63-37.24l-0.17,17.77l-21.2,16.82l21.12-8.93l-0.27,28.74l-10.3,19.61
+							l15.27-13.97l15.9,14.93l-10.87-19.66l0.14-14.71l16.67,2.85l-16.6-10.23l0.17-18.26l17.54,3.91l-17.47-11.27l0.13-14.12l-0.31,0
+							l13.65-9.14l3.19-0.01l-4.69,9.75l12.26-9.78l22.45-0.1l0.01,2.67h0.01l-0.39,94.75l-16.95,13.18l16.92-5.66l-0.24,58.61
+							l-10.24,8.58l-15.12-7.96l10.02,12.24l-19.55,16.38l-14.51-5.59l-13.05-11.28l6.63,15.2l-14.41,9.14l18.1-3.4l8.48,3.27
+							l-12.12,10.16l-20.7,10.31l18.04-2.26l-3.84,21.46l10.54-20.33l0.24,0.29l26.49-22.2l3.67,15.55l2.05-20.33l19.23-16.12
+							l-0.22,53.36l-10.83,14.69l10.79-6.86l-0.05,10.89l-9.38,16.38l14.29-12.06l15.11,12.9l-10.01-17.52l0.1-23.24l19.02,13.39
+							l13.54,14.26l-6.14-15.92l17.49-1.44l-19.3-5.19l-24.55-17.29l0.35-85.23l35.54,28.42l0.04,11.2l-13.69,12.47l13.72-4.83
+							l0.06,14.47l-8.44,19.4l13.67-14.48l19.35,14.86l-14.59-20.64l-0.09-24.44l20.2,16.15l8.29,9.47l-2.82-11.72l15.46-3.95l-16.04-2.7
+							l-5.98-4.78l10.51-10.63l-16.13,6.14l-36.78-29.4l11.46-14.06l-16.95,9.67l-16.75-13.39l0.14-33.72l15.69,8.23l-15.66-16.08
+							l0.33-78.9l-0.06,0l-0.01-3.74l9.33,0.1l7.3,15.44l-1.32-15.37l7.65,0.08l19.08,12.61l-13.68-16.86l13.48-8.28l-18.1,2.53
+							l-23.74-0.25l-0.08-40.45l17.95,0.13l0.07-10l-18.04-0.13l-0.02-10.84l18.05,0.13l0.07-10l-18.14-0.13l-0.02-10.58l18.01-0.01
+							l-0.01-10l-18.02,0.01l-0.02-8.6l47.11-0.12l0.52,69.83l10-0.07l-0.23-30.49l8.93-0.04l0.09,12.63l10-0.07l-0.09-12.6l14.15-0.06
+							l0.06,28.25l10-0.02l-0.02-10.12l10.35,0l0-10l-10.37,0l-0.02-8.15l33.22-0.13l0.06,43.55l10-0.01l-0.01-8.33l10.34,0v-10l-10.36,0
+							l-0.01-7.66l10.37,0v-10l-10.38,0l-0.01-7.59l19.48-0.08l-0.04-10l-9.47,0.04l-0.07-9.5l-10,0.07l0.07,9.47l-86.35,0.34
+							l-0.22-29.29l135.1-0.35l0.84,166.55l-15.19,7.79l-17.55-7.52l-11.94-15.48l4.99,17.02l-19.36-1.01l21.48,8.28l10.81,4.63
+							l-27.3,13.99l-17.46-7.48l11.35,10.61l-14.43,7.4l-21.8-8.86l15.8,12.73l-20.28,9.21l26.43-4.19l-3.89,17.77l11.14-19.21
+							l35.78-18.34l6.5,22.11l0.22-25.55l24.76-12.69l0.36,71.83l-18.83,10.55l18.87-2.77l0.04,8.54l-24.35,11.6l-22.04,3.21l18.58,3.67
+							l-5.53,17.89l11.33-14.81l22.06-10.51l0.22,42.77l-18.35,14.34l-23.81,4l16.46,1.75l-13.22,10.34l-19,7.98l17.96-0.64l3.86,19.03
+							l2.96-18.19l33.21-25.96l0.18,36.57l-13.78,21.33l19.04-15.82l13.31,15.82l-8.57-22.15l-0.1-19.36l14,6.71l8.34,20.8l-1.48-17.51
+							l17.89,8.57l15.95,11.29l-10-14.92l18.62-6.82l-21.04,1.05l-42.35-20.29l-0.22-42.63l15.55,6.53l9.31,22.2l-2.3-19.25l20.57,8.65
+							l11.69,11.29l-6.92-16.14l14.11-8.41l-17.14,3.14l-44.92-18.88l-0.17-33.5l12.36,8.01l-12.41-16.93l-0.03-6.48l35.67,15.04
+							l10.59,22.17l-2.36-18.7l21.03,8.87L590.32,1050.85z M263.45,620.87h19.13v8.76h10v-8.76h15.78l-0.24,36.48l-44.79,0.11
+							L263.45,620.87z"/>
+						<g>
+							<polygon fill="#ADADAD" points="35.71,636.53 35.5,687.43 65.92,687.43 66.13,636.53 		"/>
+							<polygon fill="#E0E0E0" points="130.04,636.53 98.12,636.53 97.91,687.43 129.83,687.43 		"/>
+							<polygon fill="#CCCCCC" points="66.13,636.53 65.92,687.43 97.91,687.43 98.12,636.53 		"/>
+							<rect x="129.83" y="657.41" fill="#E0E0E0" width="21.53" height="10"/>
+						</g>
+						<g>
+							<path fill="#BF120A" d="M148.26,662.7c0,7.08,5.74,12.82,12.82,12.82v-25.64C154,649.88,148.26,655.62,148.26,662.7z"/>
+							<path fill="#0255AF" d="M161.08,649.88v25.64c7.08,0,12.82-5.74,12.82-12.82C173.9,655.62,168.16,649.88,161.08,649.88z"/>
+						</g>
+						<g v-for="(item,i) in words" :style="langid==0?'font-family:Onyx':''">
+							<g @click.prevent="pointer='';if(item.num>0){S_ORDER=item.n;setClass(item.n);id=-3};if(item.num==0)window.open('https://baike.baidu.com/item/'+item.n);" style="cursor:pointer;">
+								<text v-if="!pic || !(item.n in svg)" :transform='"matrix(1 0 0 1 "+item.x+" "+item.y+")"' font-size="10px" 
+									:style="item.num>0?'fill:DarkCyan;':'fill:Black;opacity:0.4;'" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
+								<g v-if="pic && item.n in svg" @mouseenter='needUpdate=false;pointer=item.n;' @mouseout='needUpdate=false;pointer=""'>
+									<image width="100" height="100" :href="svg[item.n]" 
+										:transform='"matrix("+(pointer==item.n?0.4:0.25)+" 0 0 "+(pointer==item.n?0.4:0.25)+" "+
+										(item.x+8*(item.n.length-3)+(pointer==item.n?0:7))+" "+(item.y-(pointer==item.n?33:16))+")"'>
+									</image>
+								</g>
+							</g>
+						</g>
+						<g v-for="(item,i) in words" :style="langid==0?'font-family:Onyx':''">
+							<text v-if="pic && item.n in svg && pointer==item.n" :transform='"matrix(1 0 0 1 "+(item.x-3)+" "+(item.y+11)+")"' 
+								font-size="12px" font-weight="600" 
+								style="fill:Red;" >{{langTrans(item.n)}}{{item.num>0?item.num:""}}</text>
+						</g>
+						<g id="图层_1" fill="#FFFF00" font-size="12px" :style="langid==0?'font-family:Onyx':''">
+							<text transform="matrix(0.7216 -0.6923 0.6923 0.7216 470.0823 224.1201)" >{{langTrans("豆类")}}</text>
+							<text transform="matrix(0.5608 0.8279 -0.8279 0.5608 355.3011 190.5796)" >{{langTrans("超菊类")}}</text>
+							<text transform="matrix(0.5608 0.8279 -0.8279 0.5608 317.0267 133.8298)" >{{langTrans("菊类")}}</text>
+							<text transform="matrix(0.7876 -0.6162 0.6162 0.7876 322.169 131.5821)" >{{langTrans("桔梗类")}}</text>
+							<text transform="matrix(1 4.220000e-03 -4.220000e-03 1 384.5676 227.2354)" >{{langTrans("超蔷薇类")}}</text>
+							<text transform="matrix(0.7049 -0.7093 0.7093 0.7049 301.9177 310.9187)" >{{langTrans("双子叶")}}</text>
+							<text transform="matrix(0.7249 0.6889 -0.6889 0.7249 227.2275 327.7906)" >{{langTrans("单子叶")}}</text>
+							<text transform="matrix(0.7249 0.6889 -0.6889 0.7249 121.2495 232.4945)" >{{langTrans("鸭跖草类")}}</text>
+							<text transform="matrix(1 -6.600000e-04 6.600000e-04 1 263.7458 385.8443)" >{{langTrans("木兰类")}}</text>
+							<text transform="matrix(0.9999 0.0145 -0.0145 0.9999 262.2586 477.0098)" >{{langTrans("蕨类")}}</text>
+							<text transform="matrix(0.9999 0.0145 -0.0145 0.9999 410.8002 477.0098)" >{{langTrans("水龙骨纲")}}</text>
+							<text transform="matrix(1 -5.520000e-03 5.520000e-03 1 231.4696 506.8553)" >{{langTrans("石松")}}</text>
+							<text transform="matrix(0.7925 0.6098 -0.6098 0.7925 284.4655 108.4615)" >{{langTrans("唇形类")}}</text>
+							<text transform="matrix(1 0 0 1 230.1803 458.641)" >{{langTrans("裸子")}}</text>
+							<text transform="matrix(1 0 0 1 359.8887 775.3915)" >{{langTrans("节肢")}}</text>
+							<text transform="matrix(1 0 0 1 382.5356 813.892)" >{{langTrans("软体")}}</text>
+							<text transform="matrix(1 0 0 1 271.8817 894.6505)" >{{langTrans("爬行")}}</text>
+							<text transform="matrix(0.8003 -0.5996 0.5996 0.8003 247.3651 905.2968)" >{{langTrans("鸟")}}</text>
+							<text transform="matrix(1 0 0 1 305.5855 884.7786)" >{{langTrans("两栖")}}</text>
+							<text transform="matrix(0.9454 0.3259 -0.3259 0.9454 506.1559 827.4871)" >{{langTrans("内口")}}</text>
+							<text transform="matrix(1 0 0 1 508.6451 774.5343)" >{{langTrans("甲壳")}}</text>
+							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 220.2903 923.142)" >{{langTrans("今颚")}}</text>
+							<text transform="matrix(0.8335 -0.5526 0.5526 0.8335 193.9764 940.9086)" >{{langTrans("新鸟")}}</text>
+							<text transform="matrix(0.5849 0.8111 -0.8111 0.5849 79.1999 979.2584)" >{{langTrans("南鸟")}}</text>
+							<text transform="matrix(0.8352 -0.5499 0.5499 0.8352 68.7028 1024.4653)" >{{langTrans("非洲禽")}}</text>
+							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 122.1699 920.9634)" >{{langTrans("基部陆鸟")}}</text>
+							<text transform="matrix(0.5382 0.8428 -0.8428 0.5382 196.8506 899.1497)" >{{langTrans("鸡雁")}}</text>
+							<text transform="matrix(0.7717 0.636 -0.636 0.7717 321.6406 1033.9375)" >{{langTrans("非洲兽")}}</text>
+							<text transform="matrix(0.7733 -0.634 0.634 0.7733 268.56 1093.3512)" >{{langTrans("劳亚兽")}}</text>
+							<text transform="matrix(0.8855 -0.4646 0.4646 0.8855 468.7274 967.4852)" >{{langTrans("渐变态")}}</text>
+							<text transform="matrix(1 0 0 1 215.9204 667.117)" fill="#FFFFFF" >{{langTrans("原生")}}</text>
+							<text transform="matrix(1 0 0 1 173.1548 667.1165)" fill="#FFFFFF" >{{langTrans("原核")}}</text>
+							<text transform="matrix(1 0 0 1 304.4094 666.6165)" fill="#FFFFFF" >{{langTrans("真菌")}}</text>
+							<text transform="matrix(1 0 0 1 154.6683 667.1166)" fill="#FFFFFF" @click.prevent="pic=!pic" style="cursor:pointer;">{{langTrans("炁")}}</text>
+							<g v-if="!isIE" glyph-orientation-vertical="0" writing-mode="tb" >
+								<text transform="matrix(1 0 0 1 466.9138 224.7801)" >{{langTrans("锦葵类")}}</text>
+								<text transform="matrix(1 0 0 1 258.9973 425.9962)" >{{langTrans("被子")}}</text>
+								<text transform="matrix(1 0 0 1 300.3814 897.9498)" >{{langTrans("哺乳")}}</text>
+								<text transform="matrix(1 0 0 1 299.2805 1082.4755)" >{{langTrans("灵长")}}</text>
+								<text transform="matrix(1 0 0 1 459.5245 742.3331)" >{{langTrans("多足")}}</text>
+								<text transform="matrix(1 0 0 1 502.5211 774.3365)" >{{langTrans("六足")}}</text>
+								<text transform="matrix(1 0 0 1 503.7912 905.9365)" >{{langTrans("昆虫")}}</text>
+								<text transform="matrix(1 0 0 1 503.8289 958.5543)" >{{langTrans("真变态")}}</text>
+								<text transform="matrix(1 0 0 1 435.1992 714.2849)" >{{langTrans("螯肢")}}</text>
+								<text transform="matrix(1 0 0 1 243.9271 907.6461)" >{{langTrans("古颚")}}</text>
+								<text transform="matrix(1 0 0 1 131.1211 980.9936)" >{{langTrans("水鸟半水鸟")}}</text>
+								<text transform="matrix(1 0 0 1 258.8563 634.6157)" fill="#FFFFFF" >{{langTrans("植物")}}</text>
+								<text transform="matrix(1 0 0 1 300.6962 667.1168)" fill="#FFFFFF" >{{langTrans("动物")}}</text>
+							</g>
+							<g v-if="isIE" glyph-orientation-vertical="0" writing-mode="tb" >
+								<text transform="matrix(1 0 0 1 462.9138 224.7801)" >{{langTrans("锦葵类")}}</text>
+								<text transform="matrix(1 0 0 1 254.9973 425.9962)" >{{langTrans("被子")}}</text>
+								<text transform="matrix(1 0 0 1 296.3814 897.9498)" >{{langTrans("哺乳")}}</text>
+								<text transform="matrix(1 0 0 1 295.2805 1082.4755)" >{{langTrans("灵长")}}</text>
+								<text transform="matrix(1 0 0 1 455.5245 742.3331)" >{{langTrans("多足")}}</text>
+								<text transform="matrix(1 0 0 1 498.5211 774.3365)" >{{langTrans("六足")}}</text>
+								<text transform="matrix(1 0 0 1 499.7912 905.9365)" >{{langTrans("昆虫")}}</text>
+								<text transform="matrix(1 0 0 1 499.8289 958.5543)" >{{langTrans("真变态")}}</text>
+								<text transform="matrix(1 0 0 1 431.1992 714.2849)" >{{langTrans("螯肢")}}</text>
+								<text transform="matrix(1 0 0 1 239.9271 907.6461)" >{{langTrans("古颚")}}</text>
+								<text transform="matrix(1 0 0 1 127.1211 980.9936)" >{{langTrans("水鸟半水鸟")}}</text>
+								<text transform="matrix(1 0 0 1 254.8563 634.6157)" fill="#FFFFFF" >{{langTrans("植物")}}</text>
+								<text transform="matrix(1 0 0 1 296.6962 667.1168)" fill="#FFFFFF" >{{langTrans("动物")}}</text>
+							</g>
+						</g>											
+					</svg>
 				<br/><br/>
 				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
 			</div>
-			<div v-if="id!=-1">
-				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
-				<span v-if="list[id].S_GROUP!=null" >【{{list[id].S_GROUP}}】 </span>
-				<span v-if="list[id].S_CLASS!=null" >【{{list[id].S_CLASS}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
-				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>			
-				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a> <a v-if="sid!=-1" :href="'tree.html?sid='+sid">树状图</a>
-				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
-				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
-				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+			<div v-if="id==-2">
+				<div class="title" align='center'>{{langTrans(S_CLASS)}}</div><br>{{getInfo()}}
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.F_NAME && (i==0 || item.S_ORDER!=list[i-1].S_ORDER)"
+						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;(i==list.length-1 || item.S_ORDER!=list[i+1].S_ORDER)?id=i:id=-3">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p>{{item.S_ORDER}}{{getOrderChildNum(i)}}：{{item.TITLE}}</p>
+					</div>
+				</div>
 				<br><br>				
 				<div align="center">
-					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
-					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">返回卷主页</a>
-					<a @click.prevent="id=(id+1)%list.length" style="cursor:pointer">▶</a>
+					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
+				</div>
+			</div>
+			<div v-if="id==-3">
+				<div class="title" align='center'>{{langTrans(S_CLASS)}}<span v-if="S_CLASS!=S_ORDER">{{">"}}{{langTrans(S_ORDER)}}</span></div><br>{{getInfo()}}
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.F_NAME && (i==0 || item.S_FAMILY!=list[i-1].S_FAMILY || item.S_FAMILY==null)"
+						@click.prevent="S_CLASS=item.S_CLASS;S_ORDER=item.S_ORDER;S_FAMILY=item.S_FAMILY;(i==list.length-1 || item.S_FAMILY==null || item.S_FAMILY!=list[i+1].S_FAMILY)?id=i:id=-4">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p><span v-if="item.S_FAMILY!=null" >{{langTransFamily(item.S_FAMILY)}}{{getFamilyChildNum(i)}}：</span>{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
+				</div>
+			</div>
+			<div v-if="id==-4">
+				<div class="title" align='center'>{{langTrans(S_CLASS)+">"}}{{langTransFamily(S_FAMILY)}}</div><br>{{getInfo()}}
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item, i) in list" 
+						v-if="item.S_CLASS==S_CLASS && item.S_ORDER==S_ORDER && item.S_FAMILY==S_FAMILY && item.F_NAME">
+						<img :src='item.F_GROUP+"/"+item.F_NAME.split(",")[0]' @click.prevent="id=i" alt="" />
+						<p>{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回本目◀</a>
+				</div>
+			</div>
+			<div v-if="id>=0">
+				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
+				<span v-if="list[id].S_CLASS!=null && S_CLASS!=S_ORDER" 
+					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
+				<span v-if="list[id].S_FAMILY!=null"
+					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
+					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
+				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
+				<br><div v-for="(item, i) in list[id].F_NAME.split(',')"><img class='myimg' :src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></div>
+				<br><br>				
+				<div align="center">
+					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
+					<a @click.prevent="id=-4" style="cursor:pointer;font-weight:bold;">返回本科</a>
+					<a @click.prevent="if(id!=-1)nextPic();" style="cursor:pointer">▶</a>
 				</div>
 			</div>
 		</div>
 		<div class="footer">Copyright © 2015~Now 鱼儿. All Rights Reserved.</div><br/><br/>
 	</div>
+</body>
 <script>
+//http://tolweb.org/tree/
+//http://duocet.ibiodiversity.net/index.php
+//普通植物 http://species.sciencereading.cn/biology/v/speciesDetails/122/ZW/1709135.html
+//https://baike.baidu.com/item/APG%20IV%E7%B3%BB%E7%BB%9F
+//藻类 http://haizao.jmu.edu.cn/info/1080/1235.htm
+//地衣 https://wenku.baidu.com/view/6dcda3e35acfa1c7ab00cc25.html
+//https://taieol.tw/pages/209893
+//蜻蜓 https://wenku.baidu.com/view/30d1698a4afe04a1b171de01.html
+//芍药科 归属 虎耳草目 or 毛茛目
 var cpageName=self.location.href.split('group/')[1].split('/')[0];
 function loadScript(script){
 	var _script = document.createElement('script');
@@ -77,57 +336,323 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+function base64_encode(str){
+    var c1, c2, c3;
+    var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";        
+    var i = 0, len= str.length, string = '';
+ 
+    while (i < len){
+        c1 = str.charCodeAt(i++) & 0xff;
+        if (i == len){
+            string += base64EncodeChars.charAt(c1 >> 2);
+            string += base64EncodeChars.charAt((c1 & 0x3) << 4);
+            string += "==";
+            break;
+        }
+        c2 = str.charCodeAt(i++);
+        if (i == len){
+            string += base64EncodeChars.charAt(c1 >> 2);
+            string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+            string += base64EncodeChars.charAt((c2 & 0xF) << 2);
+            string += "=";
+            break;
+        }
+        c3 = str.charCodeAt(i++);
+        string += base64EncodeChars.charAt(c1 >> 2);
+        string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+        string += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+        string += base64EncodeChars.charAt(c3 & 0x3F)
+    }
+        return string
+};
+
+for(let key in svg) svg[key]="data:image/svg+xml;base64,"+base64_encode(svg[key]);
+
+//兼容IE排序
+Array.prototype.sort2 = function(fn){
+    var fn = fn || function(a, b){ return a > b;};
+    for(var i=0; i<this.length; i++){
+        for(var j=i; j<this.length; j++){
+            if(fn(this[i], this[j]) > 0){
+                var t = this[i];
+                this[i] = this[j];
+                this[j] = t;
+            }
+        }
+    }
+    return this;
+};
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
-		list:file,
-		slist:sfile,
-		groupname:{
-			bug:["虫之卷","雨中山果落，灯下草虫鸣<br>地上，水上，丛莽间，凡有见者，皆以志之",0],
-			miao:["喵之卷","一道自由的光芒<br>是风和花和星空 是鱼和沙和海洋",0],
-			scene:["风之卷","人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之",0],
-			utensil:["器之卷","形而上者谓之道，形而下者谓之器<br>器物，建筑，雕塑，皆以志之",0],
-			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之",0],
-		},
+		lang:lang,
+		langFamily:langFamily,
+		langid:1,
+		isIE:false,
+		list:sfile,
+		info:ifile,
 		test:false,
+		svg:svg,
+		pointer:"",
+		needUpdate:true,
+		pic:false,		
+		words:[
+				{x:329.2457,y:450.0722,n:"木贼目"},{x:51.4161,y:450.0722,n:"南洋杉目"},{x:36.7549,y:416.7596,n:"金松目"},{x:114.8735,y:373.9507,n:"柏目"},{x:135.443,y:498.2226,n:"麻黄目"},
+				{x:54.5883,y:476.4328,n:"百岁兰目"},{x:85.732,y:505.6832,n:"买麻藤目"},{x:400.8725,y:255.9169,n:"虎耳草目"},{x:437.697,y:200.8584,n:"葡萄目"},{x:478.8721,y:239.235,n:"蒺藜目"},
+				{x:207.6826,y:270.5339,n:"露兜树目"},{x:183.2895,y:253.5338,n:"薯蓣目"},{x:123.7316,y:286.8375,n:"百合目"},{x:150.6946,y:239.4872,n:"天门冬目"},{x:282.7755,y:438.0019,n:"无油樟目"},
+				{x:198.8179,y:418.7322,n:"睡莲目"},{x:272.8138,y:414.773,n:"木兰藤目"},{x:327.1124,y:355.8271,n:"木兰目"},{x:352.2703,y:375.7711,n:"樟目"},{x:345.6725,y:397.7039,n:"胡椒目"},
+				{x:332.4648,y:420.2185,n:"白樟目"},{x:182.4446,y:383.978,n:"金粟兰目"},{x:182.4444,y:341.061,n:"菖蒲目"},{x:222.466,y:301.2531,n:"泽泻目"},{x:142.4173,y:318.4408,n:"无叶莲目"},
+				{x:93.0928,y:260.4061,n:"棕榈目"},{x:132.053,y:217.4279,n:"禾本目"},{x:96.0059,y:206.3976,n:"鸭跖草目"},{x:79.3428,y:229.7338,n:"姜目"},{x:297.1568,y:336.3402,n:"金鱼藻目"},
+				{x:259.2882,y:275.0152,n:"毛茛目"},{x:341.1329,y:294.0702,n:"山龙眼目"},{x:282.7759,y:247.8036,n:"昆栏树目"},{x:378.6116,y:265.5171,n:"黄杨目"},{x:305.0707,y:225.6248,n:"大叶草目"},
+				{x:374.9791,y:198.7236,n:"五桠果目"},{x:451.8936,y:161.8044,n:"豆目"},{x:508.6452,y:151.0927,n:"蔷薇目"},{x:454.1374,y:117.4103,n:"壳斗目"},{x:492.6751,y:116.5261,n:"葫芦目"},
+				{x:513.8553,y:229.8085,n:"卫矛目"},{x:531.1719,y:189.5912,n:"金虎尾目"},{x:533.339,y:213.2645,n:"酢浆草目"},{x:497.6217,y:284.2309,n:"牻牛儿苗目"},{x:493.7335,y:325.7552,n:"桃金娘目"},
+				{x:452.6091,y:309.9565,n:"缨子木目"},{x:390.2022,y:282.9663,n:"苦榄木目"},{x:426.1407,y:337.7772,n:"无患子目"},{x:362.4545,y:311.776,n:"腺椒树目"},{x:387.1879,y:361.2965,n:"十字花目"},
+				{x:357.4121,y:338.0711,n:"锦葵目"},{x:293.4545,y:206.3974,n:"红珊藤目"},{x:360.4371,y:161.8046,n:"檀香目"},{x:282.7882,y:178.9821,n:"石竹目"},{x:348.7256,y:136.7385,n:"山茱萸目"},
+				{x:258.0806,y:152.4259,n:"杜鹃花目"},{x:262.5498,y:69.3817,n:"茶茱萸目"},{x:212.3799,y:106.487,n:"水螅花目"},{x:231.7609,y:50.0228,n:"丝缨花目"},{x:208.225,y:30.3385,n:"紫草目"},
+				{x:169.0147,y:32.7402,n:"龙胆目"},{x:138.9195,y:50.0227,n:"黄漆姑目"},{x:146.7628,y:71.0897,n:"唇形目"},{x:176.4615,y:90.5685,n:"茄目"},{x:383.7714,y:120.6612,n:"冬青目"},
+				{x:353.0789,y:58.6603,n:"菊目"},{x:394.8216,y:101.9193,n:"南鼠刺目"},{x:412.8108,y:85.8869,n:"绒球花目"},{x:367.6858,y:45.2979,n:"伞形目"},{x:432.8289,y:65.179,n:"川续断目"},
+				{x:385.8989,y:29.1329,n:"盔被花目"},{x:174.0865,y:433.4389,n:"苏铁目"},{x:152.5882,y:479.4358,n:"银杏目"},{x:129.9216,y:414.7732,n:"松目"},{x:60.2547,y:377.8827,n:"红豆杉目"},
+				{x:386.3691,y:515.6799,n:"松叶蕨目"},{x:352.2702,y:530.936,n:"瓶尔小草目"},{x:378.6118,y:451.7756,n:"合囊蕨目"},{x:409.6249,y:501.4497,n:"紫萁目"},{x:432.8288,y:451.7757,n:"膜蕨目"},
+				{x:447.358,y:501.4504,n:"里白目"},{x:471.5774,y:451.7755,n:"莎草蕨目"},{x:483.7791,y:501.4495,n:"槐叶苹目"},{x:542.5319,y:495.7054,n:"桫椤目"},{x:533.3386,y:460.4322,n:"水龙骨目"},
+				{x:212.7201,y:482.3641,n:"石松目"},{x:178.2949,y:496.5689,n:"水韭目"},{x:178.9616,y:516.9212,n:"卷柏目"},{x:33.9165,y:905.2964,n:"麝雉目"},{x:165.3283,y:1025.1141,n:"鹲形目"},
+				{x:138.9197,y:1048.0117,n:"日鳽目"},{x:137.8529,y:1094.4453,n:"鹱形目"},{x:163.4621,y:1071.7739,n:"企鹅目"},{x:86.4798,y:840.8259,n:"鸨形目"},{x:115.6394,y:853.9106,n:"蕉鹃目"},
+				{x:15.8755,y:865.851,n:"鹃形目"},{x:112.5402,y:875.8886,n:"鹤形目"},{x:138.9198,y:889.1722,n:"鸻形目"},{x:178.2951,y:997.3976,n:"红鹳目"},{x:249.9746,y:964.0997,n:"䳍形目"},
+				{x:249.9749,y:939.8356,n:"鸵形目"},{x:192.7127,y:955.0126,n:"美洲鸵目"},{x:139.9495,y:997.3978,n:"鸊鷉目"},{x:18.8057,y:886.3333,n:"鸽形目"},{x:72.9902,y:821.9964,n:"沙鸡目"},
+				{x:33.9454,y:835.571,n:"拟鹑目"},{x:42.1242,y:923.1337,n:"夜鹰目"},{x:86.4797,y:1044.1461,n:"潜鸟目"},{x:91.5814,y:1160.1283,n:"鹈形目"},{x:88.9588,y:1114.8146,n:"鹳形目"},
+				{x:91.0679,y:970.9429,n:"叫鹤目"},{x:39.9573,y:996.662,n:"隼形目"},{x:53.9408,y:939.7635,n:"鹦形目"},{x:25.2919,y:956.5068,n:"雀形目"},{x:13.2983,y:1014.7945,n:"鹰形目"},
+				{x:15.2983,y:1037.7726,n:"美洲鹫目"},{x:24.0422,y:1062.5245,n:"鸮形目"},{x:76.3958,y:1083.7089,n:"鼠鸟目"},{x:22.7088,y:1111.2927,n:"鹃鴗目"},{x:76.396,y:1135.0846,n:"咬鹃目"},
+				{x:20.2087,y:1156.2642,n:"犀鸟目"},{x:27.3754,y:1177.4226,n:"鴷形目"},{x:63.8431,y:1177.4222,n:"佛法僧目"},{x:137.9877,y:1159.58,n:"鲣鸟目"},{x:247.365,y:994.0995,n:"鹤鸵目"},
+				{x:213.2316,y:994.0993,n:"无翼目"},{x:251.2417,y:914.6519,n:"龟鳖目"},{x:217.6251,y:861.2361,n:"有鳞目"},{x:258.0803,y:857.0602,n:"喙头目"},{x:227.2274,y:880.1273,n:"鳄目"},
+				{x:310.8191,y:911.5969,n:"蚓螈目"},{x:346.7869,y:878.3774,n:"有尾目"},{x:347.535,y:901.1206,n:"无尾目"},{x:305.5859,y:995.0221,n:"单孔目"},{x:256.3431,y:1014.9739,n:"有袋目"},
+				{x:191.7271,y:1100.2606,n:"食肉目"},{x:184.1291,y:1121.6456,n:"奇蹄目"},{x:212.3801,y:1143.5222,n:"偶蹄目"},{x:371.4867,y:1048.652,n:"管齿目"},{x:305.1849,y:1083.5098,n:"蹄兔目"},
+				{x:313.352,y:1112.4818,n:"海牛目"},{x:373.1749,y:1092.3649,n:"长鼻目"},{x:351.2121,y:1135.0746,n:"啮齿目"},{x:335.5776,y:1155.0355,n:"兔形目"},{x:212.7199,y:1071.2048,n:"鳞甲目"},
+				{x:322.5616,y:1013.9861,n:"贫齿目"},{x:304.1716,y:1170.0859,n:"灵长目"},{x:255.1777,y:1117.6844,n:"翼手目"},{x:241.2793,y:1057.4486,n:"真盲缺目"},{x:265.2889,y:1170.0864,n:"皮翼目"},
+				{x:359.4073,y:1113.1221,n:"非洲猬目"},{x:393.8897,y:1073.5437,n:"象鼩目"},{x:250.0069,y:1147.0796,n:"树鼩目"},{x:406.3132,y:945.3751,n:"蛩蠊目"},{x:457.1531,y:999.5555,n:"革翅目"},
+				{x:403.2622,y:961.8687,n:"直翅目"},{x:552.017,y:957.5619,n:"衣鱼目"},{x:371.4711,y:1001.8415,n:"螳䗛目"},{x:403.4323,y:1017.8408,n:"螳螂目"},{x:523.1586,y:982.1064,n:"襀翅目"},
+				{x:547.4031,y:993.6272,n:"纺足目"},{x:538.5977,y:1056.5439,n:"缺翅目"},{x:577.4832,y:1023.1471,n:"啮虫目"},{x:580.4064,y:1060.1184,n:"蚤目"},{x:508.6455,y:1043.2966,n:"蜉蝣目"},
+				{x:447.9169,y:1040.0122,n:"蜻蜓目"},{x:420.5471,y:1059.0077,n:"缨翅目"},{x:446.0021,y:1085.4919,n:"半翅目"},{x:519.0069,y:1106.9497,n:"膜翅目"},{x:571.2004,y:1079.9733,n:"鞘翅目"},
+				{x:564.8845,y:1104.5431,n:"捻翅目"},{x:427.3515,y:1116.4746,n:"广翅目"},{x:409.1693,y:1138.9702,n:"脉翅目"},{x:446.7625,y:1159.3993,n:"蛇蛉目"},{x:475.9813,y:1176.3584,n:"虱目"},
+				{x:506.196,y:1176.3585,n:"双翅目"},{x:522.7563,y:1160.1285,n:"长翅目"},{x:570.3469,y:1136.897,n:"毛翅目"},{x:564.8846,y:1159.5802,n:"鳞翅目"},{x:564.4492,y:934.5253,n:"石蛃目"},
+				{x:153.8036,y:903.1006,n:"鸡形目"},{x:183.5252,y:876.5312,n:"雁形目"},{x:438.3197,y:926.4263,n:"蜚蠊目"},{x:363.4964,y:977.1099,n:"竹节虫目"},{x:565.107,y:836.5789,n:"弹尾目"},
+				{x:557.6487,y:857.8287,n:"双尾目"},{x:519.007,y:866.8647,n:"原尾目"},{x:70.9165,y:651.0968,n:"日月"},{x:38.9164,y:658.7635,n:"星团"},{x:38.9164,y:673.0928,n:"星系"},
+				{x:70.4136,y:667.1165,n:"行星"},{x:70.4136,y:681.7831,n:"彗星"},{x:102.4153,y:651.0966,n:"大气"},{x:102.4153,y:666.616,n:"地表"},{x:102.4155,y:681.7829,n:"海洋"},
+				{x:347.1179,y:855.8351,n:"环节"},{x:366.8262,y:839.0623,n:"腕足"},{x:415.1091,y:831.6777,n:"无板"},{x:389.4424,y:852.8444,n:"多板"},{x:442.4763,y:794.3731,n:"单板"},
+				{x:468.7221,y:813.165,n:"瓣鳃"},{x:460.5273,y:831.1648,n:"腹足"},{x:460.5278,y:848.549,n:"头足"},{x:432.8287,y:868.2156,n:"掘足"},{x:250.7193,y:749.1661,n:"线形"},
+				{x:249.9747,y:722.9611,n:"腔肠"},{x:323.3405,y:793.3248,n:"棘皮"},{x:252.0958,y:803.1113,n:"半索"},{x:323.7512,y:814.8053,n:"尾索"},{x:251.2413,y:825.0097,n:"头索"},
+				{x:323.3408,y:835.5715,n:"圆口"},{x:591.5051,y:774.3368,n:"软甲"},{x:421.981,y:690.8586,n:"蛛形"},{x:447.9166,y:730.8724,n:"倍足"},{x:189.0966,y:687.4286,n:"真细菌"},
+				{x:175.1486,y:645.9011,n:"古细菌"},{x:329.2459,y:645.3381,n:"壶菌"},{x:322.5632,y:696.6836,n:"海绵"},{x:251.2417,y:844.4929,n:"鱼类"},{x:323.3405,y:736.4472,n:"扁形"},
+				{x:475.9812,y:749.1656,n:"唇足"},{x:285.1208,y:502.6633,n:"苔类"},{x:263.4262,y:546.1633,n:"角苔类"},{x:201.3878,y:548.0824,n:"双星藻"},{x:280.8498,y:557.8303,n:"鞘毛藻"},
+				{x:213.2314,y:569.6242,n:"轮藻"},{x:169.0146,y:589.4532,n:"绿叠球藻"},{x:202.5806,y:609.2075,n:"原始绿藻"},{x:280.1583,y:578.9551,n:"链丝藻"},{x:280.8499,y:598.6221,n:"葱绿藻"},
+				{x:316.6717,y:523.9746,n:"藓类"},{x:276.183,y:641.0335,n:"绿藻"},{x:211.6592,y:633.0857,n:"灰藻"},{x:212.3799,y:649.3384,n:"红藻"},{x:451.8937,y:714.2845,n:"海蜘蛛"},
+				{x:393.8895,y:714.2844,n:"肢口"},{x:566.0375,y:752.376,n:"蔓足"},{x:526.612,y:752.3757,n:"鳃足"},{x:551.8972,y:794.998,n:"颚足"},{x:381.8681,y:746.4243,n:"三叶虫"},
+				{x:236.2125,y:686.7625,n:"原生"},{x:344.2347,y:683.4248,n:"接合菌"},{x:405.1314,y:666.6161,n:"子囊菌"},{x:366.8264,y:645.3383,n:"担子菌"},{x:318.629,y:619.8771,n:"地衣"},
+			],
+		N_NAME:{
+			"樟科":"樟目","棕榈科":"棕榈目","豆科":"豆目","酢浆草科":"酢浆草目","桑科":"蔷薇目","荨麻科":"蔷薇目","罂粟科":"毛茛目",
+			"天南星科":"泽泻目","岩菖蒲科":"泽泻目",
+			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","莲科":"山龙眼目","菊科":"菊目","莎草科":"禾本目","芸香科":"无患子目","兰科":"天门冬目",
+			"藤黄科":"金虎尾目","大戟科":"金虎尾目","红树科":"金虎尾目",
+			"景天科":"虎耳草目","金缕梅科":"虎耳草目","小二仙草科":"虎耳草目",
+			"观音座莲科":"合囊蕨目","桫椤科":"桫椤目","里白科":"里白目","松科":"松目","柏科":"柏目",
+			"石竹科":"石竹目","紫茉莉科":"石竹目","仙人掌科":"石竹目","马齿苋科":"石竹目","商陆科":"石竹目","苋科":"石竹目","蓼科":"石竹目","藜科":"石竹目","白花丹科":"石竹目",
+			"茄科":"茄目","旋花科":"茄目",
+			"鸭跖草科":"鸭跖草目","雨久花科":"鸭跖草目",
+			"姜科":"姜目","美人蕉科":"姜目","芭蕉科":"姜目",
+			"天门冬科":"天门冬目","石蒜科":"天门冬目",
+			"车前科":"唇形目","木樨科":"唇形目","紫葳科":"唇形目","列当科":"唇形目","唇形科":"唇形目","爵床科":"唇形目","玄参科":"唇形目","马鞭草科":"唇形目","木犀科":"唇形目","通泉草科":"唇形目",
+			"壳斗科":"壳斗目","杨梅科":"壳斗目","木麻黄科":"壳斗目",
+			"西番莲科":"金虎尾目","堇菜科":"金虎尾目","藤黄科":"金虎尾目","杨柳科":"金虎尾目",
+			"龙脑香科":"锦葵目","秋海棠科":"葫芦目",
+			"番木瓜科":"十字花目","山柑科":"十字花目","十字花科":"十字花目",				
+			"茜草科":"龙胆目","夹竹桃科":"龙胆目","马钱科":"龙胆目",
+			"报春花科":"杜鹃花目","柿科":"杜鹃花目","山矾科":"杜鹃花目","凤仙花科":"杜鹃花目",
+			},
+		N_NAME2:{
+			"蛛形纲":"蛛形","唇足纲":"唇足","倍足纲":"倍足","软甲纲":"软甲","六射海绵纲":"海绵",
+			"栉水母纲":"腔肠","海百合纲":"棘皮","有铰纲":"腕足","头索纲":"头索",
+			"瓣鳃纲":"瓣鳃","腹足纲":"腹足","头足纲":"头足","肢口纲":"肢口","蔓足纲":"蔓足","寡毛纲":"环节","三叶虫纲":"三叶虫",
+			"藓纲":"藓类","苔纲":"苔类","红藻纲":"红藻","硬骨鱼纲":"鱼类",
+			"伞菌纲":"担子菌","银耳纲":"担子菌","层菌纲":"担子菌","子囊衣纲":"地衣",
+			},
 		id:-1,
-		sid:-1,
+		S_CLASS:"双子叶植物纲",
+		S_ORDER:"",
+		S_FAMILY:"",
 	},
 	methods: {
-		reSet: function reSet(){
+		reSet: function reSet(){		
 			this.list=[];
-			for(let i=0;i<file.length;i++) if(this.test || file[i].SHOW!="no") this.list.push(file[i]);
+			for(let i=0;i<sfile.length;i++) 
+				if(this.test || sfile[i].F_GROUP!="zwai") this.list.push(sfile[i]);
+				else if(i==0 || sfile[i].S_ORDER!=sfile[i-1].S_ORDER) {
+					let tmpObj ={};
+					tmpObj["S_DOMAIN"] = sfile[i]["S_DOMAIN"];tmpObj["S_KINGDOM"] = sfile[i]["S_KINGDOM"];tmpObj["S_PHYLUM"] = sfile[i]["S_PHYLUM"];
+					tmpObj["S_CLASS"] = sfile[i]["S_CLASS"];tmpObj["S_ORDER"] = sfile[i]["S_ORDER"];
+					this.list.push(tmpObj);
+				}
+			this.setNewOrderName();this.setOrderId();
 			this.$forceUpdate();		
 		},
-		getSpecies: function getSpecies(j){
-			let F_GROUP=this.list[j].F_GROUP;let F_NAME=this.list[j].F_NAME;let i=0;
-			for(;i<this.slist.length;i++) if(this.slist[i].F_GROUP==F_GROUP && this.slist[i].F_NAME.split(',').indexOf(F_NAME)>=0) break;
-			if(i==this.slist.length) this.sid=-1;
-			else this.sid=i;
+		prePic: function prePic(){
+			let i=this.id-1;
+			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
+			this.id=i;
+		},
+		nextPic: function nextPic(){
+			let i=this.id+1;
+			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
+			if(i>=this.list.length)i=-1;
+			this.id=i;
+		},
+		langTrans: function langTrans(str){
+			if(this.langid==1) return str;
+			if(this.lang[str]) return this.lang[str];
+			else return str;
+		},
+		langTransFamily: function langTransFamily(str){
+			if(this.langid==1) return str;
+			if(this.langFamily[str]) return this.langFamily[str];
+			else return str;
+		},
+		setNewOrderName: function setNewOrderName(){
+			for(let i in this.list) 
+				if(this.list[i].F_NAME!=null && this.list[i].S_FAMILY!=null && this.N_NAME[this.list[i].S_FAMILY]!=null)
+					this.list[i].S_ORDER=this.N_NAME[this.list[i].S_FAMILY];
+					
+			for(let i in this.list) 
+				if(this.list[i].F_NAME!=null && this.N_NAME2[this.list[i].S_CLASS]!=null){
+					if(this.list[i].S_FAMILY==null) this.list[i].S_FAMILY=this.list[i].S_CLASS+"."+this.list[i].S_ORDER;
+					else this.list[i].S_FAMILY=this.list[i].S_CLASS+"."+this.list[i].S_ORDER+"."+this.list[i].S_FAMILY;
+					this.list[i].S_ORDER=this.N_NAME2[this.list[i].S_CLASS];
+					this.list[i].S_CLASS=this.N_NAME2[this.list[i].S_CLASS];
+				}
+				
+			this.list.sort2(function (a,b){if(a.S_ORDER>b.S_ORDER)return -1;else return 1;});this.list.reverse();
+			//for(let i in this.list) console.log(this.list[i].S_ORDER)
+		},
+		setOrderId: function setOrderId(){
+			for(let j=0;j<this.words.length;j++) {this.words[j].id=-1;this.words[j].num=0;}
+			for(let i=0;i<this.list.length;i++) if(this.list[i].F_NAME!=null && (i==0 || this.list[i].S_ORDER!=this.list[i-1].S_ORDER) ){
+				for(let j=0;j<this.words.length;j++) if(this.words[j].n==this.list[i].S_ORDER) {this.words[j].id=i;this.words[j].num=this.getOrderChildNum(i);break;}
+			}
+		},
+		setClass: function setClass(s){
+			let i=0;
+			while(i<this.list.length) if(this.list[i].S_ORDER==s) break; else i++;
+			if(i==this.list.length) {this.S_CLASS="";return -1;}
+			else {this.S_CLASS=this.list[i].S_CLASS;return i;}
+		},
+		getFamilyChildNum: function getFamilyChildNum(j){
+			if(this.list[j].S_FAMILY==null)return "";
+			let i=j+1;
+			while(i<this.list.length) if(this.list[i].S_FAMILY!=this.list[j].S_FAMILY) break; else i++;
+			if(i-j==1)return "";
+			return j-i;
+		},
+		getOrderChildNum: function getOrderChildNum(j){
+			if(j==-1)return 0;
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; 
+				else {if(this.list[i].F_NAME!=null && this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY)k++; i++;}
+			return k;
+		},
+		getOrderGrandChildNum: function getOrderChildNum(j){
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_ORDER!=this.list[j].S_ORDER) break; 
+				else {if(this.list[i].F_NAME!=null)k++; i++;}
+			if(k<=1)return "";
+			return "/"+k;
+		},
+		getClassChildNum: function getClassChildNum(j){
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
+				else {if(this.list[i].F_NAME!=null && this.list[i].S_ORDER!=this.list[i-1].S_ORDER)k++; i++;}
+			if(k==0)return "";
+			return "/"+k;
+		},
+		getClassGrandChildNum: function getClassGrandChildNum(j){
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
+				else {if(this.list[i].F_NAME!=null && 
+				(this.list[i].S_ORDER!=this.list[i-1].S_ORDER || this.list[i].S_FAMILY!=this.list[i-1].S_FAMILY) )k++; i++;}
+			if(k==0)return "";
+			return "/"+k;
+		},
+		getClassGrandGrandChildNum: function getClassGrandGrandChildNum(j){
+			let i=j+1;let k=0;if(this.list[j].F_NAME!=null)k++;
+			while(i<this.list.length) 
+				if(this.list[i].S_CLASS!=this.list[j].S_CLASS) break; 
+				else {if(this.list[i].F_NAME!=null)k++; i++;}
+			if(k==0)return "";
+			return "/"+k;
+		},
+		getInfo: function getInfo(){
+			let str="";
+			switch(this.id) {
+				 case -2:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS) {str=this.info[i].INFO; break;}
+					break;
+				 case -3:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS && this.S_ORDER==this.info[i].S_ORDER) {str=this.info[i].INFO; break;}
+					break;
+				 case -4:
+					for(let i=0;i<this.info.length;i++) if(this.S_CLASS==this.info[i].S_CLASS && 
+						this.S_ORDER==this.info[i].S_ORDER && this.S_FAMILY==this.info[i].S_FAMILY) {str=this.info[i].INFO; break;}
+				 break;
+				 default:break;
+			} 
+			return str;
 		},
 	},
 	created: function created() {
-		if(self.location.href.substring(0,4)!="http")this.test=true;
-		else this.reSet();
+		//console.log(this.words.length);	
+		this.isIE=(!!window.ActiveXObject || "ActiveXObject" in window);
+		
 		let url=self.location.href;
-		if(url.indexOf('=')>=0){
-			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i;this.getSpecies(i);break; }
-		}
+		if(url.indexOf('sid=')>=0) this.id=decodeURI(url.split('sid=')[1].split('&')[0]);
+	
+		var tmp="";
+		if(this.id>=0) tmp=this.list[this.id].TITLE;
+		if(url.indexOf('wd=')>=0) tmp=decodeURI(url.split('wd=')[1].split('&')[0]);
+		//console.log(tmp);
+		//this.setNewOrderName();this.setOrderId();
+		if(self.location.href.substring(0,4)!="http")this.pic=true;
+		this.reSet();
+		
+		if(this.id>=0 || tmp!="") for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
+			this.id=i;
+			this.S_CLASS=this.list[i].S_CLASS;
+			this.S_ORDER=this.list[i].S_ORDER;
+			this.S_FAMILY=this.list[i].S_FAMILY;
+			break;
+		};
+		
+		if(sessionStorage.getItem("langid")==null) sessionStorage.setItem("langid",this.langid);
+		else this.langid=sessionStorage.getItem("langid");
+		
+		//if(sessionStorage.getItem("treeid")>0) this.id=sessionStorage.getItem("treeid");
+		
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
 			if (key == 36) _this.id=-1;
             if (key == 37) {
-                if(_this.id!=-1) {_this.id=(_this.id-1)%_this.list.length;_this.getSpecies(_this.id);}
+                if(_this.id!=-1) _this.prePic();
             }
 			if (key == 39) {
-                if(_this.id!=-1) {_this.id=(_this.id+1)%_this.list.length;_this.getSpecies(_this.id);}
+                if(_this.id!=-1) _this.nextPic();
             }
         };
+
 	},
 	beforeUpdate: function beforeUpdate(){
-		if(this.id>=0){
+		if(this.needUpdate==false)return;
+		if(this.id!=-1){
 			if (document.body && document.body.scrollTop) 
 				this.scrolltop=document.body.scrollTop;
 			if (document.documentElement && document.documentElement.scrollTop) 
@@ -135,12 +660,16 @@ var all=new Vue({
 		}
 	},
 	updated: function updated(){
-		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.needUpdate==false){this.needUpdate=true;return;}
+		if(this.id==-1) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].TITLE;
-		else document.title="百物卷";	
+		else if(this.id==-2) document.title="万叶集·"+this.S_CLASS;
+		else if(this.id==-3) document.title="万叶集·"+this.S_CLASS+"·"+this.S_ORDER;
+		else if(this.id==-4) document.title="万叶集·"+this.S_CLASS+"·"+this.S_ORDER+"·"+this.S_FAMILY;
+		else document.title="万叶集";	
+		//sessionStorage.setItem("treeid",this.id);
 	},
 });
 </script>
-</body>
 </html>
