@@ -30,8 +30,9 @@
 						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
 					</div>
 					<span v-if="groupname[item.F_GROUP][2]==1">						
-						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>
-						<span v-if="item.S_GROUP=='哺乳纲' && item.S_ORDER!=list[i-1].S_ORDER"><br v-if="list[i-1].S_GROUP=='哺乳纲'"/>{{item.S_ORDER}}：
+						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br>【{{item.S_GROUP}}】<br></span>
+						<span v-if="(item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲') && item.S_ORDER!=list[i-1].S_ORDER">
+							<br v-if="item.S_GROUP==list[i-1].S_GROUP && (item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲')"/>{{item.S_ORDER}}：
 						</span>					
 						<span @click.prevent="getSpecies(i);id=i" style="cursor:pointer;">
 							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
@@ -54,7 +55,8 @@
 				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a> <a v-if="sid!=-1" :href="'index.html?sid='+sid">万叶集</a>
 				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
 				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
-				<br><img class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+				<br><img v-if='list[id].F_GROUP!="zmp4"' class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
+				<video v-if='list[id].F_GROUP=="zmp4"' class='myimg' controls="controls" :src='"zmp4/"+list[id].F_NAME'></video>
 				<br><br>				
 				<div align="center">
 					<a @click.prevent="id=(id-1)%list.length" style="cursor:pointer">◀</a>
@@ -88,6 +90,7 @@ var all=new Vue({
 			scene:["风之卷","人生若尘露，天道邈悠悠<br>星辰日月，雨雾风霜，河海湖山，皆以志之",0],
 			utensil:["器之卷","形而上者谓之道，形而下者谓之器<br>器物，建筑，雕塑，皆以志之",0],
 			wood:["木之卷","长花短草，贴河而立<br>草木花果之属，凡有见者，皆以志之",0],
+			zmp4:["影之卷","鸿泥雪爪，日月山川<br>鸟兽鱼虫之属，凡有见者，皆以志之",0],
 		},
 		test:false,
 		id:-1,

@@ -131,7 +131,7 @@
 				</div>
 			</div>
 			<div v-if="id>=0">
-				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
+				<div class="title" align='center' @click="test=!test;" >{{list[id].TITLE}}</div><br>
 				<span v-if="list[id].S_DOMAIN!=null" >【{{list[id].S_DOMAIN}}】></span>
 				<span v-if="list[id].S_KINGDOM!=null" >【{{list[id].S_KINGDOM}}】></span>
 				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{list[id].S_PHYLUM}}】></span>
@@ -141,7 +141,10 @@
 					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
 					style="cursor:pointer;font-weight:bold;" >【{{list[id].S_FAMILY}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
-				<br><div v-for="(item, i) in list[id].F_NAME.split(',')"><img class='myimg' :src='list[id].F_GROUP+"/"+item' /><br/></div>
+				<br><div v-for="(item, i) in list[id].F_NAME.split(',')">
+					<span v-if="item.split('.')[1]!='mp4'" ><img class='myimg' :src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></span>
+					<span v-if="test && item.split('.')[1]=='mp4'" ><video class='myimg' controls="controls" :src='item' /></video></span>
+				</div>
 				<br><br>				
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
