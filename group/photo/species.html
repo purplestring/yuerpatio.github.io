@@ -4,6 +4,7 @@
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />	
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
+	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="species.js"></script>
 	<script src="info.js"></script>
@@ -142,7 +143,8 @@
 					style="cursor:pointer;font-weight:bold;" >【{{list[id].S_FAMILY}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				<br><div v-for="(item, i) in list[id].F_NAME.split(',')">
-					<span v-if="item.split('.')[1]!='mp4'" ><img class='myimg' :src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></span>
+					<span v-if="item.split('.')[1]!='mp4'" ><img class='myimg' style="cursor:pointer;" @click.prevent="toUrl(list[id].F_GROUP,item)"
+					:src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></span>
 					<span v-if="test && item.split('.')[1]=='mp4'" ><video class='myimg' controls="controls" :src='item' /></video></span>
 				</div>
 				<br><br>				
@@ -228,6 +230,12 @@ var all=new Vue({
 			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
+		},
+		toUrl: function toUrl(folder,file){			
+			var filename="";
+			if(file.indexOf('/')>=0) filename=file; else filename=folder+"/"+file;
+			if(filename.indexOf('../')>=0) window.location.href=linkTo(filename);//window.open(linkTo(filename),"_blank");
+			else window.location.href=linkTo('photo/photo/'+filename);	
 		},
 		getFamilyChildNum: function getFamilyChildNum(j){
 			if(this.list[j].S_FAMILY==null)return "";
@@ -345,7 +353,7 @@ var all=new Vue({
 	updated: function updated(){		
 		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
-		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		if(this.id>=0)document.title="分类页·"+this.list[this.id].TITLE;
 		else if(this.id==-2) document.title="分类页·"+this.S_CLASS;
 		else if(this.id==-3) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER;
 		else if(this.id==-4) document.title="分类页·"+this.S_CLASS+"·"+this.S_ORDER+"·"+this.S_FAMILY;

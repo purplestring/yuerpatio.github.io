@@ -17,10 +17,3 @@ var langid=1;
 if(sessionStorage.getItem("langid")==null) sessionStorage.setItem("langid",langid);
 else langid=sessionStorage.getItem("langid");
 var state=1;
-
-function linkTo(link){
-	let group=link.split('/')[0];
-	let name=link.split('/')[1];
-	if(group.split('_')[1]!=null) return '../'+group.replace(/_/,"/")+'.html?wd='+name;
-	else return '../'+group+'/index.html?wd='+name;
-}

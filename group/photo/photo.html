@@ -4,6 +4,7 @@
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
+	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="file.js"></script>
 	<script src="species.js"></script>
@@ -53,7 +54,7 @@
 				<span v-if="list[id].S_ORDER!=null" >【{{list[id].S_ORDER}}】></span>
 				<span v-if="list[id].S_FAMILY!=null" >【{{list[id].S_FAMILY}}】</span>			
 				<a v-if="sid!=-1" :href="'species.html?sid='+sid">分类页</a> <a v-if="sid!=-1" :href="'index.html?sid='+sid">万叶集</a>
-				<a v-if="list[id].LINK!=null" :href="'../'+list[id].LINK.split('/')[0]+'/index.html?wd='+list[id].LINK.split('/')[1]">本站参考<br></a>
+				<a v-if="list[id].LINK!=null" :href="linkTo(list[id].LINK)">本站参考<br></a>
 				<span v-if="list[id].F_DESC!=null" ><br>{{list[id].F_DESC}}<br></span>
 				<br><img v-if='list[id].F_GROUP!="zmp4"' class='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME'>
 				<video v-if='list[id].F_GROUP=="zmp4"' class='myimg' controls="controls" :src='"zmp4/"+list[id].F_NAME'></video>
@@ -116,8 +117,15 @@ var all=new Vue({
 		else this.reSet();
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
-			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i;this.getSpecies(i);break; }
+			if(url.indexOf('folder=')>=0){
+				let folder=decodeURI(url.split('folder=')[1].split('&')[0]);
+				let file=decodeURI(url.split('file=')[1].split('&')[0]);
+				for(let i=0;i<this.list.length;i++) if(folder==this.list[i].F_GROUP && file==this.list[i].F_NAME) {this.id=i;this.getSpecies(i);break; }
+			}
+			else{
+				let urlvalue=decodeURI(url.split('=')[1]);
+				for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i;this.getSpecies(i);break; }
+			}
 		}
 		var _this = this;
         document.onkeydown = function(e) {
@@ -142,7 +150,7 @@ var all=new Vue({
 	updated: function updated(){
 		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
-		if(this.id>=0)document.title=this.list[this.id].TITLE;
+		if(this.id>=0)document.title="百物卷·"+this.list[this.id].TITLE;
 		else document.title="百物卷";	
 	},
 });

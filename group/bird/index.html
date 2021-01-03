@@ -59,7 +59,7 @@
 			</div>
 			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br></span>
 			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br></span>
-			<span v-if="list[id].pic!=null">【俺拍嗒】<br>
+			<span v-if="list[id].pic!=null" style="cursor:pointer;" @click.prevent="window.location.href='../photo/index.html?wd='+list[id].wu">【俺拍嗒】<br>
 				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
 				<img class='myimg' v-if="id>=1329" :src='"others/"+list[id].ke.split("科")[0]+"."+list[id].wu+".jpg"'>
 			<br></span><br>
@@ -176,7 +176,7 @@ var vm = new Vue({
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].wu) {this.id=i; break; }
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].wu.replace(/[/g, "").replace(/]/g, "")) {this.id=i; break; }
 		}
 		var _this = this;
 		document.onkeydown = function(e) {

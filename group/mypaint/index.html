@@ -8,6 +8,7 @@
 		[v-cloak] {display:none;}
 	</style>
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
+	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="file.js"></script>
 	<title>书画页</title>
@@ -37,17 +38,17 @@
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
 					<a v-for="i in list[id].W_URL.length" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}<br></a><br>
-				</span>	
-				<a v-if="list[id].LINK!=null" target="_blank" :href="setUrl(id)">本站参考<br></a>				
+				</span>					
 				<br>
-				<span v-for="(item,i) in list[id].F_NAME">
-					<img id='myimg' :src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
+				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪')">
+					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.location.href=linkTo(list[id].LINK)" 
+					:src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
 				</span>
 				<br>				
 				<div align="center">
-					<a @click.prevent="id=getPre(id)" style="cursor: pointer;">◀　</a>
+					<a @click.prevent="if(id!=-1)prePic();" style="cursor: pointer;">◀　</a>
 					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
-					<a @click.prevent="id=getNext(id)" style="cursor: pointer;">　▶</a>	
+					<a @click.prevent="if(id!=-1)nextPic();" style="cursor: pointer;">　▶</a>	
 				</div>
 			</div>
 		</div>		
@@ -77,10 +78,24 @@ var all=new Vue({
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
 		let url=self.location.href;
-		if(url.indexOf('=')>=0){
-			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.id=i; break; }
+		if(url.indexOf('=')>=0){			
+			var urlvalue=decodeURI(url.split('=')[1]);
+			if(url.indexOf('folder=')>=0) urlvalue=decodeURI(url.split('folder=')[1].split('&')[0])+'/'+decodeURI(url.split('file=')[1].split('&')[0]);
+			for(let i in this.list) if(this.list[i].F_NAME) 
+				for(let j in this.list[i].F_NAME) if(urlvalue==this.list[i].F_GROUP+'/'+this.list[i].F_NAME[j]) {this.id=parseInt(i); break; }
 		}
+		
+		var _this = this;
+        document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+            if (key == 37) {
+                if(_this.id!=-1) _this.prePic();
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.nextPic();
+            }
+        };
 	},
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
@@ -97,18 +112,16 @@ var all=new Vue({
 		else document.title="书画页";	
 	},
 	methods: {		
-		getPre: function getPre(j){
-			let i=j-1;
-			for(;i>=0;i--) if(this.list[i].F_NAME!=null) return i;
-			return -1;
+		prePic: function prePic(){
+			let i=this.id-1;
+			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
+			this.id=i;
 		},
-		getNext: function getNext(j){
-			let i=j+1;
-			for(;i<this.list.length;i++) if(this.list[i].F_NAME!=null) return i;
-			return -1;
-		},
-		setUrl: function setUrl(id){
-			return linkTo(this.list[id].LINK);
+		nextPic: function nextPic(){
+			let i=this.id+1;
+			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
+			if(i>=this.list.length)i=-1;
+			this.id=i;
 		},
 	}
 });

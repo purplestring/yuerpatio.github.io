@@ -12,7 +12,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>画之册</title>
+	<title>画卷集</title>
 	<script src="paints.js"></script>
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/vue.min.js"></script>
@@ -25,7 +25,7 @@
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
 		<div v-if="id==-1">
-			<div class="title" align="center" @click="test=!test;reSet();" >画之册</div><br><br>
+			<div class="title" align="center" @click="test=!test;reSet();" >画卷集</div><br><br>
 			<div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
 			可简单筛选，随便翻翻便好。版权及带宽所限，<br>
 			大图、近现代作品有目无画。仅供交流学习，叮！<br>
@@ -34,16 +34,18 @@
 			 <div class="desc2">
 				<span v-for="(item,i) in statename" >
 					<span :style="'color:'+statecolor[statevalue[i]]" @click="setType(i)" style="cursor:pointer">{{statename[i]}}</span> 
-					<span v-if="i==8 || i==18 || i==27 || i==35" ><br></span>
+					<span v-if="i==9 || i==19 || i==28 || i==36" ><br></span>
 				</span>	
 			</div>
 			<span v-for="(item, i) in list">
 				<span v-if="item.fliter">			
-					<span class='family' v-if="getPre(i)<0 || item.P_DYNASTY!=list[getPre(i)].P_DYNASTY">
+					<span class='family' v-if="item.pre<0 || item.P_DYNASTY!=item.preDynasty">
 						<br><br><br>{{item.P_DYNASTY}}<br>
 					</span>
-					<span v-if="!(!test && item.SHOW=='no' && item.P_DYNASTY=='近现代') && (getPre(i)<0 || (item.P_AUTHOR!=list[getPre(i)].P_AUTHOR || item.P_DYNASTY!=list[getPre(i)].P_DYNASTY))">
-						<br>【<span><span v-if="item.A_EN==null">{{item.P_AUTHOR}}</span><a 
+					<span v-if="!(!test && item.SHOW=='no' && item.P_DYNASTY=='近现代') && (item.pre<0 || (item.P_AUTHOR!=item.preAuthor || item.P_DYNASTY!=item.preDynasty))">
+						<br>【<span><span v-if="!test && item.A_EN==null">{{item.P_AUTHOR}}</span><a 
+						v-if="test && item.A_EN==null" style='color:blue;cursor:pointer'  target="_blank" 
+						:href='"http://www.ltfc.net/exhibit/search#category=c1&keyword="+item.P_AUTHOR'>{{item.P_AUTHOR}}</a><a 
 						v-if="item.A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
 						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a>
 						</span>】
@@ -76,14 +78,15 @@
                 {{list[id].P_TYPE}}<br>
                 <span v-if="list[id].P_WIDTH!=null">横：{{list[id].P_WIDTH}}厘米；</span>
                 <span v-if="list[id].P_HEIGHT!=null">纵：{{list[id].P_HEIGHT}}厘米</span>
-				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a><br>
+				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a>
+				<a v-if="list[id].P_MY!=null" :href='"../mypaint/index.html?name="+list[id].P_MY'>My</a><br>				
             </div>
             <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='近现代' && list[id].P_DYNASTY!='20世纪')">
 				<img id='myimg' :src='list[id].P_PICS' @dblclick='window.open(list[id].P_PICS);'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
 			</span-->
-            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画之册◀</a></div>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画卷集◀</a></div>
 		</div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
@@ -123,6 +126,7 @@ var vm = new Vue({
 				this.list[j].fliter= true;
 				if(!this.test && this.list[j].SHOW=="no") this.list[j].fliter= false;
 			}
+			this.setPre();
 			this.$forceUpdate();		
 		},
 		setType: function setType(i){
@@ -162,6 +166,7 @@ var vm = new Vue({
 			}
 							
 			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			this.setPre();
 			this.$forceUpdate();
 		},
 		c: function c(staten){
@@ -186,10 +191,21 @@ var vm = new Vue({
 			}
 			this.list[i].fliter= true; return;
 		},
+		setPre: function setPre(){
+			let pre=-1; let preAuthor=""; let preDynasty="";
+			for(let i=0;i<this.list.length;i++) 
+				if(this.list[i].fliter) {
+					this.list[i].pre=pre;pre=i;
+					this.list[i].preAuthor=preAuthor;preAuthor=this.list[i].P_AUTHOR;
+					this.list[i].preDynasty=preDynasty;preDynasty=this.list[i].P_DYNASTY;
+				}
+				else this.list[i].pre=-1;
+		},
 		getPre: function getPre(j){
-			let i=j-1;
+			/*let i=j-1;
 			for(;i>=0;i--) if(this.list[i].fliter) return i;
-			return -1;
+			return -1;*/
+			return this.list[j].pre;
 		},
 		getNext: function getNext(j){
 			let i=j+1;
@@ -213,7 +229,7 @@ var vm = new Vue({
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].P_NAME) {this.id=i; break; }
+			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].P_NAME || urlvalue==this.list[i].P_PICS) {this.id=i; break; }
 		}
 		var _this = this;
 		document.onkeydown = function(e) {
@@ -239,7 +255,7 @@ var vm = new Vue({
 		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].P_NAME;
-		else document.title="画之册";	
+		else document.title="画卷集";	
 	},
 })
 </script>
