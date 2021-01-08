@@ -37,7 +37,10 @@
 				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
-					<a v-for="i in list[id].W_URL.length" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}<br></a><br>
+					<span  v-for="i in list[id].W_URL.length">
+						<a  name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}</a><br>
+						<span v-if="test" v-html=getWeibo(list[id].W_URL[i-1])></span><br>
+					</span>
 				</span>					
 				<br>
 				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪')">
@@ -66,6 +69,7 @@ function loadScript(script){
 loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
+if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weibos.js");
 
 var all=new Vue({
 	el: '#all',
@@ -122,6 +126,14 @@ var all=new Vue({
 			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
+		},
+		getWeibo: function getWeibo(link){
+			//console.log(weibo.RECORDS.length)
+			for(let i in weibo.RECORDS) {
+				if(link==weibo.RECORDS[i].link) return weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+				//if(link<weibo.RECORDS[i].link) return "";
+			}
+			return "";
 		},
 	}
 });

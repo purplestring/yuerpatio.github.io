@@ -459,7 +459,8 @@ var all=new Vue({
 			],
 		N_NAME:{
 			"樟科":"樟目","棕榈科":"棕榈目","豆科":"豆目","酢浆草科":"酢浆草目","桑科":"蔷薇目","榆科":"蔷薇目","荨麻科":"蔷薇目","罂粟科":"毛茛目",
-			"天南星科":"泽泻目","岩菖蒲科":"泽泻目",
+			"天南星科":"泽泻目","岩菖蒲科":"泽泻目","水鳖科":"泽泻目",
+			"菖蒲科":"菖蒲目","忍冬科":"川续断目","木兰科":"木兰目","金鱼藻科":"金鱼藻目",
 			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","莲科":"山龙眼目","菊科":"菊目","莎草科":"禾本目","芸香科":"无患子目","兰科":"天门冬目",
 			"藤黄科":"金虎尾目","大戟科":"金虎尾目","红树科":"金虎尾目",
 			"景天科":"虎耳草目","金缕梅科":"虎耳草目","小二仙草科":"虎耳草目",
@@ -528,6 +529,7 @@ var all=new Vue({
 		toUrl: function toUrl(folder,file){			
 			var filename="";
 			if(file.indexOf('/')>=0) filename=file; else filename=folder+"/"+file;
+			if(filename.indexOf('zwai/')>=0) return;
 			if(filename.indexOf('../')>=0) window.location.href=linkTo(filename);//window.open(linkTo(filename),"_blank");
 			else window.location.href=linkTo('photo/photo/'+filename);	
 		},
@@ -630,7 +632,7 @@ var all=new Vue({
 		this.isIE=(!!window.ActiveXObject || "ActiveXObject" in window);
 		
 		let url=self.location.href;
-		if(url.indexOf('sid=')>=0) this.id=decodeURI(url.split('sid=')[1].split('&')[0]);
+		if(url.indexOf('sid=')>=0) this.id=parseInt(decodeURI(url.split('sid=')[1].split('&')[0]));
 	
 		var tmp="";
 		if(this.id>=0) tmp=this.list[this.id].TITLE;
@@ -638,6 +640,7 @@ var all=new Vue({
 		//console.log(tmp);
 		//this.setNewOrderName();this.setOrderId();
 		//if(self.location.href.substring(0,4)!="http")this.pic=true;
+		if(self.location.href.substring(0,4)!="http" && (this.id>=0 || tmp!="") )this.test=true;
 		this.reSet();
 		
 		if(this.id>=0 || tmp!="") for(var i in this.list) if(this.list[i].TITLE!=null && this.list[i].TITLE==tmp) {
