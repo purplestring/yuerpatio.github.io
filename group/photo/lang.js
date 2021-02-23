@@ -240,6 +240,12 @@
 "基部类":"Basal Groups",
 "木兰类":"Magnoliids",
 "水龙骨纲":"Polypodiopsida",
+"水龙骨":"Polypodiidae",
+"真蕨":"Polypodiopsida",
+"松柏纲":"Pinopsida",
+"松柏":"Pinopsida",
+"买麻藤纲":"Gnetopsida",
+"买麻藤":"Gnetopsida",
 
 "鱼类":"Osteichthyes",
 "脊索动物门":"Chordata",

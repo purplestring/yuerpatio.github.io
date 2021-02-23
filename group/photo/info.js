@@ -140,6 +140,8 @@
 {S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "车前目",S_FAMILY: "车前科",TITLE: "车前草",F_GROUP: "wood",F_NAME: "cheqian01.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "白花丹目",},
 {S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "报春花目",},
+{S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "唇形目",INFO: "唇形目（学名：Lamiales）也被称为玄参目（Scrophulariales），是一类双子叶植物，木本或草本，其中玄参科常含有生物碱和甙类，所以很多种都可以作为药用，也有一些观赏植物花卉。本目包括木犀科、玄参科、唇形科、车前科、列当科、紫葳科、爵床科、苦苣苔科、狸藻科、马鞭草科、醉鱼草科、透骨草科等25科。",},
+{S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "金虎尾目",INFO: "APG 分类法设立了这个目，在I类真蔷薇分支下面，其中许多科原来是被分在许多其他不同的目中的，像大戟目、杨柳目、堇菜目、山茶目等。《APG 分类法》设立了32个科，2003年修订的《APG II 分类法》剔除了几个科，又合并了几个科，已知共有36个科。",},
 {S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "茜草目",S_FAMILY: "茜草科",TITLE: "鸡眼藤",F_GROUP: "wood",F_NAME: "hongguo01.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "植物界",S_PHYLUM: "被子植物门",S_CLASS: "双子叶植物纲",S_ORDER: "管状花目",INFO: "大多为草本，也有灌木、乔木或木质藤本；不具托叶。花两性，很少单性，下位花，典型地为5基数的四轮，或通常心皮数减少，如为左右对称花时雄蕊数也减少；花冠合瓣，整齐或左右对称；虫媒花；雄蕊着生于花冠上；心皮通常2个，合生，纵向的，子房通常有假隔膜；胚珠少数至多数，倒生，稀横生或直生，珠孔向上或向下，稀侧向，1层珠被。",},
 /*{S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "原生动物门",S_CLASS: "未知纲",S_ORDER: "未知目",},

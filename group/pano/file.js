@@ -37,6 +37,7 @@
 {"TITLE":"漳州","F_GROUP":"map","F_NAME":"zhangzhou",},
 {"TITLE":"神农架","F_GROUP":"map","F_NAME":"shennongjia",},
 {"TITLE":"纳木错","F_GROUP":"map","F_NAME":"namucuo",},
+{"TITLE":"火星毅力号","F_GROUP":"map","F_NAME":"mars01",},
 
 {"TITLE":"👧和喵","F_GROUP":"piyipi","F_NAME":"cb01",},
 {"TITLE":"👧骑车","F_GROUP":"piyipi","F_NAME":"cb02",},

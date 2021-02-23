@@ -38,7 +38,7 @@
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
 					<span  v-for="i in list[id].W_URL.length">
-						<a  name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}</a><br>
+						<a  name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}</a>
 						<span v-if="test" v-html=getWeibo(list[id].W_URL[i-1])></span><br>
 					</span>
 				</span>					
@@ -90,6 +90,11 @@ var all=new Vue({
 		}
 		
 		var _this = this;
+		if(_this.id!=-1) {
+			var tmp=_this.id;
+			_this.id=-9999;
+			setTimeout(function(){ _this.id=tmp; }, 100);
+		}
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
 			if (key == 36) _this.id=-1;
@@ -129,8 +134,9 @@ var all=new Vue({
 		},
 		getWeibo: function getWeibo(link){
 			//console.log(weibo.RECORDS.length)
+			//if(typeof weibo=='undefined')return "";
 			for(let i in weibo.RECORDS) {
-				if(link==weibo.RECORDS[i].link) return weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+				if(link==weibo.RECORDS[i].link) return weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
 				//if(link<weibo.RECORDS[i].link) return "";
 			}
 			return "";

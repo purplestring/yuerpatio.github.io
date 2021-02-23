@@ -34,7 +34,7 @@
 			 <div class="desc2">
 				<span v-for="(item,i) in statename" >
 					<span :style="'color:'+statecolor[statevalue[i]]" @click="setType(i)" style="cursor:pointer">{{statename[i]}}</span> 
-					<span v-if="i==9 || i==19 || i==28 || i==36" ><br></span>
+					<span v-if="i==9 || i==20 || i==29 || i==37" ><br></span>
 				</span>	
 			</div>
 			<span v-for="(item, i) in list">
@@ -54,9 +54,9 @@
 						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
 					</span>
 					<span v-if="!test && item.SHOW!='no'">
-						<a v-if="item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪'" 
+						<a v-if="item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞'" 
 						style='color:#000;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
-						<a v-if="!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪')" 
+						<a v-if="!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞')" 
 						style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
 					</span>
 				</span>
@@ -81,7 +81,7 @@
 				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a>
 				<a v-if="list[id].P_MY!=null" :href='"../mypaint/index.html?name="+list[id].P_MY'>My</a><br>				
             </div>
-            <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='近现代' && list[id].P_DYNASTY!='20世纪')">
+            <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='近现代' && list[id].P_DYNASTY!='20世纪' && list[id].P_AUTHOR[2]!='窟' && list[id].P_AUTHOR[3]!='洞')">
 				<img id='myimg' :src='list[id].P_PICS' @dblclick='window.open(list[id].P_PICS);'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
@@ -108,7 +108,7 @@ var vm = new Vue({
 	data:{
 		list:myjson.RECORDS,
 		statename:["SS","S","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
-                    "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","宗教",
+                    "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","动物","宗教",
                     "中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
                     "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
                     "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
