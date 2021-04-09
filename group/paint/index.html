@@ -24,21 +24,22 @@
 		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br><br>
-		<div v-if="id==-1">
+		<div v-if="id==-1 && P_AUTHOR==''">
 			<div class="title" align="center" @click="test=!test;reSet();" >画卷集</div><br><br>
 			<div class="desc2">大师的画作有些多，记不住。整理了些，搁这了。<br>
 			可简单筛选，随便翻翻便好。版权及带宽所限，<br>
 			大图、近现代作品有目无画。仅供交流学习，叮！<br>
-			【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br><br><br>									
+			【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span>
+			<span @click.prevent="zuopin=!zuopin" style="cursor:pointer;color:green;" v-text="zuopin?'作品':'作者'"></span><br><br><br>									
 			</div>
 			 <div class="desc2">
 				<span v-for="(item,i) in statename" >
 					<span :style="'color:'+statecolor[statevalue[i]]" @click="setType(i)" style="cursor:pointer">{{statename[i]}}</span> 
-					<span v-if="i==9 || i==20 || i==29 || i==37" ><br></span>
+					<span v-if="i==10 || i==21 || i==27 || i==34 || i==42" ><br></span>
 				</span>	
 			</div>
 			<span v-for="(item, i) in list">
-				<span v-if="item.fliter">			
+				<span v-if="item.fliter && zuopin">			
 					<span class='family' v-if="item.pre<0 || item.P_DYNASTY!=item.preDynasty">
 						<br><br><br>{{item.P_DYNASTY}}<br>
 					</span>
@@ -49,19 +50,42 @@
 						v-if="item.A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
 						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a>
 						</span>】
+						<a style='cursor:pointer' target="_blank" @click.prevent="P_DYNASTY=item.P_DYNASTY,P_AUTHOR=item.P_AUTHOR"> ▶ </a>
 					</span>
 					<span v-if="test">
 						<a style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
 					</span>
 					<span v-if="!test && item.SHOW!='no'">
-						<a v-if="item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞'" 
+						<a v-if="item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_DYNASTY=='今人' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞'" 
 						style='color:#000;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
-						<a v-if="!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞')" 
+						<a v-if="!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_DYNASTY=='今人' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞')" 
 						style='color:DarkCyan;cursor:pointer' @click="id=i">{{item.P_NAME}}</a>
+					</span>
+				</span>
+				<span v-if="item.fliter && !zuopin">			
+					<span class='family' v-if="item.pre<0 || item.P_DYNASTY!=item.preDynasty">
+						<br><br><br>{{item.P_DYNASTY}}<br>
+					</span>
+					<span v-if="!(!test && item.SHOW=='no' && item.P_DYNASTY=='近现代') && (item.pre<0 || (item.P_AUTHOR!=item.preAuthor || item.P_DYNASTY!=item.preDynasty))">
+						<span @click.prevent="P_DYNASTY=item.P_DYNASTY,P_AUTHOR=item.P_AUTHOR" style='color:blue;cursor:pointer' target="_blank">{{item.P_AUTHOR}}|</span>
 					</span>
 				</span>
 			</span>
 			<br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
+		</div>
+		<div v-if="id==-1 && P_AUTHOR!=''">
+			<div class="title" align="center" @click.prevent="test=!test">{{P_DYNASTY}} > {{P_AUTHOR}}</div><br>
+			<div id="waterfall" class="waterfall" >
+				<div class="water" v-for="(item,i) in list" v-if="item.fliter && (P_DYNASTY==item.P_DYNASTY && P_AUTHOR==item.P_AUTHOR) && (test || ((!test && item.SHOW!='no') && (
+					!(item.P_PICS.split('/')[0]!='img' || item.P_DYNASTY=='近现代' || item.P_DYNASTY=='20世纪' || item.P_DYNASTY=='今人' || item.P_AUTHOR[2]=='窟' || item.P_AUTHOR[3]=='洞'))))">
+					<img :src='item.P_PICS' @click.prevent="id=i" alt="" />
+					<p>{{item.P_NAME}}</p>
+				</div>
+			</div>
+			<br/><br/>
+			<div align="center">
+				<a @click.prevent="P_DYNASTY='',P_AUTHOR=''" style="cursor:pointer">返回上页</a>
+			</div>
 		</div>
 		<div v-if="id>=0">
 			<div class='title' align='center' @click="test=!test;">{{list[id].P_NAME}}</div>
@@ -81,12 +105,13 @@
 				<a :href='"https://www.baidu.com/s?wd="+list[id].P_NAME' target="_blank">百度一下</a>
 				<a v-if="list[id].P_MY!=null" :href='"../mypaint/index.html?name="+list[id].P_MY'>My</a><br>				
             </div>
-            <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='近现代' && list[id].P_DYNASTY!='20世纪' && list[id].P_AUTHOR[2]!='窟' && list[id].P_AUTHOR[3]!='洞')">
+            <span v-if="test || (list[id].P_PICS.split('/')[0]=='img' && list[id].P_DYNASTY!='近现代' &&
+			list[id].P_DYNASTY!='20世纪' && list[id].P_DYNASTY!='今人' && list[id].P_AUTHOR[2]!='窟' && list[id].P_AUTHOR[3]!='洞')">
 				<img id='myimg' :src='list[id].P_PICS' @dblclick='window.open(list[id].P_PICS);'></span>
 			<!--span v-if="!test && list[id].P_PICS.split('/')[0]!='img'">
 				<iframe id="iframes" :src='"https://baike.baidu.com/item/"+list[id].P_NAME'></iframe>
 			</span-->
-            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回画卷集◀</a></div>
+            <br><br><div class="ret3"><a style="cursor:pointer" @click.prevent="id=-1"> ▶返回上页◀</a></div>
 		</div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
@@ -103,13 +128,15 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+//var alljpg="";for(let i in myjson.RECORDS)if(myjson.RECORDS[i].P_PICS[3]=='j') alljpg+=myjson.RECORDS[i].P_PICS.split('/')[1]+"\r\n"; console.log(alljpg);
 var vm = new Vue({
 	el: '#main',
 	data:{
 		list:myjson.RECORDS,
-		statename:["SS","S","水墨","设色","油彩","绢本","纸本","布面","木板","壁画",
+		statename:["SSS","SS","S","水墨","设色","油彩","绢本","纸本","布面","木板","壁画","写生",
                     "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","动物","宗教",
-                    "中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
+                    "中国","日本", "韩国","意大利","法国","西班牙",
+					"荷兰","比利时","德国","瑞士","英国","俄国","美国",
                     "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
                     "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
 		],
@@ -117,6 +144,9 @@ var vm = new Vue({
 		statevalue:[],
 		statecolor:["#888","#000","#fff"],
 		id:-1,
+		P_AUTHOR:"",
+		P_DYNASTY:"",
+		zuopin:true,
 		test:false,
 	},
 	methods: {		
@@ -124,7 +154,7 @@ var vm = new Vue({
 			for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
 			for(let j=0;j<this.list.length;j++) {
 				this.list[j].fliter= true;
-				if(!this.test && this.list[j].SHOW=="no") this.list[j].fliter= false;
+				if(!this.test && (this.list[j].SHOW=="no" || this.list[j].P_DYNASTY=="今人" || this.list[j].P_DYNASTY=="近现代" )) this.list[j].fliter= false;
 			}
 			this.setPre();
 			this.$forceUpdate();		
@@ -154,8 +184,9 @@ var vm = new Vue({
 					this.c(["绢本","纸本","布面","木板","壁画",]);
 					this.statevalue[i]=1;
 				}			
-				if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("俄国")){
-					this.c(["中国","日本","意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",]);
+				if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("美国")){
+					this.c(["中国","日本", "韩国","意大利","法国","西班牙",
+					"荷兰","比利时","德国","瑞士","英国","俄国","美国",]);
 					this.statevalue[i]=1;
 				}									
 				if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("四僧")){
@@ -180,9 +211,9 @@ var vm = new Vue({
 			for(let j=0;j<this.statename.length;j++) {
 				if(this.statevalue[j]==0) continue;				
 				let get=0;
-				let fenlei="P_TYPE"; if(j<2) fenlei="P_STAR";
+				let fenlei="P_TYPE"; if(j<3) fenlei="P_STAR";
 				let word=this.statename[j]; 
-				if(j==0) word="6";if(j==1) word="5";
+				if(j==0) word="5";if(j==1) word="4";if(j==2) word="3";
 				if(this.list[i][fenlei]==null) get=-1;
 				else get=this.list[i][fenlei].indexOf(word);
 				if(get!=-1 && this.statevalue[j]==1) continue;
@@ -224,7 +255,7 @@ var vm = new Vue({
 		},
 	},
 	created: function created() {	
-        if(self.location.href.substring(0,4)!="http")this.test=true;
+        if(self.location.href.substring(0,4)!="http"){this.test=true;this.zuopin=false;}
 		this.reSet();
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
@@ -244,7 +275,7 @@ var vm = new Vue({
         };
     },
 	beforeUpdate: function beforeUpdate(){
-		if(this.id>=0){
+		if(this.id>=0 || this.P_AUTHOR!=''){
 			if (document.body && document.body.scrollTop) 
 				this.scrolltop=document.body.scrollTop;
 			if (document.documentElement && document.documentElement.scrollTop) 
@@ -252,7 +283,7 @@ var vm = new Vue({
 		}
 	},
 	updated: function updated(){
-		if(this.id<0) document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
+		if(this.id<0 && this.P_AUTHOR=='') document.body.scrollTop=document.documentElement.scrollTop=this.scrolltop;
 		else document.body.scrollTop=document.documentElement.scrollTop=0;
 		if(this.id>=0)document.title=this.list[this.id].P_NAME;
 		else document.title="画卷集";	

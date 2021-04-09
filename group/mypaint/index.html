@@ -18,13 +18,21 @@
 		<div id="mb"></div><div id="lt"></div><div id="rt"></div>
 		<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 		<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
-		<div id="all" v-cloak>		
-			<div v-if="id==-1">
-				<div class="title" align="center" @click.prevent="test=!test">书画页</div><br><br>
-				<span v-for="(item,i) in list" v-if="test || (item.SHOW!='no' && item.F_GROUP!='test')">
-					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" class="family"><br/><br/>{{groupname[item.F_GROUP]}}<br/><br/></div>
-					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】<br/></span>			
-					<a v-if="item.F_NAME==null" name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+item.W_URL[0]">{{item.TITLE}}</a>
+		<div id="all" v-cloak>
+			<div v-if="id==-1 && S_GROUP==''">
+				<div class="title" align="center" @click.prevent="test=!test">书画页</div><br>
+				<div class="desc2" style="cursor:pointer;" v-if="!full" @click.prevent="full=!full">简</div>
+				<div class="desc2" style="cursor:pointer;" v-if="full" @click.prevent="full=!full">全</div><br>
+				<span v-for="(item,i) in list" v-if="(test || (
+				(item.SHOW!='no' && item.F_GROUP!='test') 
+				&& (!test && item.F_NAME!=null && item.F_NAME[0].slice(0,2)!=20)
+				)) && (full || ( !full && item.F_STAR==5) )">
+					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP"
+					@click.prevent="S_GROUP=item.S_GROUP,F_GROUP=item.F_GROUP" class="family" style="cursor: pointer;"><br/><br/>{{groupname[item.F_GROUP]}}<br/><br/></div>
+					<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP) && item.S_GROUP!=groupname[item.F_GROUP] && item.S_GROUP!='c4d'"
+					@click.prevent="S_GROUP=item.S_GROUP,F_GROUP=item.F_GROUP" style="cursor: pointer;"><br/>【{{item.S_GROUP}}】<br/></span>			
+					<a v-if="item.F_NAME==null" 
+						name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+item.W_URL[0]">{{item.TITLE}}</a>
 					<a v-if="item.F_NAME!=null" @click.prevent="id=i" style="color: darkcyan; cursor: pointer;">{{item.TITLE}}</a>
 					<span v-if="item.F_GROUP=='guhua' || item.F_GROUP=='shufa'"></br></span>
 					<span v-if="item.TITLE=='谷雨' || item.TITLE=='大暑' || item.TITLE=='霜降'"></br></span>					
@@ -33,24 +41,44 @@
 					<a href="../../index.html" style="cursor:pointer">返回主页</a>
 				</div>
 			</div>
+			<div v-if="id==-1 && S_GROUP!=''">
+				<div class="title" align="center" @click.prevent="test=!test">{{groupname[F_GROUP]}} > {{S_GROUP}}</div><br>
+				<div class="desc2" style="cursor:pointer;" v-if="!full" @click.prevent="full=!full">简</div>
+				<div class="desc2" style="cursor:pointer;" v-if="full" @click.prevent="full=!full">全</div><br>
+				<div id="waterfall" class="waterfall" >
+					<div class="water" v-for="(item,i) in list" v-if="item.F_GROUP==F_GROUP && item.S_GROUP==S_GROUP && (test || (
+						(item.SHOW!='no' && item.F_GROUP!='test') 
+						&& (!test && item.F_NAME!=null && item.F_NAME[0].slice(0,2)!=20)
+						)) && (full || ( !full && item.F_STAR==5) )">
+						<img v-for="(myimg,j) in item.F_NAME" :src='item.F_GROUP+"/"+myimg' @click.prevent="id=i" alt="" />
+						<p>{{item.TITLE}}</p>
+					</div>
+				</div>
+				<br/><br/>
+				<div align="center">
+					<a @click.prevent="S_GROUP='',F_GROUP=''" style="cursor:pointer">返回上页</a>
+				</div>
+			</div>
 			<div v-if="id!=-1">
-				<div class="title" align='center'>{{list[id].TITLE}}</div><br>
+				<div class="title" align='center'>{{list[id].S_GROUP}} > {{list[id].TITLE}}</div><br>
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
 				<span v-if="list[id].W_URL!=null" >
 					<span  v-for="i in list[id].W_URL.length">
 						<a  name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}</a>
 						<span v-if="test" v-html=getWeibo(list[id].W_URL[i-1])></span><br>
-					</span>
-				</span>					
-				<br>
-				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪')">
+					</span><br>
+				</span>							
+				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪' && list[id].F_NAME[0].slice(0,2)!=20)">
 					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.location.href=linkTo(list[id].LINK)" 
 					:src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
 				</span>
-				<br>				
+				<br>
+				<span v-if="list[id].W_URL==null && (list[id].F_NAME[0].slice(0,3)==201 || list[id].F_NAME[0].slice(0,3)==202)" >
+					<span v-if="test" v-html=getWeiboDate(list[id].F_NAME[0].slice(0,8))></span><br>
+				</span>					
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor: pointer;">◀　</a>
-					<a @click.prevent="id=-1" style="cursor:pointer">返回卷主页</a>
+					<a @click.prevent="id=-1" style="cursor:pointer">返回上页</a>
 					<a @click.prevent="if(id!=-1)nextPic();" style="cursor: pointer;">　▶</a>	
 				</div>
 			</div>
@@ -69,15 +97,19 @@ function loadScript(script){
 loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
-if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weibos.js");
+if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weiboa.js");
 
 var all=new Vue({
 	el: '#all',
 	data:{ 	
 		list:file,
-		groupname:{color:"彩色写实",guhua:"古画临摹",jieqi:"节气",suse:"素色写实",shufa:"书法临摹",other:"其它一些",},
+		groupname:{color:"彩色写实",guhua:"古画临摹",jieqi:"节气",suse:"素色写实",shufa:"书法临摹",other:"其它一些",
+		jihe:"几何",font:"字体",xieshi:"写实",shiwu:"实物",jianbi:"简笔",tool:"工具",c4d:"C4D",},
 		test:false,
+		full:true,
 		id:-1,
+		F_GROUP:"",
+		S_GROUP:"",
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
@@ -123,12 +155,12 @@ var all=new Vue({
 	methods: {		
 		prePic: function prePic(){
 			let i=this.id-1;
-			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
+			while(i!=-1) if(this.list[i].F_NAME!=null && (this.full || ( !this.full && this.list[i].F_STAR==5)) && (this.test || this.list[i].F_NAME[0].slice(0,2)!=20) ) break; else i--;
 			this.id=i;
 		},
 		nextPic: function nextPic(){
 			let i=this.id+1;
-			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
+			while(i<this.list.length) if(this.list[i].F_NAME!=null && (this.full || ( !this.full && this.list[i].F_STAR==5)) && (this.test || this.list[i].F_NAME[0].slice(0,2)!=20)) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
 		},
@@ -136,10 +168,26 @@ var all=new Vue({
 			//console.log(weibo.RECORDS.length)
 			//if(typeof weibo=='undefined')return "";
 			for(let i in weibo.RECORDS) {
-				if(link==weibo.RECORDS[i].link) return weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+				if(link==weibo.RECORDS[i].link) {
+					let str=weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+					if(weibo.RECORDS[i].link2!="") str+="<br><br>引用【<a  name='file' target='_blank' href='https://weibo.com/"+weibo.RECORDS[i].authorb+"/"+weibo.RECORDS[i].linkb+"'>"+
+					weibo.RECORDS[i].nameb+"</a>】"+weibo.RECORDS[i].pubdateb+"<br>"+weibo.RECORDS[i].textb.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+					return str;
+				}
 				//if(link<weibo.RECORDS[i].link) return "";
 			}
 			return "";
+		},
+		getWeiboDate: function getWeiboDate(date){
+			let tmpdate=parseInt(date.slice(6,8))+"/"+parseInt(date.slice(4,6))+"/"+date.slice(0,4);
+			let str="";
+			for(let i in weibo.RECORDS) {
+				if(tmpdate==weibo.RECORDS[i].pubdate.split(" ")[0]) 
+					//if(weibo.RECORDS[i].text.indexOf("评论配图")!=-1 || weibo.RECORDS[i].text.indexOf("查看图片")!=-1 ) 					
+						str+='<a target="_blank" href="https://weibo.com/5679301959/'+weibo.RECORDS[i].link+'">'+weibo.RECORDS[i].pubdate+'</a><br>'+
+							weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦")+"<br>";
+			}
+			return str;
 		},
 	}
 });

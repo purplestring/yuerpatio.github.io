@@ -356,7 +356,8 @@ var jsonFile="201412.json";
 		else if(nian==2020 && yue<6) jsonFile="202006.json";
 		else if(nian==2020 && yue<8) jsonFile="202008.json";
 		else if(nian==2020 && yue<10) jsonFile="202010.json";
-		else if((nian==2020 && yue<12) || nian==2021) jsonFile="202012.json";
+		else if(nian==2020 && yue<12) jsonFile="202012.json";
+		else if(nian==2021) jsonFile="202102.json";
 		info="";
 			if(document.location.protocol === "file:" && navigator.userAgent.indexOf("Android")<0){
 				//console.log("aa")
