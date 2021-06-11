@@ -24,24 +24,24 @@
 				</div>
 				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a> <a href="index.html">万叶集</a> </div>				
 				<span v-for="(item,i) in list">
-					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP" style="text-align:center;"><br/><br/>
+					<div v-if="i==0 ||item.F_GROUP!=item.F_GROUP_LAST" style="text-align:center;"><br/><br/>
 						<span class="family" >{{groupname[item.F_GROUP][0]}}</span><br/><br/>					
 						<span class="desc2" v-html="groupname[item.F_GROUP][1]"></span><br/><br/>
 						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼收起▼ —————</span>						
 						<span v-if="groupname[item.F_GROUP][2]==0" @click="groupname[item.F_GROUP][2]=1;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▼展开▼ —————</span>
 					</div>
 					<span v-if="groupname[item.F_GROUP][2]==1">						
-						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br>【{{item.S_GROUP}}】<br></span>
-						<span v-if="(item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲') && item.S_ORDER!=list[i-1].S_ORDER">
-							<br v-if="item.S_GROUP==list[i-1].S_GROUP && (item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲')"/>{{item.S_ORDER}}：
+						<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=item.S_GROUP_LAST)"><br>【{{item.S_GROUP}}】<br></span>
+						<span v-if="(item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲') && item.S_ORDER!=item.S_ORDER_LAST">
+							<br v-if="item.S_GROUP==item.S_GROUP_LAST && (item.S_GROUP=='哺乳纲' || item.S_GROUP=='鸟纲')"/>{{item.S_ORDER}}：
 						</span>					
 						<span @click.prevent="getSpecies(i);id=i" style="cursor:pointer;">
-							<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].TITLE}} </span>
-							<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].TITLE}} </span>
+							<span v-if="item.LINK==null" style="color:Green;">{{item.TITLE}} </span>
+							<span v-if="item.LINK!=null" style="color:DarkCyan;font-weight:900">{{item.TITLE}} </span>
 						</span>	
 					</span>	
-					<div v-if="i==list.length-1 || item.F_GROUP!=list[i+1].F_GROUP" style="text-align:center;"><br/>
-						<span v-if="groupname[item.F_GROUP][2]==1" @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▲收起▲ —————</span>
+					<div v-if="groupname[item.F_GROUP][2]==1 && (i==list.length-1 || item.F_GROUP!=item.F_GROUP_NEXT)" style="text-align:center;">
+						<br/><span @click="groupname[item.F_GROUP][2]=0;$forceUpdate();" style="cursor:pointer;color:Green;">————— ▲收起▲ —————</span>
 					</div>					
 				</span>
 				<br/><br/>
@@ -80,6 +80,8 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+//for(i in file) if(file[i].F_GROUP=="wood")console.log(file[i].F_NAME);
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -101,7 +103,24 @@ var all=new Vue({
 		reSet: function reSet(){
 			this.list=[];
 			for(let i=0;i<file.length;i++) if(this.test || file[i].SHOW!="no") this.list.push(file[i]);
+			this.getNearGroup();
 			this.$forceUpdate();		
+		},
+		getNearGroup: function getNearGroup(){
+			this.list[0].F_GROUP_LAST="";
+			var tmp=this.list[0].F_GROUP;
+			var tmps=this.list[0].S_GROUP;
+			var tmpso=this.list[0].S_ORDER;
+			for(let i=0;i<this.list.length;i++) {
+				this.list[i].F_GROUP_LAST=tmp;
+				this.list[i].S_GROUP_LAST=tmps;
+				this.list[i].S_ORDER_LAST=tmpso;
+				tmp=this.list[i].F_GROUP;
+				tmps=this.list[i].S_GROUP;
+				tmpso=this.list[i].S_ORDER;
+				if(i<this.list.length-1) this.list[i].F_GROUP_NEXT=this.list[i+1].F_GROUP;
+			}
+			this.list[this.list.length-1].F_GROUP_NEXT="";
 		},
 		getSpecies: function getSpecies(j){
 			let F_GROUP=this.list[j].F_GROUP;let F_NAME=this.list[j].F_NAME;let i=0;
@@ -113,7 +132,7 @@ var all=new Vue({
 		},
 	},
 	created: function created() {
-		if(self.location.href.substring(0,4)!="http")this.test=true;
+		if(self.location.href.substring(0,4)!="http"){ this.test=true; this.getNearGroup();}
 		else this.reSet();
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){

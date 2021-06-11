@@ -45,7 +45,7 @@
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
-					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='类属|合集'" ><br></span>
+					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|北欧' || item=='类属|合集' || item=='标签|传记' || item=='标签|生化'" ><br></span>
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
@@ -65,12 +65,17 @@
 				<div v-if="getPre(i)<0 || item.F_GROUP!=list[getPre(i)].F_GROUP || item.S_GROUP!=list[getPre(i)].S_GROUP" id="family"><br>
 					{{item.F_GROUP}}->{{item.S_GROUP}}					
 					<br><br></div>
-				<span v-if="list[i].FILE=='file/' || (test && list[i].FILE=='filel/')">					
+				<span v-if="item.TYPE!='pdf' && (item.FILE=='file/' || (test && item.FILE=='filel/'))">					
 					<a @click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</a>
-					<input v-if="listselect" v-model="list[i].selected" type="checkbox"/>
+					<input v-if="listselect" v-model="item.selected" type="checkbox"/>
 				</span>
-				<span v-if="list[i].FILE==null || (!test && list[i].FILE=='filel/' )" 
-					@click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</span>
+				<span v-if="item.TYPE!='pdf' && (item.FILE==null || (!test && item.FILE=='filel/' ))" 
+					@click.prevent="getBook(i)" style="cursor:pointer">
+						<span v-if="!test || item.GET==null">{{item.TITLE}}</span>
+						<span v-if="test && item.GET=='nofound'" style="color:#888;">{{item.TITLE}}</span>
+					</span>
+				<span v-if="test && item.TYPE=='pdf'" style="cursor:pointer">
+					<a :href="'pdf/'+item.TITLE+'.pdf'" target="_blank" style="cursor:pointer;color:Blue;">{{item.TITLE}}</a></span>
 				<span v-if="listselect">|</span>
 			</span>
 			<br>
@@ -81,7 +86,7 @@
 			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}<br><br>
 			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/'))">加载中...</span>
 			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
-			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE">
+			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE" target="_blank">
 				{{list[listindex].TITLE}}</a></span>
 			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))">
 				<a v-for="i of 100" v-if='(listpage*100+i-1)<subinfo.length' @click="getZhang(listpage*100+i-1)" style="cursor:pointer">{{subinfo[listpage*100+i-1].title}}<br></a><br>
@@ -151,12 +156,16 @@ var vm = new Vue({
 		statename:["主类|古籍","主类|今人","主类|外国",
 		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 		"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
-		"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
-		"地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",
+		"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
+		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥",
+		"地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",
 		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
-		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",		
+		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
+		"标签|经枢","标签|天工","标签|数学","标签|物理","标签|天文","标签|地理","标签|生化",
+		"标签|哲学","标签|经济","标签|心理","标签|法学","标签|历史","标签|社会","标签|传记",
+		"标签|美学","标签|计算机","标签|长篇","标签|短篇","标签|英文","标签|SSS",	
 		],
-		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY",},		
+		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY","标签":"TAG",},		
 		statevalue:[],
 		stateor:false,
 		statecoloror:["#fff","#000"],
@@ -224,7 +233,7 @@ var vm = new Vue({
 			if(this.searchrst.length==0) for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
 			if(this.stateor) this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 				"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
-				"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
+				"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
 				"地域|中",],1);	
 			for(let j=0;j<this.list.length;j++) { 
 				this.list[j].fliter= false; 
@@ -280,15 +289,18 @@ var vm = new Vue({
 					if(i>=this.statename.indexOf("朝代|先秦") && i<=this.statename.indexOf("朝代|无")) 
 						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
-						"朝代|上古","朝代|中世纪","朝代|近代","朝代|现代","朝代|当代","朝代|无",	]);
+						"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",]);
 					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
 						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
 					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
-						this.c(["地域|中","地域|英","地域|法","地域|德","地域|俄","地域|意","地域|荷","地域|美","地域|日","地域|其它","地域|无",]);
+						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥",
+						"地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",]);
 					if(i==this.statename.indexOf("主类|外国")) 
 						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",]);
+					/*if(i>=this.statename.indexOf("标签|经枢") && i<=this.statename.indexOf("标签|美学")) 
+						this.c(["标签|经枢","标签|天工","标签|哲学","标签|经济","标签|心理","标签|法学","标签|社会","标签|美学",]);*/
 					this.statevalue[i]=1;
 				}
 			}			
@@ -332,6 +344,7 @@ var vm = new Vue({
 					let word=this.statename[j].split("|")[1];
 					if(this.list[i][this.stategroup[fenlei]]==null) {if(word=="无") get=0;}
 					else if(this.list[i][this.stategroup[fenlei]]==word) get=0;
+					else if(fenlei=="标签" && this.list[i][this.stategroup[fenlei]].indexOf(word)>=0) get=0;
 					if(get!=-1 && this.statevalue[j]==1) continue;
 					if(get==-1 && this.statevalue[j]==2) continue;
 					this.list[i].fliter= false;	return;		
@@ -399,7 +412,7 @@ var vm = new Vue({
             this.listindex=index;
 			if(this.depth==0) { this.depth=1; this.listpage=0; }
 			this.subinfo=[];this.text="";
-			if(this.list[index].FILE==null ||(!this.test && this.list[index].FILE=='filel/')) return;
+			if(this.list[index].TYPE=="pdf" || this.list[index].FILE==null || (!this.test && this.list[index].FILE=='filel/')) return;
             this.loadFile(this.setBook,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
         },
 
@@ -483,7 +496,7 @@ var vm = new Vue({
 				for(let i=0;i<msg.length;i++) {
 					if(i>0) search+=" && ";
 					if(msg[i][0]=="-") search+='linen.indexOf("'+msg[i]+'")<0';
-					else search+='linen.indexOf("'+msg[i]+'")>0';
+					else search+='linen.indexOf("'+msg[i]+'")>=0';
 				}
 				//console.log(search)
 			}
@@ -495,10 +508,11 @@ var vm = new Vue({
 			let jstart=0;//卷始
 			let jtitle="目录页";
 			let getjtitle=false;
+			//console.log(search)
             for(let i=0;i<this.text.length;i++) {
 			
                 line+=this.text[i];
-                if(this.text[i]=="\n") {
+                if(this.text[i]=="\n" || i==this.text.length-1) {
                     if(eval(this.list[this.listindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                          jstart=i-line.length+1;
 						 jtitle=line;
@@ -507,8 +521,10 @@ var vm = new Vue({
                     line="";					
                 }
 								
-				linen+=this.text[i];		
-                if(getjtitle || (this.text[i]=="\n" && linen.length>nbreak) || (this.text[i]=="。" && linen.length>dbreak)) {
+				linen+=this.text[i];
+			
+                if(getjtitle || (this.text[i]=="\n" && linen.length>nbreak) || i==this.text.length-1 || (this.text[i]=="。" && linen.length>dbreak)) {
+					
 					if(eval(search)){
 						let content="";
 						if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;

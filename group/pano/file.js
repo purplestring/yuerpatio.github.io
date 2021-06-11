@@ -45,6 +45,7 @@
 {"TITLE":"脑斧和大锅","F_GROUP":"piyipi","F_NAME":"naofudaguo",},
 {"TITLE":"月球车","F_GROUP":"piyipi","F_NAME":"yueqiuche",},
 {"TITLE":"火星车毅力号","F_GROUP":"piyipi","F_NAME":"mars01",},
+{"TITLE":"火星车祝融号","F_GROUP":"piyipi","F_NAME":"mars02",},
 {"TITLE":"石船","F_GROUP":"piyipi","F_NAME":"shichuan",},
 
 {"TITLE":"财神庙","F_GROUP":"test","F_NAME":"csm",},

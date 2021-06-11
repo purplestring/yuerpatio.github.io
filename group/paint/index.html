@@ -35,7 +35,7 @@
 			 <div class="desc2">
 				<span v-for="(item,i) in statename" >
 					<span :style="'color:'+statecolor[statevalue[i]]" @click="setType(i)" style="cursor:pointer">{{statename[i]}}</span> 
-					<span v-if="i==10 || i==21 || i==27 || i==34 || i==42" ><br></span>
+					<span v-if="i==6 || i==15 || i==22 || i==30 || i==38 || i==44 || i==50" ><br></span>
 				</span>	
 			</div>
 			<span v-for="(item, i) in list">
@@ -44,11 +44,13 @@
 						<br><br><br>{{item.P_DYNASTY}}<br>
 					</span>
 					<span v-if="!(!test && item.SHOW=='no' && item.P_DYNASTY=='近现代') && (item.pre<0 || (item.P_AUTHOR!=item.preAuthor || item.P_DYNASTY!=item.preDynasty))">
-						<br>【<span><span v-if="!test && item.A_EN==null">{{item.P_AUTHOR}}</span><a 
-						v-if="test && item.A_EN==null" style='color:blue;cursor:pointer'  target="_blank" 
+						<br>【<span><span v-if="!test && item.A_EN==null && item.P_DYNASTY!='今人'">{{item.P_AUTHOR}}</span><a 
+						v-if="test && item.A_EN==null && item.P_DYNASTY!='今人'" style='color:blue;cursor:pointer'  target="_blank" 
 						:href='"http://www.ltfc.net/exhibit/search#category=c1&keyword="+item.P_AUTHOR'>{{item.P_AUTHOR}}</a><a 
-						v-if="item.A_EN!=null" style='color:blue;cursor:pointer'  target="_blank" 
-						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a>
+						v-if="item.A_EN!=null && item.P_DYNASTY!='今人'" style='color:blue;cursor:pointer'  target="_blank" 
+						:href='"https://en.jinzhao.wiki/wiki/"+item.A_EN.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a><a 
+						v-if="item.P_DYNASTY=='今人'" style='color:blue;cursor:pointer'  target="_blank" 
+						:href='"https://www.baidu.com/s?wd="+item.P_AUTHOR.replace(/ /g,"_")'>{{item.P_AUTHOR}}</a>
 						</span>】
 						<a style='cursor:pointer' target="_blank" @click.prevent="P_DYNASTY=item.P_DYNASTY,P_AUTHOR=item.P_AUTHOR"> ▶ </a>
 					</span>
@@ -133,12 +135,14 @@ var vm = new Vue({
 	el: '#main',
 	data:{
 		list:myjson.RECORDS,
-		statename:["SSS","SS","S","水墨","设色","油彩","绢本","纸本","布面","木板","壁画","写生",
-                    "卷轴","立轴","册页","扇","书法","人物","山水","花鸟","动物","宗教",
-                    "中国","日本", "韩国","意大利","法国","西班牙",
-					"荷兰","比利时","德国","瑞士","英国","俄国","美国",
-                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
-                    "荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
+		statename:["SSS","SS","S","水墨","设色","油彩","水彩","绢本",
+					"纸本","布面","木板","壁画","卷轴","立轴","册页","扇",
+					"书法","写生","人物","山水","花鸟","动物","宗教",
+                    "中国","日本","韩国","意大利","法国","西班牙","荷兰","比利时",
+					"德国","瑞士","北欧","英国","俄国","美国","其它国","未知国",
+                    "翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典",
+					"浪漫","写实","印象","荆关董巨","南宋四家","元四家",
+					"吴门","扬州八怪","四王","四僧","海上",
 		],
 		//stategroup:{"喙":"hui","虹膜":"hm","脚":"zu","分布":"area",},		
 		statevalue:[],
@@ -166,15 +170,15 @@ var vm = new Vue({
 				//if(this.statename[i]=="中国") this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
 				
 				if(i>=this.statename.indexOf("意大利") && i<=this.statename.indexOf("印象")) 
-					this.c(["水墨","设色","绢本","纸本","卷轴","立轴","册页","扇","书法",
-					"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",
+					this.c(["水墨","绢本","纸本","卷轴","立轴","扇","书法",
+					"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧","海上",
 					]);
-				if(i>=this.statename.indexOf("荆关董巨") && i<=this.statename.indexOf("四僧") || 
+				if(i>=this.statename.indexOf("荆关董巨") && i<=this.statename.indexOf("海上") || 
 				this.statename[i]=="中国" || this.statename[i]=="绢本" || this.statename[i]=="纸本" || this.statename[i]=="书法" )
 					this.c(["意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
 					"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
 
-				if(i>=this.statename.indexOf("卷轴") && i<=this.statename.indexOf("扇")){
+				if(i==this.statename.indexOf("卷轴") || i==this.statename.indexOf("立轴") || i==this.statename.indexOf("扇")){
 					this.c(["卷轴","立轴","册页","扇",
 					"意大利","法国","西班牙","荷兰","比利时","德国","英国","俄国",
 						"翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",]);
@@ -184,14 +188,14 @@ var vm = new Vue({
 					this.c(["绢本","纸本","布面","木板","壁画",]);
 					this.statevalue[i]=1;
 				}			
-				if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("美国")){
-					this.c(["中国","日本", "韩国","意大利","法国","西班牙",
-					"荷兰","比利时","德国","瑞士","英国","俄国","美国",]);
+				if(i>=this.statename.indexOf("中国") && i<=this.statename.indexOf("未知国")){
+					this.c(["中国","日本", "韩国","意大利","法国","西班牙","荷兰","比利时",
+					"德国","瑞士","北欧","英国","俄国","美国","其它国","未知国",]);
 					this.statevalue[i]=1;
 				}									
-				if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("四僧")){
+				if(i>=this.statename.indexOf("翡冷翠") && i<=this.statename.indexOf("海上")){
 					this.c(["翡冷翠","威尼斯","北方","巴洛克","洛可可","新古典","浪漫","写实","印象",
-						"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧",]);
+						"荆关董巨","南宋四家","元四家","吴门","扬州八怪","四王","四僧","海上",]);
 					this.statevalue[i]=1;
 				}
 			}
