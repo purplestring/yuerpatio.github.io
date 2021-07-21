@@ -45,7 +45,7 @@
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
-					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|北欧' || item=='类属|合集' || item=='标签|传记' || item=='标签|生化'" ><br></span>
+					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|波' || item=='类属|合集' || item=='标签|传记' || item=='标签|化学'" ><br></span>
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
@@ -66,16 +66,24 @@
 					{{item.F_GROUP}}->{{item.S_GROUP}}					
 					<br><br></div>
 				<span v-if="item.TYPE!='pdf' && (item.FILE=='file/' || (test && item.FILE=='filel/'))">					
-					<a @click.prevent="getBook(i)" style="cursor:pointer">{{item.TITLE}}</a>
+					<a @click.prevent="getBook(i)" style="cursor:pointer">
+						<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
+					</a>
 					<input v-if="listselect" v-model="item.selected" type="checkbox"/>
 				</span>
 				<span v-if="item.TYPE!='pdf' && (item.FILE==null || (!test && item.FILE=='filel/' ))" 
 					@click.prevent="getBook(i)" style="cursor:pointer">
-						<span v-if="!test || item.GET==null">{{item.TITLE}}</span>
-						<span v-if="test && item.GET=='nofound'" style="color:#888;">{{item.TITLE}}</span>
+						<span v-if="!test || item.GET==null">
+							<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
+						</span>
+						<span v-if="test && item.GET=='nofound'" style="color:#888;">
+							<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
+						</span>
 					</span>
 				<span v-if="test && item.TYPE=='pdf'" style="cursor:pointer">
-					<a :href="'pdf/'+item.TITLE+'.pdf'" target="_blank" style="cursor:pointer;color:Blue;">{{item.TITLE}}</a></span>
+					<a :href="'pdf/'+item.TITLE+'.pdf'" target="_blank" style="cursor:pointer;color:Blue;">
+						<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
+					</a></span>
 				<span v-if="listselect">|</span>
 			</span>
 			<br>
@@ -157,13 +165,13 @@ var vm = new Vue({
 		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 		"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
 		"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
-		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥",
-		"地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",
+		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波",
+		"地域|爱","地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",
 		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
-		"标签|经枢","标签|天工","标签|数学","标签|物理","标签|天文","标签|地理","标签|生化",
-		"标签|哲学","标签|经济","标签|心理","标签|法学","标签|历史","标签|社会","标签|传记",
-		"标签|美学","标签|计算机","标签|长篇","标签|短篇","标签|英文","标签|SSS",	
+		"标签|经枢","标签|数学","标签|物理","标签|天文","标签|地理","标签|生物","标签|化学",
+		"标签|天工","标签|医学","标签|哲学","标签|经济","标签|心理","标签|法学","标签|历史","标签|社会","标签|传记",
+		"标签|美学","标签|计算机","标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS",	
 		],
 		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY","标签":"TAG",},		
 		statevalue:[],
@@ -294,8 +302,8 @@ var vm = new Vue({
 						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
 						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
 					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
-						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥",
-						"地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",]);
+						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波",
+						"地域|爱","地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|其它","地域|无",]);
 					if(i==this.statename.indexOf("主类|外国")) 
 						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",]);

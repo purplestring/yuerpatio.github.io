@@ -440,6 +440,7 @@
 {F_GROUP:"jihe",S_GROUP:"几何",TITLE:"20200428.jpg",F_NAME: ["20200428.jpg"],},
 {F_GROUP:"jihe",S_GROUP:"几何",TITLE:"20200525.jpg",F_NAME: ["20200525.jpg"],},
 {F_GROUP:"jihe",S_GROUP:"几何",TITLE:"20200731.jpg",F_NAME: ["20200731.jpg"],},
+{F_GROUP:"jihe",S_GROUP:"几何",TITLE:"莫比乌斯",W_URL:["KoP6m6Y8L"],F_NAME: ["20210714.jpg"],},
 
 {F_GROUP:"font",S_GROUP:"字体",TITLE:"长城",W_URL:["I9B5IEaew"],F_STAR: "5",F_NAME: ["20191002.jpg"],},
 {F_GROUP:"font",S_GROUP:"字体",TITLE:"20190525.jpg",F_NAME: ["20190525.jpg"],},
