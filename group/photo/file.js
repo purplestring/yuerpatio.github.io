@@ -841,7 +841,7 @@
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "游蛇科",TITLE: "绿瘦蛇2",F_NAME: "lvshoushe02.jpg",F_DESC: "路边偶遇",},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "未知",TITLE: "黄黑白卷",F_NAME: "she05.jpg",F_DESC: "路边偶遇",},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "眼镜蛇科",TITLE: "眼镜王蛇",F_NAME: "she06.jpg",F_DESC: "路边偶遇",},
-{F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "未知",TITLE: "黑白",F_NAME: "she08.jpg",F_DESC: "路边偶遇",},
+{F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "眼镜蛇科",TITLE: "丽纹蛇",F_NAME: "she08.jpg",F_DESC: "路边偶遇",},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "未知",TITLE: "灰卷",F_NAME: "she07.jpg",F_DESC: "路边偶遇",},
 {F_GROUP: "miao",S_GROUP: "爬行纲",S_ORDER: "鳄目",S_FAMILY: "短吻鳄科",TITLE: "短吻鳄",F_NAME: "dwe01.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "鸡形目",S_FAMILY: "雉科",TITLE: "泥滑滑打架了",F_NAME: "nihuahua01.jpg",LINK: "bird/灰胸竹鸡",},

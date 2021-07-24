@@ -1145,6 +1145,7 @@
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "游蛇科",TITLE: "绿瘦蛇",F_GROUP: "miao",F_NAME: "lvshoushe01.jpg,lvshoushe02.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "盲蛇科",TITLE: "钩盲蛇",F_GROUP: "miao",F_NAME: "she02.jpg,zmp4/gms01.mp4",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "眼镜蛇科",TITLE: "眼镜王蛇",F_GROUP: "miao",F_NAME: "she06.jpg",},
+{S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "有鳞目",S_FAMILY: "眼镜蛇科",TITLE: "丽纹蛇",F_GROUP: "miao",F_NAME: "she08.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "喙头目",S_FAMILY: "喙头蜥科",TITLE: "喙头蜥",F_GROUP: "zwai",F_NAME: "huitouxi01.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "爬行纲",S_ORDER: "鳄目",S_FAMILY: "短吻鳄科",TITLE: "短吻鳄",F_GROUP: "miao",F_NAME: "dwe01.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "脊索动物门",S_CLASS: "鸟纲",S_ORDER: "鸵形目",S_FAMILY: "鸵鸟科",TITLE: "鸵鸟",F_GROUP: "zwai",F_NAME: "tuoniao01.jpg",},

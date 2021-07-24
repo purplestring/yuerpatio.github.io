@@ -21,6 +21,7 @@
 {"TITLE":"微博r","F_GROUP":"set","S_GROUP":"交互","F_NAME":"weibo/r.html","SHOW":"no",},
 {"TITLE":"影视集","F_GROUP":"set","S_GROUP":"交互","F_NAME":"movie","SHOW":"no",},
 {"TITLE":"唐诗三百首·五言","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/tssbs01.html",},
+{"TITLE":"唐诗三百首·五言射覆","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/tssbs02.html",},
 {"TITLE":"长江千里图","F_GROUP":"set","S_GROUP":"交互·长卷","F_NAME":"scroll03","SHOW":"no",},
 {"TITLE":"古堡","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano01",},
 {"TITLE":"古台","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano02",},
