@@ -114,8 +114,9 @@ function setNew(){
 		txt+=$('#worda'+i+'>text>tspan').html();
 	};
 	if(txt==cpoem || kword==""){
-		if(kword!=""){
-			ct++;cuole=0;
+		if(kword!=""){			
+			if(cuole<=3)ct+=3-cuole;		
+			cuole=0;
 			if(ct<20)tips="五言射覆喵";
 			else{
 				var t=Math.random();
@@ -164,17 +165,18 @@ function setNew(){
 		}		
 	}
 	else {
-		if(cuole<1)ct-=1; cuole++;
+		//if(cuole<1)ct-=1; 
+		cuole++;
 		if(cuole>=2){
-			if(ct>=5){
+			if(ct>=20){
 				var t=Math.random();
 				if(t<0.5) tips=getTipPoem(cpoem);
 				else if(t<0.75)tips="小啾来了鸭";	
 				else tips="你的铁粉呢";				
 			}			
 			else tips=getTipPoem(cpoem);
-			if(cuole>=5 && cuole<=9) tips=cpoem.substring(0,cuole-4)+"？？？？".substring(0,9-cuole);
-			if(cuole>9) tips=cpoem;
+			if(cuole>=3 && cuole<=7) tips=cpoem.substring(0,cuole-2)+"？？？？".substring(0,7-cuole);
+			if(cuole>7) tips=cpoem;
 		}
 	} 
 	if(ct<0)ct=0;
