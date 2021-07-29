@@ -186,8 +186,8 @@ function wordClick(n){
 }
 var status=0;
 function animCommon(){ status=0;anim.playSegments([[0*12,6*12]],true);}
-function animXiaojiu(){ status=1;tips=["小啾来了鸭","你的铁粉呢"][Math.floor(Math.random()*2)];anim.playSegments([[0*12,12*12]],true);}
-function animMengzi(){ status=2;tips=["梦子来了鸭","梦子有铁粉"][Math.floor(Math.random()*2)];anim.playSegments([[0*12,6*12],[12*12,18*12]],true);}
+function animXiaojiu(){ status=1;tips=["小啾来了鸭","你的铁粉呢"][Math.floor(Math.random()*2)];for(let i=1;i<=N;i++) $('#tips'+i+'>text>tspan').html(tips[i-1]);anim.playSegments([[0*12,12*12]],true);}
+function animMengzi(){ status=2;tips=["梦子来了鸭","梦子有铁粉"][Math.floor(Math.random()*2)];for(let i=1;i<=N;i++) $('#tips'+i+'>text>tspan').html(tips[i-1]);anim.playSegments([[0*12,6*12],[12*12,18*12]],true);}
 
 anim.onComplete = () => {
 	if(ct>=21 && Math.random()<0.3) { if(Math.random()<0.5) animXiaojiu(); else animMengzi();}
