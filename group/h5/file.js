@@ -26,6 +26,8 @@
 {"TITLE":"五言射覆2","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/wysf02.html","SHOW":"no",},
 {"TITLE":"射覆1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/shefu01.html",},
 {"TITLE":"菜单动画1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/菜单动画1.html",},
+{"TITLE":"斐波那契01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fbnq01.html",},
+{"TITLE":"傅里叶七夕01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/Fourier01.html",},
 {"TITLE":"长江千里图","F_GROUP":"set","S_GROUP":"交互·长卷","F_NAME":"scroll03","SHOW":"no",},
 {"TITLE":"古堡","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano01",},
 {"TITLE":"古台","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano02",},
