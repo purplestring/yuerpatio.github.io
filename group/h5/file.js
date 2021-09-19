@@ -28,6 +28,8 @@
 {"TITLE":"菜单动画1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/菜单动画1.html",},
 {"TITLE":"斐波那契01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fbnq01.html",},
 {"TITLE":"傅里叶七夕01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/Fourier01.html",},
+{"TITLE":"分形龙曲线01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fenxinglong01.html",},
+{"TITLE":"分形十字绣01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fenxingshizixiu01.html",},
 {"TITLE":"长江千里图","F_GROUP":"set","S_GROUP":"交互·长卷","F_NAME":"scroll03","SHOW":"no",},
 {"TITLE":"古堡","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano01",},
 {"TITLE":"古台","F_GROUP":"set","S_GROUP":"全景动图","F_NAME":"pano02",},
@@ -55,6 +57,7 @@
 
 
 {"TITLE":"小盒子","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"box03",},
+{"TITLE":"小盒子","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"box04",},
 {"TITLE":"画圈璧","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"cbhqq",},
 {"TITLE":"围住璧","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"weizhu01",},
 {"TITLE":"丁丁喵","F_GROUP":"cb","S_GROUP":"交互","F_NAME":"ddm",},
