@@ -55,5 +55,7 @@
 {"TITLE":"地","F_GROUP":"test","F_NAME":"earth",},
 {"TITLE":"月","F_GROUP":"test","F_NAME":"moon",},
 {"TITLE":"测试","F_GROUP":"test","F_NAME":"test",},
+{"TITLE":"jhdz01","F_GROUP":"test","F_NAME":"jhdz01",},
+{"TITLE":"jhdz02","F_GROUP":"test","F_NAME":"jhdz02",},
 
 ];
