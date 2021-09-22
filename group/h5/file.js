@@ -26,6 +26,7 @@
 {"TITLE":"五言射覆2","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/wysf02.html","SHOW":"no",},
 {"TITLE":"射覆1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/shefu01.html",},
 {"TITLE":"菜单动画1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/菜单动画1.html",},
+{"TITLE":"空间站","F_GROUP":"set","S_GROUP":"3D交互","F_NAME":"3d/zgkjz.html",},
 {"TITLE":"斐波那契01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fbnq01.html",},
 {"TITLE":"傅里叶七夕01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/Fourier01.html",},
 {"TITLE":"分形龙曲线01","F_GROUP":"set","S_GROUP":"函数","F_NAME":"lottie/fenxinglong01.html",},
