@@ -297,7 +297,8 @@ div > input:checked ~ article {
 					<a :href="'group/'+item.tag+'/index.html'">进入分卷</a>
 				</article>
 			</div>
-			<div v-if="n=='box' || n=='yuer'" id="info"><a href="main/index.html">主目录</a></div>
+			<div v-if="n=='box' || n=='yuer'" id="info"><a :href="(window.navigator.userAgent.indexOf('Chrome') !== -1)?'3dindex.html':'main/index.html'">
+			{{(window.navigator.userAgent.indexOf('Chrome') !== -1)?'3D目录':'主目录'}}</a></div>
 		</form>
 		<div id="mfoot">
 			Copyright © 2015~Now 魚儿. All Rights Reserved.

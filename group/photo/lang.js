@@ -140,7 +140,7 @@
 "衣鱼目":"Zygentoma",
 "蜉蝣目":"Ephemeroptera",
 "蜻蜓目":"Odonata",
-"直翅目":"Orthoptera	",
+"直翅目":"Orthoptera",
 "脉翅目":"Neuroptera",
 "竹节虫目":"Phasmatodea",
 "纺足目":"Embioptera",
@@ -466,6 +466,13 @@ var langFamily={
 "伪蜻科":"Corduliidae",
 "蜓科":"Aeshnidae",
 "大蜓科":"Cordulegastridae",
+
+"䗛科":"Phasmatidae",
+"异䗛科":"Heteronemiidae",
+"杆䗛科":"Bacillidae",
+"伪䗛科":"Pseudophasmatidae",
+"叶䗛科":"Phasmatidae",
+"三跗䗛科":"Timematidae",
 
 "眼甲科":"Ommatidae",
 "沟胸长扁甲科":"Tetraphaleridae",

@@ -62,7 +62,7 @@
 				</div>
 			</div>				
 			<span v-for="(item,i) in list" v-if="item.fliter">
-				<div v-if="getPre(i)<0 || item.F_GROUP!=list[getPre(i)].F_GROUP || item.S_GROUP!=list[getPre(i)].S_GROUP" id="family"><br>
+				<div v-if="item.newGROUP" id="family"><br>
 					{{item.F_GROUP}}->{{item.S_GROUP}}					
 					<br><br></div>
 				<span v-if="item.TYPE!='pdf' && (item.FILE=='file/' || (test && item.FILE=='filel/'))">					
@@ -172,7 +172,7 @@ var vm = new Vue({
 		"标签|学门","标签|数学","标签|物理","标签|天文","标签|地理","标签|化学","标签|生物",
 		"标签|天工","标签|医学","标签|哲学","标签|经济","标签|管理","标签|历史","标签|心理","标签|法学","标签|社会",
 		"标签|传记","标签|语言","标签|美学","标签|文学","标签|计算机","标签|未来","标签|实操","标签|动漫",
-		"标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS","标签|无",
+		"标签|巨篇","标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS","标签|无",
 		],
 		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY","标签":"TAG",},		
 		statevalue:[],
@@ -242,6 +242,7 @@ var vm = new Vue({
 			}, 0);
 		},
 		reSet: function reSet(stateor){
+		
 			document.getElementById("searching").innerHTML="";
 			if(stateor!=null) this.stateor=stateor; else this.stateor=false;
 			if(this.searchrst.length==0) for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
@@ -249,14 +250,16 @@ var vm = new Vue({
 				"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
 				"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
 				"地域|中",],1);	
+			
 			for(let j=0;j<this.list.length;j++) { 
 				this.list[j].fliter= false; 
 				//if(this.test || this.list[j].SHOW==null || this.list[j].F_GROUP=='test') this.list[j].fliter=true;
 				this.list[j].selected= false; 
 				if(this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/')) this.list[j].selected= true; 
 				//this.list[j].gselected= false;
-				this.getItem(j);
+				this.getItem(j);				
 			}
+			this.setIsNewGroup();
 			this.depth=0;
 			this.searchstart=-1;
 			this.msg="";
@@ -265,7 +268,8 @@ var vm = new Vue({
 			this.search=false;
 			this.listselect=false;
 			this.searchrst=[];
-			this.$forceUpdate();		
+			this.$forceUpdate();	
+		
 		},
 		
 		selectClear: function selectClear(){
@@ -283,6 +287,17 @@ var vm = new Vue({
 			this.search=false;
 			this.searchrst=[];
 			this.$forceUpdate();		
+		},
+		setIsNewGroup: function setIsNewGroup(){
+			var lastF_GROUP="";var lastS_GROUP="";
+			for(let j=0;j<this.list.length;j++) {
+				this.list[j].newGROUP=false;
+				if(lastF_GROUP=="" || lastF_GROUP!=this.list[j].F_GROUP || lastS_GROUP!=this.list[j].S_GROUP) this.list[j].newGROUP=true;
+				if(this.list[j].fliter) {
+					lastF_GROUP=this.list[j].F_GROUP;
+					lastS_GROUP=this.list[j].S_GROUP;
+				}
+			}
 		},
 		setType: function setType(i){
 			if(this.stateor){
@@ -319,6 +334,7 @@ var vm = new Vue({
 				}
 			}			
 			for(let k=0;k<this.list.length;k++) this.getItem(k);
+			this.setIsNewGroup();
 			this.$forceUpdate();
 		},
 		c: function c(staten,v){
