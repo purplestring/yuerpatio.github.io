@@ -131,7 +131,7 @@ $('#door').attr("cursor","pointer");
 $('#door').click(function(){window.location.href="index.html"});
 
 var pages=["book","paint","photo","bird","drug","pano","mypaint","h5"];
-for(i in pages) $('#'+pages[i]).click(function(){ window.location.href="group/"+pages[i]+"/index.html"});
+for(var i in pages) (function(j){$('#'+pages[j]).click(function(){ window.location.href="group/"+pages[j]+"/index.html"})}(i));
 
 </script>
 </body>
