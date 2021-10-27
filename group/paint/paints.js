@@ -3136,6 +3136,7 @@ var myjson={RECORDS: [{P_DYNASTY: "战国",P_AUTHOR: "佚名",P_NAME: "人物龙
 {P_DYNASTY: "近现代",P_AUTHOR: "杨明义",P_NAME: "江南烟雨7",P_TYPE: "纸本 设色 山水 中国",P_PICS: "imgj/YMYjnyy07.jpg",P_STAR: "2",},
 {P_DYNASTY: "近现代",P_AUTHOR: "杨明义",P_NAME: "江南烟雨8",P_TYPE: "纸本 设色 山水 中国",P_PICS: "imgj/YMYjnyy08.jpg",P_STAR: "2",},
 {P_DYNASTY: "近现代",P_AUTHOR: "杨明义",P_NAME: "江南烟雨9",P_TYPE: "纸本 设色 山水 中国",P_PICS: "imgj/YMYjnyy09.jpg",P_STAR: "2",},
+{P_DYNASTY: "近现代",P_AUTHOR: "杨明义",P_NAME: "水国春晖1",P_TYPE: "纸本 设色 山水 中国",P_PICS: "imgj/YMYsgch01.jpg",P_STAR: "2",},
 {P_DYNASTY: "近现代",P_AUTHOR: "杨善深",P_NAME: "花鸟1",P_TYPE: "纸本 设色 花鸟 中国",P_PICS: "imgj/YSShn01.jpg",P_STAR: "2",},
 {P_DYNASTY: "近现代",P_AUTHOR: "杨善深",P_NAME: "花鸟2",P_TYPE: "纸本 设色 花鸟 中国",P_PICS: "imgj/YSShn02.jpg",P_STAR: "2",},
 {P_DYNASTY: "近现代",P_AUTHOR: "杨善深",P_NAME: "花鸟3",P_TYPE: "纸本 设色 花鸟 中国",P_PICS: "imgj/YSShn03.jpg",P_STAR: "2",},
