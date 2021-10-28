@@ -73,7 +73,7 @@
 					</span>
 				</span>
 			</span>
-			<br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" href="../../index.html"> ▶返回主页◀</a></div>
+			<br><br><br><div class="ret3"><a href="#main">▶页面顶部◀</a> <a style="cursor:pointer" :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'"> ▶返回主页◀</a></div>
 		</div>
 		<div v-if="id==-1 && P_AUTHOR!=''">
 			<div class="title" align="center" @click.prevent="test=!test">{{P_DYNASTY}} > {{P_AUTHOR}}</div><br>

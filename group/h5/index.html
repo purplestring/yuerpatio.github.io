@@ -26,12 +26,13 @@
 				<span v-if="item.S_GROUP!=null && (i==0 ||item.S_GROUP!=list[i-1].S_GROUP)"><br/>【{{item.S_GROUP}}】 </span>
 				<a name="file" :href="item.F_GROUP+'/'+item.F_NAME+(item.F_NAME.indexOf('.')>0?'':'/index.html')">{{item.TITLE}}</a>
 			</span>
+			
+			<br/><br/>
+			<div align="center">
+				<a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'" style="cursor:pointer">返回主页</a>
+			</div>
+			<div class="footer">Copyright © 2015~Now 鱼儿.</div><br/><br/>
 		</div>
-		<br/><br/>
-		<div align="center">
-			<a href="../../index.html" style="cursor:pointer">返回主页</a>
-		</div>
-		<div class="footer">Copyright © 2015~Now 鱼儿.</div><br/><br/>
 	</div>
 </body>
 <script>

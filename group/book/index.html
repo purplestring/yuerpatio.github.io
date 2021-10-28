@@ -136,7 +136,7 @@
 			<a v-if="depth==2 && searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
 			<a v-if="depth==2 && zhangindex<subinfo.length-1" @click.prevent="getZhang(zhangindex+1)" style="cursor:pointer">▶</a>
 			<a v-if="depth==1 || depth==3" @click.prevent="depth=0;searchstart=-1;" style="cursor:pointer">返回书卷目录</a>
-			<a v-if="depth==0" href="../../index.html" style="cursor:pointer">返回主页</a>
+			<a v-if="depth==0" :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'" style="cursor:pointer">返回主页</a>
 		</div>
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>

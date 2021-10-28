@@ -57,7 +57,7 @@
 			<br><br><div v-html="list[id].D_INFO"></div>		
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>	
-		<div v-if="id==-1" id="ret"><a href="../../index.html"> ▶返回主页◀</a></div>		
+		<div v-if="id==-1" id="ret"><a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'"> ▶返回主页◀</a></div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
 	</div>
 </body>
@@ -101,6 +101,7 @@ var vm = new Vue({
 		getItem: function getItem(i){
 			let mohu=this.mohu;
 			//console.log("dd")
+			if(this.wselect[6]==2 && i>=618) {this.list[i].fliter= false; return;}
 			for(let j=0;j<this.words.length;j++) {
 				if(this.wselect[j]==0) continue;
 				

@@ -38,7 +38,7 @@
 					<span v-if="item.TITLE=='谷雨' || item.TITLE=='大暑' || item.TITLE=='霜降'"></br></span>					
 				</span><br/><br/>
 				<div align="center">
-					<a href="../../index.html" style="cursor:pointer">返回主页</a>
+					<a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'" style="cursor:pointer">返回主页</a>
 				</div>
 			</div>
 			<div v-if="id==-1 && S_GROUP!=''">

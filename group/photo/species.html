@@ -87,7 +87,7 @@
 					</span>
 				</span>
 				<br/><br/>
-				<div align="center"><a href="../../index.html" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
+				<div align="center"><a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'" style="cursor:pointer;font-weight:bold;">▶返回主页◀</a></div>
 			</div>
 			<div v-if="id==-2">
 				<div class="title" align='center'>{{S_CLASS}}</div><br>{{getInfo()}}

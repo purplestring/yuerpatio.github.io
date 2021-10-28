@@ -12,7 +12,7 @@ Vue.component('navi1', {
 	},
 	template: 
 	'<div id="navi1">\
-		<div id="navi1logo" @click="window.location.href=\'../../index.html\'"></div>\
+		<div id="navi1logo" @click="sessionStorage.getItem(\'cube\')==true?window.location.href=\'../../3dindex.html\':window.location.href=\'../../index.html\'"></div>\
 		<ul id="navi">\
 			<li v-for="(item, i) in page">\
 				<span href="javascript:;" @click="window.location.href=\'../\'+page[i]+\'/index.html\'" :class="(i==current?\'active\':\'\')">{{navinames[langid][page[i]]}}</span>\
