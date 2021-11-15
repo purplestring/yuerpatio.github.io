@@ -11,11 +11,24 @@
 		font-size:14px;
 		width:240px;
 	}
+	.subnotezhang{
+		font-size:12px;
+		color:Gray;
+	}
+	.subnotezhang a,.zhang a{
+		color:blue;
+	}
+	.subnotezhang a:hover,.zhang a:hover{
+		color:white;
+	}
 	@media screen and (max-device-width:640px){
 		textarea{
 			font-size:42px;
 			height:54px;
 			width:480px;
+		}
+		.subnotezhang{
+			font-size:36px;
 		}
 	}
 	</style>
@@ -45,7 +58,8 @@
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
-					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|波' || item=='类属|合集' || item=='标签|社会' || item=='标签|动漫' || item=='标签|科学'" ><br></span>
+					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|爱' || item=='类属|合集' || item=='标签|法学' 
+					|| item=='标签|宗教' || item=='标签|动漫' || item=='标签|科学'" ><br></span>
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
@@ -55,7 +69,7 @@
 						<span v-if="listselect" style="color:White">选书</span>
 						<span v-if="!listselect" style="color:Green">选书</span>
 					</span>
-					<span @click="startSearch()" style="color:Green;cursor:pointer">搜索</span>
+					<span @click="msgOne=false;startSearch()" style="color:Green;cursor:pointer">搜索</span>
 					<span @click.prevent="searchClear()" style="cursor:pointer;color:green;">清空</span>
 					<span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span>
 					<span id="searching"></span>
@@ -90,14 +104,23 @@
 		</div>
 		<div v-if="depth==1">
 			<div class="title" align="center">{{list[listindex].TITLE}}</div><br>
-			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br>
-			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}<br><br>
+			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
+			<a v-if="note!=''" @click="titlenoteshow=!titlenoteshow" style="cursor:pointer;color:Brown;font-weight:bold">
+			<span v-if="!titlenoteshow">显示</span><span v-if="titlenoteshow">隐藏</span>笔记</a><br>
+			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}
+			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))" >
+				<span @click="msgOne=true;startSearch()" :style='msg==""?"color:Gray;cursor:pointer":"color:Green;cursor:pointer"'>搜索</span><br>
+				<textarea type="text" v-model="msg" placeholder="设定搜索文字" :style="(msg.length>20)?'width:80%;height:200px;':''"></textarea><br>							
+			</span><br>
 			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/'))">加载中...</span>
 			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
 			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE" target="_blank">
-				{{list[listindex].TITLE}}</a></span>
-			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))">
-				<a v-for="i of 100" v-if='(listpage*100+i-1)<subinfo.length' @click="getZhang(listpage*100+i-1)" style="cursor:pointer">{{subinfo[listpage*100+i-1].title}}<br></a><br>
+				{{list[listindex].TITLE}}</a></span>			
+			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))">			
+				<span v-for="i of 100" v-if='(listpage*100+i-1)<subinfo.length'>
+				<a @click="getZhang(listpage*100+i-1)" style="cursor:pointer">{{subinfo[listpage*100+i-1].title}}</a>
+				<span v-if="note!='' && titlenoteshow" v-html=showNoteSubTitleZhang(subinfo[listpage*100+i-1].title) class="subnotezhang"></span>
+				<br></span><br>
 				<a v-if="listpage>=50" @click="listpage-=50;" style="cursor:pointer">◀◀◀　</a>
 				<a v-if="listpage>=5" @click="listpage-=5;" style="cursor:pointer">◀◀　</a>
 				<a v-if="listpage>0" @click="listpage--;" style="cursor:pointer">◀</a>
@@ -110,16 +133,18 @@
 		</div>
 		<div v-if="depth==2">
 			<div>
-				<a v-if="searchstart==-1" @click.prevent="depth=1" style="cursor:pointer">返回本书目录</a>
+				<a v-if="searchstart==-1" @click.prevent="depth=1;if(msgOne)getBook(listindex);" style="cursor:pointer">返回本书目录</a>
 				<a v-if="searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
 				 | {{list[listindex].TITLE}}
 			</div>
 			<br>
-			<div v-html="zhang"></div>
+			<div class="zhang" v-html="zhang"></div>
 		</div>
 		<div v-if="depth==3">
 			<div class="title" align="center">搜索结果</div><br>
-			<a @click.prevent="depth=0;searchstart=-1;" style="cursor:pointer">返回书卷目录</a><br><br>
+				<a v-if="!msgOne" @click.prevent="depth=0;searchstart=-1;" style="cursor:pointer">返回书卷目录</a>
+				<a v-if="msgOne" @click.prevent="depth=1;searchstart=-1;getBook(listindex);" style="cursor:pointer">返回本书目录</a>
+			<br><br>
 			<span v-if="searchrst.length==0">
 				什么也没找到...
 			</span>
@@ -159,19 +184,20 @@ var vm = new Vue({
     data: {
         depth:0,list:book,
 		listindex:0,zhangindex:0,listpage:0,
-		text:"",subinfo:[],zhang:"",
+		text:"",subinfo:[],zhang:"",tozhang:"",
 				
 		statename:["主类|古籍","主类|今人","主类|外国",
 		"朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 		"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
 		"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
-		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波",
-		"地域|爱","地域|西","地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|美洲","地域|其它","地域|无",
+		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波","地域|西","地域|爱",
+		"地域|北欧","地域|罗马","地域|美","地域|日","地域|韩","地域|印","地域|加","地域|澳","地域|美洲","地域|其它","地域|无",
 		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
-		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",
+		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|书目","类属|其它",
 		"标签|学门","标签|数学","标签|物理","标签|天文","标签|地理","标签|化学","标签|生物","标签|科学",
-		"标签|天工","标签|医学","标签|哲学","标签|经济","标签|管理","标签|历史","标签|心理","标签|法学","标签|社会",
-		"标签|宗教","标签|传记","标签|语言","标签|美学","标签|文学","标签|计算机","标签|未来","标签|实操","标签|动漫",
+		"标签|天工","标签|医学","标签|计算机","标签|经济","标签|管理","标签|历史","标签|心理","标签|法学",
+		"标签|哲学","标签|逻辑","标签|伦理","标签|认识论","标签|政治","标签|形而上学","标签|宗教",
+		"标签|社会","标签|语言","标签|美学","标签|传记","标签|文学","标签|未来","标签|实操","标签|动漫",
 		"标签|巨篇","标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS","标签|无",
 		],
 		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY","标签":"TAG",},		
@@ -184,18 +210,21 @@ var vm = new Vue({
 		//notes:false,
 		listselect:false,
 		msg:"",
+		msgOne:false,
 		note:"",
+		titlenoteshow:false,
 		searchrst:[],
 		searchstart:-1,	
-		searchshow:"",		
+		searchshow:"",
 		//searchline:"",
 		
 		test:false,
+		recordmax:36,
 		//milliseconds:0,
 	},
 
 	created: function created() {		
-		if(self.location.href.substring(0,4)!="http")this.test=true;
+		if(self.location.href.substring(0,4)!="http")this.test=true;		
 		this.reSet();
 		
 		//for(let i=0;i<this.list.length;i++) if(this.list[i].TYPE=="pdf") {console.log(this.list[i].TITLE); }
@@ -205,15 +234,21 @@ var vm = new Vue({
 		let url=self.location.href;
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
-			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].TITLE) {this.getBook(i); break; }
+			for(let i=0;i<this.list.length;i++) if(urlvalue.split('|')[0]==this.list[i].TITLE) {			 				
+				if(urlvalue.split('|')[1]!='') this.tozhang=urlvalue.split('|')[1];
+				this.getBook(i); break; 
+			}
 		}
 		
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
 			if (key == 36) {
-                if(_this.depth==2) _this.depth=1;
+                if(_this.depth==2 && _this.searchstart==-1) {_this.depth=1; if(_this.msgOne)getBook(_this.listindex);}
+				else if(_this.depth==2 && _this.searchstart!=-1) _this.depth=3; 
 				else if(_this.depth==1) _this.depth=0;
+				else if(_this.depth==3 && _this.msgOne) {_this.depth=1;_this.searchstart=-1;_this.getBook(_this.listindex);}
+				else if(_this.depth==3 && !_this.msgOne) {_this.depth=0;_this.searchstart=-1;}
             }
             if (key == 37) {
                 if(_this.depth==2 && _this.zhangindex>0) _this.getZhang(_this.zhangindex-1);
@@ -259,10 +294,13 @@ var vm = new Vue({
 				//this.list[j].gselected= false;
 				this.getItem(j);				
 			}
+			
 			this.setIsNewGroup();
 			this.depth=0;
 			this.searchstart=-1;
 			this.msg="";
+			this.msgOne=false;
+			if(this.test) this.recordmax=36;else this.recordmax=20;
 			this.text="";
 			this.note="";
 			this.search=false;
@@ -321,10 +359,10 @@ var vm = new Vue({
 						"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",]);
 					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
 						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
-						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|其它",]);
+						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|书目","类属|其它",]);
 					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
-						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波",
-						"地域|爱","地域|西","地域|北欧","地域|美","地域|日","地域|印","地域|加","地域|澳","地域|美洲","地域|其它","地域|无",]);
+						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波","地域|西",
+						"地域|爱","地域|北欧","地域|罗马","地域|美","地域|日","地域|韩","地域|印","地域|加","地域|澳","地域|美洲","地域|其它","地域|无",]);
 					if(i==this.statename.indexOf("主类|外国")) 
 						this.c(["朝代|先秦","朝代|秦","朝代|西汉","朝代|东汉","朝代|魏晋南北朝",
 						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",]);
@@ -410,21 +448,7 @@ var vm = new Vue({
 			
 			if(this.note!="" && this.searchstart==-1){
 				let subtitle=this.zhang.split("<br>")[0];
-				let note='';
-				if(this.note[0]=='{') note=JSON.parse(this.note)[subtitle];
-				else if(this.note[0]=='【'){
-					this.note=this.note.replace(/\r\n【/g, '],\r\n"');
-					this.note=this.note.replace(/【/g, '"');	
-					this.note=this.note.replace(/】/g, '":[');
-					this.note=this.note.replace(/『/g, '{"s":"');
-					this.note=this.note.replace(/』/g, '","w":""}');
-					this.note=this.note.replace(/}\r\n{/g, '},\r\n{');
-					this.note=this.note.replace(/）","w":""/g, '"');
-					this.note=this.note.replace(/（/g, '","w":"');
-					this.note="{"+this.note+"]}";
-					//console.log(this.note);	
-					note=JSON.parse(this.note)[subtitle];					
-				}
+				let note=this.getNoteSubTitle(subtitle);			
 				if(note!=null) {
 					for(let j=0;j<note.length;j++){
 						let tmp="<span style='font-weight:900;color:green'>"+note[j].s+"</span>";
@@ -434,7 +458,64 @@ var vm = new Vue({
 				}
 			}
 			
+			var _this = this;
+			this.zhang=this.zhang.replace(/《(.+?)》/g, function($1){return _this.setBookUrl($1);});
+			
 			this.depth=2;this.zhangindex=i;
+        },
+		
+		setBookUrl: function setBookUrl(book){		
+			book=book.split('《')[1].split('》')[0];
+			let bookall=book; 
+			
+			var isEn=false; 
+			var re = new RegExp("^[a-zA-Z0-9]+$");
+			if (re.test(bookall.replace(/\s*/g,""))) isEn=true;
+			
+			if(bookall.indexOf("|")>0)book=bookall.split('|')[0];
+			else if(bookall.indexOf("·")>0)book=bookall.split('·')[0];
+			else if(!isEn && bookall.indexOf(" ")>0)book=bookall.split(' ')[0]; 
+			
+			let getBook=false; for(let i=0;i<this.list.length;i++) if(book==this.list[i].TITLE) {getBook=true;break;}
+			
+			if(getBook) {
+				if(bookall.indexOf("|")>0) return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+bookall+'">《'+bookall+'》</a>';
+				else return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+book+'">《'+bookall+'》</a>';
+			}				
+			return '《'+bookall+'》';
+		},
+		
+		getNoteSubTitle: function getNoteSubTitle(subtitle) {
+			let note='';
+			if(this.note[0]=='{') note=JSON.parse(this.note)[subtitle];
+			else if(this.note[0]=='【'){
+				this.note=this.note.replace(/\r\n【/g, '],\r\n"');
+				this.note=this.note.replace(/【/g, '"');	
+				this.note=this.note.replace(/】/g, '":[');
+				this.note=this.note.replace(/『/g, '{"s":"');
+				this.note=this.note.replace(/』/g, '","w":""}');
+				this.note=this.note.replace(/}\r\n{/g, '},\r\n{');
+				this.note=this.note.replace(/）","w":""/g, '"');
+				this.note=this.note.replace(/（/g, '","w":"');
+				this.note="{"+this.note+"]}";
+				//console.log(this.note);	
+				note=JSON.parse(this.note)[subtitle];					
+			}
+			return note;
+        },
+		
+		showNoteSubTitleZhang: function showNoteSubTitleZhang(zhangTitle) {
+			let noteZhang='';
+			let tmp=this.getNoteSubTitle(zhangTitle);
+			if(tmp==null) return "";
+			for(var i in tmp) {
+				noteZhang+='<br>'+tmp[i].s;
+				if(tmp[i].w){
+					var _this = this;
+					noteZhang+="（"+tmp[i].w.replace(/《(.+?)》/g, function($1){return _this.setBookUrl($1);})+"）";
+				}
+			}
+			return noteZhang;
         },
 
         getBook: function getBook(index) {
@@ -453,6 +534,7 @@ var vm = new Vue({
             for(let i=0;i<this.text.length;i++) {
                 line+=this.text[i];
                 if(this.text[i]=="\n") {
+					if(this.list[this.listindex].F_EVAL==null) this.list[this.listindex].F_EVAL="line[0]=='●'";
                     if(eval(this.list[this.listindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                         sublength=i-line.length-substart+1;
 						//console.log(i+" "+line.length+" "+substart+" "+sublength)
@@ -476,6 +558,11 @@ var vm = new Vue({
 				//this.searchstart=-1;
 				if(i<this.subinfo.length)this.getZhang(i);
 			}
+			
+			if(this.tozhang!=""){			
+				for(var j=0;j<this.subinfo.length;j++) if(this.subinfo[j].title==this.tozhang) {this.tozhang="";this.getZhang(j);break;}
+				this.tozhang="";
+			}
         },
 		
 		getNote: function getNote() {
@@ -498,10 +585,10 @@ var vm = new Vue({
 			//this.milliseconds = new Date().getTime();
 			if(this.msg.indexOf('function')<0) this.msg=this.msg.replace(/(^\s*)|(\s*$)/g, "").replace(/,/g," ").replace(/，/g," ");
 			if(this.msg=="")return;
-			this.listindex=0;
+			if(!this.msgOne)this.listindex=0;
 			this.search=true;
 			this.searchrst=[];
-			this.nextSearch();			 
+			if(this.msgOne)this.oneSearch();else this.nextSearch();			 
         },
 		
 		endSearch: function endSearch() {
@@ -515,11 +602,10 @@ var vm = new Vue({
         },
 		
 		doSearch: function doSearch() {
-			//console.log("search: "+this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt");
-			if(this.text[0]=='出' && this.text[1]=='错') { this.listindex=0; this.search=false;document.getElementById("searching").innerHTML="搜索出错";return;}
+			if(this.text[0]=='出' && this.text[1]=='错') { if(!this.msgOne)this.listindex=0; this.search=false;document.getElementById("searching").innerHTML="搜索出错";return;}
 			
 			let line=""; let linen="";//let substart=0; let sublength=0;  let subtitle=0;
-			var msg="";var search="";var nbreak=100;dbreak=300;	
+			var msg="";var search="";var nbreak=120;dbreak=300;	
 			 
 			if(this.msg.indexOf('function')<0){
 				msg=this.msg.split(' ');
@@ -543,6 +629,7 @@ var vm = new Vue({
 			
                 line+=this.text[i];
                 if(this.text[i]=="\n" || i==this.text.length-1) {
+					if(this.list[this.listindex].F_EVAL==null) this.list[this.listindex].F_EVAL="line[0]=='●'";
                     if(eval(this.list[this.listindex].F_EVAL) && line.replace(/(^\s*)|(\s*$)/g, "").length>0){
                          jstart=i-line.length+1;
 						 jtitle=line;
@@ -553,8 +640,7 @@ var vm = new Vue({
 								
 				linen+=this.text[i];
 			
-                if(getjtitle || (this.text[i]=="\n" && linen.length>nbreak) || i==this.text.length-1 || (this.text[i]=="。" && linen.length>dbreak)) {
-					
+                if(getjtitle || (this.text[i]=="\n" && linen.length>nbreak) || i==this.text.length-1 || ( (this.text[i]=="。"||this.text[i]=="？"||this.text[i]=="！") && linen.length>dbreak)) {
 					if(eval(search)){
 						let content="";
 						if(getjtitle && eval(search.replace("linen","jtitle"))) content=jtitle;
@@ -570,8 +656,7 @@ var vm = new Vue({
 							'content':content,
 						});
 
-						let recordmax=20; if(this.test) recordmax=36;
-						if(this.searchrst.length>=recordmax) {this.endSearch(); return;}
+						if(this.searchrst.length>=this.recordmax) {this.endSearch(); return;}
                     }
                     linen="";
 					getjtitle=false;
@@ -579,8 +664,8 @@ var vm = new Vue({
 				
             }
 			
-			this.listindex++;
-			this.nextSearch();			
+			if(!this.msgOne){this.listindex++;this.nextSearch();}
+			else {this.search=false; this.text=""; this.depth=3;}
         },
 		
 		nextSearch: function nextSearch() {
@@ -590,15 +675,18 @@ var vm = new Vue({
 					( (this.listselect && this.list[this.listindex].selected) || !this.listselect )){
 					//this.$forceUpdate();
 					//alert(this.list[this.listindex].TITLE);
-					let recordmax=20; if(this.test) recordmax=36;
 					document.getElementById("searching").innerHTML="<br>正在搜索《"+
-					this.list[this.listindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+recordmax;
+					this.list[this.listindex].TITLE+"》...  已找到："+this.searchrst.length+"/"+this.recordmax;
 					this.loadFile(this.doSearch,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
 					return;
 				}
 			}
 			this.endSearch();
 			this.search=false;
+        },
+		
+		oneSearch: function oneSearch() {
+			this.loadFile(this.doSearch,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
         },
 		
         loadFile: function loadFile(fn,name,t) {
