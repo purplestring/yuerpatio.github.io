@@ -34,13 +34,16 @@
 	<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
 	<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
 	<div class="title" align="center">魚苑</div><br>	
-	<form id="content">
-		<input type="text" name="name" placeholder="输入你的姓名"/>       
-		<input type="email" name="_replyto" placeholder="输入你的邮箱"/>
-		<input type="button" value="发送" id="btn"/>   
-	</form>		
+	<form id="my-form" action="https://formspree.io/f/mbjwjpng" method="POST">
+	  <label>您的邮箱:</label>
+	  <input type="email" name="email" /><br>
+	  <label>消息:</label>
+	  <input type="text" name="message" />
+	  <button id="my-form-button">提交</button>
+	  <p id="my-form-status"></p>
+	</form>	
 	<div align="center">
-			<a href="../index.html" style="cursor:pointer">返回主页</a>
+			<a href="../../index.html" style="cursor:pointer">返回上页</a>
 	</div>
 	<div class="footer">
 		Copyright © 2015~19 鱼儿. All Rights Reserved.
@@ -48,21 +51,25 @@
 </div>
 </body>
 <script>
-	$("#btn").on("click",function(){
-		var obj = $("#content").serialize();  //获取id为content的form表单里面的内容,name值均为formspree提供不能更改
-		$.ajax({
-			type:"post",						//必须post请求
-			url:"https://formspree.io/f/purplestring@sina.cn", //abc@qq.com换成你要接收的邮箱地址
-			async:true,
-			data:obj,            									
-			dataType:"json",
-			success: res=>{
-				alert('邮件已发送!!!');   			//发送成功后的操作
-			},
-			error:res=>{
-				alert("未知错误,发送失败");
-			}
-		});
-	})//更多name属性参考https://formspree.io
+   var form = document.getElementById("my-form");
+    
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var status = document.getElementById("my-form-status");
+      var data = new FormData(event.target);
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+      }).then(response => {
+        status.innerHTML = "Thanks for your submission!";
+        form.reset()
+      }).catch(error => {
+        status.innerHTML = "Oops! There was a problem submitting your form"
+      });
+    }
+    form.addEventListener("submit", handleSubmit)
 </script>
 </html>
