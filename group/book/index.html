@@ -79,13 +79,13 @@
 				<div v-if="item.newGROUP" id="family"><br>
 					{{item.F_GROUP}}->{{item.S_GROUP}}					
 					<br><br></div>
-				<span v-if="item.TYPE!='pdf' && (item.FILE=='file/' || (test && item.FILE=='filel/'))">					
+				<span v-if="item.TYPE!='pdf' && (item.FILE=='file/' || (test && (item.FILE=='filewai/' || item.FILE=='filegu/' || item.FILE=='filejin/')))">					
 					<a @click.prevent="getBook(i)" style="cursor:pointer">
 						<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
 					</a>
 					<input v-if="listselect" v-model="item.selected" type="checkbox"/>
 				</span>
-				<span v-if="item.TYPE!='pdf' && (item.FILE==null || (!test && item.FILE=='filel/' ))" 
+				<span v-if="item.TYPE!='pdf' && (item.FILE==null || (!test && (item.FILE=='filewai/' || item.FILE=='filegu/' || item.FILE=='filejin/') ))" 
 					@click.prevent="getBook(i)" style="cursor:pointer">
 						<span v-if="!test || item.GET==null">
 							<span v-if="item.TITLE.indexOf(' ')>0">【</span>{{item.TITLE}}<span v-if="item.TITLE.indexOf(' ')>0">】</span>
@@ -104,19 +104,21 @@
 		</div>
 		<div v-if="depth==1">
 			<div class="title" align="center">{{list[listindex].TITLE}}</div><br>
-			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a>
+			<span v-if="test"> {{list[listindex].TAG}}</span>
 			<a v-if="note!=''" @click="titlenoteshow=!titlenoteshow" style="cursor:pointer;color:Brown;font-weight:bold">
-			<span v-if="!titlenoteshow">显示</span><span v-if="titlenoteshow">隐藏</span>笔记</a><br>
-			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}}
-			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))" >
+			<span v-if="!titlenoteshow">显示</span><span v-if="titlenoteshow">隐藏</span>笔记</a>
+			<a @click.prevent="depth=0" style="cursor:pointer">返回书卷目录</a><br>
+			<span v-if="list[listindex].COUNTRY!='中'">{{list[listindex].COUNTRY}} </span>
+			{{list[listindex].DYNASTY}} {{list[listindex].AUTHOR}} {{text.length}}字
+			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && (list[listindex].FILE=='filewai/' || list[listindex].FILE=='filegu/' || list[listindex].FILE=='filejin/'))))" >
 				<span @click="msgOne=true;startSearch()" :style='msg==""?"color:Gray;cursor:pointer":"color:Green;cursor:pointer"'>搜索</span><br>
 				<textarea type="text" v-model="msg" placeholder="设定搜索文字" :style="(msg.length>20)?'width:80%;height:200px;':''"></textarea><br>							
 			</span><br>
-			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/'))">加载中...</span>
-			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && list[listindex].FILE=='filel/' )">
+			<span v-if="text=='' && (list[listindex].FILE=='file/' || (test && (list[listindex].FILE=='filewai/' || list[listindex].FILE=='filegu/' || list[listindex].FILE=='filejin/')))">加载中...</span>
+			<span v-if="(text!='' && text.length<200) || list[listindex].FILE==null || (!test && (list[listindex].FILE=='filewai/' || list[listindex].FILE=='filegu/' || list[listindex].FILE=='filejin/') )">
 			百度百科：<a :href="'https://baike.baidu.com/item/' + list[listindex].TITLE" target="_blank">
 				{{list[listindex].TITLE}}</a></span>			
-			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && list[listindex].FILE=='filel/')))">			
+			<span v-if="!(text=='' && (list[listindex].FILE=='file/' || (test && (list[listindex].FILE=='filewai/' || list[listindex].FILE=='filegu/' || list[listindex].FILE=='filejin/'))))">			
 				<span v-for="i of 100" v-if='(listpage*100+i-1)<subinfo.length'>
 				<a @click="getZhang(listpage*100+i-1)" style="cursor:pointer">{{subinfo[listpage*100+i-1].title}}</a>
 				<span v-if="note!='' && titlenoteshow" v-html=showNoteSubTitleZhang(subinfo[listpage*100+i-1].title) class="subnotezhang"></span>
@@ -192,7 +194,7 @@ var vm = new Vue({
 		"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",		
 		"地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波","地域|西","地域|爱",
 		"地域|北欧","地域|罗马","地域|美","地域|日","地域|韩","地域|印","地域|加","地域|澳","地域|美洲","地域|其它","地域|无",
-		"类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
+		"类属|经","类属|史","类属|儒","类属|释","类属|道","类属|医","类属|诸子","类属|单集","类属|合集",
 		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|书目","类属|其它",
 		"标签|学门","标签|数学","标签|物理","标签|天文","标签|地理","标签|化学","标签|生物","标签|科学",
 		"标签|天工","标签|医学","标签|计算机","标签|经济","标签|管理","标签|历史","标签|心理","标签|法学",
@@ -290,7 +292,7 @@ var vm = new Vue({
 				this.list[j].fliter= false; 
 				//if(this.test || this.list[j].SHOW==null || this.list[j].F_GROUP=='test') this.list[j].fliter=true;
 				this.list[j].selected= false; 
-				if(this.list[j].FILE=='file/' || (this.test && this.list[j].FILE=='filel/')) this.list[j].selected= true; 
+				if(this.list[j].FILE=='file/' || (this.test && (this.list[j].FILE=='filewai/' || this.list[j].FILE=='filegu/' || this.list[j].FILE=='filejin/'))) this.list[j].selected= true; 
 				//this.list[j].gselected= false;
 				this.getItem(j);				
 			}
@@ -358,7 +360,7 @@ var vm = new Vue({
 						"朝代|隋唐五代","朝代|北宋","朝代|南宋","朝代|元","朝代|明","朝代|清",
 						"朝代|上古","朝代|中世纪","朝代|文艺复兴","朝代|近代","朝代|现代","朝代|当代","朝代|无",]);
 					if(i>=this.statename.indexOf("类属|经") && i<=this.statename.indexOf("类属|其它")) 
-						this.c(["类属|经","类属|史","类属|医","类属|释","类属|道","类属|诸子","类属|单集","类属|合集",
+						this.c(["类属|经","类属|史","类属|儒","类属|释","类属|道","类属|医","类属|诸子","类属|单集","类属|合集",
 						"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|书目","类属|其它",]);
 					if(i>=this.statename.indexOf("地域|中") && i<=this.statename.indexOf("地域|无")) 
 						this.c(["地域|中","地域|英","地域|法","地域|德","地域|意","地域|俄","地域|希","地域|荷","地域|奥","地域|波","地域|西",
@@ -476,12 +478,10 @@ var vm = new Vue({
 			else if(bookall.indexOf("·")>0)book=bookall.split('·')[0];
 			else if(!isEn && bookall.indexOf(" ")>0)book=bookall.split(' ')[0]; 
 			
-			let getBook=false; for(let i=0;i<this.list.length;i++) if(book==this.list[i].TITLE) {getBook=true;break;}
-			
-			if(getBook) {
-				if(bookall.indexOf("|")>0) return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+bookall+'">《'+bookall+'》</a>';
-				else return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+book+'">《'+bookall+'》</a>';
-			}				
+			for(let i=0;i<this.list.length;i++) if(book==this.list[i].TITLE) {				
+				if(this.list[i].TYPE=='pdf') return '<a style="cursor: pointer;" target="_blank" href="pdf/'+(bookall.indexOf("|")>0?bookall:book)+'.pdf">《'+bookall+'》</a>';
+				else return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+(bookall.indexOf("|")>0?bookall:book)+'">《'+bookall+'》</a>';
+			}	
 			return '《'+bookall+'》';
 		},
 		
@@ -523,7 +523,7 @@ var vm = new Vue({
             this.listindex=index;
 			if(this.depth==0) { this.depth=1; this.listpage=0; }
 			this.subinfo=[];this.text="";
-			if(this.list[index].TYPE=="pdf" || this.list[index].FILE==null || (!this.test && this.list[index].FILE=='filel/')) return;
+			if(this.list[index].TYPE=="pdf" || this.list[index].FILE==null || (!this.test && (this.list[index].FILE=='filewai/'||this.list[index].FILE=='filegu/'||this.list[index].FILE=='filejin/'))) return;
             this.loadFile(this.setBook,this.list[this.listindex].FILE+this.list[this.listindex].TITLE+".txt","text");
         },
 
@@ -671,7 +671,7 @@ var vm = new Vue({
 		nextSearch: function nextSearch() {
 			for(;this.listindex<this.list.length;this.listindex++) {
 				if(this.list[this.listindex].fliter && 
-					( this.list[this.listindex].FILE=='file/' || (this.test && this.list[this.listindex].FILE=='filel/')) && 
+					( this.list[this.listindex].FILE=='file/' || (this.test && (this.list[this.listindex].FILE=='filewai/'||this.list[this.listindex].FILE=='filegu/'||this.list[this.listindex].FILE=='filejin/'))) && 
 					( (this.listselect && this.list[this.listindex].selected) || !this.listselect )){
 					//this.$forceUpdate();
 					//alert(this.list[this.listindex].TITLE);

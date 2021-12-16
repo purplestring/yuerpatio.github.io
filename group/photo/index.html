@@ -248,24 +248,32 @@
 			</div>
 			<div v-if="id>=0">
 				<div class="title" align='center' @click="mp4=!mp4;" >{{list[id].TITLE}}</div><br>
-				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="subpage=0;S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
 				<span v-if="list[id].S_CLASS!=null && S_CLASS!=S_ORDER" 
-					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" @click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
 				<span v-if="list[id].S_FAMILY!=null"
-					@click.prevent="S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
 					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span><br>
+				<div v-if="(mp4 && list[id].F_NAME.split(',').length>10) || (!mp4 && list[id].F_NAME.split(',zmp4')[0].split(',').length>10)" align="center">
+					<a v-if="subpage>0" @click="subpage--;" style="cursor:pointer">◀</a>
+					<span>第{{subpage+1}}/{{Math.ceil((mp4?(list[id].F_NAME.split(',').length):(list[id].F_NAME.split(',zmp4')[0].split(',').length))/10)}}页</span>					
+					<a v-if="(mp4 && list[id].F_NAME.split(',').length>(subpage+1)*10) || (!mp4 && list[id].F_NAME.split(',zmp4')[0].split(',').length>(subpage+1)*10)"
+					@click="subpage++;" style="cursor:pointer">▶</a>
+				</div>
 				<div v-for="(item, i) in list[id].F_NAME.split(',')">
-					<span v-if="item.split('.')[1]!='mp4'" >
-						<img v-if="test || item.split('/')[0]!='zwai'" class='myimg' style="cursor:pointer;" @click.prevent="toUrl(list[id].F_GROUP,item)"
-						:src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></span>
-					<span v-if="mp4 && item.split('.')[1]=='mp4'" ><video class='myimg' controls="controls" :src='item' /></video><br/></span>
+					<span v-if="i>=subpage*10 && i<subpage*10+10">
+						<span v-if="item.split('.')[1]!='mp4'" >
+							<img v-if="test || item.split('/')[0]!='zwai'" class='myimg' style="cursor:pointer;" @click.prevent="toUrl(list[id].F_GROUP,item)"
+							:src='item.indexOf("/")>=0?item:(list[id].F_GROUP+"/"+item)' /><br/></span>
+						<span v-if="mp4 && item.split('.')[1]=='mp4'" ><video class='myimg' controls="controls" :src='item' /></video><br/></span>
+					</span>
 				</div>
 				<br><br>				
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
-					<a @click.prevent="id=-4" style="cursor:pointer;font-weight:bold;">返回当前科</a>
+					<a @click.prevent="subpage=0;id=-4;" style="cursor:pointer;font-weight:bold;">返回当前科</a>
 					<a @click.prevent="if(id!=-1)nextPic();" style="cursor:pointer">▶</a>
 				</div>
 			</div>
@@ -349,6 +357,7 @@ var all=new Vue({
 		lang:lang,
 		langFamily:langFamily,
 		langid:1,
+		subpage:0,
 		isIE:false,
 		list:sfile,
 		info:ifile,
@@ -414,7 +423,8 @@ var all=new Vue({
 			"天南星科":"泽泻目","岩菖蒲科":"泽泻目","水鳖科":"泽泻目",
 			"桑科":"蔷薇目","榆科":"蔷薇目","荨麻科":"蔷薇目","鼠李科":"蔷薇目","胡颓子科":"蔷薇目",
 			"菖蒲科":"菖蒲目","忍冬科":"川续断目","木兰科":"木兰目","金鱼藻科":"金鱼藻目",
-			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","莲科":"山龙眼目","菊科":"菊目","莎草科":"禾本目","芸香科":"无患子目","兰科":"天门冬目","远志科":"豆目",
+			"葡萄科":"葡萄目","薯蓣科":"薯蓣目","睡莲科":"睡莲目","莲科":"山龙眼目","菊科":"菊目","莎草科":"禾本目",
+			"芸香科":"无患子目","苦木科":"无患子目","兰科":"天门冬目","远志科":"豆目",
 			"藤黄科":"金虎尾目","大戟科":"金虎尾目","红树科":"金虎尾目",
 			"景天科":"虎耳草目","金缕梅科":"虎耳草目","小二仙草科":"虎耳草目","虎耳草科":"虎耳草目","鼠刺科":"虎耳草目",
 			"观音座莲科":"合囊蕨目","桫椤科":"桫椤目","里白科":"里白目",//"松科":"松目","柏科":"柏目",
@@ -455,16 +465,16 @@ var all=new Vue({
 					tmpObj["S_CLASS"] = sfile[i]["S_CLASS"];tmpObj["S_ORDER"] = sfile[i]["S_ORDER"];
 					this.list.push(tmpObj);
 				}
-			this.setNewOrderName();this.setOrderId();
+			this.setNewOrderName();this.setOrderId();this.subpage=0;
 			this.$forceUpdate();		
 		},
 		prePic: function prePic(){
-			let i=this.id-1;
+			this.subpage=0;let i=this.id-1;
 			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
 			this.id=i;
 		},
 		nextPic: function nextPic(){
-			let i=this.id+1;
+			this.subpage=0;let i=this.id+1;
 			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
@@ -614,10 +624,22 @@ var all=new Vue({
             let key = window.event.keyCode;
 			if (key == 36) _this.id=-1;
             if (key == 37) {
-                if(_this.id!=-1) _this.prePic();
+                if(_this.id!=-1) {
+					let listlength=0;
+					if(_this.mp4) listlength=_this.list[_this.id].F_NAME.split(',').length;
+					else listlength=_this.list[_this.id].F_NAME.split(',zmp4')[0].split(',').length;					
+					if(listlength<=10 || _this.subpage==0) {_this.subpage=0;_this.prePic();}
+					else _this.subpage--;
+				}
             }
 			if (key == 39) {
-                if(_this.id!=-1) _this.nextPic();
+                if(_this.id!=-1) {
+					let listlength=0;
+					if(_this.mp4) listlength=_this.list[_this.id].F_NAME.split(',').length;
+					else listlength=_this.list[_this.id].F_NAME.split(',zmp4')[0].split(',').length;					
+					if(listlength<=10 || _this.subpage==Math.ceil(listlength/10)-1) {_this.subpage=0;_this.nextPic();}
+					else _this.subpage++;
+				}
             }
         };
 
