@@ -380,6 +380,32 @@ a:hover {
 	border: medium none;
 }
 
+#form_name,#form_message{
+	height:22px;
+	vertical-align: middle;			
+}
+#form_name{
+	width:80px;	
+}
+#form_message{
+	width:90.8%;
+	max-width: 90.8%;
+	height:64px;
+}
+#form_submit{
+	width:44px;	
+	height:24px;
+	vertical-align: middle;
+	float:right;
+	margin-right:5%;
+}
+#form{
+	text-align:left;
+}
+#form input,#form textarea{
+	font-size:16px;
+}
+
 @media screen and (max-device-width:640px){
 	#main{
 		font-size:42px;
@@ -423,5 +449,27 @@ a:hover {
 	.water p {
 		font-size: 36px;
 		line-height: 36px;
+	}
+	
+	#form_name,#form_message{
+		height:60px;
+		vertical-align: middle;			
+	}
+	#form_name{
+		width:300px;	
+	}
+	#form_message{
+		width:84%;
+		height:240px;
+	}
+	#form_submit{
+		width:104px;	
+		height:54px;
+	}
+	#form input{
+		font-size:42px;
+	}
+	#form textarea,#form_submit{
+		font-size:36px;
 	}
 }

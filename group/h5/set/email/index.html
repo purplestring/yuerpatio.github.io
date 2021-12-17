@@ -178,6 +178,7 @@
     async function handleSubmit(event) {
       event.preventDefault();
       var status = document.getElementById("my-form-status");
+	  status.innerHTML = "发送中...";
       var data = new FormData(event.target);
       fetch(event.target.action, {
         method: form.method,
@@ -193,5 +194,9 @@
       });
     }
     form.addEventListener("submit", handleSubmit)
+	
+	/*function onInput(){
+		document.getElementById("fs-frm-inputs").click(document.getElementById("my-form-status").innerHTML = "";);
+	}*/
 </script>
 </html>
