@@ -64,10 +64,10 @@
             'Accept': 'application/json'
         }
       }).then(response => {
-        status.innerHTML = "Thanks for your submission!";
+        status.innerHTML = "发送成功！";
         form.reset()
       }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
+        status.innerHTML = "发送失败！邮箱联系吧：purplestring@sina.cn"
       });
     }
     form.addEventListener("submit", handleSubmit)

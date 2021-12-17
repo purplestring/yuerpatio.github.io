@@ -56,7 +56,8 @@
 				style="color:green;cursor:pointer;">与</span>筛选🔍】灰：无 | 黑：是 | 白：非 |</span><br>			
 				 <span v-for="(item, i) in statename">
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
-					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" @click="setType(i)" style="cursor:pointer;">
+					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" 
+					@click="if(test || (i!=statename.length-4 && i!=statename.length-6) )setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
 					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|爱' || item=='类属|合集' || item=='标签|法学' 
 					|| item=='标签|宗教' || item=='标签|动漫' || item=='标签|科学'" ><br></span>
@@ -228,7 +229,6 @@ var vm = new Vue({
 	created: function created() {		
 		if(self.location.href.substring(0,4)!="http")this.test=true;		
 		this.reSet();
-		
 		//for(let i=0;i<this.list.length;i++) if(this.list[i].TYPE=="pdf") {console.log(this.list[i].TITLE); }
 		
 		//list.sort(function (a, b) {return a.TITLE.localeCompare(b.TITLE);});
@@ -308,8 +308,15 @@ var vm = new Vue({
 			this.search=false;
 			this.listselect=false;
 			this.searchrst=[];
+			
+			if(!this.test){
+				this.statevalue[this.statename.length-6]=2; //En
+				this.statevalue[this.statename.length-4]=1;// S
+				for(let k=0;k<this.list.length;k++) this.getItem(k);
+				this.setIsNewGroup();
+			}
+			
 			this.$forceUpdate();	
-		
 		},
 		
 		selectClear: function selectClear(){
