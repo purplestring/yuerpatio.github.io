@@ -20,7 +20,7 @@
 {"TITLE":"微博","F_GROUP":"set","S_GROUP":"交互","F_NAME":"weibo","SHOW":"no",},
 {"TITLE":"微博r","F_GROUP":"set","S_GROUP":"交互","F_NAME":"weibo/r.html","SHOW":"no",},
 {"TITLE":"影视集","F_GROUP":"set","S_GROUP":"交互","F_NAME":"movie","SHOW":"no",},
-{"TITLE":"邮箱","F_GROUP":"set","S_GROUP":"交互","F_NAME":"email",},
+{"TITLE":"留言板","F_GROUP":"set","S_GROUP":"交互","F_NAME":"email",},
 {"TITLE":"唐诗三百首·五言","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/tssbs01.html","SHOW":"no",},
 {"TITLE":"唐诗三百首·五言射覆","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/tssbs02.html","SHOW":"no",},
 {"TITLE":"五言射覆1","F_GROUP":"set","S_GROUP":"交互","F_NAME":"lottie/wysf01.html","SHOW":"no",},
