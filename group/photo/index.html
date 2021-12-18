@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
-	<script src="comments.js"></script>
+	<script src="../../main/js/comments.js"></script>
 	<script src="species.js"></script>
 	<script src="lang.js"></script>
 	<script src="info.js"></script>
@@ -267,11 +267,12 @@
 					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="6" @change="addSubmit()">
 					<input id="form_submit" type="submit" value="发送"><br>
 					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
-					<input type="hidden" name="item" id="item" :value=list[id].TITLE>
+					<input type="hidden" name="item" :value=list[id].TITLE>
+					<input type="hidden" name="page" value='photo'>
 					<br><span style="color:blue;" id="my-form-status"></span>
 				</form>
 				<div v-if="showcomment" v-for="(item, i) in comments.submissions">
-					<span v-if="item.item==list[id].TITLE">
+					<span v-if="item.page=='photo' && item.item==list[id].TITLE">
 					<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
 					<span style="color:gray;">{{showTime(item._date)}}</span><br></span>
 				</div>
