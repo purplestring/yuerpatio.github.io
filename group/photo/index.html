@@ -249,24 +249,24 @@
 			</div>
 			<div v-if="id>=0">
 				<div class="title" align='center' @click="mp4=!mp4;" >{{list[id].TITLE}}</div><br>
-				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="subpage=0;S_ORDER=list[id].S_ORDER;id=-1" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="subpage=0;S_ORDER=list[id].S_ORDER;id=-1;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
 				<span v-if="list[id].S_CLASS!=null && S_CLASS!=S_ORDER" 
-					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" @click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
 				<span v-if="list[id].S_FAMILY!=null"
-					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4"
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4;addSubmitFlag=false"
 					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				
 				<div style="width:100%;">
-				<span @click="showcomment=!showcomment;" style="float:right;margin-right:5%;cursor:pointer;font-weight:bold;color:blue;">{{showcomment?"折叠":"展开"}}评论区</span>
+				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;"
+					style="float:right;margin-right:5%;cursor:pointer;font-weight:bold;color:blue;">{{showcomment?"折叠":"展开"}}评论区</span>
 				</div>
 
 				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST">
-					<label>昵称:</label><input id="form_name" name="name" required="" @change="addSubmit()">
+					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="6" @change="addSubmit()">
 					<input id="form_submit" type="submit" value="发送"><br>
-					<label>评论:</label><textarea id="form_message" name="message" required=""></textarea>
-					<input type="hidden" name="page" id="page" value="photo">
+					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
 					<input type="hidden" name="item" id="item" :value=list[id].TITLE>
 					<br><span style="color:blue;" id="my-form-status"></span>
 				</form>
@@ -293,7 +293,7 @@
 				</div><br>				
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
-					<a @click.prevent="subpage=0;id=-4;" style="cursor:pointer;font-weight:bold;">返回当前科</a>
+					<a @click.prevent="subpage=0;id=-4;addSubmitFlag=false;" style="cursor:pointer;font-weight:bold;">返回当前科</a>
 					<a @click.prevent="if(id!=-1)nextPic();" style="cursor:pointer">▶</a>
 				</div>
 			</div>
@@ -313,6 +313,7 @@
 //芍药科 归属 虎耳草目 or 毛茛目
 //蝴蝶 https://www.ifoundbutterflies.org/sp/524/Lethe-europa
 //昆虫 http://eelib.zslib.com.cn/zjm/variouslist/animal/insect/dragonfly/Index.html
+
 var cpageName=self.location.href.split('group/')[1].split('/')[0];
 function loadScript(script){
 	var _script = document.createElement('script');
@@ -679,7 +680,7 @@ var all=new Vue({
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
-			if (key == 36) _this.id=-1;
+			if (key == 36) {_this.id=-1;_this.addSubmitFlag=false;}
             if (key == 37) {
                 if(_this.id!=-1) {
 					let listlength=0;

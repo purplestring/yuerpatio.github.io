@@ -6,6 +6,7 @@
 	<link rel="icon" type="image/x-ico" href="../../../../yuer.ico" />
 	<link rel="stylesheet" href="../../../../main/css/style.css" type="text/css" />
 	<script src="../../../../main/js/jquery-3.3.1.min.js"></script>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <style type="text/css">
 	#all a{
 		font-size:32px;
@@ -155,11 +156,13 @@
 	<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjpng" method="post">
 		<fieldset id="fs-frm-inputs">
 			<label for="full-name">姓名</label>
-			<input type="text" name="name" id="full-name" placeholder="姓名" required="">
+			<input type="text" name="name" id="full-name" placeholder="姓名" maxlength="10" required="">
 			<label for="email-address">邮箱</label>
-			<input type="email" name="email" id="email-address" placeholder="email@domain.tld" required="">
+			<input type="email" name="email" id="email-address" placeholder="email@domain.tld" maxlength="28" required="">
 			<label for="message">留言</label>
-			<textarea rows="5" name="message" id="message" placeholder="您的留言" required=""></textarea>		
+			<textarea rows="5" name="message" id="message" placeholder="您的留言" maxlength="256" required=""></textarea>
+			<input type="hidden" name="cip" id="cip">
+			<input type="hidden" name="cname" id="cname">			
 		</fieldset>
 		<input type="submit" value="发送"><span id="my-form-status"></span>
 	</form>
@@ -195,6 +198,8 @@
     }
     form.addEventListener("submit", handleSubmit)
 	
+	document.getElementById("cip").value=returnCitySN["cip"];
+	document.getElementById("cname").value=returnCitySN["cname"];
 	/*function onInput(){
 		document.getElementById("fs-frm-inputs").click(document.getElementById("my-form-status").innerHTML = "";);
 	}*/
