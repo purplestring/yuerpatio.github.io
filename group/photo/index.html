@@ -264,7 +264,7 @@
 				</div>
 
 				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST">
-					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="6" @change="addSubmit()">
+					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
 					<input id="form_submit" type="submit" value="发送"><br>
 					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
 					<input type="hidden" name="item" :value=list[id].TITLE>
