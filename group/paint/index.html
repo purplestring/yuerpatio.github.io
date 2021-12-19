@@ -130,6 +130,8 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+window.onload = function(){
+
 //var alljpg="";for(let i in myjson.RECORDS)if(myjson.RECORDS[i].P_PICS[3]=='j') alljpg+=myjson.RECORDS[i].P_PICS.split('/')[1]+"\r\n"; console.log(alljpg);
 var vm = new Vue({
 	el: '#main',
@@ -293,5 +295,7 @@ var vm = new Vue({
 		else document.title="画卷集";	
 	},
 })
+
+};
 </script>
 </html>
