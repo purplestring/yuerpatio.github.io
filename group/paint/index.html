@@ -154,14 +154,14 @@ var vm = new Vue({
 		test:false,
 	},
 	methods: {		
-		reSet: function reSet(){
-			for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;
+		reSet: function reSet(){			
+			for(let j=0;j<this.statename.length;j++) this.statevalue[j]=0;			
 			for(let j=0;j<this.list.length;j++) {
 				this.list[j].fliter= true;
 				if(!this.test && (this.list[j].SHOW=="no" || this.list[j].P_DYNASTY=="今人" || this.list[j].P_DYNASTY=="近现代" )) this.list[j].fliter= false;
 			}
-			this.setPre();
-			this.$forceUpdate();		
+			if(!this.test){this.zuopin=true;this.setType(1);}
+			else{this.setPre();this.$forceUpdate();}	
 		},
 		setType: function setType(i){
 			this.statevalue[i]=(this.statevalue[i]+1)%3;
