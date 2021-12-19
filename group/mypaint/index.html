@@ -118,6 +118,7 @@ if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weiboa.js");
 
+window.onload = function(){
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -243,5 +244,8 @@ var all=new Vue({
 		},
 	}
 });
+
+
+};
 </script>
 </html>

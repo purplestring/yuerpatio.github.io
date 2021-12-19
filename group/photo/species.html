@@ -175,6 +175,7 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+window.onload = function(){
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -360,5 +361,8 @@ var all=new Vue({
 		else document.title="分类页";
 	},
 });
+
+
+};
 </script>
 </html>

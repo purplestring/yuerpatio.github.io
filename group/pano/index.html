@@ -41,6 +41,7 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+window.onload = function(){
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -52,5 +53,7 @@ var all=new Vue({
         if(self.location.href.substring(0,4)!="http")this.test=true;
     },
 });
+
+};
 </script>
 </html>

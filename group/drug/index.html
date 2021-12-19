@@ -73,6 +73,7 @@ loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
 
+window.onload = function(){
 var vm = new Vue({
 	el: '#main',
 	data:{
@@ -161,5 +162,7 @@ var vm = new Vue({
 		else document.title="中药集";	
 	},
 })
+
+};
 </script>
 </html>
