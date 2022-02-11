@@ -85,7 +85,7 @@ return lottie;
 	
 	
 	function move(a,b){
-		myx+=a;myy+=b;
+		myx+=0.1*a;myy+=0.1*b;
 		if(myy<95)myy=95; if(myy>180)myy=180;
 		//if(anim.isPaused) newFrame();
 	};
@@ -134,16 +134,16 @@ function move1(ev,mvfn)
 document.onkeydown = function(e) {
 	let key = window.event.keyCode;
 	if (key == 37) {
-		 posy-=5;dirqzh=0;
+		 posy-=2;dirqzh=0;
 	}
 	if (key == 38) {
-		 posx-=5;dirqzh=90;
+		 posx-=2;dirqzh=90;
 	}
 	if (key == 39) {
-		 posy+=5;dirqzh=180;
+		 posy+=2;dirqzh=180;
 	}
 	if (key == 40) {
-		 posx+=5;dirqzh=-90;
+		 posx+=2;dirqzh=-90;
 	}
 };
 		
