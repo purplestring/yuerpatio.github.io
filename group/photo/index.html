@@ -6,7 +6,8 @@
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
-	<script src="../../main/js/comments.js"></script>
+	<script src="../../main/js/jquery-3.1.0.min.js"></script>
+	<!--script src="../../main/js/comments.js"></script-->
 	<script src="species.js"></script>
 	<script src="lang.js"></script>
 	<script src="info.js"></script>
@@ -216,7 +217,7 @@
 				</div>
 				<br><br>				
 				<div align="center">
-					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
+					<a @click.prevent="id++;showcomment=false;" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
 				</div>
 			</div>
 			<div v-if="id==-3">
@@ -230,7 +231,7 @@
 				</div>
 				<br><br>				
 				<div align="center">
-					<a @click.prevent="id=-1" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
+					<a @click.prevent="id=-1;showcomment=false;" style="cursor:pointer;font-weight:bold;">▶返回万叶集页◀</a>
 				</div>
 			</div>
 			<div v-if="id==-4">
@@ -244,26 +245,27 @@
 				</div>
 				<br><br>				
 				<div align="center">
-					<a @click.prevent="id++" style="cursor:pointer;font-weight:bold;">▶返回当前目◀</a>
+					<a @click.prevent="id++;showcomment=false;" style="cursor:pointer;font-weight:bold;">▶返回当前目◀</a>
 				</div>
 			</div>
 			<div v-if="id>=0">
 				<div class="title" align='center' @click="mp4=!mp4;" >{{list[id].TITLE}}</div><br>
-				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="subpage=0;S_ORDER=list[id].S_ORDER;id=-1;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
+				<span v-if="list[id].S_PHYLUM!=null" @click.prevent="subpage=0;S_ORDER=list[id].S_ORDER;id=-1;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_PHYLUM)}}】></span>
 				<span v-if="list[id].S_CLASS!=null && S_CLASS!=S_ORDER" 
-					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
-				<span v-if="list[id].S_ORDER!=null" @click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3;addSubmitFlag=false" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-2;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_CLASS)}}】></span>	
+				<span v-if="list[id].S_ORDER!=null" @click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;id=-3;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;font-weight:bold;">【{{langTrans(list[id].S_ORDER)}}】></span>
 				<span v-if="list[id].S_FAMILY!=null"
-					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4;addSubmitFlag=false"
+					@click.prevent="subpage=0;S_CLASS=list[id].S_CLASS;S_ORDER=list[id].S_ORDER;S_FAMILY=list[id].S_FAMILY;id=-4;addSubmitFlag=false;showcomment=false;"
 					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				
 				<div style="width:100%;">
-				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;"
+				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="float:right;margin-right:5%;cursor:pointer;font-weight:bold;color:blue;">{{showcomment?"折叠":"展开"}}评论区</span>
 				</div>
 
-				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST">
+				<!--form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST"-->
+				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/setcmts" method="POST">
 					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
 					<input id="form_submit" type="submit" value="发送"><br>
 					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
@@ -271,10 +273,9 @@
 					<input type="hidden" name="page" value='photo'>
 					<br><span style="color:blue;" id="my-form-status"></span>
 				</form>
-				<div v-if="showcomment" v-for="(item, i) in comments.submissions">
-					<span v-if="item.page=='photo' && item.item==list[id].TITLE">
+				<div v-if="showcomment" v-for="(item, i) in comments">
 					<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
-					<span style="color:gray;">{{showTime(item._date)}}</span><br></span>
+					<span style="color:gray;">{{showTime(item.date)}}</span><br>
 				</div>
 				<br>
 				
@@ -294,7 +295,7 @@
 				</div><br>				
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor:pointer">◀</a>
-					<a @click.prevent="subpage=0;id=-4;addSubmitFlag=false;" style="cursor:pointer;font-weight:bold;">返回当前科</a>
+					<a @click.prevent="subpage=0;id=-4;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;font-weight:bold;">返回当前科</a>
 					<a @click.prevent="if(id!=-1)nextPic();" style="cursor:pointer">▶</a>
 				</div>
 			</div>
@@ -377,9 +378,8 @@ window.onload = function(){
 var all=new Vue({
 	el: '#all',
 	data:{ 	
-		lang:lang,
-		langFamily:langFamily,
-		comments:comments,
+		langOrder,langFamily,
+		comments:[],
 		showcomment:false,
 		addSubmitFlag:false,
 		langid:1,
@@ -389,7 +389,7 @@ var all=new Vue({
 		info:ifile,
 		test:false,
 		mp4:false,
-		svg:svg,
+		svg,
 		pointer:"",
 		needUpdate:true,
 		pic:true,		
@@ -459,7 +459,7 @@ var all=new Vue({
 			"鸭跖草科":"鸭跖草目","雨久花科":"鸭跖草目",
 			"姜科":"姜目","美人蕉科":"姜目","芭蕉科":"姜目",
 			"天门冬科":"天门冬目","石蒜科":"天门冬目",
-			"车前科":"唇形目","木樨科":"唇形目","紫葳科":"唇形目","列当科":"唇形目","唇形科":"唇形目",
+			"车前科":"唇形目","木樨科":"唇形目","紫葳科":"唇形目","列当科":"唇形目","唇形科":"唇形目","苦苣苔科":"唇形目",
 			"爵床科":"唇形目","玄参科":"唇形目","马鞭草科":"唇形目","木犀科":"唇形目","通泉草科":"唇形目","紫草科":"紫草目",
 			"壳斗科":"壳斗目","杨梅科":"壳斗目","木麻黄科":"壳斗目",
 			"西番莲科":"金虎尾目","堇菜科":"金虎尾目","藤黄科":"金虎尾目","杨柳科":"金虎尾目",
@@ -473,7 +473,7 @@ var all=new Vue({
 			"栉水母纲":"腔肠","海胆纲":"棘皮","海百合纲":"棘皮","有铰纲":"腕足","头索纲":"头索",
 			"瓣鳃纲":"瓣鳃","腹足纲":"腹足","头足纲":"头足","肢口纲":"肢口","蔓足纲":"蔓足","寡毛纲":"环节","三叶虫纲":"三叶虫",
 			"藓纲":"藓类","苔纲":"苔类","红藻纲":"红藻","软骨鱼纲":"鱼类","硬骨鱼纲":"鱼类","珊瑚虫纲":"腔肠",
-			"伞菌纲":"担子菌","银耳纲":"担子菌","层菌纲":"担子菌","子囊衣纲":"地衣",
+			"担子菌纲":"担子菌","伞菌纲":"担子菌","银耳纲":"担子菌","层菌纲":"担子菌","子囊衣纲":"地衣",
 			},
 		id:-1,
 		S_CLASS:"双子叶植物纲",
@@ -498,22 +498,24 @@ var all=new Vue({
 			this.subpage=0;let i=this.id-1;
 			while(i!=-1) if(this.list[i].F_NAME!=null) break; else i--;
 			this.id=i;
+			this.showcomment=false;
 		},
 		nextPic: function nextPic(){
 			this.subpage=0;let i=this.id+1;
 			while(i<this.list.length) if(this.list[i].F_NAME!=null) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;
+			this.showcomment=false;
 		},
 		langTrans: function langTrans(str){
 			if(this.langid==1) return str;
-			if(this.lang[str]) return this.lang[str];
-			else return str;
+			if(this.langOrder[str]) return this.langOrder[str];
+			return str;
 		},
 		langTransFamily: function langTransFamily(str){
 			if(this.langid==1) return str;
 			if(this.langFamily[str]) return this.langFamily[str];			
-			else return str;
+			return str;
 		},
 		toUrl: function toUrl(folder,file){			
 			var filename="";
@@ -615,7 +617,11 @@ var all=new Vue({
 			} 
 			return str;
 		},
-		
+		getComments:function Comments(){
+			this.comments=[];
+			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=photo&item="+this.list[this.id].TITLE,async:false});
+			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 
+		},
 		addSubmit: function addSubmit(){
 		//console.log(this.addSubmitFlag)
 			if(this.addSubmitFlag) return;
@@ -623,6 +629,7 @@ var all=new Vue({
 			document.getElementById("my-form-status").innerHTML="";
 			var form = document.getElementById("form");
 			
+			var _this=this;
 			async function handleSubmit(event) {
 				event.preventDefault();
 				var status = document.getElementById("my-form-status");
@@ -635,7 +642,9 @@ var all=new Vue({
 					'Accept': 'application/json'
 				}
 				}).then(response => {
-				status.innerHTML = "发送成功！紫月精选后即可看见~";
+				//status.innerHTML = "发送成功！紫月精选后即可看见~";
+				status.innerHTML = "";
+				_this.getComments();
 				form.reset();
 				}).catch(error => {
 				status.innerHTML = "发送失败了..."
@@ -647,7 +656,9 @@ var all=new Vue({
 		},
 		
 		showTime: function showTime(s){
-			return '('+s.split('.')[0].replace(/T/g, " ")+')';
+		var t=new Date(s);//console.log(t.toTimeString().)
+		return t.toLocaleDateString()+" "+t.toLocaleTimeString();
+			//return '('+s.split('.')[0].replace(/T/g, " ")+')';
 		},
 	},
 	created: function created() {
@@ -689,7 +700,7 @@ var all=new Vue({
 					if(_this.mp4) listlength=_this.list[_this.id].F_NAME.split(',').length;
 					else listlength=_this.list[_this.id].F_NAME.split(',zmp4')[0].split(',').length;					
 					if(listlength<=10 || _this.subpage==0) {_this.subpage=0;_this.prePic();}
-					else _this.subpage--;
+					else _this.subpage--;					
 				}
             }
 			if (key == 39) {
