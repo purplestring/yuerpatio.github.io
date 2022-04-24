@@ -11,7 +11,8 @@
 	<title>鳥之册</title>
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="bird.js"></script>
-	<script src="../../main/js/comments.js"></script>
+	<!--script src="../../main/js/comments.js"></script-->
+	<script src="../../main/js/jquery-3.1.0.min.js"></script>	
 	<script src="../../main/js/vue.min.js"></script>
 </head>
 
@@ -61,10 +62,10 @@
 			
 			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br></span>
 			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br></span>
-			<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;"
+			<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>
 
-			<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST">
+			<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/setcmts" method="POST">
 				<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
 				<input id="form_submit" type="submit" value="发送"><br>
 				<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
@@ -72,10 +73,9 @@
 				<input type="hidden" name="page" value='bird'>
 				<br><span style="color:blue;" id="my-form-status"></span>
 			</form>
-			<div v-if="showcomment" v-for="(item, i) in comments.submissions">
-				<span v-if="item.page=='bird' && item.item==list[id].wu">
+			<div v-if="showcomment" v-for="(item, i) in comments">
 				<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
-				<span style="color:gray;">{{showTime(item._date)}}</span><br></span>
+				<span style="color:gray;">{{showTime(item.date)}}</span><br>
 			</div>
 			<span v-if="list[id].pic!=null" style="cursor:pointer;" @click.prevent="window.location.href='../photo/index.html?wd='+list[id].wu"><br>【俺拍嗒】<br>
 				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
@@ -90,7 +90,7 @@
 			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br></span>			
 			<span v-if="test && id<1329">【分布图】<br><img class='myimg' :src='"birdmap/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<span v-if="test && id<1329">【插图】<br><img class='myimg' :src='"birdsall/b"+addZero(id+1)+".jpg"'><br><br></span>
-			<br><br><div align="center"><a @click.prevent="id=-1;addSubmitFlag=false" style="cursor:pointer;">▶返回册主页◀</a></div>
+			<br><br><div align="center"><a @click.prevent="id=-1;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>	
 		<div v-if="id==-1" class="ret"><a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'"> ▶返回主页◀</a></div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -124,6 +124,7 @@ var vm = new Vue({
 		statevalue:[],
 		statecolor:["#888","#000","#fff"],
 		id:-1,
+		comments:[],
 		showcomment:false,
 		addSubmitFlag:false,
 		test:false,
@@ -168,11 +169,13 @@ var vm = new Vue({
 			let i=this.getPre(this.id);
 			while(i!=-1) if(this.list[i].pic!=null) break; else i=this.getPre(i);
 			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.showcomment=false;
 		},
 		nextPic: function nextPic(){
 			let i=this.getNext(this.id);
 			while(i!=-1) if(this.list[i].pic!=null) break; else i=this.getNext(i);
 			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.showcomment=false;
 		},
 		preFamily: function preFamily(){
 			let i=this.getPre(this.id);
@@ -190,12 +193,18 @@ var vm = new Vue({
 			if(i<1000) return "0"+i;
 			return i;
 		},
+		getComments:function getComments(){
+			this.comments=[];
+			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=bird&item="+this.list[this.id].wu,async:false});
+			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 
+		},
 		addSubmit: function addSubmit(){
 			if(this.addSubmitFlag) return;
 			this.addSubmitFlag=true;
 			document.getElementById("my-form-status").innerHTML="";
 			var form = document.getElementById("form");
-			
+
+			var _this=this;			
 			async function handleSubmit(event) {
 				event.preventDefault();
 				var status = document.getElementById("my-form-status");
@@ -208,7 +217,9 @@ var vm = new Vue({
 					'Accept': 'application/json'
 				}
 				}).then(response => {
-				status.innerHTML = "发送成功！紫月精选后即可看见~";
+				//status.innerHTML = "发送成功！紫月精选后即可看见~";
+				status.innerHTML = "";
+				_this.getComments();				
 				form.reset();
 				}).catch(error => {
 				status.innerHTML = "发送失败了..."
@@ -219,7 +230,9 @@ var vm = new Vue({
 			//alert(this.addSubmitFlag)
 		},
 		showTime: function showTime(s){
-			return '('+s.split('.')[0].replace(/T/g, " ")+')';
+			//return '('+s.split('.')[0].replace(/T/g, " ")+')';
+			var t=new Date(s);//console.log(t.toTimeString().)
+			return t.toLocaleDateString()+" "+t.toLocaleTimeString();
 		},
 	},
 	created: function created() {

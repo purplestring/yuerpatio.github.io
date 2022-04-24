@@ -617,7 +617,7 @@ var all=new Vue({
 			} 
 			return str;
 		},
-		getComments:function Comments(){
+		getComments:function getComments(){
 			this.comments=[];
 			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=photo&item="+this.list[this.id].TITLE,async:false});
 			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 

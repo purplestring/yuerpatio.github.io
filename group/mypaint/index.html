@@ -10,7 +10,8 @@
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
-	<script src="../../main/js/comments.js"></script>
+	<!--script src="../../main/js/comments.js"></script-->
+	<script src="../../main/js/jquery-3.1.0.min.js"></script>	
 	<script src="file.js"></script>
 	<title>书画页</title>
 <body>
@@ -63,10 +64,10 @@
 			<div v-if="id!=-1">
 				<div class="title" align='center'>{{list[id].S_GROUP}} > {{list[id].TITLE}}</div><br>
 				
-				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;"
+				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>
 
-				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST">
+				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/setcmts" method="POST">
 					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
 					<input id="form_submit" type="submit" value="发送"><br>
 					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
@@ -74,10 +75,9 @@
 					<input type="hidden" name="page" value='mypaint'>
 					<br><span style="color:blue;" id="my-form-status"></span>
 				</form>
-				<div v-if="showcomment" v-for="(item, i) in comments.submissions">
-					<span v-if="item.page=='mypaint' && item.item.split('|')[0]==list[id].F_GROUP && item.item.split('|')[1]==list[id].S_GROUP && item.item.split('|')[2]==list[id].TITLE">
+				<div v-if="showcomment" v-for="(item, i) in comments">
 					<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
-					<span style="color:gray;">{{showTime(item._date)}}</span><br></span>
+					<span style="color:gray;">{{showTime(item.date)}}</span><br>
 				</div><br>
 				
 				<span v-if="list[id].F_DESC!=null" v-html="list[id].F_DESC+'</br>'"></span>
@@ -97,7 +97,7 @@
 				</span>					
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor: pointer;">◀　</a>
-					<a @click.prevent="id=-1" style="cursor:pointer">返回上页</a>
+					<a @click.prevent="id=-1;showcomment=false;" style="cursor:pointer">返回上页</a>
 					<a @click.prevent="if(id!=-1)nextPic();" style="cursor: pointer;">　▶</a>	
 				</div>
 			</div>
@@ -128,6 +128,7 @@ var all=new Vue({
 		test:false,
 		full:true,
 		id:-1,
+		comments:[],
 		showcomment:false,
 		addSubmitFlag:false,
 		F_GROUP:"",
@@ -179,12 +180,14 @@ var all=new Vue({
 			let i=this.id-1;
 			while(i!=-1) if(this.list[i].F_NAME!=null && (this.full || ( !this.full && this.list[i].F_STAR==5)) && (this.test || this.list[i].F_NAME[0].slice(0,2)!=20) ) break; else i--;
 			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.showcomment=false;
 		},
 		nextPic: function nextPic(){
 			let i=this.id+1;
 			while(i<this.list.length) if(this.list[i].F_NAME!=null && (this.full || ( !this.full && this.list[i].F_STAR==5)) && (this.test || this.list[i].F_NAME[0].slice(0,2)!=20)) break; else i++;
 			if(i>=this.list.length)i=-1;
 			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.showcomment=false;
 		},
 		getWeibo: function getWeibo(link){
 			//console.log(weibo.RECORDS.length)
@@ -211,12 +214,20 @@ var all=new Vue({
 			}
 			return str;
 		},
+		getComments:function getComments(){
+			this.comments=[];
+
+			var itemname=this.list[this.id].F_GROUP+'|'+this.list[this.id].S_GROUP+'|'+this.list[this.id].TITLE;			
+			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=mypaint&item="+itemname,async:false});
+			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 
+		},
 		addSubmit: function addSubmit(){
 			if(this.addSubmitFlag) return;
 			this.addSubmitFlag=true;
 			document.getElementById("my-form-status").innerHTML="";
 			var form = document.getElementById("form");
 			
+			var _this=this;	
 			async function handleSubmit(event) {
 				event.preventDefault();
 				var status = document.getElementById("my-form-status");
@@ -229,7 +240,9 @@ var all=new Vue({
 					'Accept': 'application/json'
 				}
 				}).then(response => {
-				status.innerHTML = "发送成功！紫月精选后即可看见~";
+				//status.innerHTML = "发送成功！紫月精选后即可看见~";
+				status.innerHTML = "";
+				_this.getComments();	
 				form.reset();
 				}).catch(error => {
 				status.innerHTML = "发送失败了..."
@@ -240,7 +253,8 @@ var all=new Vue({
 			//alert(this.addSubmitFlag)
 		},
 		showTime: function showTime(s){
-			return '('+s.split('.')[0].replace(/T/g, " ")+')';
+			var t=new Date(s);//console.log(t.toTimeString().)
+			return t.toLocaleDateString()+" "+t.toLocaleTimeString();
 		},
 	}
 });
