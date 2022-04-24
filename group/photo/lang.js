@@ -1,4 +1,4 @@
-﻿var lang={
+﻿var langOrder={
 "无油樟目":"Amborellales",
 "睡莲目":"Nymphaeales",
 "木兰藤目":"Austrobaileyales",

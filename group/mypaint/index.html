@@ -88,7 +88,7 @@
 					</span><br>
 				</span>							
 				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪' && list[id].F_NAME[0].slice(0,2)!=20)">
-					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.location.href=linkTo(list[id].LINK)" 
+					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.open(linkTo(list[id].LINK))" 
 					:src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
 				</span>
 				<br>

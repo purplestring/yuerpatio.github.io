@@ -59,8 +59,8 @@
 					<a :style="'color:'+(stateor?statecoloror[statevalue[i]]:statecolorand[statevalue[i]])" 
 					@click="if(test || (i!=statename.length-4 && i!=statename.length-6) )setType(i)" style="cursor:pointer;">
 					{{statename[i].indexOf("|")==-1?statename[i]:statename[i].split("|")[1]}} </a>
-					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|奥' || item=='地域|澳' || item=='类属|合集' || item=='标签|食品' 
-					|| item=='标签|计算机' || item=='标签|未来' || item=='标签|生物' || item=='标签|语言'" ><br></span>
+					<span v-if="item=='朝代|魏晋南北朝' || item=='朝代|清' || item=='地域|奥' || item=='地域|澳' || item=='类属|合集' || item=='标签|宗教' 
+					|| item=='标签|生物' || item=='标签|传媒' || item=='标签|造物' || item=='标签|未来'" ><br></span>
 				</span>								
 			</div><br>
 			<div style="text-align:center;">
@@ -204,12 +204,14 @@ var vm = new Vue({
 		"地域|亚洲","地域|欧洲","地域|美洲","地域|大洋洲","地域|非洲","地域|其它","地域|无",
 		"类属|经","类属|史","类属|儒","类属|释","类属|道","类属|医","类属|诸子","类属|单集","类属|合集",
 		"类属|诗文","类属|随笔","类属|人文","类属|小说戏剧","类属|书目","类属|其它",
-		"标签|学门","标签|数学","标签|物理","标签|天文","标签|地理","标签|化学","标签|生物",
-		"标签|哲学","标签|逻辑","标签|伦理","标签|认识论","标签|形而上学","标签|宗教","标签|语言",		
-		"标签|文学","标签|传记","标签|社会","标签|政治","标签|经济","标签|管理","标签|法学","标签|未来",
-		"标签|美学","标签|实操","标签|造物","标签|美术","标签|音乐","标签|体育","标签|动漫","标签|计算机",
-		"标签|艺术","标签|科学","标签|工业","标签|农林","标签|医学","标签|历史","标签|心理","标签|军事","标签|食品",
-		"标签|百科","标签|巨篇","标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS","标签|无",
+		
+		
+		"标签|哲学","标签|逻辑","标签|认识论","标签|伦理","标签|形上学","标签|宗教",		
+		"标签|百科","标签|学门","标签|科学","标签|数学","标签|物理","标签|天文","标签|地理","标签|化学","标签|生物",
+		"标签|社会","标签|政治","标签|经济","标签|管理","标签|法学","标签|心理","标签|教育","标签|语言","标签|传媒",
+		"标签|实操","标签|工业","标签|农林","标签|医学","标签|计算机","标签|军事","标签|体育","标签|食品","标签|未来",
+		"标签|美学","标签|文学","标签|历史","标签|传记","标签|艺术","标签|美术","标签|音乐","标签|动漫","标签|造物",
+		"标签|巨篇","标签|长篇","标签|短篇","标签|英文","标签|Nobel","标签|S","标签|SS","标签|SSS","标签|PDF","标签|无",
 		],
 		stategroup:{"朝代":"DYNASTY","主类":"F_GROUP","类属":"S_GROUP","地域":"COUNTRY","标签":"TAG",},		
 		statevalue:[],
@@ -235,7 +237,8 @@ var vm = new Vue({
 	},
 
 	created: function created() {		
-		if(self.location.href.substring(0,4)!="http")this.test=true;		
+		if(self.location.href.substring(0,4)!="http")this.test=true;
+		for(let i=0;i<this.list.length;i++) if(this.list[i].TYPE=="pdf") {if(this.list[i].TAG==null) this.list[i].TAG="PDF";else this.list[i].TAG+=" PDF";}
 		this.reSet();
 		//for(let i=0;i<this.list.length;i++) if(this.list[i].TYPE=="pdf") {console.log(this.list[i].TITLE); }
 		
@@ -503,7 +506,7 @@ var vm = new Vue({
 				if(this.list[i].TYPE=='pdf') return '<a style="cursor: pointer;color:BlueViolet;" target="_blank" href="pdf/'+(bookall.indexOf("|")>0?bookall:book)+'.pdf">《'+bookall+'》</a>';
 				else return '<a style="cursor: pointer;" target="_blank" href="index.html?wd='+(bookall.indexOf("|")>0?bookall:book)+'">《'+bookall+'》</a>';
 			}	
-			return '《'+bookall+'》';
+			return `《${bookall}》`;
 		},
 		
 		getNoteSubTitle: function getNoteSubTitle(subtitle) {
@@ -632,7 +635,7 @@ var vm = new Vue({
 				msg=this.msg.split(' ');
 				for(let i=0;i<msg.length;i++) {
 					if(i>0) search+=" && ";
-					if(msg[i][0]=="-") search+='linen.indexOf("'+msg[i]+'")<0';
+					if(msg[i][0]=="-") search+='linen.indexOf("'+msg[i].split('-')[1]+'")<0';
 					else search+='linen.indexOf("'+msg[i]+'")>=0';
 				}
 				//console.log(search)

@@ -52,7 +52,7 @@
 			<br><br><div class='title' align='center'>{{list[id].D_NAME}}<br><br></div>
 			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}<br>
 			<a :href="'https://baike.baidu.com/item/'+list[id].D_NAME" target="_blank" style="cursor:pointer;">百度百科</a>
-			<a v-if="list[id].LINK!=null" :href="setUrl(id)">本站参考<br></a>
+			<a v-if="list[id].LINK!=null" :href="setUrl(id)" target="_blank">本站参考<br></a>
 			</div>	
 			<br><br><div v-html="list[id].D_INFO"></div>		
 			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
@@ -102,7 +102,7 @@ var vm = new Vue({
 		getItem: function getItem(i){
 			let mohu=this.mohu;
 			//console.log("dd")
-			if(this.wselect[6]==2 && i>=618) {this.list[i].fliter= false; return;}
+			if(this.wselect[6]==2 && i>=618 && i<2158 ) {this.list[i].fliter= false; return;}
 			for(let j=0;j<this.words.length;j++) {
 				if(this.wselect[j]==0) continue;
 				
@@ -134,7 +134,7 @@ var vm = new Vue({
 			for(let j=0;j<this.words.length;j++) this.wselect[j]=0;			
 			for(let j=0;j<this.list.length;j++) this.list[j].fliter= true;
 			this.wselect[6]=2;//关闭处方类
-			for(let j=618;j<this.list.length;j++) this.list[j].fliter= false;//关闭处方类+提取物
+			for(let j=618;j<2158;j++) this.list[j].fliter= false;//关闭处方类+提取物
 			this.$forceUpdate();
 		},
 	},
@@ -145,7 +145,13 @@ var vm = new Vue({
 		if(url.indexOf('=')>=0){
 			let urlvalue=decodeURI(url.split('=')[1]);
 			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].D_NAME) {this.id=i; break; }
-		}
+		};
+		
+		var _this = this;
+        document.onkeydown = function(e) {
+            let key = window.event.keyCode;
+			if (key == 36) _this.id=-1;
+        };
     },
 	beforeUpdate: function beforeUpdate(){
 		if(this.id>=0){
