@@ -693,7 +693,7 @@ var all=new Vue({
 		var _this = this;
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
-			if (key == 36) {_this.id=-1;_this.addSubmitFlag=false;}
+			if (key == 36) {_this.id=-1;_this.addSubmitFlag=false;_this.showcomment=false;}
             if (key == 37) {
                 if(_this.id!=-1) {
 					let listlength=0;
