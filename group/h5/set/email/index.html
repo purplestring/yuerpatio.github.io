@@ -195,8 +195,14 @@
             'Accept': 'application/json'
         }
       }).then(response => {
-        status.innerHTML = "发送成功！";
-        form.reset()
+		let result = response.json()
+		result.then(res => {
+			if(res.status==1)status.innerHTML = res.message;
+			else{
+				status.innerHTML = "发送成功！";
+				form.reset()
+			}
+		})
       }).catch(error => {
         status.innerHTML = "发送失败！邮箱联系吧：purplestring@sina.cn"
       });

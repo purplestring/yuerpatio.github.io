@@ -1561,7 +1561,6 @@
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "莺科",TITLE: "长尾缝叶莺",F_NAME: "cwfyy08.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "莺科",TITLE: "红头穗鹛",F_NAME: "htsm01.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "莺科",TITLE: "红头穗鹛",F_NAME: "htsm02.jpg",},
-{F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "莺科",TITLE: "柳莺",F_NAME: "liuying01.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "麻雀科",TITLE: "白鹡鸰",F_NAME: "jiling01.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "麻雀科",TITLE: "白鹡鸰",F_NAME: "jiling03.jpg",},
 {F_GROUP: "miao",S_GROUP: "鸟纲",S_ORDER: "雀形目",S_FAMILY: "麻雀科",TITLE: "白鹡鸰",F_NAME: "jiling04.jpg",},
