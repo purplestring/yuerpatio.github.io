@@ -217,10 +217,16 @@ var vm = new Vue({
 					'Accept': 'application/json'
 				}
 				}).then(response => {
-				//status.innerHTML = "发送成功！紫月精选后即可看见~";
-				status.innerHTML = "";
-				_this.getComments();				
-				form.reset();
+				let result = response.json()
+				result.then(res => {
+						if(res.status==1)status.innerHTML = res.message;
+						else{
+							status.innerHTML = "";
+							//status.innerHTML = "发送成功！紫月精选后即可看见~";						
+							_this.getComments();
+							form.reset();
+						}
+					})
 				}).catch(error => {
 				status.innerHTML = "发送失败了..."
 				});
