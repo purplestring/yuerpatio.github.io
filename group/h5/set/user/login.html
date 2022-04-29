@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="../../../../main/js/jquery-3.1.0.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>token</h1>
+    <input type="text" id="username" name="name" value="猫儿"/>
+    <input type="text" id="password" name="password" value="123456"/>
+    <button id="btn_login">登录,获取token</button>
+​
+    <button id="btn_testToken">没有token,不能访问</button>
+    <button id="btn_delToken">删除token</button>
+
+    <script>
+        
+        $('#btn_delToken').click(function(){
+			localStorage.removeItem('token')
+			localStorage.removeItem('username')
+        });
+		
+		$('#btn_testToken').click(function(){
+			//console.log(localStorage.getItem('token'))
+			$.ajax({
+				   type:'get',
+				   url:'http://127.0.0.1/api/test',
+				   headers: {
+						Authorization: localStorage.getItem('token'),
+					},
+				   success(res){
+						console.log(res);			   
+				   }
+			   })
+        });
+
+       $('#btn_login').click(function(){
+          $.ajax({
+               type:'post',
+               url:'http://127.0.0.1/api/login',
+               data:{username:$('#username').val(),password:$('#password').val()},
+               success(res){
+                   console.log(res);
+				   if(res.status==0) {
+					localStorage.setItem('username', $('#username').val())
+					localStorage.setItem('token', res.token)
+				 }
+               }
+           })
+       });
+       
+    </script>
+</body>
+</html>

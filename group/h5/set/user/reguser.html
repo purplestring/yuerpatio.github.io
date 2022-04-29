@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<head>
+	<meta charste="utf-8">
+	<meta id="meta" name="viewport">
+	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060+",maximum-scale=1, user-scalable=no"; </script>
+	<link rel="icon" type="image/x-ico" href="../../../../yuer.ico" />
+	<link rel="stylesheet" href="../../../../main/css/style.css" type="text/css" />
+	<script src="../../../../main/js/jquery-3.3.1.min.js"></script>
+	<script src="https://pv.sohu.com/cityjson"></script>
+<style type="text/css">
+	#all a{
+		font-size:32px;
+		color:black;
+	}
+	.title{
+			font-weight:900;
+	}
+	
+	textarea{
+		resize:none;
+	}
+	@media screen and (max-device-width:640px){
+		#all a{
+			font-size:60px;
+		}
+		.title{
+			font-size:96px;
+			font-weight:900;
+		}
+		
+	}
+
+	/* reset */
+	#fs-frm input,
+	#fs-frm select,
+	#fs-frm textarea,
+	#fs-frm fieldset,
+	#fs-frm optgroup,
+	#fs-frm label,
+	#fs-frm #card-element:disabled {
+	  font-family: inherit;
+	  font-size:20px;
+	  color: inherit;
+	  border: none;
+	  border-radius: 0;
+	  display: block;
+	  width: 100%;
+	  padding: 0;
+	  margin: 0;
+	  -webkit-appearance: none;
+	  -moz-appearance: none;
+	}
+	#fs-frm label,
+	#fs-frm legend,
+	#fs-frm ::placeholder {
+	  margin-bottom: .5rem;
+	  padding-top: .2rem;
+	  display: flex;
+	  align-items: baseline;
+	}
+
+	/* border, padding, margin, width */
+	#fs-frm input,
+	#fs-frm select,
+	#fs-frm textarea,
+	#fs-frm #card-element {
+	  border: 1px solid rgba(0,0,0,0.2);
+	  background-color: rgba(255,255,255,0.9);
+	  padding: .75em 1rem;
+	  margin-bottom: 1.5rem;
+	}
+	#fs-frm input:focus,
+	#fs-frm select:focus,
+	#fs-frm textarea:focus {
+	  background-color: white;
+	  outline-style: solid;
+	  outline-width: thin;
+	  outline-color: gray;
+	  outline-offset: -1px;
+	}
+	#fs-frm [type="text"],
+	#fs-frm [type="email"] {
+	  width: 100%;
+	}
+	#fs-frm [type="button"],
+	#fs-frm [type="submit"],
+	#fs-frm [type="reset"] {
+	  width: auto;
+	  cursor: pointer;
+	  -webkit-appearance: button;
+	  -moz-appearance: button;
+	  appearance: button;
+	}
+	#fs-frm [type="button"]:focus,
+	#fs-frm [type="submit"]:focus,
+	#fs-frm [type="reset"]:focus {
+	  outline: none;
+	}
+	#fs-frm [type="submit"],
+	#fs-frm [type="reset"] {
+	  margin-bottom: 0;
+	}
+	#fs-frm select {
+	  text-transform: none;
+	}
+
+	#fs-frm [type="checkbox"] {
+	  -webkit-appearance: checkbox;
+	  -moz-appearance: checkbox;
+	  appearance: checkbox;
+	  display: inline-block;
+	  width: auto;
+	  margin: 0 .5em 0 0 !important;
+	}
+
+	#fs-frm [type="radio"] {
+	  -webkit-appearance: radio;
+	  -moz-appearance: radio;
+	  appearance: radio;
+	}
+
+	/* address, locale */
+	#fs-frm fieldset.locale input[name="city"],
+	#fs-frm fieldset.locale select[name="state"],
+	#fs-frm fieldset.locale input[name="postal-code"] {
+	  display: inline;
+	}
+	#fs-frm fieldset.locale input[name="city"] {
+	  width: 52%;
+	}
+	#fs-frm fieldset.locale select[name="state"],
+	#fs-frm fieldset.locale input[name="postal-code"] {
+	  width: 20%;
+	}
+	#fs-frm fieldset.locale input[name="city"],
+	#fs-frm fieldset.locale select[name="state"] {
+	  margin-right: 3%;
+	}
+@media screen and (max-device-width:640px){
+	#fs-frm input,
+	#fs-frm select,
+	#fs-frm textarea,
+	#fs-frm fieldset,
+	#fs-frm optgroup,
+	#fs-frm label,
+	#fs-frm #card-element:disabled {
+	  font-size:48px;
+	}
+}
+</style>
+	<title>注册页</title>
+</head>
+<body>
+<div id="main">	
+	<div id="mt"></div><div id="lm"></div><div id="rm"></div>
+	<div id="mb"></div><div id="lt"></div><div id="rt"></div>
+	<div id="lb"></div><div id="rb"></div><div id="ltx"></div>
+	<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
+	<div class="title" align="center">注册页</div><br>	
+	<!--form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjpng" method="post"-->
+	<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/reguser" method="post">
+		<fieldset id="fs-frm-inputs">
+			<label for="full-name">账号</label>
+			<input type="text" name="username" placeholder="名儿" maxlength="10" required="">
+			<label for="password">密码</label>
+			<input type="text" name="password" placeholder="" maxlength="10" required="">
+			<!--label for="email-address">邮箱</label>
+			<input type="email" name="email" id="email-address" placeholder="email@domain.tld" maxlength="28" required="">
+			<label for="message">留言</label>
+			<textarea rows="5" name="message" id="message" placeholder="您的留言" maxlength="1024" required=""></textarea-->
+			<input type="hidden" name="cip" id="cip">
+			<input type="hidden" name="cname" id="cname">			
+		</fieldset>
+		<input type="submit" value="发送"><span id="my-form-status"></span>
+	</form>
+	<div align="center">
+			<a href="../../../../index.html" style="cursor:pointer">返回主页</a>
+			<a onclick="window.history.go(-1)" style="cursor:pointer">返回上页</a>
+	</div>
+	<div class="footer">
+		Copyright © 2015~19 鱼儿. All Rights Reserved.
+	</div><br><br>
+</div>
+</body>
+<script>
+   var form = document.getElementById("fs-frm");
+    
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var status = document.getElementById("my-form-status");
+	  status.innerHTML = "发送中...";
+      var data = new FormData(event.target);
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+      }).then(response => {
+		let result = response.json()
+		result.then(res => {
+			if(res.status==1)status.innerHTML = res.message;
+			else{
+				status.innerHTML = "注册信息已发送！请记住账号密码，审核后生效。";
+				form.reset()
+			}
+		})
+      }).catch(error => {
+        status.innerHTML = "发送失败！邮箱联系吧：purplestring@sina.cn"
+      });
+    }
+    form.addEventListener("submit", handleSubmit)
+	
+	document.getElementById("cip").value=returnCitySN["cip"];
+	document.getElementById("cname").value=returnCitySN["cname"];
+	/*function onInput(){
+		document.getElementById("fs-frm-inputs").click(document.getElementById("my-form-status").innerHTML = "";);
+	}*/
+</script>
+</html>

@@ -11,9 +11,10 @@
 	<title>鳥之册</title>
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
 	<script src="bird.js"></script>
-	<!--script src="../../main/js/comments.js"></script-->
+	<!--script src="../../main/js/comments.js"></script-->	
 	<script src="../../main/js/jquery-3.1.0.min.js"></script>	
 	<script src="../../main/js/vue.min.js"></script>
+	<script src="../../main/js/head.js"></script>	
 </head>
 
 <body>
@@ -27,7 +28,7 @@
 			<div class="desc1">水积而鱼聚，木茂而鸟集。<br>
 				天上，水上，丛莽间，凡有见者，皆以志之。</div><br>
 			<div class="desc2"><span style="color: darkcyan;">浅蓝链</span>附图为紫月拍摄，嵌有数字水印；<br>鸟类数据参考《中国鸟类野外手册》。<br>
-				转载请注明来源，其他用途请<a href="../h5/set/email/index.html">私信</a>。<br><br>
+				转载请注明来源，其他用途请<a href="../h5/set/user/email.html">私信</a>。<br><br>
 				【筛选🔍】灰：无 | 黑：是 | 白：非 | <span @click.prevent="reSet()" style="cursor:pointer;color:green;">重置</span><br>			
 				 <span v-for="(item, i) in statename">
 					<span v-if="i==0 || statename[i].split('|')[0]!=statename[i-1].split('|')[0]"><br>{{"【"+statename[i].split("|")[0]+"】"}}</span>
@@ -63,19 +64,22 @@
 			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br></span>
 			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br></span>
 			<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
-					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>
-
-			<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/setcmts" method="POST">
-				<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
+					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>			
+			<form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
+				<label>名儿:</label><input id="form_name" name="name" required="" maxlength="10" :value="username" placeholder="写一下" :readonly="username!=null?true:false" >
+				<label style="color:green;cursor:pointer;font;font-weight: bold;" @click="toogleLog()">{{username==null?'登录':'登出'}}</label>
 				<input id="form_submit" type="submit" value="发送"><br>
-				<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
+				<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required="" 
+				placeholder="未注册登录亦可评论，12小时内评论、精选评论、登录者自己评论可见。"></textarea>
 				<input type="hidden" name="item" :value=list[id].wu>
 				<input type="hidden" name="page" value='bird'>
+				<input type="hidden" name="islogin" :value="username==null?0:1">
 				<br><span style="color:blue;" id="my-form-status"></span>
-			</form>
+			</form>				
 			<div v-if="showcomment" v-for="(item, i) in comments">
-				<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
-				<span style="color:gray;">{{showTime(item.date)}}</span><br>
+				<span :style="'font-weight:bold;color:'+(item.islogin==1?'brown':'black')">{{item.name}}</span>: {{item.message}}
+				<span style="color:gray;">{{showTime(item.date)}}</span>
+				<span style="color:red;cursor:pointer" v-if="username!=null && username==item.name && item.islogin==1" @click="delComments(item.id)">删</span><br>
 			</div>
 			<span v-if="list[id].pic!=null" style="cursor:pointer;" @click.prevent="window.location.href='../photo/index.html?wd='+list[id].wu"><br>【俺拍嗒】<br>
 				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
@@ -97,7 +101,7 @@
 	</div>
 </body>
 <script>
-var cpageName=self.location.href.split('group/')[1].split('/')[0];
+/*var cpageName=self.location.href.split('group/')[1].split('/')[0];
 function loadScript(script){
 	var _script = document.createElement('script');
 	_script.type = "text/javascript";
@@ -106,7 +110,7 @@ function loadScript(script){
 }
 loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
-else loadScript("../../main/js/navi1.js");
+else loadScript("../../main/js/navi1.js");*/
 
 window.onload = function(){
 var vm = new Vue({
@@ -125,6 +129,7 @@ var vm = new Vue({
 		statecolor:["#888","#000","#fff"],
 		id:-1,
 		comments:[],
+		username:'',		
 		showcomment:false,
 		addSubmitFlag:false,
 		test:false,
@@ -194,17 +199,18 @@ var vm = new Vue({
 			return i;
 		},
 		getComments:function getComments(){
-			this.comments=[];
-			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=bird&item="+this.list[this.id].wu,async:false});
-			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 
+			const pagename='bird';const itemname=this.list[this.id].wu;
+			eval(getCommentsStr)
 		},
-		addSubmit: function addSubmit(){
+		delComments:function delComments(id){ eval(delCommentsStr)},
+		toogleLog:function toogleLog(){ eval(toogleLogStr) },
+		addSubmit: function addSubmit(){ 
 			if(this.addSubmitFlag) return;
 			this.addSubmitFlag=true;
 			document.getElementById("my-form-status").innerHTML="";
 			var form = document.getElementById("form");
 
-			var _this=this;			
+			var _this=this;
 			async function handleSubmit(event) {
 				event.preventDefault();
 				var status = document.getElementById("my-form-status");
@@ -214,7 +220,8 @@ var vm = new Vue({
 				method: form.method,
 				body: data,
 				headers: {
-					'Accept': 'application/json'
+					'Accept': 'application/json',
+					'Authorization': localStorage.getItem('token')
 				}
 				}).then(response => {
 				let result = response.json()
@@ -228,18 +235,13 @@ var vm = new Vue({
 						}
 					})
 				}).catch(error => {
-				status.innerHTML = "发送失败了..."
+					status.innerHTML = "发送失败了..."
 				});
 			}
-			
+
 			form.addEventListener("submit", handleSubmit)
-			//alert(this.addSubmitFlag)
-		},
-		showTime: function showTime(s){
-			//return '('+s.split('.')[0].replace(/T/g, " ")+')';
-			var t=new Date(s);//console.log(t.toTimeString().)
-			return t.toLocaleDateString()+" "+t.toLocaleTimeString();
-		},
+		},	
+		showTime: function showTime(s){ var t=new Date(s); return t.toLocaleDateString()+" "+t.toLocaleTimeString();},
 	},
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
@@ -249,16 +251,12 @@ var vm = new Vue({
 			let urlvalue=decodeURI(url.split('=')[1]);
 			for(let i=0;i<this.list.length;i++) if(urlvalue==this.list[i].wu.replace(/[/g, "").replace(/]/g, "")) {this.id=i; break; }
 		}
-		var _this = this;
-		document.onkeydown = function(e) {
+
+		document.onkeydown = () => {
             let key = window.event.keyCode;
-			if (key == 36) {_this.id=-1;_this.addSubmitFlag=false;_this.showcomment=false;}
-            if (key == 37) {
-                if(_this.id!=-1) _this.prePic();//_this.id=_this.getPre(_this.id);
-            }
-			if (key == 39) {
-                if(_this.id!=-1) _this.nextPic();//_this.id=_this.getNext(_this.id);
-            }
+			if (key == 36) {this.id=-1;this.addSubmitFlag=false;this.showcomment=false;}
+            if (key == 37) {if(this.id!=-1) this.prePic();}
+			if (key == 39) {if(this.id!=-1) this.nextPic();}
         };
     },
 	beforeUpdate: function beforeUpdate(){

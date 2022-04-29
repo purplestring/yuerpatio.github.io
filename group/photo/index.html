@@ -4,7 +4,6 @@
 	<script>document.getElementById("meta").content="width=device-width, initial-scale="+window.screen.width/1060; </script>
 	<link rel="stylesheet" href="../../main/css/style.css" type="text/css" />
 	<link rel="icon" type="image/x-ico" href="../../yuer.ico" />
-	<script src="../../main/js/headb.js"></script>
 	<script src="../../main/js/vue.min.js"></script>
 	<script src="../../main/js/jquery-3.1.0.min.js"></script>
 	<!--script src="../../main/js/comments.js"></script-->
@@ -12,6 +11,7 @@
 	<script src="lang.js"></script>
 	<script src="info.js"></script>
 	<script src="svg.js"></script>
+	<script src="../../main/js/head.js"></script>	
 	<title>万叶集</title>
 <body>
 	<div id="main">
@@ -26,7 +26,7 @@
 				列阵为页 止于纲目<br>
 				图元位是所遇 灰色是未遇<br><br>
 				本分页所有图片均为紫月拍摄、绘制<br>
-				转载请注明来源，其他用途请<a href="../h5/set/email/index.html">私信</a>
+				转载请注明来源，其他用途请<a href="../h5/set/user/email.html">私信</a>
 				</div>
 				<br/><div class="family" style="text-align:center;"><a href="species.html">分类页</a> <a href="photo.html">百物卷</a></div>	
 				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -265,17 +265,21 @@
 				</div>
 
 				<!--form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST"-->
-				<form v-if="showcomment" id="form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/setcmts" method="POST">
-					<label>昵称:</label><input id="form_name" name="name" required="" maxlength="10" @change="addSubmit()">
+				<form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
+					<label>名儿:</label><input id="form_name" name="name" required="" maxlength="10" :value="username" placeholder="写一下" :readonly="username!=null?true:false" >
+					<label style="color:green;cursor:pointer;font;font-weight: bold;" @click="toogleLog()">{{username==null?'登录':'登出'}}</label>
 					<input id="form_submit" type="submit" value="发送"><br>
-					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required=""></textarea>
+					<label>评论:</label><textarea id="form_message" name="message" maxlength="256" required="" 
+					placeholder="未注册登录亦可评论，12小时内评论、精选评论、登录者自己评论可见。"></textarea>
 					<input type="hidden" name="item" :value=list[id].TITLE>
 					<input type="hidden" name="page" value='photo'>
+					<input type="hidden" name="islogin" :value="username==null?0:1">
 					<br><span style="color:blue;" id="my-form-status"></span>
 				</form>
 				<div v-if="showcomment" v-for="(item, i) in comments">
-					<span style="font-weight:bold;color:brown;">{{item.name}}</span>: {{item.message}}
-					<span style="color:gray;">{{showTime(item.date)}}</span><br>
+					<span :style="'font-weight:bold;color:'+(item.islogin==1?'brown':'black')">{{item.name}}</span>: {{item.message}}
+					<span style="color:gray;">{{showTime(item.date)}}</span>
+					<span style="color:red;cursor:pointer" v-if="username!=null && username==item.name && item.islogin==1" @click="delComments(item.id)">删</span><br>
 				</div>
 				<br>
 				
@@ -316,16 +320,10 @@
 //蝴蝶 https://www.ifoundbutterflies.org/sp/524/Lethe-europa
 //昆虫 http://eelib.zslib.com.cn/zjm/variouslist/animal/insect/dragonfly/Index.html
 
-var cpageName=self.location.href.split('group/')[1].split('/')[0];
-function loadScript(script){
-	var _script = document.createElement('script');
-	_script.type = "text/javascript";
-	_script.src = script;
-	document.head.appendChild(_script);
-}
-loadScript("../../main/js/head.js");
-if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
-else loadScript("../../main/js/navi1.js");
+//var cpageName=self.location.href.split('group/')[1].split('/')[0];
+//loadScript("../../main/js/head.js");
+//if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
+//else loadScript("../../main/js/navi1.js");
 
 function base64_encode(str){
     var c1, c2, c3;
@@ -380,6 +378,7 @@ var all=new Vue({
 	data:{ 	
 		langOrder,langFamily,
 		comments:[],
+		username:'',
 		showcomment:false,
 		addSubmitFlag:false,
 		langid:1,
@@ -618,17 +617,17 @@ var all=new Vue({
 			return str;
 		},
 		getComments:function getComments(){
-			this.comments=[];
-			var htmlobj=$.ajax({url:"https://yuer-nodejs.herokuapp.com/api/getcmts?page=photo&item="+this.list[this.id].TITLE,async:false});
-			if(htmlobj.responseText!="") this.comments=JSON.parse(htmlobj.responseText);	 
+			const pagename='photo';const itemname=this.list[this.id].TITLE;
+			eval(getCommentsStr)
 		},
-		addSubmit: function addSubmit(){
-		//console.log(this.addSubmitFlag)
+		delComments:function delComments(id){ eval(delCommentsStr)},
+		toogleLog:function toogleLog(){ eval(toogleLogStr) },
+		addSubmit: function addSubmit(){ 
 			if(this.addSubmitFlag) return;
 			this.addSubmitFlag=true;
 			document.getElementById("my-form-status").innerHTML="";
 			var form = document.getElementById("form");
-			
+
 			var _this=this;
 			async function handleSubmit(event) {
 				event.preventDefault();
@@ -639,7 +638,8 @@ var all=new Vue({
 				method: form.method,
 				body: data,
 				headers: {
-					'Accept': 'application/json'
+					'Accept': 'application/json',
+					'Authorization': localStorage.getItem('token')
 				}
 				}).then(response => {
 				let result = response.json()
@@ -653,19 +653,13 @@ var all=new Vue({
 						}
 					})
 				}).catch(error => {
-				status.innerHTML = "发送失败了..."
+					status.innerHTML = "发送失败了..."
 				});
 			}
-			
+
 			form.addEventListener("submit", handleSubmit)
-			//alert(this.addSubmitFlag)
-		},
-		
-		showTime: function showTime(s){
-		var t=new Date(s);//console.log(t.toTimeString().)
-		return t.toLocaleDateString()+" "+t.toLocaleTimeString();
-			//return '('+s.split('.')[0].replace(/T/g, " ")+')';
-		},
+		},	
+		showTime: function showTime(s){ var t=new Date(s); return t.toLocaleDateString()+" "+t.toLocaleTimeString();},
 	},
 	created: function created() {
 		//console.log(this.words.length);	
@@ -696,26 +690,26 @@ var all=new Vue({
 		
 		//if(sessionStorage.getItem("treeid")>0) this.id=sessionStorage.getItem("treeid");
 		
-		var _this = this;
-        document.onkeydown = function(e) {
+
+        document.onkeydown = () => {
             let key = window.event.keyCode;
-			if (key == 36) {_this.id=-1;_this.addSubmitFlag=false;_this.showcomment=false;}
+			if (key == 36) {this.id=-1;this.addSubmitFlag=false;this.showcomment=false;}
             if (key == 37) {
-                if(_this.id!=-1) {
+                if(this.id!=-1) {
 					let listlength=0;
-					if(_this.mp4) listlength=_this.list[_this.id].F_NAME.split(',').length;
-					else listlength=_this.list[_this.id].F_NAME.split(',zmp4')[0].split(',').length;					
-					if(listlength<=10 || _this.subpage==0) {_this.subpage=0;_this.prePic();}
-					else _this.subpage--;					
+					if(this.mp4) listlength=this.list[this.id].F_NAME.split(',').length;
+					else listlength=this.list[this.id].F_NAME.split(',zmp4')[0].split(',').length;					
+					if(listlength<=10 || this.subpage==0) {this.subpage=0;this.prePic();}
+					else this.subpage--;					
 				}
             }
 			if (key == 39) {
-                if(_this.id!=-1) {
+                if(this.id!=-1) {
 					let listlength=0;
-					if(_this.mp4) listlength=_this.list[_this.id].F_NAME.split(',').length;
-					else listlength=_this.list[_this.id].F_NAME.split(',zmp4')[0].split(',').length;					
-					if(listlength<=10 || _this.subpage==Math.ceil(listlength/10)-1) {_this.subpage=0;_this.nextPic();}
-					else _this.subpage++;
+					if(this.mp4) listlength=this.list[this.id].F_NAME.split(',').length;
+					else listlength=this.list[this.id].F_NAME.split(',zmp4')[0].split(',').length;					
+					if(listlength<=10 || this.subpage==Math.ceil(listlength/10)-1) {this.subpage=0;this.nextPic();}
+					else this.subpage++;
 				}
             }
         };

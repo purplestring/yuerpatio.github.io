@@ -1126,6 +1126,7 @@
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "蚁蜂科",TITLE: "绒蚁蜂",F_GROUP: "bug",F_NAME: "feng26.jpg,feng39.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "胡蜂科",TITLE: "虎头蜂",F_GROUP: "bug",F_NAME: "htf01.jpg,htf02.jpg,htf03.jpg,htf04.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "胡蜂科",TITLE: "黄胡蜂",F_GROUP: "bug",F_NAME: "hufeng01.jpg,hufeng02.jpg,hufeng03.jpg,hufeng04.jpg",},
+{S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "姬蜂科",TITLE: "姬蜂",F_GROUP: "bug",F_NAME: "wen20.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "旗腹姬蜂科",TITLE: "旗腹姬蜂",F_GROUP: "bug",F_NAME: "feng36.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "膜翅目",S_FAMILY: "茧蜂科",TITLE: "悬茧姬蜂",F_GROUP: "bug",F_NAME: "yong18.jpg",},
 {S_DOMAIN: "真核域",S_KINGDOM: "动物界",S_PHYLUM: "节肢动物门",S_CLASS: "昆虫纲",S_ORDER: "蚤目",S_FAMILY: "蚤科",TITLE: "人蚤",F_GROUP: "zwai",F_NAME: "zao01.jpg",},
