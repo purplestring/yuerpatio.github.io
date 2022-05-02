@@ -211,6 +211,19 @@
 	
 	document.getElementById("cip").value=returnCitySN["cip"];
 	document.getElementById("cname").value=returnCitySN["cname"];
+	
+	if(sessionStorage.getItem("firstvisit")==null){
+		sessionStorage.setItem("firstvisit",1);
+		$.ajax({
+			url : "https://yuer-nodejs.herokuapp.com/api/visitor",
+			type : "post",
+			data : {ip:returnCitySN["cip"],city:returnCitySN["cname"]},
+			success : function(result) {
+				//console.log(result.message);
+			}
+		});
+	}
+  
 	/*function onInput(){
 		document.getElementById("fs-frm-inputs").click(document.getElementById("my-form-status").innerHTML = "";);
 	}*/

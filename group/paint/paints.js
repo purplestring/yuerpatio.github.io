@@ -1379,6 +1379,8 @@ var myjson={RECORDS: [{P_DYNASTY: "战国",P_AUTHOR: "佚名",P_NAME: "人物龙
 {P_DYNASTY: "明",P_AUTHOR: "佚名",P_NAME: "帝释梵天图西",P_TYPE: "壁画 宗教 中国",P_PICS: "img/dsfttx.jpg",P_STAR: "3",},
 {P_DYNASTY: "明",P_AUTHOR: "佚名",P_NAME: "风雨泊舟图",P_TYPE: "团扇 绢本 设色 山水 中国",P_PICS: "imgl/fybzt.jpg",P_WIDTH: "22.5",P_HEIGHT: "20.5",P_STAR: "3",},
 {P_DYNASTY: "明",P_AUTHOR: "佚名",P_NAME: "丝路山水地图",P_TYPE: "卷轴 绢本 设色 山水 中国",P_PICS: "imgl/slssdt.jpg",P_WIDTH: "3012",P_HEIGHT: "59",P_STAR: "3",},
+{P_DYNASTY: "明",P_AUTHOR: "佚名",P_NAME: "千秋绝艳图",P_TYPE: "卷轴 绢本 设色 人物 中国",P_PICS: "imgj/QQJYT.jpg",P_STAR: "3",},
+{P_DYNASTY: "明",P_AUTHOR: "佚名",P_NAME: "千秋绝艳图",P_TYPE: "卷轴 纸本 水墨 人物 中国",P_PICS: "imgj/QQJYTsm.jpg",P_STAR: "3",},
 {P_DYNASTY: "清",P_AUTHOR: "弘仁",P_NAME: "天都峰图轴",P_TYPE: "立轴 纸本 水墨 山水 四僧 中国",P_PICS: "imgl/tdftz.jpg",P_WIDTH: "99.6",P_HEIGHT: "307.5",P_STAR: "3",},
 {P_DYNASTY: "清",P_AUTHOR: "弘仁",P_NAME: "黄海松石图",P_TYPE: "立轴 纸本 水墨 山水 四僧 中国",P_PICS: "imgl/hhsst.jpg",P_WIDTH: "81",P_HEIGHT: "198.7",P_STAR: "345",},
 {P_DYNASTY: "清",P_AUTHOR: "弘仁",P_NAME: "墨梅图",P_TYPE: "立轴 纸本 水墨 花鸟 四僧 中国",P_PICS: "img/HRmmt.jpg",P_STAR: "3",},
