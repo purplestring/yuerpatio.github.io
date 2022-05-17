@@ -86,6 +86,10 @@ this.getComments();`
 
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");
+if(sessionStorage.getItem("firstvisit")==null){
+sessionStorage.setItem("firstvisit",1);loadScript("https://pv.sohu.com/cityjson?ie=utf-8");if(typeof(jQuery)=="undefined")loadScript("../../main/js/jquery-3.1.0.min.js");
+setTimeout(function(){$.ajax({url:myUrl+"/api/visitor",type:"post",data:{ip:returnCitySN["cip"],city:returnCitySN["cname"]}})},3000);}
+
 
 function loadScript(script){
 	var _script = document.createElement('script');

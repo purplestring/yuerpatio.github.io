@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/x-ico" href="../../../../yuer.ico" />
 	<link rel="stylesheet" href="../../../../main/css/style.css" type="text/css" />
 	<script src="../../../../main/js/jquery-3.3.1.min.js"></script>
-	<script src="https://pv.sohu.com/cityjson"></script>
+	<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
 <style type="text/css">
 	#all a{
 		font-size:32px;
@@ -158,15 +158,15 @@
 	<div id="rtx"></div><div id="lbx"></div><div id="rbx"></div><br/><br/>
 	<div class="title" align="center">注册页</div><br>	
 	<!--form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjpng" method="post"-->
-	<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://yuer-nodejs.herokuapp.com/api/reguser" method="post">
+	<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="http://yuer-nodejs.herokuapp.com/api/reguser" method="post">
 		<fieldset id="fs-frm-inputs">
 			<label for="full-name">账号</label>
 			<input type="text" name="username" placeholder="名儿" maxlength="10" required="">
 			<label for="password">密码</label>
 			<input type="text" name="password" placeholder="" maxlength="10" required="">
-			<!--label for="email-address">邮箱</label>
+			<label for="email-address">邮箱</label>
 			<input type="email" name="email" id="email-address" placeholder="email@domain.tld" maxlength="28" required="">
-			<label for="message">留言</label>
+			<!--label for="message">留言</label>
 			<textarea rows="5" name="message" id="message" placeholder="您的留言" maxlength="1024" required=""></textarea-->
 			<input type="hidden" name="cip" id="cip">
 			<input type="hidden" name="cname" id="cname">			
