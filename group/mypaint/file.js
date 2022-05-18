@@ -101,6 +101,7 @@
 {F_GROUP:"color",S_GROUP:"小猫",TITLE:"猫138",W_URL:["LpEgwBtyD"],F_NAME: ["猫138.jpg"],},
 {F_GROUP:"color",S_GROUP:"小猫",TITLE:"猫139",W_URL:["Lsxtvcxob"],F_NAME: ["猫139.jpg"],},
 {F_GROUP:"color",S_GROUP:"小猫",TITLE:"猫140",W_URL:["LsGUBjCie"],F_NAME: ["猫140.jpg"],},
+{F_GROUP:"color",S_GROUP:"小猫",TITLE:"猫143",W_URL:["LtsfebEfp"],F_NAME: ["猫143.jpg"],},
 {F_GROUP:"color",S_GROUP:"小猫",TITLE:"我要鱼",W_URL:["K6NPXkcZs"],F_NAME: ["wyyu.jpg"],},
 
 {F_GROUP:"color",S_GROUP:"其它",TITLE:"土丁桂",W_URL:["Gl2KsoIkq"],F_STAR: "5",F_NAME: ["20180612.jpg"],},

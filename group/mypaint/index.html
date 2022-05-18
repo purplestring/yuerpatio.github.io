@@ -13,6 +13,7 @@
 	<script src="../../main/js/jquery-3.1.0.min.js"></script>	
 	<script src="file.js"></script>
 	<script src="../../main/js/head.js"></script>
+	<script src="weibo.js"></script>
 	<title>书画页</title>
 <body>
 	<div id="main">
@@ -27,7 +28,7 @@
 				<div class="desc2" style="cursor:pointer;" v-if="full" @click.prevent="full=!full">全</div><br>
 				<span v-for="(item,i) in list" v-if="(test || (
 				(item.SHOW!='no' && item.F_GROUP!='test') 
-				&& (!test && item.F_NAME!=null && item.F_NAME[0].slice(0,2)!=20)
+				&& (!test && item.F_NAME!=null && item.F_NAME[0].slice(0,3)!=201 && item.F_NAME[0].slice(0,3)!=202)
 				)) && (full || ( !full && item.F_STAR==5) )">
 					<div v-if="i==0 ||item.F_GROUP!=list[i-1].F_GROUP"
 					@click.prevent="S_GROUP=item.S_GROUP,F_GROUP=item.F_GROUP" class="family" style="cursor: pointer;"><br/><br/>{{groupname[item.F_GROUP]}}<br/><br/></div>
@@ -63,7 +64,11 @@
 			</div>
 			<div v-if="id!=-1">
 				<div class="title" align='center'>{{list[id].S_GROUP}} > {{list[id].TITLE}}</div><br>
-				
+				<span v-for="(item,i) in list[id].F_NAME" 
+					v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪' && list[id].F_NAME[0].slice(0,3)!=201 && list[id].F_NAME[0].slice(0,3)!=202)">
+					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.open(linkTo(list[id].LINK))" 
+					:src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br>
+				</span>
 				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>
 				<form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
@@ -87,17 +92,12 @@
 				<span v-if="list[id].W_URL!=null" >
 					<span  v-for="i in list[id].W_URL.length">
 						<a  name="file" target="_blank"  :href="'https://weibo.com/5679301959/'+list[id].W_URL[i-1]">微博 {{i}}</a>
-						<span v-if="test" v-html=getWeibo(list[id].W_URL[i-1])></span><br>
+						<span v-html=getWeibo(list[id].W_URL[i-1])></span><br>
 					</span><br>
 				</span>							
-				<span v-for="(item,i) in list[id].F_NAME" v-if="test || (list[id].S_GROUP!='近现代' && list[id].S_GROUP!='20世纪' && list[id].F_NAME[0].slice(0,2)!=20)">
-					<img id='myimg' :style="list[id].LINK!=null?'cursor:pointer':''" @click.prevent="if(list[id].LINK!=null) window.open(linkTo(list[id].LINK))" 
-					:src='list[id].F_GROUP+"/"+list[id].F_NAME[i]'><br><br>
-				</span>
-				<br>
-				<span v-if="list[id].W_URL==null && (list[id].F_NAME[0].slice(0,3)==201 || list[id].F_NAME[0].slice(0,3)==202)" >
+				<!--span v-if="list[id].W_URL==null && (list[id].F_NAME[0].slice(0,3)==201 || list[id].F_NAME[0].slice(0,3)==202)" >
 					<span v-if="test" v-html=getWeiboDate(list[id].F_NAME[0].slice(0,8))></span><br>
-				</span>					
+				</span-->
 				<div align="center">
 					<a @click.prevent="if(id!=-1)prePic();" style="cursor: pointer;">◀　</a>
 					<a @click.prevent="id=-1;showcomment=false;" style="cursor:pointer">返回上页</a>
@@ -119,9 +119,23 @@ function loadScript(script){
 loadScript("../../main/js/head.js");
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
 else loadScript("../../main/js/navi1.js");*/
-if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weiboa.js");
+//if(self.location.href.substring(0,4)!="http")loadScript("../../main/js/weibor.js");
 
 window.onload = function(){
+
+/*var myfile=[];
+for(let i in file) if(file[i].W_URL!=null) for(let j=0;j<file[i].W_URL.length;j++) {
+	myfile.push(file[i].W_URL[j]);
+}
+var myfilenew=new Set(myfile);
+console.log(myfilenew);
+var myfileweibo=[];
+console.log(weibo.RECORDS.length)
+for(let key of myfilenew.keys()) {
+  for(let i in weibo.RECORDS) if(key==weibo.RECORDS[i].link) {myfileweibo.push(weibo.RECORDS[i]);break;}
+}
+console.log(JSON.stringify(myfileweibo));*/
+
 var all=new Vue({
 	el: '#all',
 	data:{ 	
@@ -140,11 +154,17 @@ var all=new Vue({
 	created: function created() {
 		if(self.location.href.substring(0,4)!="http")this.test=true;
 		let url=self.location.href;
-		if(url.indexOf('=')>=0){			
-			var urlvalue=decodeURI(url.split('=')[1]);
-			if(url.indexOf('folder=')>=0) urlvalue=decodeURI(url.split('folder=')[1].split('&')[0])+'/'+decodeURI(url.split('file=')[1].split('&')[0]);
-			for(let i in this.list) if(this.list[i].F_NAME) 
-				for(let j in this.list[i].F_NAME) if(urlvalue==this.list[i].F_GROUP+'/'+this.list[i].F_NAME[j]) {this.id=parseInt(i); break; }
+		if(url.indexOf('=')>=0){
+			var urlvalue;
+			if(url.indexOf('folder=')>=0){
+				urlvalue=decodeURI(url.split('folder=')[1].split('&')[0])+'/'+decodeURI(url.split('file=')[1].split('&')[0]);
+				for(let i in this.list) if(this.list[i].F_NAME) 
+					for(let j in this.list[i].F_NAME) if(urlvalue==this.list[i].F_GROUP+'/'+this.list[i].F_NAME[j]) {this.id=parseInt(i); break; }
+			}
+			else if(url.indexOf('wd=')>=0){
+				var urlvalue;urlvalue=decodeURI(url.split('wd=')[1]);
+				for(let i in this.list) if(urlvalue==this.list[i].F_GROUP+'|'+this.list[i].S_GROUP+'|'+this.list[i].TITLE) {this.id=parseInt(i); break; }
+			}
 		}
 		
 		var _this = this;
@@ -197,9 +217,10 @@ var all=new Vue({
 			//if(typeof weibo=='undefined')return "";
 			for(let i in weibo.RECORDS) {
 				if(link==weibo.RECORDS[i].link) {
-					let str=weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
-					if(weibo.RECORDS[i].link2!="") str+="<br><br>引用【<a  name='file' target='_blank' href='https://weibo.com/"+weibo.RECORDS[i].authorb+"/"+weibo.RECORDS[i].linkb+"'>"+
-					weibo.RECORDS[i].nameb+"</a>】"+weibo.RECORDS[i].pubdateb+"<br>"+weibo.RECORDS[i].textb.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+					//let str=weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
+					let str=weibo.RECORDS[i].pubdate+"<br>"+weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"");
+					//if(weibo.RECORDS[i].link2!="") str+="<br><br>引用【<a  name='file' target='_blank' href='https://weibo.com/"+weibo.RECORDS[i].authorb+"/"+weibo.RECORDS[i].linkb+"'>"+
+					//weibo.RECORDS[i].nameb+"</a>】"+weibo.RECORDS[i].pubdateb+"<br>"+weibo.RECORDS[i].textb.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦");
 					return str;
 				}
 				//if(link<weibo.RECORDS[i].link) return "";
@@ -213,7 +234,8 @@ var all=new Vue({
 				if(tmpdate==weibo.RECORDS[i].pubdate.split(" ")[0]) 
 					//if(weibo.RECORDS[i].text.indexOf("评论配图")!=-1 || weibo.RECORDS[i].text.indexOf("查看图片")!=-1 ) 					
 						str+='<a target="_blank" href="https://weibo.com/5679301959/'+weibo.RECORDS[i].link+'">'+weibo.RECORDS[i].pubdate+'</a><br>'+
-							weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦")+"<br>";
+							//weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"").replace(/\[\[EMOJI:%F0%9F%90%A6\]\]/, "🐦")+"<br>";
+							weibo.RECORDS[i].text.replace(/<img[^>]+>/g,"")+"<br>";
 			}
 			return str;
 		},
