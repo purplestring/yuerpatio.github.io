@@ -259,13 +259,13 @@
 					style="cursor:pointer;font-weight:bold;" >【{{langTransFamily(list[id].S_FAMILY)}}】></span> {{list[id].TITLE}}<br>
 				<span v-if="list[id].F_DESC!=null" >{{list[id].F_DESC}}<br></span>
 				
-				<div style="width:100%;">
+				<!-- style="width:100%;">
 				<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="float:right;margin-right:5%;cursor:pointer;font-weight:bold;color:blue;">{{showcomment?"折叠":"展开"}}评论区</span>
-				</div>
+				</div-->
 
 				<!--form v-if="showcomment" id="form" accept-charset="utf-8" action="https://formspree.io/f/mbjwjqev" method="POST"-->
-				<form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
+				<!--form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
 					<label>名儿:</label><input id="form_name" name="name" required="" maxlength="10" :value="username" placeholder="写一下" :readonly="username!=null?true:false" >
 					<label style="color:green;cursor:pointer;font;font-weight: bold;" @click="toogleLog()">{{username==null?'登录':'登出'}}</label>
 					<input id="form_submit" type="submit" value="发送"><br>
@@ -280,7 +280,7 @@
 					<span :style="'font-weight:bold;color:'+(item.islogin==1?'brown':'black')">{{item.name}}</span>: {{item.message}}
 					<span style="color:gray;">{{showTime(item.date)}}</span>
 					<span style="color:red;cursor:pointer" v-if="username!=null && username==item.name && item.islogin==1" @click="delComments(item.id)">删</span><br>
-				</div>
+				</div-->
 				<br>
 				
 				<div v-if="(mp4 && list[id].F_NAME.split(',').length>10) || (!mp4 && list[id].F_NAME.split(',zmp4')[0].split(',').length>10)" align="center">
@@ -377,10 +377,10 @@ var all=new Vue({
 	el: '#all',
 	data:{ 	
 		langOrder,langFamily,
-		comments:[],
+		/*comments:[],
 		username:'',
 		showcomment:false,
-		addSubmitFlag:false,
+		addSubmitFlag:false,*/
 		langid:1,
 		subpage:0,
 		isIE:false,
@@ -616,6 +616,7 @@ var all=new Vue({
 			} 
 			return str;
 		},
+		/*
 		getComments:function getComments(){
 			const pagename='photo';const itemname=this.list[this.id].TITLE;
 			eval(getCommentsStr)
@@ -660,6 +661,7 @@ var all=new Vue({
 			form.addEventListener("submit", handleSubmit)
 		},	
 		showTime: function showTime(s){ var t=new Date(s); return t.toLocaleDateString()+" "+t.toLocaleTimeString();},
+		*/
 	},
 	created: function created() {
 		//console.log(this.words.length);	

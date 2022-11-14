@@ -63,7 +63,7 @@
 			
 			<span v-if="list[id].sn!=null">【学名】{{list[id].sn}}<br></span>
 			<span v-if="list[id].en!=null">【英文名】{{list[id].en}}<br></span>
-			<span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
+			<!--span @click="showcomment=!showcomment;if(!showcomment)addSubmitFlag=false;else getComments();"
 					style="cursor:pointer;font-weight:bold;color:blue;">【{{showcomment?"折叠":"展开"}}评论区】</span>			
 			<form v-if="showcomment" id="form" accept-charset="utf-8" :action="myUrl+'/api/setcmts'" @change="addSubmit()" method="POST">
 				<label>名儿:</label><input id="form_name" name="name" required="" maxlength="10" :value="username" placeholder="写一下" :readonly="username!=null?true:false" >
@@ -80,8 +80,8 @@
 				<span :style="'font-weight:bold;color:'+(item.islogin==1?'brown':'black')">{{item.name}}</span>: {{item.message}}
 				<span style="color:gray;">{{showTime(item.date)}}</span>
 				<span style="color:red;cursor:pointer" v-if="username!=null && username==item.name && item.islogin==1" @click="delComments(item.id)">删</span><br>
-			</div>
-			<span v-if="list[id].pic!=null" style="cursor:pointer;" @click.prevent="window.location.href='../photo/index.html?wd='+list[id].wu"><br>【俺拍嗒】<br>
+			</div-->
+			<span v-if="list[id].pic!=null" style="cursor:pointer;" @click.prevent="window.location.href='../photo/index.html?wd='+list[id].wu">【俺拍嗒】<br>
 				<img class='myimg' v-if="id<1329" :src='"birds/"+list[id].ke.split("科")[0]+"."+list[id].wu.replace("[","").replace("]","")+".jpg"'>
 				<img class='myimg' v-if="id>=1329" :src='"others/"+list[id].ke.split("科")[0]+"."+list[id].wu+".jpg"'>
 			<br></span><br>
@@ -94,7 +94,8 @@
 			<span v-if="list[id].area!=null">【分布】{{list[id].area}}<br></span>			
 			<span v-if="test && id<1329">【分布图】<br><img class='myimg' :src='"birdmap/b"+addZero(id+1)+".jpg"'><br><br></span>
 			<span v-if="test && id<1329">【插图】<br><img class='myimg' :src='"birdsall/b"+addZero(id+1)+".jpg"'><br><br></span>
-			<br><br><div align="center"><a @click.prevent="id=-1;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;">▶返回册主页◀</a></div>
+			<!--br><br><div align="center"><a @click.prevent="id=-1;addSubmitFlag=false;showcomment=false;" style="cursor:pointer;">▶返回册主页◀</a></div-->
+			<br><br><div align="center"><a @click.prevent="id=-1;" style="cursor:pointer;">▶返回册主页◀</a></div>
 		</div>	
 		<div v-if="id==-1" class="ret"><a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'"> ▶返回主页◀</a></div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -130,8 +131,8 @@ var vm = new Vue({
 		id:-1,
 		comments:[],
 		username:'',		
-		showcomment:false,
-		addSubmitFlag:false,
+		//showcomment:false,
+		//addSubmitFlag:false,
 		test:false,
 	},
 	methods: {		
@@ -173,24 +174,24 @@ var vm = new Vue({
 		prePic: function prePic(){
 			let i=this.getPre(this.id);
 			while(i!=-1) if(this.list[i].pic!=null) break; else i=this.getPre(i);
-			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
-			this.showcomment=false;
+			this.id=i;//if(this.id==-1)this.addSubmitFlag=false;
+			//this.showcomment=false;
 		},
 		nextPic: function nextPic(){
 			let i=this.getNext(this.id);
 			while(i!=-1) if(this.list[i].pic!=null) break; else i=this.getNext(i);
-			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
-			this.showcomment=false;
+			this.id=i;//if(this.id==-1)this.addSubmitFlag=false;
+			//this.showcomment=false;
 		},
 		preFamily: function preFamily(){
 			let i=this.getPre(this.id);
 			while(i!=-1) if(this.list[i].ke!=this.list[this.id].ke) break; else i=this.getPre(i);
-			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.id=i;//if(this.id==-1)this.addSubmitFlag=false;
 		},
 		nextFamily: function nextFamily(){
 			let i=this.getNext(this.id);
 			while(i!=-1) if(this.list[i].ke!=this.list[this.id].ke) break; else i=this.getNext(i);
-			this.id=i;if(this.id==-1)this.addSubmitFlag=false;
+			this.id=i;//if(this.id==-1)this.addSubmitFlag=false;
 		},
 		addZero: function addZero(i){
 			if(i<10) return "000"+i;
@@ -198,7 +199,7 @@ var vm = new Vue({
 			if(i<1000) return "0"+i;
 			return i;
 		},
-		getComments:function getComments(){
+		/*getComments:function getComments(){
 			const pagename='bird';const itemname=this.list[this.id].wu;
 			eval(getCommentsStr)
 		},
@@ -240,7 +241,7 @@ var vm = new Vue({
 			}
 
 			form.addEventListener("submit", handleSubmit)
-		},	
+		},	*/
 		showTime: function showTime(s){ var t=new Date(s); return t.toLocaleDateString()+" "+t.toLocaleTimeString();},
 	},
 	created: function created() {
@@ -254,7 +255,7 @@ var vm = new Vue({
 
 		document.onkeydown = () => {
             let key = window.event.keyCode;
-			if (key == 36) {this.id=-1;this.addSubmitFlag=false;this.showcomment=false;}
+			if (key == 36) {this.id=-1;}//this.addSubmitFlag=false;this.showcomment=false;}
             if (key == 37) {if(this.id!=-1) this.prePic();}
 			if (key == 39) {if(this.id!=-1) this.nextPic();}
         };

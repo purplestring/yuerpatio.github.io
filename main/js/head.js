@@ -21,7 +21,7 @@ var state=1;
 
 
 //const myUrl="http://127.0.0.1";
-const myUrl="https://yuer-nodejs.herokuapp.com";
+/*const myUrl="https://yuer-nodejs.herokuapp.com";
 var delCommentsStr=
 `var htmlobj=$.ajax({
 	url:"${myUrl}/jwt/delcmts?id="+id,
@@ -81,7 +81,7 @@ else{
 	localStorage.removeItem('expiresTime');
 	this.username="";
 }
-this.getComments();`
+this.getComments();`*/
 
 
 if(window.screen.width<1080) loadScript("../../main/js/navi2.js");
