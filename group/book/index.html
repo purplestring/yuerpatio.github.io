@@ -148,6 +148,7 @@
 				<a v-if="searchstart==-1" @click.prevent="depth=1;if(msgOne)getBook(listindex);" style="cursor:pointer">返回本书目录</a>
 				<a v-if="searchstart!=-1" @click.prevent="depth=3" style="cursor:pointer">返回搜索结果</a>
 				 | {{list[listindex].TITLE}}
+				 | {{zhang.length}}字
 			</div>
 			<br>
 			<div class="zhang" v-html="zhang"></div>

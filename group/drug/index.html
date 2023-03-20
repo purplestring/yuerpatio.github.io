@@ -42,20 +42,28 @@
 				</div>				
 			</div><br><br>
 			<span v-if="list[i].fliter" v-for="(item, i) in list" @click.prevent="id=i" style="cursor:pointer;">
-				<span v-if="list[i].LINK==null" style="color:Green;">{{list[i].D_NAME}} </span>
-				<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900">{{list[i].D_NAME}} </span>
+				<span v-if="list[i].LINK==null" style="color:Green;"><span v-if="list[i].PHOTO!=null">◉</span>{{list[i].D_NAME}} </span>
+				<span v-if="list[i].LINK!=null" style="color:DarkCyan;font-weight:900"><span v-if="list[i].PHOTO!=null">◉</span>{{list[i].D_NAME}} </span>
 			</span><br><br>
 			<!--a v-if="list[i].fliter" v-for="(item, i) in list" :href="'https://baike.baidu.com/item/'+list[i].D_NAME" 
 			target="_blank" style="cursor:pointer;">{{list[i].D_NAME}} </a><br><br-->		
 		</div>
 		<div v-if="id>=0">
 			<br><br><div class='title' align='center'>{{list[id].D_NAME}}<br><br></div>
-			<div align='center'>{{list[id].P_NAME}} | {{list[id].E_NAME}}<br>
+			<div align='center'>{{list[id].P_NAME}}<span v-if="list[id].E_NAME!=null"> | {{list[id].E_NAME}}</span><br>
 			<a :href="'https://baike.baidu.com/item/'+list[id].D_NAME" target="_blank" style="cursor:pointer;">百度百科</a>
 			<a v-if="list[id].LINK!=null" :href="setUrl(id)" target="_blank">本站参考<br></a>
 			</div>	
-			<br><br><div v-html="list[id].D_INFO"></div>		
-			<br><br><div align="center"><a @click.prevent="id=-1" style="cursor:pointer;">▶返回册主页◀</a></div>
+			<br><br><span v-html="list[id].D_INFO"></span><br><br>
+			<span v-if="list[id].PHOTO!=null">
+				<img id='myimg' style="cursor:pointer" :src='"../mypaint/drug/"+list[id].PHOTO'
+				@click.prevent="window.open('../mypaint/index.html?folder=drug&file='+list[id].PHOTO)">
+			</span>			
+			<br><div align="center">
+				<a @click.prevent="if(id!=-1)prePic();" style="cursor: pointer;">◀　</a>
+				<a @click.prevent="id=-1" style="cursor:pointer">返回上页</a>
+				<a @click.prevent="if(id!=-1)nextPic();" style="cursor: pointer;">　▶</a>
+			</div>
 		</div>	
 		<div v-if="id==-1" id="ret"><a :href="sessionStorage.getItem('cube')==true?'../../3dindex.html':'../../index.html'"> ▶返回主页◀</a></div>		
 		<div class="footer">Copyright © 2017~19 鱼儿. All Rights Reserved.</div><br><br>
@@ -94,6 +102,17 @@ var vm = new Vue({
 		mohu:0,
 	},
 	methods: {
+		prePic: function prePic(){
+			let i=this.id-1;
+			while(i!=-1) if(this.list[i].fliter) break; else i--;
+			this.id=i;
+		},
+		nextPic: function nextPic(){
+			let i=this.id+1;
+			while(i<this.list.length) if(this.list[i].fliter) break; else i++;
+			if(i>=this.list.length)i=-1;
+			this.id=i;
+		},
 		setType: function setType(i){
 			this.wselect[i]=(this.wselect[i]+1)%3;
 			for(let k=0;k<this.list.length;k++) this.getItem(k);
@@ -151,6 +170,12 @@ var vm = new Vue({
         document.onkeydown = function(e) {
             let key = window.event.keyCode;
 			if (key == 36) _this.id=-1;
+			if (key == 37) {
+                if(_this.id!=-1) _this.prePic();
+            }
+			if (key == 39) {
+                if(_this.id!=-1) _this.nextPic();
+            }
         };
     },
 	beforeUpdate: function beforeUpdate(){

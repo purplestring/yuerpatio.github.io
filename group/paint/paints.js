@@ -3708,6 +3708,7 @@ var myjson={RECORDS: [{P_DYNASTY: "战国",P_AUTHOR: "佚名",P_NAME: "人物龙
 {P_DYNASTY: "18世纪",P_AUTHOR: "夏尔丹",P_YEAR: "1735",P_NAME: "Boy with a Spinning-Top",P_TYPE: "木板 油彩 人物 法国",P_PICS: "img/BoySpin.jpg",A_EN: "Jean-Baptiste-Siméon Chardin",P_STAR: "3",},
 {P_DYNASTY: "18世纪",P_AUTHOR: "夏尔丹",P_YEAR: "1737",P_NAME: "吸烟者的箱子",P_TYPE: "木板 油彩 法国",P_PICS: "img/xyzdxz.jpg",A_EN: "Jean-Baptiste-Siméon Chardin",P_WIDTH: "40",P_HEIGHT: "32.5",P_STAR: "3",},
 {P_DYNASTY: "18世纪",P_AUTHOR: "夏尔丹",P_YEAR: "1756",P_NAME: "配膳桌",P_TYPE: "布面 油彩 静物 法国",P_PICS: "img/psz.jpg",A_EN: "Jean-Baptiste-Siméon Chardin",P_WIDTH: "46",P_HEIGHT: "38",P_STAR: "3",},
+{P_DYNASTY: "18世纪",P_AUTHOR: "卡纳莱托",P_YEAR: "1730",P_NAME: "威尼斯大运河",P_TYPE: "布面 油彩 意大利",P_PICS: "imgl/Kwnsdyh.jpg",A_EN: "Canaletto",P_STAR: "3",},
 {P_DYNASTY: "18世纪",P_AUTHOR: "荷加斯",P_YEAR: "1744",P_NAME: "时髦婚姻·早餐",P_TYPE: "布面 油彩 人物 英国",P_PICS: "img/shhyzc.jpg",A_EN: "William Hogarth",P_WIDTH: "89",P_HEIGHT: "68.5",P_STAR: "3",},
 {P_DYNASTY: "18世纪",P_AUTHOR: "佩宏诺",P_YEAR: "1745",P_NAME: "少女与猫",P_TYPE: "布面 粉彩 人物 法国",P_PICS: "img/snym.jpg",A_EN: "Jean-Baptiste Perronneau",P_WIDTH: "20",P_HEIGHT: "23",P_STAR: "3",},
 {P_DYNASTY: "18世纪",P_AUTHOR: "布歇",P_YEAR: "1742",P_NAME: "Autumn Pastoral",P_TYPE: "布面 油彩 人物 洛可可 法国",P_PICS: "img/AutumnP.jpg",A_EN: "Francois Boucher",P_STAR: "3",},
